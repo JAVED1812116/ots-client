@@ -1,19 +1,18 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
-
-:root{
+:root {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -37,7 +36,6 @@ code {
   left: 0;
   z-index: 1030;
 }
-
 
 .navbar .navbar-brand-wrapper {
   background: white;
@@ -88,7 +86,6 @@ code {
   height: 4.625rem;
 }
 
-
 .navbar-nav {
   display: flex;
   flex-direction: row;
@@ -126,35 +123,34 @@ dl li {
   height: 2.5rem;
 }
 
-.nav_icons{
+.nav_icons {
   border-right: 2px solid #e4e4f4;
   padding-left: 0.875rem;
   padding-right: 0.875rem;
   /* border-radius: 0.25rem; */
   width: calc(236px + 0.5rem);
   height: 4.062rem;
-
 }
-.icons{
+.icons {
   transition: all 0.5s;
 }
-.icons:hover{
+.icons:hover {
   cursor: pointer;
   background-color: white;
 }
-.icons:hover > a{
+.icons:hover > a {
   cursor: pointer;
   color: #05a081;
 }
 .nav-link h6 {
   font-weight: normal;
-  font-size: .875rem;
+  font-size: 0.875rem;
 }
-.navbar-toggler{
+.navbar-toggler {
   transition: all 0.3s;
   padding: 5px;
 }
-.navbar-toggler:hover{
+.navbar-toggler:hover {
   border-radius: 2px;
   color: white;
   background-color: rgb(5, 158, 128);
@@ -216,6 +212,6 @@ dl li {
 .togle_home {
   height: 30px;
 }
-.date{
+.date {
   color: black;
 }
