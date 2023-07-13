@@ -9,6 +9,12 @@ top: calc(50% - 713px/2);
 
 background: rgba(255, 255, 255, 0.9);
 }
+.loginemail{
+margin-top: -20px;
+}
+.loginPassword{
+    margin-top: -20px;
+}
 .logoClass{
     left: 20px;
     display:flex;
@@ -289,3 +295,6 @@ font-size: 24px;
 line-height: 29px;
 color: #000000;
 }
+.signUpName{
+    margin-top: -20px;
+    }

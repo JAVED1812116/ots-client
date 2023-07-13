@@ -2,7 +2,9 @@ import React from 'react'
 import "./auth.css"
 import { Button } from '@mui/base'
 import { useNavigate } from "react-router-dom";
-import logo from "../../../assets/Logo.png"
+import logo from "../../../assets/Logo.png";
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 const LandlordLogin = () => {
   const navigate=useNavigate();
   return (
@@ -14,9 +16,15 @@ const LandlordLogin = () => {
       <h1>Login Page</h1>
       </div>
       <div className='line1'>
-<input className='loginEmailText' placeholder='Enter Your Email'/>
+        <div className='loginemail'>
+      <EmailOutlinedIcon className='loginemail'/>
+      </div>
+<input className='loginEmailText'  placeholder='Enter Your Email'/>
       </div>
       <div className='line2'>
+        <div className='loginPassword'>
+        <LockOutlinedIcon className='loginPassword'/>
+        </div>
 <input className='loginPasswordText' placeholder='Enter Your Password'/>
       </div>
       <div className='forgetPassword'>
