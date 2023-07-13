@@ -1,0 +1,132 @@
+.login-body{
+/* Rectangle 9 */
+
+position: absolute;
+width: 488px;
+height: 713px;
+left: calc(50% - 488px/2 + 0.5px);
+top: calc(50% - 713px/2);
+
+background: rgba(255, 255, 255, 0.9);
+}
+.loginText{
+    /* Login Page */
+
+position: absolute;
+width: 194px;
+height: 44px;
+left: calc(50% - 194px/2 + 0.5px);
+top: 165px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 20px;
+line-height: 44px;
+/* identical to box height */
+
+color: #000000;
+
+
+}
+.line1{
+    /* Line 1 */
+
+position: absolute;
+width: 388px;
+height: 0px;
+left: calc(50% - 388px/2 + 0.5px);
+top: 320px;
+
+border: 1px solid #000000;
+
+}
+.loginEmailText{
+    /* Enter Your Email */
+
+position: absolute;
+width: 125px;
+height: 19px;
+left: calc(50% - 150px/2 - 95px);
+top: -26px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 19px;
+border: none;
+color: #000000;
+
+
+}
+.line2{
+    /* Line 2 */
+
+position: absolute;
+width: 388px;
+height: 0px;
+left: calc(50% - 388px/2 + 0.5px);
+top: 409px;
+
+border: 1px solid #000000;
+
+}
+.loginPasswordText{
+    /* Enter Your Password */
+
+position: absolute;
+width: 159px;
+height: 19px;
+left: calc(50% - 188px/2 - 78px);
+top: -26px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 19px;
+border: none;
+color: #000000;
+}
+.forgetPassword{
+    /* Forgot Password */
+
+position: absolute;
+width: 129px;
+height: 19px;
+left: calc(50% - 233px/2 + 130px);
+top: 208px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 19px;
+color: #000000;
+}
+.LoginButton{
+
+background: #007792;
+border-radius: 8px;
+
+
+/* Login */
+
+position: absolute;
+width: 131.88px;
+height: 50px;
+left: calc(50% - 140.88px/2 + 0.52px);
+top: 470px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 22px;
+line-height: 27px;
+/* identical to box height */
+
+color: #FFFFFF;
+
+
+}
