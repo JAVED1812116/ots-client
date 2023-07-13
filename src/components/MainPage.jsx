@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "../assets/Logo.png";
 import "./MainPageCss.css"
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
