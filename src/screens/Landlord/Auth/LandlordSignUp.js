@@ -2,10 +2,15 @@ import React from 'react'
 import "./auth.css"
 import { Button } from '@mui/base'
 import { useNavigate } from "react-router-dom";
+import logo from "../../../assets/Logo.png";
 const LandlordSignUp = () => {
   const navigate=useNavigate();
   return (
+    <>    
     <div className='signup-body'>
+       <div className='logoClass'>
+      <img className='logo' src={logo} alt="" />
+      </div>
       <div className='signupText'>
       <h1>SignUp Page</h1>
       </div>
@@ -18,13 +23,14 @@ const LandlordSignUp = () => {
       <div className='signupline3'>
 <input className='loginPasswordText' placeholder='Enter Your Password'/>
       </div>
-      <div className='Login'>
+      <div className='Signup'>
       <Button className='signupButton'>Signup</Button>
       </div>
-      <div className='Login'>
+      <div className='Signup'>
       <text className='alreadyAccount'>Already Have Account?<Button onClick={()=> navigate("/landlord-login")}>Login</Button></text>
       </div>
     </div>
+  </>
   )
 }
 

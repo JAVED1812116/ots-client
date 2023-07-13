@@ -2,10 +2,14 @@ import React from 'react'
 import "./auth.css"
 import { Button } from '@mui/base'
 import { useNavigate } from "react-router-dom";
+import logo from "../../../assets/Logo.png"
 const LandlordLogin = () => {
   const navigate=useNavigate();
   return (
     <div className='login-body'>
+      <div className='logoClass'>
+      <img className='logo' src={logo} alt="" />
+      </div>
       <div className='loginText'>
       <h1>Login Page</h1>
       </div>
