@@ -1,0 +1,52 @@
+.addNewTenant{
+/* Rectangle 13 */
+
+position: absolute;
+width: 296px;
+height: 240px;
+left: calc(50% - 296px/2 - 343.5px);
+top: calc(50% - 240px/2 - 254.5px);
+
+background: rgba(255, 255, 255, 0.9);
+border-radius: 10px;
+}
+/* .icon{
+    width:111;
+    height:200;
+    alignItems:'center';
+    justifyContent:'center';
+    marginLeft:85;
+} */
+.addIcon{
+       
+        width: 11em;
+        height: 11em;
+        display: inline-block;
+       
+}
+.newRequest{
+    /* Rectangle 9 */
+
+position: absolute;
+width: 296px;
+height: 240px;
+left: calc(50% - 296px/2 + 0.5px);
+top: calc(50% - 240px/2 - 254.5px);
+
+background: rgba(255, 255, 255, 0.9);
+border-radius: 10px;
+
+}
+.allTenant{
+    /* Rectangle 12 */
+
+position: absolute;
+width: 296px;
+height: 240px;
+left: calc(50% - 296px/2 + 344.5px);
+top: calc(50% - 240px/2 - 254.5px);
+
+background: rgba(255, 255, 255, 0.9);
+border-radius: 10px;
+
+}

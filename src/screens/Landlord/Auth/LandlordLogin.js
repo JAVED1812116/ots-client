@@ -31,7 +31,7 @@ const LandlordLogin = () => {
 <text className='forgetPassword'>Forget Password</text>
       </div>
       <div className='Login'>
-      <Button className='LoginButton'>Login</Button>
+      <Button className='LoginButton' onClick={()=>navigate("/landlord-dashboard")}>Login</Button>
       </div>
       <div className='Login'>
       <text className='newAccount'>Don't Have Account?<Button onClick={()=> navigate("/landlord-signup")}>Signup</Button></text>
