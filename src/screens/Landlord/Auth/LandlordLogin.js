@@ -1,8 +1,9 @@
 import React from 'react'
 import "./auth.css"
-import { TextField } from '@mui/material'
 import { Button } from '@mui/base'
+import { useNavigate } from "react-router-dom";
 const LandlordLogin = () => {
+  const navigate=useNavigate();
   return (
     <div className='login-body'>
       <div className='loginText'>
@@ -18,7 +19,10 @@ const LandlordLogin = () => {
 <text className='forgetPassword'>Forget Password</text>
       </div>
       <div className='Login'>
-<Button className='LoginButton'>Login</Button>
+      <Button className='LoginButton'>Login</Button>
+      </div>
+      <div className='Login'>
+      <text className='newAccount'>Don't Have Account?<Button onClick={()=> navigate("/landlord-signup")}>Signup</Button></text>
       </div>
     </div>
   )
