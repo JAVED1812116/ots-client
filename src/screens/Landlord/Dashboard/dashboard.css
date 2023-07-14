@@ -48,5 +48,30 @@ top: calc(50% - 240px/2 - 254.5px);
 
 background: rgba(255, 255, 255, 0.9);
 border-radius: 10px;
+}
+.rentSetting{
+    /* Rectangle 15 */
+
+position: absolute;
+width: 296px;
+height: 240px;
+left: calc(50% - 296px/2 - 343.5px);
+top: calc(50% - 240px/2 + 42.5px);
+
+background: rgba(255, 255, 255, 0.9);
+border-radius: 10px;
+
+}
+.accountDetail{
+    /* Rectangle 14 */
+
+position: absolute;
+width: 296px;
+height: 240px;
+left: calc(50% - 296px/2 + 0.5px);
+top: calc(50% - 240px/2 + 42.5px);
+
+background: rgba(255, 255, 255, 0.9);
+border-radius: 10px;
 
 }
