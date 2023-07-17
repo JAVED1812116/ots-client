@@ -42,15 +42,13 @@ const LandlordLogin = () => {
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
                     edge="end"
                   >
                     {<EmailRounded />}
                   </IconButton>
                 </InputAdornment>
               }
-              label="Password"
+              label="Email"
             />
           </FormControl>
           <FormControl variant="outlined" fullWidth className="password_input">

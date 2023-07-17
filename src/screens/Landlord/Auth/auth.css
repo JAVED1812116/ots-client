@@ -26,6 +26,9 @@
 .email_input, .password_input{
     margin-bottom: 20px !important;
 }
+.name_input{
+    margin-bottom: 20px !important;
+}
 .login-body {
   /* Rectangle 9 */
 
