@@ -1,300 +1,318 @@
-.login-body{
-/* Rectangle 9 */
-
-position: absolute;
-width: 488px;
-height: 713px;
-left: calc(50% - 488px/2 + 0.5px);
-top: calc(50% - 713px/2);
-
-background: rgba(255, 255, 255, 0.9);
+.bg {
+  background-image: url("../../../assets/BackGroundImage.png");
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: calc(100vh + 15px);
+  overflow: hidden;
+  width: 70%;
 }
-.loginemail{
-margin-top: -20px;
+.landlord_login {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 15px);
+  margin: 0 auto;
+  width: 100%;
 }
-.loginPassword{
-    margin-top: -20px;
-}
-.logoClass{
-    left: 20px;
-    display:flex;
+.flex{
+    display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 6%;
 }
-.logo{
-    width: 215px;
+.flex-col{
+    flex-direction: column;
 }
-.loginText{
-    /* Login Page */
-
-position: absolute;
-width: 194px;
-height: 44px;
-left: calc(50% - 194px/2 + 0.5px);
-top: 165px;
-
-font-family: 'Inter';
-font-style: normal;
-font-weight: 700;
-font-size: 20px;
-line-height: 44px;
-/* identical to box height */
-color: #000000;
+.email_input, .password_input{
+    margin-bottom: 20px !important;
 }
-.line1{
-    /* Line 1 */
+.login-body {
+  /* Rectangle 9 */
 
-position: absolute;
-width: 388px;
-height: 0px;
-left: calc(50% - 388px/2 + 0.5px);
-top: 320px;
+  /* position: absolute; */
+  width: 30%;
+  height: 713px;
+  padding: 15px;
+  /* left: calc(50% - 488px/2 + 0.5px); */
+  /* top: calc(50% - 713px/2); */
 
-border: 1px solid #000000;
-
+  background: rgba(255, 255, 255, 0.9);
 }
-.loginEmailText{
-    /* Enter Your Email */
-
-position: absolute;
-width: 125px;
-height: 19px;
-left: calc(50% - 150px/2 - 95px);
-top: -26px;
-
-font-family: 'Inter';
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-line-height: 19px;
-border: none;
-color: #000000;
-
-
+.loginemail {
+  margin-top: -20px;
 }
-.line2{
-    /* Line 2 */
-
-position: absolute;
-width: 388px;
-height: 0px;
-left: calc(50% - 388px/2 + 0.5px);
-top: 409px;
-
-border: 1px solid #000000;
-
+.loginPassword {
+  margin-top: -20px;
 }
-.loginPasswordText{
-    /* Enter Your Password */
-
-position: absolute;
-width: 159px;
-height: 19px;
-left: calc(50% - 188px/2 - 78px);
-top: -26px;
-
-font-family: 'Inter';
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-line-height: 19px;
-border: none;
-color: #000000;
+.logoClass {
+  left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6%;
 }
-.forgetPassword{
-    /* Forgot Password */
-
-position: absolute;
-width: 129px;
-height: 19px;
-left: calc(50% - 233px/2 + 130px);
-top: 208px;
-
-font-family: 'Inter';
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-line-height: 19px;
-color: #000000;
+.logo {
+  width: 215px;
 }
-.LoginButton{
+.loginText {
+  /* Login Page */
 
-background: #007792;
-border-radius: 8px;
+  /* position: absolute; */
+  /* width: 194px;
+  height: 44px; */
+  /* left: calc(50% - 194px / 2 + 0.5px); */
+  /* top: 165px; */
 
-
-/* Login */
-
-position: absolute;
-width: 131.88px;
-height: 50px;
-left: calc(50% - 140.88px/2 + 0.52px);
-top: 470px;
-
-font-family: 'Inter';
-font-style: normal;
-font-weight: 700;
-font-size: 22px;
-line-height: 27px;
-/* identical to box height */
-color: #FFFFFF;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 44px;
+  /* identical to box height */
+  color: #000000;
+  text-align: center;
 }
-.newAccount{
-    /* Don’t Have Account? Signup */
+.line1 {
+  /* Line 1 */
 
-position: absolute;
-width: 333px;
-height: 31px;
-left: calc(50% - 231px/2);
-top: 610px;
+  /* position: absolute; */
+  /* width: 388px;
+  height: 0px; */
+  /* left: calc(50% - 388px / 2 + 0.5px); */
+  /* top: 320px; */
 
-font-family: 'Inter';
-font-style: normal;
-font-weight: 400;
-font-size: 24px;
-line-height: 29px;
-color: #000000;
+  border: 1px solid #000000;
 }
-                                                                        /* SIGNUP PAGE*/
-.signup-body{
-/* Rectangle 9 */
-position: absolute;
-width: 488px;
-height: 713px;
-left: calc(50% - 488px/2 + 0.5px);
-top: calc(50% - 713px/2);
+.loginEmailText {
+  /* Enter Your Email */
 
-background: rgba(255, 255, 255, 0.9);
+  /* position: absolute; */
+  width: 125px;
+  height: 19px;
+  /* left: calc(50% - 150px / 2 - 95px); */
+  /* top: -26px; */
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  border: none;
+  color: #000000;
 }
-.signupText{
-    /* Login Page */
+.line2 {
+  /* Line 2 */
 
-position: absolute;
-width: 219px;
-height: 44px;
-left: calc(50% - 194px/2 + 0.5px);
-top: 165px;
+  /* position: absolute; */
+  width: 388px;
+  height: 0px;
+  /* left: calc(50% - 388px / 2 + 0.5px); */
+  /* top: 409px; */
 
-font-family: 'Inter';
-font-style: normal;
-font-weight: 700;
-font-size: 20px;
-line-height: 44px;
-/* identical to box height */
-color: #000000;
+  border: 1px solid #000000;
 }
-.signupline1{
-    /* Line 1 */
+.loginPasswordText {
+  /* Enter Your Password */
 
-position: absolute;
-width: 388px;
-height: 0px;
-left: calc(50% - 388px/2 + 0.5px);
-top: 320px;
+  /* position: absolute; */
+  width: 159px;
+  height: 19px;
+  /* left: calc(50% - 188px / 2 - 78px); */
+  /* top: -26px; */
 
-border: 1px solid #000000;
-
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  border: none;
+  color: #000000;
 }
-.loginEmailText{
-    /* Enter Your Email */
+.forgetPassword {
+  /* Forgot Password */
 
-position: absolute;
-width: 125px;
-height: 19px;
-left: calc(50% - 150px/2 - 95px);
-top: -26px;
+  /* position: absolute; */
+  width: 100%;
+  height: 19px;
+  /* left: calc(50% - 233px / 2 + 130px); */
+  /* top: 208px; */
 
-font-family: 'Inter';
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-line-height: 19px;
-border: none;
-color: #000000;
-
-
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #000000;
 }
-.signupline2{
-    /* Line 2 */
+.LoginButton {
+  background: #007792;
+  border-radius: 8px;
+  margin-bottom: 10px;
 
-position: absolute;
-width: 388px;
-height: 0px;
-left: calc(50% - 388px/2 + 0.5px);
-top: 409px;
+  /* Login */
 
-border: 1px solid #000000;
+  /* position: absolute; */
+  width: 131.88px;
+  height: 50px;
+  /* left: calc(50% - 140.88px / 2 + 0.52px); */
+  /* top: 470px; */
 
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 27px;
+  /* identical to box height */
+  color: #ffffff;
 }
-.loginPasswordText{
-    /* Enter Your Password */
+.newAccount {
+  /* Don’t Have Account? Signup */
 
-position: absolute;
-width: 159px;
-height: 19px;
-left: calc(50% - 188px/2 - 78px);
-top: -26px;
+  /* position: absolute; */
+  width: 333px;
+  height: 31px;
+  /* left: calc(50% - 231px / 2); */
+  /* top: 610px; */
 
-font-family: 'Inter';
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-line-height: 19px;
-border: none;
-color: #000000;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  color: #000000;
 }
-.signupline3{
-    /* Line 2 */
+/* SIGNUP PAGE*/
+.signup-body {
+  /* Rectangle 9 */
+  /* position: absolute; */
+  width: 488px;
+  height: 713px;
+  /* left: calc(50% - 488px / 2 + 0.5px); */
+  /* top: calc(50% - 713px / 2); */
 
-position: absolute;
-width: 388px;
-height: 0px;
-left: calc(50% - 388px/2 + 0.5px);
-top: 490px;
+  background: rgba(255, 255, 255, 0.9);
+}
+.signupText {
+  /* Login Page */
 
-border: 1px solid #000000;
+  /* position: absolute; */
+  width: 219px;
+  height: 44px;
+  /* left: calc(50% - 194px / 2 + 0.5px); */
+  /* top: 165px; */
 
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 44px;
+  /* identical to box height */
+  color: #000000;
+}
+.signupline1 {
+  /* Line 1 */
+
+  /* position: absolute; */
+  width: 388px;
+  height: 0px;
+  /* left: calc(50% - 388px / 2 + 0.5px); */
+  /* top: 320px; */
+
+  border: 1px solid #000000;
+}
+.loginEmailText {
+  /* Enter Your Email */
+
+  /* position: absolute; */
+  width: 125px;
+  height: 19px;
+  /* left: calc(50% - 150px / 2 - 95px); */
+  /* top: -26px; */
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  border: none;
+  color: #000000;
+}
+.signupline2 {
+  /* Line 2 */
+
+  /* position: absolute; */
+  width: 388px;
+  height: 0px;
+  /* left: calc(50% - 388px / 2 + 0.5px); */
+  /* top: 409px; */
+
+  border: 1px solid #000000;
+}
+.loginPasswordText {
+  /* Enter Your Password */
+
+  /* position: absolute; */
+  width: 159px;
+  height: 19px;
+  /* left: calc(50% - 188px / 2 - 78px); */
+  /* top: -26px; */
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  border: none;
+  color: #000000;
+}
+.signupline3 {
+  /* Line 2 */
+
+  /* position: absolute; */
+  width: 388px;
+  height: 0px;
+  /* left: calc(50% - 388px / 2 + 0.5px); */
+  /* top: 490px; */
+
+  border: 1px solid #000000;
 }
 
-.signupButton{
+.signupButton {
+  background: #007792;
+  border-radius: 8px;
 
-background: #007792;
-border-radius: 8px;
+  /* Login */
 
+  /* position: absolute; */
+  width: 131.88px;
+  height: 50px;
+  /* left: calc(50% - 140.88px / 2 + 0.52px); */
+  /* top: 555px; */
 
-/* Login */
-
-position: absolute;
-width: 131.88px;
-height: 50px;
-left: calc(50% - 140.88px/2 + 0.52px);
-top: 555px;
-
-font-family: 'Inter';
-font-style: normal;
-font-weight: 700;
-font-size: 22px;
-line-height: 27px;
-/* identical to box height */
-color: #FFFFFF;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 27px;
+  /* identical to box height */
+  color: #ffffff;
 }
-.alreadyAccount{
-    /* Don’t Have Account? Signup */
+.alreadyAccount {
+  /* Don’t Have Account? Signup */
 
-position: absolute;
-width: 333px;
-height: 31px;
-left: calc(50% - 231px/2);
-top: 655px;
+  /* position: absolute; */
+  width: 333px;
+  height: 31px;
+  /* left: calc(50% - 231px / 2); */
+  /* top: 655px; */
 
-font-family: 'Inter';
-font-style: normal;
-font-weight: 400;
-font-size: 24px;
-line-height: 29px;
-color: #000000;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  color: #000000;
 }
-.signUpName{
-    margin-top: -20px;
-    }
+.signUpName {
+  margin-top: -20px;
+}

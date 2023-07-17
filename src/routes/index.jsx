@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NotFound from "../screens/NotFound/NotFound";
 import Dashboard from "../screens/Dashboard/Dashboard";
-import LandlordSignUp from "../screens/Landlord/Auth/LandlordSignup";
+import LandlordSignUp from "../screens/Landlord/Auth/LandlordSignUp";
 import LandlordLogin from "../screens/Landlord/Auth/LandlordLogin";
 
 export default function AllRoutes() {
