@@ -130,7 +130,7 @@ export default function Dashboard() {
           <Typography variant="h6" noWrap component="div">
            OTS
           </Typography>
-               {/* <Box
+               <Box
                    component="img"
                    sx={{
                    height: 74,
@@ -138,7 +138,7 @@ export default function Dashboard() {
                    }}
                    alt="Your logo."
                    src={Logo}
-               /> */}
+               />
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -166,7 +166,7 @@ export default function Dashboard() {
                   }}
                 >
                     
-                   <AiFillHome />
+                   <AiFillHome size={20}/>
                 </ListItemIcon>
                 <ListItemText primary={open ? "Home" : null}  />
               </ListItemButton>
@@ -188,7 +188,7 @@ export default function Dashboard() {
                   }}
                 >
                     
-                   <IoMdAdd />
+                   <IoMdAdd size={20}/>
                 </ListItemIcon>
                 <ListItemText primary={open ? "Add New Tenant" : null}  />
               </ListItemButton>
@@ -210,7 +210,7 @@ export default function Dashboard() {
                   }}
                 >
                     
-                   <IoIosPeople />
+                   <IoIosPeople size={20}/>
                 </ListItemIcon>
                 <ListItemText primary={open ? "All Tenant" : null}  />
               </ListItemButton>
@@ -232,7 +232,7 @@ export default function Dashboard() {
                   }}
                 >
                     
-                   <AiFillSetting />
+                   <AiFillSetting size={20}/>
                 </ListItemIcon>
                 <ListItemText primary={open ? "Rent Setting" : null}  />
               </ListItemButton>
@@ -254,7 +254,7 @@ export default function Dashboard() {
                   }}
                 >
                     
-                   <MdAccountBalance />
+                   <MdAccountBalance size={20}/>
                 </ListItemIcon>
                 <ListItemText primary={open ? "ACCOUNT DETAIL" : null} />
               </ListItemButton>
