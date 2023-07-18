@@ -118,10 +118,6 @@ export default function Dashboard() {
             aria-label="open drawer"
             onClick={()=>{setOpen(!open)}}
             edge="start"
-            // sx={{
-            //      marginRight: 5,
-            //      ...(open && { display: 'none' }),
-            //    }}
           >
          
             <MenuIcon />
@@ -150,7 +146,7 @@ export default function Dashboard() {
         <Divider />
         <List>
      
-            <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItem disablePadding sx={{ display: 'block' }} onClick={()=>{setMenuData("home")}}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -172,7 +168,7 @@ export default function Dashboard() {
               </ListItemButton>
             </ListItem>
 
-            <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItem disablePadding sx={{ display: 'block' }} onClick={()=>{setMenuData("addNewTenant")}}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -265,9 +261,8 @@ export default function Dashboard() {
        
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        {
-          menuData=='Home'
-        }
+        {menuData=='home'&&<Dashboard />}
+        {menuData=='addNewTenant'&&<NewRequest />}
       </Box>
     </Box>
     </>
