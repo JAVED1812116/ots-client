@@ -1,0 +1,63 @@
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+export default function RentSetting() {
+  return (
+    <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      
+      <div>
+        <TextField
+          id="standard-multiline-flexible"
+          label="Monthly Rent"
+          multiline
+          maxRows={4}
+          variant="standard"
+        />
+        <TextField
+          id="standard-textarea"
+          label="Advance"
+          placeholder="Placeholder"
+          multiline
+          variant="standard"
+        />
+        {/* <TextField
+          id="standard-multiline-static"
+          label="Multiline"
+          multiline
+          rows={4}
+          defaultValue="Default Value"
+          variant="standard"
+        /> */}
+      </div>
+      
+      <div>
+        <TextField
+          id="standard-multiline-flexible"
+          label="Maintenance Charges"
+          multiline
+          maxRows={4}
+          variant="standard"
+        />
+        <TextField
+          id="standard-textarea"
+          label="Trash Charges"
+          placeholder="Placeholder"
+          multiline
+          variant="standard"
+        />
+      </div>
+      <Button variant="contained" color="success">
+        Save
+      </Button>
+    </Box>
+    
+  );
+}

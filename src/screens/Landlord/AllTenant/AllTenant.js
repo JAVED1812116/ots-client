@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import { Button } from '@mui/base';
 
 const columns = [
   { id: 'name', label: 'Name', minWidth: 170 },
@@ -40,8 +41,8 @@ function createData(name, fatherName,fromDate, cnic, action) {
 }
 
 const rows = [
-  createData('Zia', 'Khalil', 1324171354, 3287263,"view"),
-  createData('Ritik', 'Bhawani Shankar', 1403500365, 9596961,"view"),
+  createData('Zia', 'Khalil', 1324171354, 3287263,<Button>view</Button>),
+  createData('Ritik', 'Bhawani Shankar', 1403500365, 9596961,<Button>view</Button>),
   
 ];
 
