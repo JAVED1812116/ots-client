@@ -1,17 +1,18 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import Button from "@mui/material/Button";
 
 function createData(name, calories, fat, carbs, protein, price) {
   return {
@@ -23,16 +24,13 @@ function createData(name, calories, fat, carbs, protein, price) {
     price,
     history: [
       {
-        date: '2020-01-05',
+        date: "2020-01-05",
         totalFamilyMembers: 5,
         advance: 30000,
         monthlyRent: 15000,
-        previousAddress: 'naganChowrangi',
-        permenantAddress: 'Shikarpur',
+        previousAddress: "naganChowrangi",
+        permenantAddress: "Shikarpur",
       },
-      
-    
-      
     ],
   };
 }
@@ -43,7 +41,7 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -87,14 +85,25 @@ function Row(props) {
                       </TableCell>
                       <TableCell>{historyRow.totalFamilyMembers}</TableCell>
                       <TableCell align="right">{historyRow.advance}</TableCell>
-                      <TableCell align="right">{historyRow.monthlyRent}</TableCell>
-                      <TableCell align="right">{historyRow.previousAddress}</TableCell>
-                      <TableCell align="right">{historyRow.permenantAddress}</TableCell>
-                      
+                      <TableCell align="right">
+                        {historyRow.monthlyRent}
+                      </TableCell>
+                      <TableCell align="right">
+                        {historyRow.previousAddress}
+                      </TableCell>
+                      <TableCell align="right">
+                        {historyRow.permenantAddress}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
+              <Button variant="contained" sx={{ marginTop: 2, marginRight: 1, background: "black" }}>
+                Accept
+              </Button>
+              <Button variant="contained" sx={{ marginTop: 2, background: "black" }}>
+                Reject
+              </Button>
             </Box>
           </Collapse>
         </TableCell>
@@ -103,26 +112,28 @@ function Row(props) {
   );
 }
 
-
 const rows = [
-  createData('Zia-ur-rehman','Khalil-ur-rehman', 500),
-  createData('Ritick', 'Bhawani shankar', 420),
-  createData('saeed', 'afzal', 200),
-  createData('shameel', 'idrees', 100),
-  createData('rahul', 'Gianchandani', 50),
+  createData("Zia-ur-rehman", "Khalil-ur-rehman", 500),
+  createData("Ritick", "Bhawani shankar", 420),
+  createData("saeed", "afzal", 200),
+  createData("shameel", "idrees", 100),
+  createData("rahul", "Gianchandani", 50),
 ];
 
 export default function NewRequest() {
   return (
-
-    <TableContainer component={Paper} >
+    <TableContainer component={Paper} sx={{ marginTop: 4 }}>
       <Table aria-label="collapsible table">
-        <TableHead>
+        <TableHead sx={{ background: "black" }}>
           <TableRow>
             <TableCell />
-            <TableCell>Name</TableCell>
-            <TableCell align="right">Father Name</TableCell>
-            <TableCell align="right">CNIC No</TableCell>
+            <TableCell sx={{ color: "white" }}>Name</TableCell>
+            <TableCell sx={{ color: "white" }} align="right">
+              Father Name
+            </TableCell>
+            <TableCell sx={{ color: "white" }} align="right">
+              CNIC No
+            </TableCell>
             <TableCell align="right"></TableCell>
             <TableCell align="right"></TableCell>
           </TableRow>

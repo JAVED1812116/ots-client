@@ -301,7 +301,7 @@ export default function Dashboard() {
           </List>
           <Divider />
         </Drawer>
-        <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: 10 }}>
+        <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: 5 }}>
           {menuData == "home" && <Dashboard />}
           {menuData == "addNewTenant"}
           {menuData == "newRequest" && <NewRequest />}
