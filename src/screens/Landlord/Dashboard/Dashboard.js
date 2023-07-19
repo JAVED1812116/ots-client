@@ -25,6 +25,7 @@ import Logo from "../../../assets/Logo.png"
 import { AiFillHome,AiFillSetting } from 'react-icons/ai';
 import { IoMdAdd ,IoIosPeople} from 'react-icons/io';
 import { MdAccountBalance} from 'react-icons/md';
+import { GoGitPullRequest} from 'react-icons/go';
 
 // import { FaPeopleGroup } from 'react-icons/fa';
 const drawerWidth = 240;
@@ -189,6 +190,27 @@ export default function Dashboard() {
                 <ListItemText primary={open ? "Add New Tenant" : null}  />
               </ListItemButton>
             </ListItem>
+            <ListItem disablePadding sx={{ display: 'block' }} onClick={()=>{setMenuData("newRequest")}}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                    
+                   <GoGitPullRequest size={20}/>
+                </ListItemIcon>
+                <ListItemText primary={open ? "New Request" : null}  />
+              </ListItemButton>
+            </ListItem>
 
             <ListItem disablePadding sx={{ display: 'block' }}>
               <ListItemButton
@@ -262,7 +284,8 @@ export default function Dashboard() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         {menuData=='home'&&<Dashboard />}
-        {menuData=='addNewTenant'&&<NewRequest />}
+        {menuData=='addNewTenant'}
+        {menuData=='newRequest'&&<NewRequest />}
       </Box>
     </Box>
     </>
