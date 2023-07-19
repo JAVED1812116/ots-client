@@ -21,6 +21,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import AddIcon from "@mui/icons-material/Add";
 import FolderSharedIcon from "@mui/icons-material/FolderShared";
 import NewRequest from "../NewRequest/NewRequest";
+import AllTenant from "../AllTenant/AllTenant";
 import Logo from "../../../assets/Logo.png";
 import { AiFillHome, AiFillSetting } from "react-icons/ai";
 import { IoMdAdd, IoIosPeople } from "react-icons/io";
@@ -236,7 +237,9 @@ export default function Dashboard() {
               </ListItemButton>
             </ListItem>
 
-            <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItem disablePadding sx={{ display: "block" }}   onClick={() => {
+                setMenuData("allTenant");
+              }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -305,6 +308,7 @@ export default function Dashboard() {
           {menuData == "home" && <Dashboard />}
           {menuData == "addNewTenant"}
           {menuData == "newRequest" && <NewRequest />}
+          {menuData == "allTenant" && <AllTenant />}
         </Box>
       </Box>
     </>
