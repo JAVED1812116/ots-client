@@ -98,7 +98,7 @@ const Drawer = styled(MuiDrawer, {
 export default function Dashboard() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [menuData, setMenuData] = useState("Home");
+  const [menuData, setMenuData] = useState("home");
 
   const handleDrawerOpen = () => {
     setOpen(true);

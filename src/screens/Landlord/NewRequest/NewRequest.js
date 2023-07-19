@@ -1,5 +1,5 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -104,23 +104,23 @@ function Row(props) {
   );
 }
 
-Row.propTypes = {
-  row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-      }),
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
-  }).isRequired,
-};
+// Row.propTypes = {
+//   row: PropTypes.shape({
+//     calories: PropTypes.number.isRequired,
+//     carbs: PropTypes.number.isRequired,
+//     fat: PropTypes.number.isRequired,
+//     history: PropTypes.arrayOf(
+//       PropTypes.shape({
+//         amount: PropTypes.number.isRequired,
+//         customerId: PropTypes.string.isRequired,
+//         date: PropTypes.string.isRequired,
+//       }),
+//     ).isRequired,
+//     name: PropTypes.string.isRequired,
+//     price: PropTypes.number.isRequired,
+//     protein: PropTypes.number.isRequired,
+//   }).isRequired,
+// };
 
 const rows = [
   createData('Zia-ur-rehman','Khalil-ur-rehman', 500),
@@ -137,9 +137,9 @@ export default function NewRequest() {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Name</TableCell>
+            <TableCell >Name</TableCell>
             <TableCell align="right">Father Name</TableCell>
-            <TableCell align="right">CNIC No</TableCell>
+            <TableCell align="right">CNIC&nbsp;(No)</TableCell>
             {/* <TableCell align="right">Carbs&nbsp;(g)</TableCell>
             <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
           </TableRow>
