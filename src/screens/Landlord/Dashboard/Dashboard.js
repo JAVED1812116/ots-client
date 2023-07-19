@@ -98,7 +98,7 @@ const Drawer = styled(MuiDrawer, {
 export default function Dashboard() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [menuData, setMenuData] = useState("home");
+  const [menuData, setMenuData] = useState("Home");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -124,21 +124,27 @@ export default function Dashboard() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              OTS
-            </Typography>
+
             <Box
               component="img"
               sx={{
-                height: 74,
-                marginLeft: 180,
+                height: 56,
+                margin: 1,
               }}
               alt="Your logo."
               src={Logo}
             />
+            <Typography
+              sx={{ marginLeft: 200 }}
+              variant="h6"
+              noWrap
+              component="div"
+            >
+              OTS
+            </Typography>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open}>
+        <Drawer sx={{ marginTop: 10 }} variant="permanent" open={open}>
           <DrawerHeader>
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === "rtl" ? (
@@ -295,7 +301,7 @@ export default function Dashboard() {
           </List>
           <Divider />
         </Drawer>
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: 10 }}>
           {menuData == "home" && <Dashboard />}
           {menuData == "addNewTenant"}
           {menuData == "newRequest" && <NewRequest />}
