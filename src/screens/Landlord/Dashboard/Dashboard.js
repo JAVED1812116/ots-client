@@ -143,7 +143,7 @@ export default function Dashboard() {
             </Typography>
           </Toolbar>
         </AppBar>
-        <Drawer sx={{ marginTop: 10 }} variant="permanent" open={open}>
+        <Drawer variant="permanent" open={open}>
           <DrawerHeader>
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === "rtl" ? (
@@ -159,33 +159,6 @@ export default function Dashboard() {
               disablePadding
               sx={{ display: "block" }}
               onClick={() => {
-                setMenuData("home");
-              }}
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <AiFillHome size={20} />
-                </ListItemIcon>
-                <ListItemText primary={open ? "Home" : null} />
-              </ListItemButton>
-            </ListItem>
-
-            <ListItem
-              disablePadding
-              sx={{ display: "block" }}
-              onClick={() => {
                 setMenuData("addNewTenant");
               }}
             >
@@ -194,6 +167,7 @@ export default function Dashboard() {
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
+                  marginTop: 2,
                 }}
               >
                 <ListItemIcon
@@ -235,9 +209,13 @@ export default function Dashboard() {
               </ListItemButton>
             </ListItem>
 
-            <ListItem disablePadding sx={{ display: "block" }}   onClick={() => {
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => {
                 setMenuData("allTenant");
-              }}>
+              }}
+            >
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -258,9 +236,13 @@ export default function Dashboard() {
               </ListItemButton>
             </ListItem>
 
-            <ListItem disablePadding sx={{ display: "block" }}  onClick={() => {
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => {
                 setMenuData("rentSetting");
-              }}>
+              }}
+            >
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -281,7 +263,13 @@ export default function Dashboard() {
               </ListItemButton>
             </ListItem>
 
-            <ListItem disablePadding sx={{ display: "block" }} onClick={()=>{setMenuData("bankDetail")}}>
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => {
+                setMenuData("bankDetail");
+              }}
+            >
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -305,7 +293,7 @@ export default function Dashboard() {
           <Divider />
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: 5 }}>
-          {menuData == "home" && <Dashboard />}
+          {/* {menuData == "home" && <Dashboard />} */}
           {menuData == "addNewTenant"}
           {menuData == "newRequest" && <NewRequest />}
           {menuData == "allTenant" && <AllTenant />}

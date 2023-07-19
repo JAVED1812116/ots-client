@@ -1,49 +1,63 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import { Button } from '@mui/base';
+import * as React from "react";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import Button from "@mui/material/Button";
 
 const columns = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'fatherName', label: 'Father Name', minWidth: 100 },
+  { id: "name", label: "Name", minWidth: 170 },
+  { id: "fatherName", label: "Father Name", minWidth: 100 },
   {
-    id: 'cnic',
-    label: 'CNIC',
+    id: "cnic",
+    label: "CNIC",
     minWidth: 170,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
+    align: "right",
+    format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: 'fromDate',
-    label: 'From Date',
+    id: "fromDate",
+    label: "From Date",
     minWidth: 170,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
+    align: "right",
+    format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: 'action',
-    label: 'Action',
+    id: "action",
+    label: "Action",
     minWidth: 170,
-    align: 'right',
+    align: "right",
     format: (value) => value.toFixed(2),
   },
 ];
 
-function createData(name, fatherName,fromDate, cnic, action) {
- 
-  return { name,fatherName,  cnic, fromDate, action };
+function createData(name, fatherName, fromDate, cnic, action) {
+  return { name, fatherName, cnic, fromDate, action };
 }
 
 const rows = [
-  createData('Zia', 'Khalil', 1324171354, 3287263,<Button>view</Button>),
-  createData('Ritik', 'Bhawani Shankar', 1403500365, 9596961,<Button>view</Button>),
-  
+  createData(
+    "Zia",
+    "Khalil",
+    1324171354,
+    3287263,
+    <Button variant="contained" sx={{ background: "black" }}>
+      View
+    </Button>
+  ),
+  createData(
+    "Ritik",
+    "Bhawani Shankar",
+    1403500365,
+    9596961,
+    <Button variant="contained" sx={{ background: "black" }}>
+      View
+    </Button>
+  ),
 ];
 
 export default function AllTenant() {
@@ -60,16 +74,17 @@ export default function AllTenant() {
   };
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <Paper sx={{ width: "100%", overflow: "hidden", marginTop: 4 }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
+          <TableHead >
+            <TableRow sx={{ background: "black" }}>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
+                  sx={{ background: "black", color: "white" }}
                 >
                   {column.label}
                 </TableCell>
@@ -86,7 +101,7 @@ export default function AllTenant() {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
+                          {column.format && typeof value === "number"
                             ? column.format(value)
                             : value}
                         </TableCell>
