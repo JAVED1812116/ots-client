@@ -16,11 +16,10 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import AddIcon from "@mui/icons-material/Add";
-import FolderSharedIcon from "@mui/icons-material/FolderShared";
 import NewRequest from "../NewRequest/NewRequest";
+import AllTenant from "../AllTenant/AllTenant";
+import RentSetting from "../RentSetting/RentSetting";
+import BankDetail from "../BankDetail/BankDetail";
 import Logo from "../../../assets/Logo.png";
 import { AiFillHome, AiFillSetting } from "react-icons/ai";
 import { IoMdAdd, IoIosPeople } from "react-icons/io";
@@ -236,7 +235,9 @@ export default function Dashboard() {
               </ListItemButton>
             </ListItem>
 
-            <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItem disablePadding sx={{ display: "block" }}   onClick={() => {
+                setMenuData("allTenant");
+              }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -257,7 +258,9 @@ export default function Dashboard() {
               </ListItemButton>
             </ListItem>
 
-            <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItem disablePadding sx={{ display: "block" }}  onClick={() => {
+                setMenuData("rentSetting");
+              }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -278,7 +281,7 @@ export default function Dashboard() {
               </ListItemButton>
             </ListItem>
 
-            <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItem disablePadding sx={{ display: "block" }} onClick={()=>{setMenuData("bankDetail")}}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -305,6 +308,9 @@ export default function Dashboard() {
           {menuData == "home" && <Dashboard />}
           {menuData == "addNewTenant"}
           {menuData == "newRequest" && <NewRequest />}
+          {menuData == "allTenant" && <AllTenant />}
+          {menuData == "rentSetting" && <RentSetting />}
+          {menuData == "bankDetail" && <BankDetail />}
         </Box>
       </Box>
     </>
