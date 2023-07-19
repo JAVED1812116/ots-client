@@ -32,14 +32,7 @@ function createData(name, calories, fat, carbs, protein, price) {
         permenantAddress: 'Shikarpur',
       },
       
-      {
-        date: '2020-01-05',
-        totalFamilyMembers: 7,
-        advance: 50000,
-        monthlyRent: 25000,
-        previousAddress: 'saddar line Area',
-        permenantAddress: 'punjab',
-      },
+    
       
     ],
   };
