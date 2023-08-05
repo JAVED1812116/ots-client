@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
-
+import { useNavigate } from "react-router-dom";
 const columns = [
   { id: "name", label: "Name", minWidth: 170 },
   { id: "fatherName", label: "Father Name", minWidth: 100 },
@@ -39,40 +39,40 @@ function createData(name, fatherName, fromDate, cnic, action) {
   return { name, fatherName, cnic, fromDate, action };
 }
 
-const rows = [
-  createData(
-    "Zia",
-    "Khalil",
-    1324171354,
-    3287263,
-    <Button variant="contained" sx={{ background: "black" }}>
-      View
-    </Button>
-  ),
-  createData(
-    "Ritik",
-    "Bhawani Shankar",
-    1403500365,
-    9596961,
-    <Button variant="contained" sx={{ background: "black" }}>
-      View
-    </Button>
-  ),
-];
 
 export default function AllTenant() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+  const navigate = useNavigate();
+  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
+  
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
+  const rows = [
+    createData(
+      "Zia",
+      "Khalil",
+      1324171354,
+      3287263,
+      <Button variant="contained" sx={{ background: "black" }}  onClick={() => navigate("/landlord-Functionality")}>
+        View
+      </Button>
+    ),
+    createData(
+      "Ritik",
+      "Bhawani Shankar",
+      1403500365,
+      9596961,
+      <Button variant="contained" sx={{ background: "black" }}>
+        View
+      </Button>
+    ),
+  ];
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", marginTop: 4 }}>
       <TableContainer sx={{ maxHeight: 440 }}>
