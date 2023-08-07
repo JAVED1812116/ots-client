@@ -13,8 +13,13 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Button from "@mui/material/Button";
+import Wrapper from "../../../components/Wrapper";
+import { useState } from "react";
+import { useLocation } from "react-router";
+
 
 function createData(name, calories, fat, carbs, protein, price) {
+  
   return {
     name,
     calories,
@@ -98,10 +103,16 @@ function Row(props) {
                   ))}
                 </TableBody>
               </Table>
-              <Button variant="contained" sx={{ marginTop: 2, marginRight: 1, background: "black" }}>
+              <Button
+                variant="contained"
+                sx={{ marginTop: 2, marginRight: 1, background: "black" }}
+              >
                 Accept
               </Button>
-              <Button variant="contained" sx={{ marginTop: 2, background: "black" }}>
+              <Button
+                variant="contained"
+                sx={{ marginTop: 2, background: "black" }}
+              >
                 Reject
               </Button>
             </Box>
@@ -121,29 +132,40 @@ const rows = [
 ];
 
 export default function NewRequest() {
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const [mylocation, setMyLocation] = useState(location.pathname);
+
   return (
-    <TableContainer component={Paper} sx={{ marginTop: 4 }}>
-      <Table aria-label="collapsible table">
-        <TableHead sx={{ background: "black" }}>
-          <TableRow>
-            <TableCell />
-            <TableCell sx={{ color: "white" }}>Name</TableCell>
-            <TableCell sx={{ color: "white" }} align="right">
-              Father Name
-            </TableCell>
-            <TableCell sx={{ color: "white" }} align="right">
-              CNIC No
-            </TableCell>
-            <TableCell align="right"></TableCell>
-            <TableCell align="right"></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <Wrapper open={open} setOpen={setOpen} mylocation= {mylocation}/>
+      <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
+        <TableContainer component={Paper} 
+        // sx={{ marginTop: 4 }}
+        >
+          <Table aria-label="collapsible table">
+            <TableHead sx={{ background: "black" }}>
+              <TableRow>
+                <TableCell />
+                <TableCell sx={{ color: "white" }}>Name</TableCell>
+                <TableCell sx={{ color: "white" }} align="right">
+                  Father Name
+                </TableCell>
+                <TableCell sx={{ color: "white" }} align="right">
+                  CNIC No
+                </TableCell>
+                <TableCell align="right"></TableCell>
+                <TableCell align="right"></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <Row key={row.name} row={row} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </>
   );
 }

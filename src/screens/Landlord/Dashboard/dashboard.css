@@ -75,3 +75,14 @@ background: rgba(255, 255, 255, 0.9);
 border-radius: 10px;
 
 }
+.main-container{
+    float: right;
+    margin: 5px 15px;
+}
+
+.ml-66{
+    margin-left: 70px;
+}
+.ml-245{
+    margin-left: 245px;
+}

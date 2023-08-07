@@ -215,3 +215,23 @@ dl li {
 .date {
   color: black;
 }
+.sidebar-closed{
+  width: calc(100vw - 102px);
+  float: left;
+  margin: 10px 20px;
+  margin-left: 80px;
+}
+.sidebar-open{
+  width: calc(100vw - 275px);
+  /* width: 85vw; */
+  float: left;
+  margin: 10px 20px;
+  margin-left: 257px;
+}
+.active-li{
+  background-color: black;
+  color: white;
+}
+.active-li .MuiListItemIcon-root{
+  color: white;
+}

@@ -1,12 +1,12 @@
-import React from 'react'
-import MainPage from "../../components/MainPage"
+import React from "react";
+import MainPage from "../../components/MainPage";
 
 const Dashboard = () => {
   return (
     <>
-<MainPage />
+      <MainPage />
     </>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

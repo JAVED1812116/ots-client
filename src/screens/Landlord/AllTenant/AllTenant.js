@@ -8,6 +8,8 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
+import { useState } from "react";
+
 
 const columns = [
   { id: "name", label: "Name", minWidth: 170 },
@@ -73,7 +75,12 @@ export default function AllTenant() {
     setPage(0);
   };
 
+  const [open, setOpen] = useState(false);
   return (
+
+    <>
+          <Wrapper open={open} setOpen={setOpen} />
+      <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
     <Paper sx={{ width: "100%", overflow: "hidden", marginTop: 4 }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
@@ -123,5 +130,8 @@ export default function AllTenant() {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
+      </div>
+    </>
+
   );
 }
