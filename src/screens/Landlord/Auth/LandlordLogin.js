@@ -11,6 +11,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import { EmailRounded } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 // import Button from '@mui/material/Button';
 const LandlordLogin = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -73,9 +74,9 @@ const LandlordLogin = () => {
               label="Password"
             />
           </FormControl>
-          <div className="forgetPassword">
+          {/* <div className="forgetPassword">
             <text>Forget Password</text>
-          </div>
+          </div> */}
         </div>
         {/* <div className="line1">
         <div className="loginemail">
@@ -97,11 +98,12 @@ const LandlordLogin = () => {
           <Button className="LoginButton" onClick={() => navigate("/landlord-dashboard")}>Login</Button>
         </div>
         <div className="Login flex">
-          <text className="newAccount">
+          <div className="newAccount">
             Don't Have Account?
             {/* <Button onClick={() => navigate("/landlord-signup")}>Signup</Button> */}
-            <Button variant="text" onClick={() => navigate("/landlord-signup")}>Signup</Button>
-          </text>
+            {/* <Button variant="text" onClick={() => navigate("/landlord-signup")}>Signup</Button> */}
+            <Link to={"/landlord-signup"} className="nodecoration signuplink">Signup</Link>
+          </div>
         </div>
       </div>
     </div>

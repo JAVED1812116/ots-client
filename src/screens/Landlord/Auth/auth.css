@@ -15,26 +15,27 @@
   margin: 0 auto;
   width: 100%;
 }
-.flex{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.flex-col{
-    flex-direction: column;
+.flex-col {
+  flex-direction: column;
 }
-.email_input, .password_input{
-    margin-bottom: 20px !important;
+.email_input,
+.password_input {
+  margin-bottom: 20px !important;
 }
-.name_input{
-    margin-bottom: 20px !important;
+.name_input {
+  margin-bottom: 20px !important;
 }
 .login-body {
   /* Rectangle 9 */
 
   /* position: absolute; */
   width: 30%;
-  height: 713px;
+  /* height: 713px; */
   padding: 15px;
   /* left: calc(50% - 488px/2 + 0.5px); */
   /* top: calc(50% - 713px/2); */
@@ -66,7 +67,7 @@
   /* left: calc(50% - 194px / 2 + 0.5px); */
   /* top: 165px; */
 
-  font-family: "Inter";
+  /* font-family: "Inter"; */
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -95,7 +96,7 @@
   /* left: calc(50% - 150px / 2 - 95px); */
   /* top: -26px; */
 
-  font-family: "Inter";
+  /* font-family: "Inter"; */
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -123,7 +124,7 @@
   /* left: calc(50% - 188px / 2 - 78px); */
   /* top: -26px; */
 
-  font-family: "Inter";
+  /* font-family: "Inter"; */
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -140,49 +141,51 @@
   /* left: calc(50% - 233px / 2 + 130px); */
   /* top: 208px; */
 
-  font-family: "Inter";
+  /* font-family: "Inter"; */
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
   color: #000000;
 }
-.LoginButton {
+/* .LoginButton {
   background: #007792;
   border-radius: 8px;
   margin-bottom: 10px;
-
-  /* Login */
-
-  /* position: absolute; */
   width: 131.88px;
   height: 50px;
-  /* left: calc(50% - 140.88px / 2 + 0.52px); */
-  /* top: 470px; */
-
   font-family: "Inter";
   font-style: normal;
   font-weight: 700;
   font-size: 22px;
   line-height: 27px;
-  /* identical to box height */
   color: #ffffff;
+} */
+.LoginButton {
+  background: black;
+  margin-bottom: 10px;
+  width: 131.88px;
+  height: 50px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  /* line-height: 27px; */
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.LoginButton:hover {
+  opacity: 0.6;
 }
 .newAccount {
-  /* Don’t Have Account? Signup */
-
-  /* position: absolute; */
   width: 333px;
   height: 31px;
-  /* left: calc(50% - 231px / 2); */
-  /* top: 610px; */
-
-  font-family: "Inter";
+  /* font-family: "Inter"; */
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
+  font-size: var(--font20);
   line-height: 29px;
-  color: #000000;
+  color: black;
 }
 /* SIGNUP PAGE*/
 .signup-body {
@@ -204,7 +207,7 @@
   /* left: calc(50% - 194px / 2 + 0.5px); */
   /* top: 165px; */
 
-  font-family: "Inter";
+  /* font-family: "Inter"; */
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -232,7 +235,7 @@
   /* left: calc(50% - 150px / 2 - 95px); */
   /* top: -26px; */
 
-  font-family: "Inter";
+  /* font-family: "Inter"; */
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -260,7 +263,7 @@
   /* left: calc(50% - 188px / 2 - 78px); */
   /* top: -26px; */
 
-  font-family: "Inter";
+  /* font-family: "Inter"; */
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -292,7 +295,7 @@
   /* left: calc(50% - 140.88px / 2 + 0.52px); */
   /* top: 555px; */
 
-  font-family: "Inter";
+  /* font-family: "Inter"; */
   font-style: normal;
   font-weight: 700;
   font-size: 22px;
@@ -309,7 +312,7 @@
   /* left: calc(50% - 231px / 2); */
   /* top: 655px; */
 
-  font-family: "Inter";
+  /* font-family: "Inter"; */
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -318,4 +321,26 @@
 }
 .signUpName {
   margin-top: -20px;
+}
+.nodecoration {
+  text-decoration: none;
+}
+
+.signuplink{
+  margin-left: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  color: black;
+}
+.signuplink:hover{
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 936px) {
+  .bg {
+    display: none;
+  }
+  .login-body {
+    width: 100%;
+  }
 }
