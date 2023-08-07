@@ -7,6 +7,7 @@ import LandlordLogin from "../screens/Landlord/Auth/LandlordLogin";
 import LandLordDashboard from "../screens/Landlord/Dashboard/Dashboard";
 import NewRequest from "../screens/Landlord/NewRequest/NewRequest";
 import RequestUserDetail from "../screens/Landlord/RequestUserDetail/RequestUserDetail";
+import LandlordFunctionality from "../screens/Landlord/LandlordFunction/LandlordFunctionality";
 export default function AllRoutes() {
   return (
     <Router>
@@ -17,6 +18,7 @@ export default function AllRoutes() {
         <Route path="/landlord-dashboard" element={<LandLordDashboard />} />
         <Route path="/new-request" element={<NewRequest />} />
         <Route path="/user-detail" element={<RequestUserDetail />} />
+        <Route path="/landlord-Functionality" element={<LandlordFunctionality />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </Router>
