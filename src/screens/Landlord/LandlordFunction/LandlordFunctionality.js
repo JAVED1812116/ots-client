@@ -11,14 +11,21 @@ import previousBill from "../../../assets/previousBill.jpg"
 import unRegister from "../../../assets/unRigister.png"
 import Wrapper from '../../../components/Wrapper';
 import { useState } from 'react';
+import { Grid } from '@mui/material';
 export default function LandlordFunctionality() {
   const [open, setOpen] = useState(false);
   return (
     <>
     <Wrapper open={open} setOpen={setOpen} />
-      <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
+      <div className={`${open ? "sidebar-open" : "sidebar-closed"} `} style={{flex:1}}>
 
-      <CardActions>
+     <div>
+        <Grid container
+            direction="row"
+            justifyContent="space-evenly"
+            alignItems="center"
+            mt={10}
+      >
       <Button size="small">
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -50,7 +57,15 @@ export default function LandlordFunctionality() {
       </CardContent>
     </Card>
     </Button>
-
+    </Grid>
+</div>
+<div >
+     <Grid container
+            direction="row"
+            justifyContent="space-evenly"
+            alignItems="center"
+           mt={10}
+      >
       <Button size="small">
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -82,7 +97,8 @@ export default function LandlordFunctionality() {
       </CardContent>
     </Card>
     </Button>
-      </CardActions>
+    </Grid>
+     </div>
       
       </div>
       </>
