@@ -12,8 +12,10 @@ import unRegister from "../../../assets/unRigister.png"
 import Wrapper from '../../../components/Wrapper';
 import { useState } from 'react';
 import { Grid } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 export default function LandlordFunctionality() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   return (
     <>
     <Wrapper open={open} setOpen={setOpen} />
@@ -26,7 +28,9 @@ export default function LandlordFunctionality() {
             alignItems="center"
             mt={10}
       >
-      <Button size="small">
+      <Button size="small"  onClick={() => {
+                navigate("/agreement");
+              }}>
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         component="img"
@@ -42,7 +46,9 @@ export default function LandlordFunctionality() {
     </Card>
     </Button>
     
-      <Button size="small">
+      <Button size="small" onClick={() => {
+                navigate("/upload-Bill");
+              }}>
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         component="img"
