@@ -2,8 +2,14 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Wrapper from '../../../components/Wrapper';
+import { useState } from 'react';
 export default function RentSetting() {
+  const [open, setOpen] = useState(false);
   return (
+    <>
+    <Wrapper open={open} setOpen={setOpen} />
+      <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
     <Box
       component="form"
       sx={{
@@ -58,6 +64,8 @@ export default function RentSetting() {
         Save
       </Button>
     </Box>
+    </div>
+    </>
     
   );
 }

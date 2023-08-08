@@ -10,6 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Wrapper from "../../../components/Wrapper";
 const columns = [
   { id: "name", label: "Name", minWidth: 170 },
   { id: "fatherName", label: "Father Name", minWidth: 100 },
@@ -62,7 +63,7 @@ export default function AllTenant() {
       "Khalil",
       1324171354,
       3287263,
-      <Button variant="contained" sx={{ background: "black" }}  onClick={() => navigate("/landlord-Functionality")}>
+      <Button variant="contained" sx={{ background: "black" }}  onClick={() => navigate("/landlord-functionality")}>
         View
       </Button>
     ),

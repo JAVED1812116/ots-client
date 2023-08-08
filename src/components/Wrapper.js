@@ -231,6 +231,10 @@ export default function Wrapper({ open, setOpen, mylocation }) {
             <ListItem
               disablePadding
               sx={{ display: "block" }}
+              className={`${mylocation === "/all-tenant" ? "active-li" : ""}`}
+              onClick={() => {
+                navigate("/all-tenant");
+              }}
             >
               <ListItemButton
                 sx={{
@@ -255,6 +259,10 @@ export default function Wrapper({ open, setOpen, mylocation }) {
             <ListItem
               disablePadding
               sx={{ display: "block" }}
+              className={`${mylocation === "/rent-setting" ? "active-li" : ""}`}
+              onClick={() => {
+                navigate("/rent-setting");
+              }}
             >
               <ListItemButton
                 sx={{
@@ -279,6 +287,10 @@ export default function Wrapper({ open, setOpen, mylocation }) {
             <ListItem
               disablePadding
               sx={{ display: "block" }}
+              className={`${mylocation === "/bank-detail" ? "active-li" : ""}`}
+              onClick={() => {
+                navigate("/bank-detail");
+              }}
             >
               <ListItemButton
                 sx={{

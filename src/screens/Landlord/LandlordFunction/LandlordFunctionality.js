@@ -9,8 +9,15 @@ import agreement from "../../../assets/agreement.png"
 import uploadBill from "../../../assets/UploadBill.jpg"
 import previousBill from "../../../assets/previousBill.jpg"
 import unRegister from "../../../assets/unRigister.png"
+import Wrapper from '../../../components/Wrapper';
+import { useState } from 'react';
 export default function LandlordFunctionality() {
+  const [open, setOpen] = useState(false);
   return (
+    <>
+    <Wrapper open={open} setOpen={setOpen} />
+      <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
+
       <CardActions>
       <Button size="small">
     <Card sx={{ maxWidth: 345 }}>
@@ -76,5 +83,9 @@ export default function LandlordFunctionality() {
     </Card>
     </Button>
       </CardActions>
+      
+      </div>
+      </>
+      
   );
 }
