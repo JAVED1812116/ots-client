@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Wrapper from '../../../components/Wrapper';
 import { useState } from 'react';
+import { Typography } from '@mui/material';
 export default function RentSetting() {
   const [open, setOpen] = useState(false);
   return (
@@ -17,8 +18,12 @@ export default function RentSetting() {
       }}
       noValidate
       autoComplete="off"
+      ml={80}
+      mt={20}
     >
-      
+        <Typography variant="h2" mb={5} gutterBottom>
+          Rent Setting
+        </Typography>
       <div>
         <TextField
           id="standard-multiline-flexible"
