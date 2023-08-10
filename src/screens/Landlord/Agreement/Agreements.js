@@ -2,7 +2,7 @@ import React from "react";
 import Wrapper from "../../../components/Wrapper";
 import { useState } from "react";
 import Typography from "@mui/material/Typography";
-import { Box } from "@mui/material";
+import {Container } from "@mui/material";
 
 export default function Agreements() {
   const [open, setOpen] = useState(false);
@@ -10,7 +10,8 @@ export default function Agreements() {
     <>
       <Wrapper open={open} setOpen={setOpen} />
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
-      <Box width={700} ml={70}>
+
+      <Container maxWidth="sm">
         <Typography variant="h2" align="center" gutterBottom>
           AGREEMENT OF RENT
         </Typography>
@@ -73,7 +74,7 @@ export default function Agreements() {
           continue this agreement, rent will be increased by 15%, and make a new
           agreement.
         </Typography>
-        </Box>
+        </Container>
       </div>
     </>
   );

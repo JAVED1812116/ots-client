@@ -1,26 +1,17 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Wrapper from '../../../components/Wrapper';
 import { useState } from 'react';
-import { Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 export default function RentSetting() {
   const [open, setOpen] = useState(false);
   return (
     <>
     <Wrapper open={open} setOpen={setOpen} />
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
-    <Box
-      component="form"
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
-      }}
-      noValidate
-      autoComplete="off"
-      ml={80}
-      mt={20}
-    >
+      <Container maxWidth="sm">
+
         <Typography variant="h2" mb={5} gutterBottom>
           Rent Setting
         </Typography>
@@ -68,7 +59,7 @@ export default function RentSetting() {
       <Button variant="contained" color="success">
         Save
       </Button>
-    </Box>
+    </Container>
     </div>
     </>
     
