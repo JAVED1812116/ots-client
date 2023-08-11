@@ -21,6 +21,7 @@ const MainPage = () => {
         >
           <Button 
           id="tenant"
+          onClick={() => navigate("/tenant-login")}
           >Tenant</Button>
         </div>
         <div 

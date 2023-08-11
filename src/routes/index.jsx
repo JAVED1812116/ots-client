@@ -13,6 +13,8 @@ import BankDetail from "../screens/Landlord/BankDetail/BankDetail"
 import LandlordFunctionality from "../screens/Landlord/LandlordFunction/landlordFunctionality";
 import Agreement from "../screens/Landlord/Agreement/Agreements";
 import UploadBill from "../screens/Landlord/UploadBills/UploadBill";
+import TenantLogin from "../screens/Tenant/Auth/TenantLogin";
+import TenantSignup from "../screens/Tenant/Auth/TenantSignUp";
 export default function AllRoutes() {
   return (
     <Router>
@@ -30,6 +32,8 @@ export default function AllRoutes() {
         <Route path="/agreement" element={<Agreement />} />
         <Route path="/upload-Bill" element={<UploadBill />} />
         
+        <Route path="/tenant-login" element={<TenantLogin />} />
+        <Route path="/tenant-signup" element={<TenantSignup />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </Router>
