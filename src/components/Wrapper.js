@@ -21,6 +21,7 @@ import { IoMdAdd, IoIosPeople } from "react-icons/io";
 import { MdAccountBalance } from "react-icons/md";
 import { GoGitPullRequest } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
+import { Logout } from "@mui/icons-material";
 
 // import { FaPeopleGroup } from 'react-icons/fa';
 const drawerWidth = 240;
@@ -94,9 +95,9 @@ export default function Wrapper({ open, setOpen, mylocation }) {
   const theme = useTheme();
   const navigate = useNavigate();
 
-//   const handleDrawerOpen = () => {
-//     setOpen(true);
-//   };
+  //   const handleDrawerOpen = () => {
+  //     setOpen(true);
+  //   };
 
   const handleDrawerClose = () => {
     setOpen(false);
@@ -316,6 +317,33 @@ export default function Wrapper({ open, setOpen, mylocation }) {
                   <MdAccountBalance size={20} />
                 </ListItemIcon>
                 <ListItemText primary={open ? "ACCOUNT DETAIL" : null} />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => {
+                navigate("/landlord-login");
+              }}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Logout size={20} />
+                </ListItemIcon>
+                <ListItemText primary={open ? "LOGOUT" : null} />
               </ListItemButton>
             </ListItem>
           </List>

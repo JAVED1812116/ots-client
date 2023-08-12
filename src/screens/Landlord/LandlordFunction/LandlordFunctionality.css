@@ -1,9 +1,11 @@
 .view_button{
   background: black !important;
   color: white !important;
-  padding: 4px 25px;
+  padding: 4px 25px !important;
 }
-
+.view_button:hover {
+  opacity: 0.6;
+}
 .justifyend{
   justify-content: end;
 }
