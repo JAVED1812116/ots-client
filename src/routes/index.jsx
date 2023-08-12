@@ -15,6 +15,7 @@ import UploadBill from "../screens/Landlord/UploadBills/UploadBill";
 import TenantLogin from "../screens/Tenant/Auth/TenantLogin";
 import TenantSignup from "../screens/Tenant/Auth/TenantSignUp";
 import LandlordFunctionality from "../screens/Landlord/LandlordFunction/LandlordFunctionality";
+import AddNew from "../screens/Landlord/AddNewTenant/AddNew";
 export default function AllRoutes() {
   return (
     <Router>
@@ -34,6 +35,7 @@ export default function AllRoutes() {
         
         <Route path="/tenant-login" element={<TenantLogin />} />
         <Route path="/tenant-signup" element={<TenantSignup />} />
+        <Route path="/addNew-Tenant" element={<AddNew />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </Router>

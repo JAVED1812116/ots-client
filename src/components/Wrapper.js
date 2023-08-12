@@ -207,7 +207,14 @@ export default function Wrapper({ open, setOpen, mylocation }) {
                 <ListItemText primary={open ? "New Request" : null} />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              className={`${mylocation === "/addNew-Tenant" ? "active-li" : ""}`}
+              onClick={() => {
+                navigate("/addNew-Tenant");
+              }}
+            >
               <ListItemButton
                 sx={{
                   minHeight: 48,
