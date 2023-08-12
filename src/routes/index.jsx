@@ -10,11 +10,11 @@ import RequestUserDetail from "../screens/Landlord/RequestUserDetail/RequestUser
 import AllTenant from "../screens/Landlord/AllTenant/AllTenant";
 import RentSetting from "../screens/Landlord/RentSetting/RentSetting";
 import BankDetail from "../screens/Landlord/BankDetail/BankDetail"
-import LandlordFunctionality from "../screens/Landlord/LandlordFunction/landlordFunctionality";
 import Agreement from "../screens/Landlord/Agreement/Agreements";
 import UploadBill from "../screens/Landlord/UploadBills/UploadBill";
 import TenantLogin from "../screens/Tenant/Auth/TenantLogin";
 import TenantSignup from "../screens/Tenant/Auth/TenantSignUp";
+import LandlordFunctionality from "../screens/Landlord/LandlordFunction/LandlordFunctionality";
 export default function AllRoutes() {
   return (
     <Router>

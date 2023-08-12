@@ -247,3 +247,10 @@ dl li {
 .active-li .MuiListItemIcon-root{
   color: white;
 }
+.mainHeading{
+  border-bottom: 1px solid;
+  margin-bottom: 10px;
+}
+.mainHeading > h1{
+  margin: 5px 5px 5px 0;
+}

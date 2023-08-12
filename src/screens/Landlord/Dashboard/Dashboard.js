@@ -10,8 +10,11 @@ export default function Dashboard() {
 
   return (
     <>
-      <Wrapper open={open} setOpen={setOpen} mylocation= {mylocation}/>
+      <Wrapper open={open} setOpen={setOpen} mylocation={mylocation} />
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
+        <div className="mainHeading">
+          <h1>Dashboard</h1>
+        </div>
         This is dashboard
       </div>
     </>

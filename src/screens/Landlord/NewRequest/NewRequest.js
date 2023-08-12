@@ -140,6 +140,9 @@ export default function NewRequest() {
     <>
       <Wrapper open={open} setOpen={setOpen} mylocation= {mylocation}/>
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
+      <div className="mainHeading">
+          <h1>New Requests</h1>
+        </div>
         <TableContainer component={Paper} 
         // sx={{ marginTop: 4 }}
         >

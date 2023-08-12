@@ -4,11 +4,15 @@ import Button from '@mui/material/Button';
 import Wrapper from '../../../components/Wrapper';
 import { useState } from 'react';
 import { Container, Typography } from '@mui/material';
+import { useLocation } from "react-router";
 export default function RentSetting() {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const [mylocation, setMyLocation] = useState(location.pathname);
+
   return (
     <>
-    <Wrapper open={open} setOpen={setOpen} />
+    <Wrapper open={open} setOpen={setOpen} mylocation= {mylocation}/>
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
       <Container maxWidth="sm">
 
