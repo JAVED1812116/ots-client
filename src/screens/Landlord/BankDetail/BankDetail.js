@@ -14,10 +14,11 @@ export default function BankDetail() {
     <>
     <Wrapper open={open} setOpen={setOpen} mylocation= {mylocation}/>
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
+      <div className="mainHeading">
+          <h1>Account Detail</h1>
+        </div>
       <Container maxWidth="sm">
-      <Typography variant="h2" mb={5} gutterBottom>
-          Account Detail
-        </Typography>
+
       <div>
         <TextField
           id="standard-multiline-flexible"
