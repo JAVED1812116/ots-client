@@ -6,7 +6,9 @@ import Wrapper from '../../../components/Wrapper';
 import { useState } from 'react';
 import { Container, Typography } from '@mui/material';
 import { useLocation } from "react-router";
+import title from '../../../components/title';
 export default function BankDetail() {
+  title("Account Detail")
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);

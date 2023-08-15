@@ -3,8 +3,10 @@ import Wrapper from "../../../components/Wrapper";
 import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import {Container } from "@mui/material";
+import title from "../../../components/title";
 
 export default function Agreements() {
+  title("Agreement")
   const [open, setOpen] = useState(false);
   return (
     <>

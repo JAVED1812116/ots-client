@@ -16,6 +16,7 @@ import Button from "@mui/material/Button";
 import Wrapper from "../../../components/Wrapper";
 import { useState } from "react";
 import { useLocation } from "react-router";
+import title from "../../../components/title";
 
 
 function createData(name, calories, fat, carbs, protein, price) {
@@ -130,7 +131,8 @@ const rows = [
   createData("TRASH CHARGES", "2019", "3-3-2019"),
 ];
 
-export default function NewRequest() {
+export default function UploadBill() {
+  title("Upload Bill")
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);

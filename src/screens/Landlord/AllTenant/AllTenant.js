@@ -12,6 +12,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Wrapper from "../../../components/Wrapper";
 import { useLocation } from "react-router";
+import title from "../../../components/title";
 const columns = [
   { id: "name", label: "Name", minWidth: 170 },
   { id: "fatherName", label: "Father Name", minWidth: 100 },
@@ -43,6 +44,7 @@ function createData(name, fatherName, fromDate, cnic, action) {
 }
 
 export default function AllTenant() {
+  title("All Tenant")
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const navigate = useNavigate();

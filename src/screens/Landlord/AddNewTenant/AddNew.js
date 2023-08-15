@@ -6,10 +6,11 @@ import { Button, FormControl, Input, InputAdornment, InputLabel } from "@mui/mat
 
 import MarkunreadIcon from '@mui/icons-material/Markunread';
 import SendIcon from '@mui/icons-material/Send';
-
+import title from "../../../components/title"
 
 
 export default function AddNew() {
+title("Add New Tenant")
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);

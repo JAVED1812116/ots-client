@@ -10,11 +10,12 @@ import {
   MenuItem,
   InputLabel,
 } from "@mui/material";
-
+import title from "../../../components/title";
 function getSteps() {
   return ["Basic Information", "Contact Information", "Personal Information"];
 }
 function stepContent(step) {
+title("Registration")
   switch (step) {
     case 0:
 

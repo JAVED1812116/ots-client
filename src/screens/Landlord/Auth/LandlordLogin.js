@@ -12,8 +12,10 @@ import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import { EmailRounded } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import title from "../../../components/title";
 // import Button from '@mui/material/Button';
 const LandlordLogin = () => {
+  title("Login")
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
