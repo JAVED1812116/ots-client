@@ -95,7 +95,7 @@ const TenantLogin = () => {
       </div> */}
 
         <div className="flex Login">
-          <Button className="LoginButton" onClick={() => navigate("/landlord-dashboard")}>Login</Button>
+          <Button className="LoginButton" onClick={() => navigate("/tenant-registration")}>Login</Button>
         </div>
         <div className="Login flex">
           <div className="newAccount">
