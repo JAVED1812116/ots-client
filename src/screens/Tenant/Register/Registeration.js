@@ -9,6 +9,8 @@ import {
   Select,
   MenuItem,
   InputLabel,
+  Box,
+  Container,
 } from "@mui/material";
 import title from "../../../components/title";
 function getSteps() {
@@ -214,6 +216,8 @@ export default function Registeration() {
           Thankue
         </Typography>
       ) : (
+        <Container maxWidth="sm" >
+          <Box mt={20}>
         <>
           <Stepper activeStep={activeStep}>
             {step.map((step, index) => {
@@ -225,18 +229,23 @@ export default function Registeration() {
             })}
           </Stepper>
           <form>{stepContent(activeStep)}</form>
+<Box ml={48}>
           <Button
             variant="contained"
             color="primary"
             disabled={activeStep === 0}
             onClick={handleBack}
+            style={{margin:4}}
           >
             Back
           </Button>
           <Button variant="contained" color="primary" onClick={handleNext}>
             {activeStep === 2 ? "Finish" : "Next"}
           </Button>
+          </Box>
         </>
+        </Box>
+        </Container>
       )}
     </div>
   );
