@@ -11,7 +11,6 @@ import Typography from "@mui/material/Typography";
 // import unRegister from "../../../assets/unRigister.png";
 import Wrapper from "../../../components/Wrapper";
 import { useState } from "react";
-import { Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "./LandlordFunctionality.css";
 

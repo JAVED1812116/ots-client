@@ -52,6 +52,7 @@ color: #000000;
     justify-content: center;
     flex-direction: column !important;
     align-items: center;
+    margin-top: 20px;
 }
 .addNewButton {
     background: black !important;
