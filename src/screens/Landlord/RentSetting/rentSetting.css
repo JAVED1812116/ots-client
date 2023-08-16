@@ -47,13 +47,21 @@ color: #000000;
     margin-top: 18;
     margin-left: -446;
 }
-.add-new-container{
-    display: flex !important;
-    justify-content: center;
-    flex-direction: column !important;
-    align-items: center;
+.rent-setting-container{
+  display: flex !important;
+  flex-direction: column;
+  align-items: center !important;
+  justify-content: center;
 }
-.addNewButton {
+.rent-inputs{
+  display: flex;
+  flex-wrap: wrap;
+}
+.rent-inputs > div{
+  margin-top: 10px;
+  width: 100%;
+}
+.rentButton {
     background: black !important;
     margin-bottom: 10px;
     width: 100px;
@@ -65,12 +73,12 @@ color: #000000;
     color: #ffffff;
     cursor: pointer;
     transition: all 0.3s;
-    margin-top: 10px !important;
+    margin-top: 15px !important;
   }
-  .addNewButton:hover {
+  .rentButton:hover {
     opacity: 0.6;
     background-color: black;
   }
-  .addNewButton > span > svg{
+  .rentButton > span > svg{
     font-size: 16px !important;
   }

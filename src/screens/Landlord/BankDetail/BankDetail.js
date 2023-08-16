@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Container, Typography } from '@mui/material';
 import { useLocation } from "react-router";
 import title from '../../../components/title';
+import "./bankDetails.css"
 export default function BankDetail() {
   title("Account Detail")
   const [open, setOpen] = useState(false);
@@ -19,9 +20,9 @@ export default function BankDetail() {
       <div className="mainHeading">
           <h1>Account Detail</h1>
         </div>
-      <Container maxWidth="sm">
+      <Container maxWidth="sm" className="bank-details-container">
 
-      <div>
+      <div className="bank-inputs">
         <TextField
           id="standard-multiline-flexible"
           label="Bank Name"
@@ -44,9 +45,7 @@ export default function BankDetail() {
           defaultValue="Default Value"
           variant="standard"
         /> */}
-      </div>
-      
-      <div>
+
         <TextField
           id="standard-multiline-flexible"
           label="Account Number"
@@ -62,7 +61,7 @@ export default function BankDetail() {
           variant="standard"
         />
       </div>
-      <Button variant="contained" color="success">
+      <Button className="bankButton" variant="contained" >
         Save
       </Button>
     </Container>

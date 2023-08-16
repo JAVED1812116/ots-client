@@ -6,6 +6,9 @@ import { useState } from "react";
 import { Container, Typography } from "@mui/material";
 import { useLocation } from "react-router";
 import title from "../../../components/title";
+import "./rentSetting.css"
+
+
 export default function RentSetting() {
   title("Rent Setting")
   const [open, setOpen] = useState(false);
@@ -19,8 +22,8 @@ export default function RentSetting() {
         <div className="mainHeading">
           <h1>Rent Setting</h1>
         </div>
-        <Container maxWidth="sm">
-          <div>
+        <Container maxWidth="sm" className="rent-setting-container">
+          <div className="rent-inputs">
             <TextField
               id="standard-multiline-flexible"
               label="Monthly Rent"
@@ -43,9 +46,7 @@ export default function RentSetting() {
           defaultValue="Default Value"
           variant="standard"
         /> */}
-          </div>
 
-          <div>
             <TextField
               id="standard-multiline-flexible"
               label="Maintenance Charges"
@@ -61,7 +62,7 @@ export default function RentSetting() {
               variant="standard"
             />
           </div>
-          <Button variant="contained" color="success">
+          <Button className="rentButton" variant="contained" >
             Save
           </Button>
         </Container>

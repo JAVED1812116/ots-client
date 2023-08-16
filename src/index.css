@@ -254,3 +254,6 @@ dl li {
 .mainHeading > h1{
   margin: 5px 5px 5px 0;
 }
+.w100{
+  width: 100%;
+}

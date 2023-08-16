@@ -1,0 +1,77 @@
+.nav {
+  /* Rectangle 11 */
+
+  position: absolute;
+  width: 1920px;
+  height: 71px;
+  left: 0;
+  top: 0px;
+
+  background: #d9d9d9;
+}
+.heading {
+  /* Line 4 */
+
+  position: absolute;
+  width: 1012px;
+  height: 0px;
+  left: calc(50% - 1012px / 2 + 0.5px);
+  top: 220px;
+
+  border: 1px solid #000000;
+}
+.name {
+  /* New Requests */
+
+  position: absolute;
+  width: 335px;
+  height: 34px;
+  left: 348px;
+  top: -100px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 34px;
+  /* identical to box height */
+
+  color: #000000;
+}
+.table {
+  width: 20;
+  margin-top: 18;
+  margin-left: -446;
+}
+.bank-details-container{
+    display: flex !important;
+    flex-direction: column;
+    align-items: center !important;
+    justify-content: center;
+  }
+  .bank-inputs{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .bank-inputs > div{
+    margin-top: 10px;
+    width: 100%;
+  }
+  .bankButton {
+      background: black !important;
+      margin-bottom: 10px;
+      width: 100px;
+      height: 40px;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      /* line-height: 27px; */
+      color: #ffffff;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 15px !important;
+    }
+    .bankButton:hover {
+      opacity: 0.6;
+      background-color: black;
+    }
