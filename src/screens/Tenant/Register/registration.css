@@ -1,0 +1,16 @@
+.nextbtn {
+    background: black;
+    width: 71px;
+    height: 36px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .nextbtn:hover {
+    opacity: 0.6;
+    background: black;
+
+  }
