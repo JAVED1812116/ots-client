@@ -1,0 +1,1 @@
+export const BASE_URL="172.168.2.18"

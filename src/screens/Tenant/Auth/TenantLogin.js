@@ -12,12 +12,20 @@ import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import { EmailRounded } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOrders } from "../../../Redux/Reducer/DummyData";
 // import Button from '@mui/material/Button';
 const TenantLogin = () => {
+  const test = useSelector((state) => state.orders);
+  const dispatch = useDispatch();
+  // fetchOrders2
+  console.log(test, "test");
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
+  const login = () => {
+    dispatch(fetchOrders("rahul"));
+  };
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -93,16 +101,25 @@ const TenantLogin = () => {
           placeholder="Enter Your Password"
         />
       </div> */}
-
+        {/* onClick={() => navigate("/tenant-registration")} */}
         <div className="flex Login">
-          <Button className="LoginButton" onClick={() => navigate("/tenant-registration")}>Login</Button>
+          <Button
+            className="LoginButton"
+            onClick={() => {
+              login();
+            }}
+          >
+            Login
+          </Button>
         </div>
         <div className="Login flex">
           <div className="newAccount">
             Don't Have Account?
             {/* <Button onClick={() => navigate("/landlord-signup")}>Signup</Button> */}
             {/* <Button variant="text" onClick={() => navigate("/landlord-signup")}>Signup</Button> */}
-            <Link to={"/tenant-signup"} className="nodecoration signuplink">Signup</Link>
+            <Link to={"/tenant-signup"} className="nodecoration signuplink">
+              Signup
+            </Link>
           </div>
         </div>
       </div>
