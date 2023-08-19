@@ -105,9 +105,10 @@ const TenantLogin = () => {
         <div className="flex Login">
           <Button
             className="LoginButton"
-            onClick={() => {
-              login();
-            }}
+            // onClick={() => {
+            //   login();
+            // }}
+            onClick={() => navigate("/tenant-registration")} 
           >
             Login
           </Button>

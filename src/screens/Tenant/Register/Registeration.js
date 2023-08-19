@@ -15,10 +15,11 @@ import {
 } from "@mui/material";
 import title from "../../../components/title";
 import "./registration.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Registeration() {
   const [age, setAge] = React.useState("");
-
+  const navigate = useNavigate();
   const handleChange = (event) => {
     setAge(event.target.value);
   };
@@ -264,7 +265,8 @@ export default function Registeration() {
                 <Button
                   variant="contained"
                   // color="primary"
-                  onClick={handleNext}
+                  // onClick={handleNext}
+                  onClick={() => navigate("/tenant-dashboard")}
                   className="nextbtn"
                 >
                   {activeStep === 2 ? "Finish" : "Next"}

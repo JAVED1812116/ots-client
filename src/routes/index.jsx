@@ -17,6 +17,8 @@ import TenantSignup from "../screens/Tenant/Auth/TenantSignUp";
 import LandlordFunctionality from "../screens/Landlord/LandlordFunction/LandlordFunctionality";
 import AddNew from "../screens/Landlord/AddNewTenant/AddNew";
 import Registeration from "../screens/Tenant/Register/Registeration";
+import TenantFunctionality from "../screens/Tenant/TenantFunction/TenantFunctionality";
+import PreviousBill from "../screens/Tenant/PreviousBill/PreviousBill";
 export default function AllRoutes() {
   return (
     <Router>
@@ -38,6 +40,8 @@ export default function AllRoutes() {
         <Route path="/tenant-signup" element={<TenantSignup />} />
         <Route path="/addNew-Tenant" element={<AddNew />} />
         <Route path="/tenant-registration" element={<Registeration />} />
+        <Route path="/tenant-dashboard" element={<TenantFunctionality />} />
+        <Route path="//previous-TenantBill" element={<PreviousBill />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </Router>
