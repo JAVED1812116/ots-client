@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import DummyData from "./Reducer/DummyData";
+import Signup from "./Reducer/Signup";
 
 
 
 export const store = configureStore({
   reducer: {
-    "dummyData": DummyData,
+    "signup": Signup,
   },
 })

@@ -13,7 +13,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { EmailRounded } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchOrders } from "../../../Redux/Reducer/DummyData";
+// import { fetchOrders } from "../../../Redux/Reducer/Signup";
 // import Button from '@mui/material/Button';
 const TenantLogin = () => {
   const test = useSelector((state) => state.orders);
@@ -23,9 +23,9 @@ const TenantLogin = () => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const login = () => {
-    dispatch(fetchOrders("rahul"));
-  };
+  // const login = () => {
+  //   dispatch(fetchOrders("rahul"));
+  // };
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };

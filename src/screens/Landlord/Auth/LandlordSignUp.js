@@ -14,7 +14,7 @@ import { EmailRounded } from "@mui/icons-material";
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import { Link } from "react-router-dom";
 import title from "../../../components/title";
-import { fetchOrders } from "../../../Redux/Reducer/DummyData";
+import { UserAdd } from "../../../Redux/Reducer/Signup";
 import { useDispatch, useSelector } from "react-redux";
 // import Button from '@mui/material/Button';
 const LandlordSignup = () => {
@@ -31,7 +31,7 @@ const LandlordSignup = () => {
   };
   const navigate = useNavigate();
   const login = () => {
-    dispatch(fetchOrders({name,email,password}));
+    dispatch(UserAdd({name,email,password}));
   };
   return (
     <div className="landlord_login">

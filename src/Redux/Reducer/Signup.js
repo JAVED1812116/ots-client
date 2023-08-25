@@ -3,7 +3,7 @@ import axios from "axios";
 import { BASE_URL } from "../../config/config";
 
 
-export const fetchOrders = createAsyncThunk("dummyData/fetchOrders", async ({name,email,password}) => {
+export const UserAdd = createAsyncThunk("dummyData/UserAdd", async ({name,email,password}) => {
     let response = await axios.post(`${BASE_URL}/create-landlord`,  {
         name,
         email,
@@ -14,24 +14,24 @@ export const fetchOrders = createAsyncThunk("dummyData/fetchOrders", async ({nam
 
 
 
-const DummyData = createSlice({
-    name: "dummyData",
+const Signup = createSlice({
+    name: "signup",
     initialState: {
         loading: false,
-        dummyData: [],
+        signup: [],
         error: ""
     },
     extraReducers: {
-        [fetchOrders.fulfilled]: (state, action) => {
-            state.dummyData = action.payload;
+        [UserAdd.fulfilled]: (state, action) => {
+            state.signup = action.payload;
             state.loading = false;
         },
-        [fetchOrders.pending]: (state) => {
+        [UserAdd.pending]: (state) => {
             state.loading = true;
         },
-        [fetchOrders.rejected]: (state, action) => {
+        [UserAdd.rejected]: (state, action) => {
             state.error = action.error.message;
         },
     }
 });
-export default DummyData.reducer;
+export default Signup.reducer;
