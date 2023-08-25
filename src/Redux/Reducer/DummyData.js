@@ -3,11 +3,13 @@ import axios from "axios";
 import { BASE_URL } from "../../config/config";
 
 
-export const fetchOrders = createAsyncThunk("dummyData/fetchOrders", async (id) => {
-    console.log(id,"id")
-    let response = await axios.get(`https://jsonplaceholder.typicode.com/todos/1`);
-    let data = await response.data.data;
-    return data;
+export const fetchOrders = createAsyncThunk("dummyData/fetchOrders", async ({name,email,password}) => {
+    let response = await axios.post(`${BASE_URL}/create-landlord`,  {
+        name,
+        email,
+        password
+    });
+    return response?.message;
 });
 
 

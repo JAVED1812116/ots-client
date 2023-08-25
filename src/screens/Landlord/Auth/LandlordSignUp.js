@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./auth.css";
 import { Button } from "@mui/base";
 import { useNavigate } from "react-router-dom";
@@ -14,17 +14,25 @@ import { EmailRounded } from "@mui/icons-material";
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import { Link } from "react-router-dom";
 import title from "../../../components/title";
+import { fetchOrders } from "../../../Redux/Reducer/DummyData";
+import { useDispatch, useSelector } from "react-redux";
 // import Button from '@mui/material/Button';
 const LandlordSignup = () => {
   title("SignUp")
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const [name,setName]=useState(null);
+  const [email,setEmail]=useState(null);
+  const [password,setPassword]=useState(null);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
   const navigate = useNavigate();
+  const login = () => {
+    dispatch(fetchOrders({name,email,password}));
+  };
   return (
     <div className="landlord_login">
     
@@ -53,6 +61,7 @@ const LandlordSignup = () => {
                 </InputAdornment>
               }
               label="Name"
+              onChange={(e)=>setName(e.target.value)}
             />
           </FormControl>
 
@@ -72,6 +81,7 @@ const LandlordSignup = () => {
                 </InputAdornment>
               }
               label="Email"
+              onChange={(e)=>{setEmail(e.target.value)}}
             />
           </FormControl>
           <FormControl variant="outlined" fullWidth className="password_input">
@@ -94,6 +104,7 @@ const LandlordSignup = () => {
                 </InputAdornment>
               }
               label="Password"
+              onChange={(e)=>{setPassword(e.target.value)}}
             />
           </FormControl>
           {/* <div className="forgetPassword">
@@ -115,9 +126,11 @@ const LandlordSignup = () => {
           placeholder="Enter Your Password"
         />
       </div> */}
-
+{/* onClick={() => navigate("/landlord-dashboard")} */}
         <div className="flex Login">
-          <Button className="LoginButton" onClick={() => navigate("/landlord-dashboard")}>Signup</Button>
+          <Button className="LoginButton"       onClick={() => {
+               login();
+             }} >Signup</Button>
         </div>
         <div className="Login flex">
           <text className="newAccount">

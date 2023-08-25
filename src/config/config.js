@@ -1,1 +1,1 @@
-export const BASE_URL="172.168.2.18"
+export const BASE_URL="http://localhost:8001"
