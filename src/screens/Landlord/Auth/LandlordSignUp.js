@@ -30,7 +30,7 @@ const LandlordSignup = () => {
     event.preventDefault();
   };
   const navigate = useNavigate();
-  const login = () => {
+  const Signup = () => {
     dispatch(UserAdd({name,email,password}));
   };
   return (
@@ -129,7 +129,7 @@ const LandlordSignup = () => {
 {/* onClick={() => navigate("/landlord-dashboard")} */}
         <div className="flex Login">
           <Button className="LoginButton"       onClick={() => {
-               login();
+               Signup();
              }} >Signup</Button>
         </div>
         <div className="Login flex">

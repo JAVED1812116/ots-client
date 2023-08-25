@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./auth.css";
 import { Button } from "@mui/base";
 import { useNavigate } from "react-router-dom";
@@ -13,15 +13,22 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { EmailRounded } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import title from "../../../components/title";
+import { useDispatch } from "react-redux";
+import { UserLogin } from "../../../Redux/Reducer/Login";
 // import Button from '@mui/material/Button';
 const LandlordLogin = () => {
   title("Login")
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
-
+const [email,setEmail]=useState(null);
+const [password,setPassword]=useState(null);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
+  };
+  const login = () => {
+    dispatch(UserLogin({email,password}));
   };
   const navigate = useNavigate();
   return (
@@ -52,6 +59,7 @@ const LandlordLogin = () => {
                 </InputAdornment>
               }
               label="Email"
+              onChange={(e)=>{setEmail(e.target.value)}}
             />
           </FormControl>
           <FormControl variant="outlined" fullWidth className="password_input">
@@ -74,6 +82,7 @@ const LandlordLogin = () => {
                 </InputAdornment>
               }
               label="Password"
+              onChange={(e)=>{setPassword(e.target.value)}}
             />
           </FormControl>
           {/* <div className="forgetPassword">
@@ -97,7 +106,9 @@ const LandlordLogin = () => {
       </div> */}
 
         <div className="flex Login">
-          <Button className="LoginButton" onClick={() => navigate("/landlord-dashboard")}>Login</Button>
+          <Button className="LoginButton"   onClick={() => {
+               login();
+             }}>Login</Button>
         </div>
         <div className="Login flex">
           <div className="newAccount">
