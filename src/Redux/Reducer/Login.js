@@ -8,7 +8,7 @@ export const UserLogin = createAsyncThunk("dummyData/UserAdd", async ({email,pas
         email,
         password
     });
-    return response?.message;
+    return response;
 });
 
 

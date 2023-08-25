@@ -9,7 +9,7 @@ export const UserAdd = createAsyncThunk("dummyData/UserAdd", async ({name,email,
         email,
         password
     });
-    return response?.message;
+    return response;
 });
 
 
