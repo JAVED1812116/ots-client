@@ -37,7 +37,7 @@ const LandlordSignup = () => {
   };
   const navigate = useNavigate();
   const Signup = () => {
-    if(name||email||password!=null){
+    if(name&&email&&password!=null||""){
       dispatch(UserAdd({name,email,password})).then((res)=>{
         if(res?.payload?.data==="user Register Successfully"){
           return(
@@ -52,7 +52,9 @@ const LandlordSignup = () => {
         }
       });
     }else{
-    
+      toast.error("Please Fill All Field!",{
+        position:"top-center"
+      })
     }
     
   };
