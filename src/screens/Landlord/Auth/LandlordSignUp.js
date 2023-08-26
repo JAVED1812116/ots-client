@@ -16,6 +16,10 @@ import { Link } from "react-router-dom";
 import title from "../../../components/title";
 import { UserAdd } from "../../../Redux/Reducer/Signup";
 import { useDispatch, useSelector } from "react-redux";
+import { Alert } from "@mui/material";
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 // import Button from '@mui/material/Button';
 const LandlordSignup = () => {
   title("SignUp")
@@ -25,13 +29,32 @@ const LandlordSignup = () => {
   const [name,setName]=useState(null);
   const [email,setEmail]=useState(null);
   const [password,setPassword]=useState(null);
-
+  <Alert variant="filled" severity="success">
+  This is a success alert — check it out!
+</Alert>
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
   const navigate = useNavigate();
   const Signup = () => {
-    dispatch(UserAdd({name,email,password}));
+    if(name||email||password!=null){
+      dispatch(UserAdd({name,email,password})).then((res)=>{
+        if(res?.payload?.data==="user Register Successfully"){
+          return(
+            toast.success("Signup Successfully!",{
+              position:"top-center"
+            })
+
+          )
+        }
+        else{
+          console.log("ok")
+        }
+      });
+    }else{
+    
+    }
+    
   };
   return (
     <div className="landlord_login">
@@ -43,7 +66,6 @@ const LandlordSignup = () => {
         <div className="loginText">
           <h1>Signup Page</h1>
         </div>
-
         <div className="flex flex-col">
           <FormControl variant="outlined" fullWidth className="name_input">
             <InputLabel htmlFor="outlined-adornment-password">Name</InputLabel>
@@ -107,41 +129,22 @@ const LandlordSignup = () => {
               onChange={(e)=>{setPassword(e.target.value)}}
             />
           </FormControl>
-          {/* <div className="forgetPassword">
-            <text>Forget Password</text>
-          </div> */}
         </div>
-        {/* <div className="line1">
-        <div className="loginemail">
-          <EmailOutlinedIcon className="loginemail" />
-        </div>
-        <input className="loginEmailText" placeholder="Enter Your Email" />
-      </div>
-      <div className="line2">
-        <div className="loginPassword">
-          <LockOutlinedIcon className="loginPassword" />
-        </div>
-        <input
-          className="loginPasswordText"
-          placeholder="Enter Your Password"
-        />
-      </div> */}
 {/* onClick={() => navigate("/landlord-dashboard")} */}
         <div className="flex Login">
           <Button className="LoginButton"       onClick={() => {
-               Signup();
-             }} >Signup</Button>
+            Signup();
+          }} >Signup</Button>
         </div>
         <div className="Login flex">
           <text className="newAccount">
             Already have an account
-            {/* <Button onClick={() => navigate("/landlord-signup")}>Signup</Button> */}
-            {/* <Button variant="text" onClick={() => navigate("/landlord-signup")}>Login</Button> */}
             <Link to={"/landlord-login"} className="nodecoration signuplink">Login</Link>
           </text>
         </div>
       </div>
       <div className="bg"></div>
+<ToastContainer />
     </div>
   );
 };

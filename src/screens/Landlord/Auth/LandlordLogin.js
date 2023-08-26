@@ -28,7 +28,9 @@ const [password,setPassword]=useState(null);
     event.preventDefault();
   };
   const login = () => {
-    dispatch(UserLogin({email,password}));
+    dispatch(UserLogin({email,password})).then((res)=>{
+      console.log(res,"response")
+    });
   };
   const navigate = useNavigate();
   return (
@@ -85,25 +87,7 @@ const [password,setPassword]=useState(null);
               onChange={(e)=>{setPassword(e.target.value)}}
             />
           </FormControl>
-          {/* <div className="forgetPassword">
-            <text>Forget Password</text>
-          </div> */}
         </div>
-        {/* <div className="line1">
-        <div className="loginemail">
-          <EmailOutlinedIcon className="loginemail" />
-        </div>
-        <input className="loginEmailText" placeholder="Enter Your Email" />
-      </div>
-      <div className="line2">
-        <div className="loginPassword">
-          <LockOutlinedIcon className="loginPassword" />
-        </div>
-        <input
-          className="loginPasswordText"
-          placeholder="Enter Your Password"
-        />
-      </div> */}
 
         <div className="flex Login">
           <Button className="LoginButton"   onClick={() => {
@@ -113,8 +97,6 @@ const [password,setPassword]=useState(null);
         <div className="Login flex">
           <div className="newAccount">
             Don't Have Account?
-            {/* <Button onClick={() => navigate("/landlord-signup")}>Signup</Button> */}
-            {/* <Button variant="text" onClick={() => navigate("/landlord-signup")}>Signup</Button> */}
             <Link to={"/landlord-signup"} className="nodecoration signuplink">Signup</Link>
           </div>
         </div>
