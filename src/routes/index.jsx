@@ -12,8 +12,6 @@ import RentSetting from "../screens/Landlord/RentSetting/RentSetting";
 import BankDetail from "../screens/Landlord/BankDetail/BankDetail"
 import Agreement from "../screens/Landlord/Agreement/Agreements";
 import UploadBill from "../screens/Landlord/UploadBills/UploadBill";
-import TenantLogin from "../screens/Tenant/Auth/TenantLogin";
-import TenantSignup from "../screens/Tenant/Auth/TenantSignUp";
 import LandlordFunctionality from "../screens/Landlord/LandlordFunction/LandlordFunctionality";
 import AddNew from "../screens/Landlord/AddNewTenant/AddNew";
 import Registeration from "../screens/Tenant/Register/Registeration";
@@ -24,8 +22,8 @@ export default function AllRoutes() {
     <Router>
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/landlord-signup" element={<LandlordSignUp />} />
-        <Route path="/landlord-login" element={<LandlordLogin />} />
+        <Route path="/signup" element={<LandlordSignUp />} />
+        <Route path="/login" element={<LandlordLogin />} />
         <Route path="/landlord-dashboard" element={<LandLordDashboard />} />
         <Route path="/new-request" element={<NewRequest />} />
         <Route path="/user-detail" element={<RequestUserDetail />} />
@@ -36,8 +34,7 @@ export default function AllRoutes() {
         <Route path="/agreement" element={<Agreement />} />
         <Route path="/upload-Bill" element={<UploadBill />} />
         
-        <Route path="/tenant-login" element={<TenantLogin />} />
-        <Route path="/tenant-signup" element={<TenantSignup />} />
+
         <Route path="/addNew-Tenant" element={<AddNew />} />
         <Route path="/tenant-registration" element={<Registeration />} />
         <Route path="/tenant-dashboard" element={<TenantFunctionality />} />

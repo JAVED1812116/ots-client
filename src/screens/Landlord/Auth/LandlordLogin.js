@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./auth.css";
 import { Button } from "@mui/base";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../assets/Logo.png";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
@@ -17,6 +17,9 @@ import { useDispatch } from "react-redux";
 import { UserLogin } from "../../../Redux/Reducer/Login";
 // import Button from '@mui/material/Button';
 const LandlordLogin = () => {
+  let DataType="";
+  const location=useLocation();
+  console.log(location.state.type,"Location")
   title("Login")
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
@@ -97,7 +100,9 @@ const [password,setPassword]=useState(null);
         <div className="Login flex">
           <div className="newAccount">
             Don't Have Account?
-            <Link to={"/landlord-signup"} className="nodecoration signuplink">Signup</Link>
+            {location.state.type==="Landlord"?
+            <Link to={"/signup"} state={{DataType:"Landlord"}} className="nodecoration signuplink">Signup</Link>:<Link to={"/signup"} state={{DataType:"Tenant"}} className="nodecoration signuplink">Signup</Link>
+            }
           </div>
         </div>
       </div>

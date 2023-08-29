@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./auth.css";
 import { Button } from "@mui/base";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../assets/Logo.png";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
@@ -23,6 +23,8 @@ import { ToastContainer, toast } from 'react-toastify';
 // import Button from '@mui/material/Button';
 const LandlordSignup = () => {
   title("SignUp")
+  const location=useLocation();
+  console.log(location.state.DataType,"Locationsignup")
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -141,7 +143,7 @@ const LandlordSignup = () => {
         <div className="Login flex">
           <text className="newAccount">
             Already have an account
-            <Link to={"/landlord-login"} className="nodecoration signuplink">Login</Link>
+            <Link to={"/login"} className="nodecoration signuplink">Login</Link>
           </text>
         </div>
       </div>

@@ -3,6 +3,7 @@ import "./MainPageCss.css"
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 const MainPage = () => {
+  let type=""
   const navigate = useNavigate();
   return (
     <>
@@ -12,7 +13,7 @@ const MainPage = () => {
         >
           <Button 
           id="landlord" 
-          onClick={() => navigate("/landlord-login")}>
+          onClick={() => navigate("/login",{state:{type:"Landlord"}})}>
             LANDLORD
           </Button>
         </div>
@@ -21,7 +22,7 @@ const MainPage = () => {
         >
           <Button 
           id="tenant"
-          onClick={() => navigate("/tenant-login")}
+          onClick={() => navigate("/login",{state:{type:"Tenant"}})}
           >Tenant</Button>
         </div>
         <div 
