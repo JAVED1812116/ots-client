@@ -11,60 +11,93 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import { EmailRounded } from "@mui/icons-material";
-import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
+import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { Link } from "react-router-dom";
 import title from "../../../components/title";
 import { UserAdd } from "../../../Redux/Reducer/Signup";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert } from "@mui/material";
-import { ToastContainer, toast } from 'react-toastify';
-import CodeIcon from '@mui/icons-material/Code';
-  import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import CodeIcon from "@mui/icons-material/Code";
+import "react-toastify/dist/ReactToastify.css";
 
 // import Button from '@mui/material/Button';
 const LandlordSignup = () => {
-  title("SignUp")
-  const location=useLocation();
-  console.log(location.state.type,"Locationsignup")
+  title("SignUp");
+  const location = useLocation();
+  console.log(location.state.type, "Locationsignup");
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const [name,setName]=useState(null);
-  const [email,setEmail]=useState(null);
-  const [password,setPassword]=useState(null);
-  const [code,setCode]=useState(null);
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [code, setCode] = useState(null);
   <Alert variant="filled" severity="success">
-  This is a success alert — check it out!
-</Alert>
+    This is a success alert — check it out!
+  </Alert>;
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
   const navigate = useNavigate();
   const Signup = () => {
-    if(name&&email&&password!=null||""){
-      dispatch(UserAdd({name,email,password,code})).then((res)=>{
-        if(res?.payload?.data==="user Register Successfully"){
-          return(
-            toast.success("Signup Successfully!",{
-              position:"top-center"
-            })
+    if ((name && email && password != null) || "") {
+      var regexEmail = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+      var names =/^([^0-9]*)$/;
+      var passwords =/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+      
+      if (names.test(name)) {
 
-          )
+        if (regexEmail.test(email)) {
+          if (passwords.test(password)) {
+            dispatch(UserAdd({name,email,password,code})).then((res)=>{
+              if(res?.payload?.data==="user Register Successfully"){
+                return(
+                  toast.success("Signup Successfully!",{
+                    position:"top-center"
+                  })
+      
+                )
+              }
+              else{
+                toast.error("Empty Field are not allowed", {
+                  position: "top-center",
+                });
+              }
+            });
+          } else {
+            toast.error("password is not valid", {
+              position: "top-center",
+            });
+          }
+        } else {
+          toast.error("Email is not valid", {
+            position: "top-center",
+          });
         }
-        else{
-          console.log("ok")
-        }
-      });
-    }else{
-      toast.error("Please Fill All Field!",{
-        position:"top-center"
-      })
-    }
+
+      }
+      
+      else {
+        toast.error("name is not valid", {
+          position: "top-center",
+        });
+      }
+
+     
+
+
     
+
+     
+    } else {
+      toast.error("Please Fill All Field!", {
+        position: "top-center",
+      });
+    }
   };
   return (
     <div className="landlord_login">
-    
       <div className="login-body">
         <div className="logoClass">
           <img className="logo" src={logo} alt="" />
@@ -89,7 +122,7 @@ const LandlordSignup = () => {
                 </InputAdornment>
               }
               label="Name"
-              onChange={(e)=>setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             />
           </FormControl>
 
@@ -109,7 +142,9 @@ const LandlordSignup = () => {
                 </InputAdornment>
               }
               label="Email"
-              onChange={(e)=>{setEmail(e.target.value)}}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
             />
           </FormControl>
           <FormControl variant="outlined" fullWidth className="password_input">
@@ -132,50 +167,76 @@ const LandlordSignup = () => {
                 </InputAdornment>
               }
               label="Password"
-              onChange={(e)=>{setPassword(e.target.value)}}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
             />
           </FormControl>
-          {
-            location.state.type==="Tenant"?
-          <FormControl variant="outlined" fullWidth className="email_input">
-            <InputLabel htmlFor="outlined-adornment-password">Code</InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-password"
-              type={"text"}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    edge="end"
-                  >
-                    {<CodeIcon />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Email"
-              onChange={(e)=>{setCode(e.target.value)}}
-            />
-          </FormControl>:""
-          }
+          {location.state.type === "Tenant" ? (
+            <FormControl variant="outlined" fullWidth className="email_input">
+              <InputLabel htmlFor="outlined-adornment-password">
+                Code
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                type={"text"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      edge="end"
+                    >
+                      {<CodeIcon />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Email"
+                onChange={(e) => {
+                  setCode(e.target.value);
+                }}
+              />
+            </FormControl>
+          ) : (
+            ""
+          )}
         </div>
-{/* onClick={() => navigate("/landlord-dashboard")} */}
+        {/* onClick={() => navigate("/landlord-dashboard")} */}
         <div className="flex Login">
-          <Button className="LoginButton"       onClick={() => {
-            Signup();
-          }} >Signup</Button>
+          <Button
+            className="LoginButton"
+            onClick={() => {
+              Signup();
+            }}
+          >
+            Signup
+          </Button>
         </div>
         <div className="Login flex">
           <text className="newAccount">
             Already have an account
             {/* <Link to={"/login"} className="nodecoration signuplink">Login</Link> */}
-            {location.state.type==="Landlord"?
-            <Link to={"/login"} state={{type:"Landlord"}} className="nodecoration signuplink">Login</Link>:<Link to={"/login"} state={{type:"Tenant"}} className="nodecoration signuplink">Login</Link>
-            }
+            {location.state.type === "Landlord" ? (
+              <Link
+                to={"/login"}
+                state={{ type: "Landlord" }}
+                className="nodecoration signuplink"
+              >
+                Login
+              </Link>
+            ) : (
+              <Link
+                to={"/login"}
+                state={{ type: "Tenant" }}
+                className="nodecoration signuplink"
+              >
+                Login
+              </Link>
+            )}
           </text>
         </div>
       </div>
       <div className="bg"></div>
-<ToastContainer />
+      <ToastContainer />
     </div>
   );
 };
