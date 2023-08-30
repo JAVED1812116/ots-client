@@ -4,7 +4,7 @@ import { BASE_URL } from "../../config/config";
 
 
 export const UserLogin = createAsyncThunk("dummyData/UserAdd", async ({email,password}) => {
-    let response = await axios.post(`${BASE_URL}/landlord-login`,  {
+    let response = await axios.post(`${BASE_URL}/loginUser`,  {
         email,
         password
     });

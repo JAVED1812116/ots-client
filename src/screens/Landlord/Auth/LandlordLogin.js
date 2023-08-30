@@ -17,7 +17,6 @@ import { useDispatch } from "react-redux";
 import { UserLogin } from "../../../Redux/Reducer/Login";
 // import Button from '@mui/material/Button';
 const LandlordLogin = () => {
-  let DataType="";
   const location=useLocation();
   console.log(location.state.type,"Location")
   title("Login")
@@ -101,7 +100,7 @@ const [password,setPassword]=useState(null);
           <div className="newAccount">
             Don't Have Account?
             {location.state.type==="Landlord"?
-            <Link to={"/signup"} state={{DataType:"Landlord"}} className="nodecoration signuplink">Signup</Link>:<Link to={"/signup"} state={{DataType:"Tenant"}} className="nodecoration signuplink">Signup</Link>
+            <Link to={"/signup"} state={{type:"Landlord"}} className="nodecoration signuplink">Signup</Link>:<Link to={"/signup"} state={{type:"Tenant"}} className="nodecoration signuplink">Signup</Link>
             }
           </div>
         </div>

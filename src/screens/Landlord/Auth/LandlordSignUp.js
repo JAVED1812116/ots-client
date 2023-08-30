@@ -18,19 +18,21 @@ import { UserAdd } from "../../../Redux/Reducer/Signup";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert } from "@mui/material";
 import { ToastContainer, toast } from 'react-toastify';
+import CodeIcon from '@mui/icons-material/Code';
   import 'react-toastify/dist/ReactToastify.css';
 
 // import Button from '@mui/material/Button';
 const LandlordSignup = () => {
   title("SignUp")
   const location=useLocation();
-  console.log(location.state.DataType,"Locationsignup")
+  console.log(location.state.type,"Locationsignup")
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const [name,setName]=useState(null);
   const [email,setEmail]=useState(null);
   const [password,setPassword]=useState(null);
+  const [code,setCode]=useState(null);
   <Alert variant="filled" severity="success">
   This is a success alert — check it out!
 </Alert>
@@ -40,7 +42,7 @@ const LandlordSignup = () => {
   const navigate = useNavigate();
   const Signup = () => {
     if(name&&email&&password!=null||""){
-      dispatch(UserAdd({name,email,password})).then((res)=>{
+      dispatch(UserAdd({name,email,password,code})).then((res)=>{
         if(res?.payload?.data==="user Register Successfully"){
           return(
             toast.success("Signup Successfully!",{
@@ -133,6 +135,28 @@ const LandlordSignup = () => {
               onChange={(e)=>{setPassword(e.target.value)}}
             />
           </FormControl>
+          {
+            location.state.type==="Tenant"?
+          <FormControl variant="outlined" fullWidth className="email_input">
+            <InputLabel htmlFor="outlined-adornment-password">Code</InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={"text"}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    edge="end"
+                  >
+                    {<CodeIcon />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Email"
+              onChange={(e)=>{setCode(e.target.value)}}
+            />
+          </FormControl>:""
+          }
         </div>
 {/* onClick={() => navigate("/landlord-dashboard")} */}
         <div className="flex Login">
@@ -143,7 +167,10 @@ const LandlordSignup = () => {
         <div className="Login flex">
           <text className="newAccount">
             Already have an account
-            <Link to={"/login"} className="nodecoration signuplink">Login</Link>
+            {/* <Link to={"/login"} className="nodecoration signuplink">Login</Link> */}
+            {location.state.type==="Landlord"?
+            <Link to={"/login"} state={{type:"Landlord"}} className="nodecoration signuplink">Login</Link>:<Link to={"/login"} state={{type:"Tenant"}} className="nodecoration signuplink">Login</Link>
+            }
           </text>
         </div>
       </div>

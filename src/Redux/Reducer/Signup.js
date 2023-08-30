@@ -3,11 +3,12 @@ import axios from "axios";
 import { BASE_URL } from "../../config/config";
 
 
-export const UserAdd = createAsyncThunk("dummyData/UserAdd", async ({name,email,password}) => {
-    let response = await axios.post(`${BASE_URL}/create-landlord`,  {
+export const UserAdd = createAsyncThunk("dummyData/UserAdd", async ({name,email,password,code}) => {
+    let response = await axios.post(`${BASE_URL}/createUser`,  {
         name,
         email,
-        password
+        password,
+        code
     });
     return response;
 });
