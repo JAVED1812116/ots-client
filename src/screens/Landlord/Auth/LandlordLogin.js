@@ -15,10 +15,11 @@ import { Link } from "react-router-dom";
 import title from "../../../components/title";
 import { useDispatch } from "react-redux";
 import { UserLogin } from "../../../Redux/Reducer/Login";
+import { ToastContainer, toast } from "react-toastify";
 // import Button from '@mui/material/Button';
 const LandlordLogin = () => {
   const location=useLocation();
-  console.log(location.state.type,"Location")
+  // console.log(location.state.type,"Location")
   title("Login")
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
@@ -30,9 +31,29 @@ const [password,setPassword]=useState(null);
     event.preventDefault();
   };
   const login = () => {
-    dispatch(UserLogin({email,password})).then((res)=>{
-      console.log(res,"response")
-    });
+    
+    if((email && password!=null)||""){
+      var regexEmail = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+      var passwords =/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+      if(regexEmail.test(email)){
+        if(passwords.test(password)){
+          dispatch(UserLogin({email,password})).then((res)=>{
+          });
+        }else{
+          toast.error("Password is not valid", {
+            position: "top-center",
+          });
+        }
+      }
+      else{
+        toast.error("Email is not valid", {
+          position: "top-center",
+        });
+      }
+    }else{
+      alert("errrrrrr")
+    }
+   
   };
   const navigate = useNavigate();
   return (
@@ -105,6 +126,7 @@ const [password,setPassword]=useState(null);
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

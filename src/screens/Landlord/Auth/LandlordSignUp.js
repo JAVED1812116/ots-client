@@ -25,7 +25,7 @@ import "react-toastify/dist/ReactToastify.css";
 const LandlordSignup = () => {
   title("SignUp");
   const location = useLocation();
-  console.log(location.state.type, "Locationsignup");
+  // console.log(location.state.type, "Locationsignup");
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
