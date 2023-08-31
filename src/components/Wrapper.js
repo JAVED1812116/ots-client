@@ -20,7 +20,7 @@ import { AiFillHome, AiFillSetting } from "react-icons/ai";
 import { IoMdAdd, IoIosPeople } from "react-icons/io";
 import { MdAccountBalance } from "react-icons/md";
 import { GoGitPullRequest } from "react-icons/go";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Logout } from "@mui/icons-material";
 
 // import { FaPeopleGroup } from 'react-icons/fa';
@@ -93,6 +93,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Wrapper({ open, setOpen, mylocation }) {
   const theme = useTheme();
+  const location=useLocation();
   const navigate = useNavigate();
 
   //   const handleDrawerOpen = () => {
@@ -129,6 +130,7 @@ export default function Wrapper({ open, setOpen, mylocation }) {
               alt="Your logo."
               src={Logo}
             />
+          {location.state?.data?.name}
             <Typography
               sx={{ marginLeft: 200 }}
               variant="h6"
@@ -184,33 +186,6 @@ export default function Wrapper({ open, setOpen, mylocation }) {
             <ListItem
               disablePadding
               sx={{ display: "block" }}
-              className={`${mylocation === "/new-request" ? "active-li" : ""}`}
-              onClick={() => {
-                navigate("/new-request");
-              }}
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <GoGitPullRequest size={20} />
-                </ListItemIcon>
-                <ListItemText primary={open ? "New Request" : null} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem
-              disablePadding
-              sx={{ display: "block" }}
               className={`${mylocation === "/addNew-Tenant" ? "active-li" : ""}`}
               onClick={() => {
                 navigate("/addNew-Tenant");
@@ -235,6 +210,34 @@ export default function Wrapper({ open, setOpen, mylocation }) {
                 <ListItemText primary={open ? "Add New Tenant" : null} />
               </ListItemButton>
             </ListItem>
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              className={`${mylocation === "/new-request" ? "active-li" : ""}`}
+              onClick={() => {
+                navigate("/new-request");
+              }}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <GoGitPullRequest size={20} />
+                </ListItemIcon>
+                <ListItemText primary={open ? "New Request" : null} />
+              </ListItemButton>
+            </ListItem>
+            
 
             <ListItem
               disablePadding
@@ -324,7 +327,7 @@ export default function Wrapper({ open, setOpen, mylocation }) {
               disablePadding
               sx={{ display: "block" }}
               onClick={() => {
-                navigate("/landlord-login");
+                navigate("/");
               }}
             >
               <ListItemButton

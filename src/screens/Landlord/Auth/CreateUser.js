@@ -22,7 +22,7 @@ import CodeIcon from "@mui/icons-material/Code";
 import "react-toastify/dist/ReactToastify.css";
 
 // import Button from '@mui/material/Button';
-const LandlordSignup = () => {
+const CreateUser = () => {
   title("SignUp");
   const location = useLocation();
   // console.log(location.state.type, "Locationsignup");
@@ -241,4 +241,4 @@ const LandlordSignup = () => {
   );
 };
 
-export default LandlordSignup;
+export default CreateUser;

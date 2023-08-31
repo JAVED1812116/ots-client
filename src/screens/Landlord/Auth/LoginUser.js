@@ -16,15 +16,15 @@ import title from "../../../components/title";
 import { useDispatch } from "react-redux";
 import { UserLogin } from "../../../Redux/Reducer/Login";
 import { ToastContainer, toast } from "react-toastify";
-// import Button from '@mui/material/Button';
-const LandlordLogin = () => {
+const LoginUser = () => {
   const location=useLocation();
+  const navigate = useNavigate();
   // console.log(location.state.type,"Location")
   title("Login")
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
-const [email,setEmail]=useState(null);
-const [password,setPassword]=useState(null);
+  const [email,setEmail]=useState(null);
+  const [password,setPassword]=useState(null);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
@@ -38,6 +38,20 @@ const [password,setPassword]=useState(null);
       if(regexEmail.test(email)){
         if(passwords.test(password)){
           dispatch(UserLogin({email,password})).then((res)=>{
+            if(res?.payload?.data?.message==="User Login Successfully"){
+              toast.success("Logging!", {
+                autoClose: 3000,
+              });
+              setTimeout(()=>{
+                { navigate("/landlord-dashboard",{state:{data:res?.payload?.data?.data}})}
+              },3000)
+
+             
+            }else{
+              toast.error(res?.payload?.data?.message, {
+                position: "top-center",
+              });
+            }
           });
         }else{
           toast.error("Password is not valid", {
@@ -51,11 +65,12 @@ const [password,setPassword]=useState(null);
         });
       }
     }else{
-      alert("errrrrrr")
+      toast.error("Empty Field are not allowed", {
+        position: "top-center",
+      });
     }
    
   };
-  const navigate = useNavigate();
   return (
     <div className="landlord_login">
       <div className="bg"></div>
@@ -131,4 +146,4 @@ const [password,setPassword]=useState(null);
   );
 };
 
-export default LandlordLogin;
+export default LoginUser;
