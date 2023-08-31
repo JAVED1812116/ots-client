@@ -18,6 +18,7 @@ import "./registration.css";
 import { useNavigate } from "react-router-dom";
 
 export default function Registeration() {
+  
   const [age, setAge] = React.useState("");
   const navigate = useNavigate();
   const handleChange = (event) => {
@@ -28,15 +29,15 @@ export default function Registeration() {
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
-
+  
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-
+  
   function getSteps() {
     return ["Basic Information", "Contact Information", "Personal Information"];
   }
-
+  
   function stepContent(step) {
     title("Registration");
     switch (step) {
@@ -51,7 +52,8 @@ export default function Registeration() {
               fullWidth
               margin="normal"
               name="name"
-            />
+              required={true}
+              />
             <TextField
               id="fatherName"
               label="Father Name"
@@ -60,7 +62,7 @@ export default function Registeration() {
               fullWidth
               margin="normal"
               name="fatherName"
-            />
+              />
             <TextField
               id="cnicNo"
               label="CNIC Number"
@@ -69,7 +71,7 @@ export default function Registeration() {
               fullWidth
               margin="normal"
               name="firstName"
-            />
+              />
             <TextField
               id="occupation"
               label="Occupation"
@@ -78,7 +80,7 @@ export default function Registeration() {
               fullWidth
               margin="normal"
               name="occupation"
-            />
+              />
             <TextField
               id="permanentAddress"
               label="Permanent Address"
@@ -87,7 +89,7 @@ export default function Registeration() {
               fullWidth
               margin="normal"
               name="permanentAddress"
-            />
+              />
 
             <FormControl fullWidth margin="normal">
               <InputLabel id="demo-simple-select-label">Gender</InputLabel>
@@ -96,7 +98,7 @@ export default function Registeration() {
                 id="demo-simple-select"
                 label="Gender"
                 onChange={handleChange}
-              >
+                >
                 <MenuItem value={0}>Male</MenuItem>
                 <MenuItem value={1}>Female</MenuItem>
               </Select>
@@ -111,16 +113,17 @@ export default function Registeration() {
                 id="demo-simple-select"
                 label="Martial Status"
                 onChange={handleChange}
-              >
+                >
                 <MenuItem value={0}>Married</MenuItem>
                 <MenuItem value={1}>UnMarried</MenuItem>
               </Select>
             </FormControl>
           </>
         );
-      case 1:
-        return (
-          <>
+        case 1:
+          return (
+            <>
+            
           <FormControl fullWidth margin="normal">
             <InputLabel id="demo-simple-select-label">
               Total Family Members
@@ -131,7 +134,7 @@ export default function Registeration() {
               // value={age}
               label="Total Family Members"
               // onChange={handleChange}
-            >
+              >
               <MenuItem value={0}>1</MenuItem>
               <MenuItem value={1}>2</MenuItem>
               <MenuItem value={1}>3</MenuItem>
@@ -237,6 +240,7 @@ export default function Registeration() {
         </Typography>
       ) : (
         <Container maxWidth="sm">
+          Welcome {localStorage.getItem("name")}
           <Box mt={20}>
             <>
               <Stepper activeStep={activeStep}>
@@ -265,8 +269,8 @@ export default function Registeration() {
                 <Button
                   variant="contained"
                   // color="primary"
-                  // onClick={handleNext}
-                  onClick={() => navigate("/tenant-dashboard")}
+                  onClick={handleNext}
+                  // onClick={() => navigate("/tenant-dashboard")}
                   className="nextbtn"
                 >
                   {activeStep === 2 ? "Finish" : "Next"}

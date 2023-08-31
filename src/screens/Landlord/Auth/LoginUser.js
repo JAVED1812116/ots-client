@@ -26,7 +26,7 @@ const LoginUser = () => {
   const [email,setEmail]=useState(null);
   const [password,setPassword]=useState(null);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
+console.log(location?.state?.type,"loooooooooooo")
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -45,7 +45,11 @@ const LoginUser = () => {
                 autoClose: 300,
               });
               setTimeout(()=>{
-                { navigate("/landlord-dashboard")}
+                if(location?.state?.type==="Landlord"){
+                  { navigate("/landlord-dashboard")}
+                }else if(location?.state?.type==="Tenant"){
+                  { navigate("/tenant-registration")}
+                }
               },2200)
 
              
