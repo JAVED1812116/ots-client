@@ -15,16 +15,16 @@ export const UserAdd = createAsyncThunk("dummyData/UserAdd", async ({name,email,
 
 
 
-const Signup = createSlice({
-    name: "signup",
+const CreateUser = createSlice({
+    name: "CreateUser",
     initialState: {
         loading: false,
-        signup: [],
+        CreateUser: [],
         error: ""
     },
     extraReducers: {
         [UserAdd.fulfilled]: (state, action) => {
-            state.signup = action.payload;
+            state.CreateUser = action.payload;
             state.loading = false;
         },
         [UserAdd.pending]: (state) => {
@@ -35,4 +35,4 @@ const Signup = createSlice({
         },
     }
 });
-export default Signup.reducer;
+export default CreateUser.reducer;

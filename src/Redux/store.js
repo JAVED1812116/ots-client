@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import Signup from "./Reducer/Signup";
+import CreateUser from "./Reducer/CreateUser";
 
 
 
 export const store = configureStore({
   reducer: {
-    "signup": Signup,
+    "CreateUser": CreateUser,
   },
 })

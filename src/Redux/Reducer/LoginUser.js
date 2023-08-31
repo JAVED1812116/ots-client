@@ -13,7 +13,7 @@ export const UserLogin = createAsyncThunk("dummyData/UserAdd", async ({email,pas
 
 
 
-const Login = createSlice({
+const LoginUser = createSlice({
     name: "login",
     initialState: {
         loading: false,
@@ -33,4 +33,4 @@ const Login = createSlice({
         },
     }
 });
-export default Login.reducer;
+export default LoginUser.reducer;

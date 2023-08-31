@@ -38,7 +38,7 @@ export default function AllRoutes() {
         <Route path="/addNew-Tenant" element={<AddNew />} />
         <Route path="/tenant-registration" element={<Registeration />} />
         <Route path="/tenant-dashboard" element={<TenantFunctionality />} />
-        <Route path="//previous-TenantBill" element={<PreviousBill />} />
+        <Route path="/previous-TenantBill" element={<PreviousBill />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </Router>
