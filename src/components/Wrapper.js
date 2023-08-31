@@ -22,6 +22,7 @@ import { MdAccountBalance } from "react-icons/md";
 import { GoGitPullRequest } from "react-icons/go";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Logout } from "@mui/icons-material";
+import { useState } from "react";
 
 // import { FaPeopleGroup } from 'react-icons/fa';
 const drawerWidth = 240;
@@ -93,7 +94,6 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Wrapper({ open, setOpen, mylocation }) {
   const theme = useTheme();
-  const location=useLocation();
   const navigate = useNavigate();
 
   //   const handleDrawerOpen = () => {
@@ -130,7 +130,7 @@ export default function Wrapper({ open, setOpen, mylocation }) {
               alt="Your logo."
               src={Logo}
             />
-          {location.state?.data?.name}
+          {`${localStorage.getItem("name")}`}
             <Typography
               sx={{ marginLeft: 200 }}
               variant="h6"
@@ -327,7 +327,9 @@ export default function Wrapper({ open, setOpen, mylocation }) {
               disablePadding
               sx={{ display: "block" }}
               onClick={() => {
+                localStorage.clear("name")
                 navigate("/");
+
               }}
             >
               <ListItemButton
@@ -336,6 +338,7 @@ export default function Wrapper({ open, setOpen, mylocation }) {
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                 }}
+                
               >
                 <ListItemIcon
                   sx={{

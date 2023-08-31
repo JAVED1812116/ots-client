@@ -26,7 +26,7 @@ const LoginUser = () => {
   const [email,setEmail]=useState(null);
   const [password,setPassword]=useState(null);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
+console.log(location?.state?.type,"loooooooooooo")
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -39,12 +39,18 @@ const LoginUser = () => {
         if(passwords.test(password)){
           dispatch(UserLogin({email,password})).then((res)=>{
             if(res?.payload?.data?.message==="User Login Successfully"){
+              localStorage.setItem("name",res?.payload?.data?.data?.name)
+              console.log(res?.payload?.data?.data?.name,"data:res?.payload?.data?.data?.name")
               toast.success("Logging!", {
-                autoClose: 3000,
+                autoClose: 300,
               });
               setTimeout(()=>{
-                { navigate("/landlord-dashboard",{state:{data:res?.payload?.data?.data}})}
-              },3000)
+                if(location?.state?.type==="Landlord"){
+                  { navigate("/landlord-dashboard")}
+                }else if(location?.state?.type==="Tenant"){
+                  { navigate("/tenant-registration")}
+                }
+              },2200)
 
              
             }else{
