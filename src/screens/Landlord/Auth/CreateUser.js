@@ -14,12 +14,13 @@ import { EmailRounded } from "@mui/icons-material";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { Link } from "react-router-dom";
 import title from "../../../components/title";
-import { UserAdd } from "../../../Redux/Reducer/Signup";
+// import { UserAdd } from "../../../redux/reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import CodeIcon from "@mui/icons-material/Code";
 import "react-toastify/dist/ReactToastify.css";
+import { UserAdd } from "../../../redux/Reducer/Signup";
 
 // import Button from '@mui/material/Button';
 const CreateUser = () => {
