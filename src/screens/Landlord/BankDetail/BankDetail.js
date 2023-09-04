@@ -7,11 +7,39 @@ import { Container } from '@mui/material';
 import { useLocation } from "react-router";
 import title from '../../../components/title';
 import "./bankDetails.css"
+import { useDispatch } from 'react-redux';
+import { AccountSet } from '../../../Redux/Reducer/AccountSetting';
 export default function BankDetail() {
   title("Account Detail")
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
+  const [detail, setDetail] = useState({
+    bankName:"",
+    accountName:"",
+    accountNumber:"",
+    ibanNumber:"",
+  });
+  const handleChange=(e)=>{
+const {name,value}=e.target;
+setDetail((prev)=>{
+  return {...prev,[name]:value}
+});
+  };
+
+  const handleSubmit=()=>{
+    dispatch(AccountSet({detail})).then((res)=>{
+      // console.log(res?.payload?.data?.message,"res?.payload?.data?.message")
+      console.log("response",res?.payload?.data?.message)
+    //  if(res?.payload?.data?.message==="Rent Set Successfully"){
+      
+    //  }else{
+    //   console.log("else")
+    //  }
+      });
+console.log("ok")
+  }
   return (
     <>
     <Wrapper open={open} setOpen={setOpen} mylocation= {mylocation}/>
@@ -28,6 +56,8 @@ export default function BankDetail() {
           multiline
           maxRows={4}
           variant="standard"
+          name='bankName'
+          onChange={handleChange}
         />
         <TextField
           id="standard-textarea"
@@ -35,6 +65,8 @@ export default function BankDetail() {
           placeholder="Placeholder"
           multiline
           variant="standard"
+          name='accountName'
+          onChange={handleChange}
         />
         {/* <TextField
           id="standard-multiline-static"
@@ -51,6 +83,8 @@ export default function BankDetail() {
           multiline
           maxRows={4}
           variant="standard"
+          name='accountNumber'
+          onChange={handleChange}
         />
         <TextField
           id="standard-textarea"
@@ -58,9 +92,11 @@ export default function BankDetail() {
           placeholder="Placeholder"
           multiline
           variant="standard"
+          name='ibanNumber'
+          onChange={handleChange}
         />
       </div>
-      <Button className="bankButton" variant="contained" >
+      <Button className="bankButton" variant="contained" onClick={handleSubmit}>
         Save
       </Button>
     </Container>

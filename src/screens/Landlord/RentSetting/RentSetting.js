@@ -7,17 +7,43 @@ import { Container } from "@mui/material";
 import { useLocation } from "react-router";
 import title from "../../../components/title";
 import "./rentSetting.css"
-
-
+import { useDispatch } from "react-redux";
+import { RentSet } from "../../../Redux/Reducer/RentSetting";
 export default function RentSetting() {
   title("Rent Setting")
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
-
+  const [detail, setDetail] = useState({
+    monthlyRent:"",
+    advance:"",
+    maintainanceChearges:"",
+    trashCharges:"",
+  });
+  const handleChange = (e) => {
+ 
+    const { name, value } = e.target;
+    setDetail((prev) => {
+      return { ...prev, [name]: value };
+    });
+  };
+  console.log(detail,"detail")
+  const handleSubmit=()=>{
+    dispatch(RentSet({detail})).then((res)=>{
+      // console.log(res?.payload?.data?.message,"res?.payload?.data?.message")
+      console.log("response",res?.payload?.data?.message)
+     if(res?.payload?.data?.message==="Rent Set Successfully"){
+      
+     }else{
+      console.log("else")
+     }
+      });
+  }
   return (
     <>
       <Wrapper open={open} setOpen={setOpen} mylocation={mylocation} />
+    
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
         <div className="mainHeading">
           <h1>Rent Setting</h1>
@@ -30,6 +56,8 @@ export default function RentSetting() {
               multiline
               maxRows={4}
               variant="standard"
+              name="monthlyRent"
+              onChange={handleChange}
             />
             <TextField
               id="standard-textarea"
@@ -37,15 +65,9 @@ export default function RentSetting() {
               placeholder="Placeholder"
               multiline
               variant="standard"
+              name="advance"
+              onChange={handleChange}
             />
-            {/* <TextField
-          id="standard-multiline-static"
-          label="Multiline"
-          multiline
-          rows={4}
-          defaultValue="Default Value"
-          variant="standard"
-        /> */}
 
             <TextField
               id="standard-multiline-flexible"
@@ -53,6 +75,8 @@ export default function RentSetting() {
               multiline
               maxRows={4}
               variant="standard"
+              name="maintainanceChearges"
+              onChange={handleChange}
             />
             <TextField
               id="standard-textarea"
@@ -60,13 +84,16 @@ export default function RentSetting() {
               placeholder="Placeholder"
               multiline
               variant="standard"
+              name="trashCharges"
+              onChange={handleChange}
             />
           </div>
-          <Button className="rentButton" variant="contained" >
+          <Button className="rentButton" variant="contained" onClick={handleSubmit}>
             Save
           </Button>
         </Container>
       </div>
+    
     </>
   );
 }
