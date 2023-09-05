@@ -9,6 +9,7 @@ import title from "../../../components/title";
 import "./rentSetting.css"
 import { useDispatch } from "react-redux";
 import { RentSet } from "../../../Redux/Reducer/RentSetting";
+import { toast,ToastContainer } from "react-toastify";
 export default function RentSetting() {
   title("Rent Setting")
   const dispatch = useDispatch();
@@ -28,17 +29,27 @@ export default function RentSetting() {
       return { ...prev, [name]: value };
     });
   };
-  console.log(detail,"detail")
+
   const handleSubmit=()=>{
-    dispatch(RentSet({detail})).then((res)=>{
-      // console.log(res?.payload?.data?.message,"res?.payload?.data?.message")
-      console.log("response",res?.payload?.data?.message)
-     if(res?.payload?.data?.message==="Rent Set Successfully"){
-      
-     }else{
-      console.log("else")
-     }
+    if(detail.monthlyRent&&detail.advance&&detail.maintainanceChearges&&detail.trashCharges!=null||""){
+      dispatch(RentSet({detail})).then((res)=>{
+       if(res?.payload?.data?.message==="Rent Set Successfully"){
+        toast.success(res?.payload?.data?.message, {
+          autoClose: 300,
+        });
+
+      }else{
+        toast.error(res?.payload?.data?.message,{
+          autoClose:300,
+        })
+       
+       }
+        });
+    }else{
+      toast.error("Empty Field are not allowed", {
+        autoClose: 300,
       });
+    }
   }
   return (
     <>
@@ -92,6 +103,7 @@ export default function RentSetting() {
             Save
           </Button>
         </Container>
+        <ToastContainer />
       </div>
     
     </>

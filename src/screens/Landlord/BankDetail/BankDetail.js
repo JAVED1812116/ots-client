@@ -9,6 +9,7 @@ import title from '../../../components/title';
 import "./bankDetails.css"
 import { useDispatch } from 'react-redux';
 import { AccountSet } from '../../../Redux/Reducer/AccountSetting';
+import { ToastContainer, toast } from 'react-toastify';
 export default function BankDetail() {
   title("Account Detail")
   const dispatch = useDispatch();
@@ -29,16 +30,29 @@ setDetail((prev)=>{
   };
 
   const handleSubmit=()=>{
-    dispatch(AccountSet({detail})).then((res)=>{
-      // console.log(res?.payload?.data?.message,"res?.payload?.data?.message")
-      console.log("response",res?.payload?.data?.message)
-    //  if(res?.payload?.data?.message==="Rent Set Successfully"){
-      
-    //  }else{
-    //   console.log("else")
-    //  }
+   
+    if(detail.bankName&&detail.accountName&&detail.accountNumber&&detail.ibanNumber!=null||""){
+      console.log("inIF")
+      dispatch(AccountSet({detail})).then((res)=>{
+        console.log(res?.payload?.data?.message)
+        if(res?.payload?.data?.message==="Account Detail Save Successfully"){
+          toast.success(res?.payload?.data?.message, {
+            autoClose: 300,
+          });
+  
+        }else{
+          toast.error(res?.payload?.data?.message,{
+            autoClose:300,
+          })
+         
+         }
+        });
+    }else{
+      console.log("inElse")
+      toast.error("Empty Field are not allowed", {
+        autoClose: 300,
       });
-console.log("ok")
+    }
   }
   return (
     <>
@@ -100,6 +114,7 @@ console.log("ok")
         Save
       </Button>
     </Container>
+    <ToastContainer />
     </div>
     </>
   );
