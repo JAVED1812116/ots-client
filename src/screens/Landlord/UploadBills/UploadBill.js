@@ -19,22 +19,70 @@ import { useLocation } from "react-router";
 import title from "../../../components/title";
 
 
-function createData(name, calories, fat, carbs, protein, price) {
+function kElectric(name,type) {
   
   return {
     name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
+    type,
     history: [
       {
-        previousReading: <input placeholder="Previous Reading"></input>,
-        currentReading:  <input placeholder="Previous Reading"></input>,
-        enterBill:  <input placeholder="Type Bill"></input>,
+        previousReading: <input placeholder="Previous Reading" onChange={(e)=>{console.log(e.target.value,"prek")}}></input>,
+        currentReading:  <input placeholder="current Reading" onChange={(e)=>{console.log(e.target.value,"currenk")}}></input>,
+        enterBill:  <input placeholder="Type Bill" onChange={(e)=>{console.log(e.target.value,"billk")}}></input>,
         totalUnit: 15000,
         kElectricBill: 1200,
+      },
+    ],
+  };
+}
+function ssgc(name,type) {
+  
+  return {
+    name,
+    type,
+    history: [
+      {
+        previousReading: <input placeholder="Previous Reading" onChange={(e)=>{console.log(e.target.value,"pressgc")}}></input>,
+        currentReading:  <input placeholder="current Reading" onChange={(e)=>{console.log(e.target.value,"currentssgc")}}></input>,
+        enterBill:  <input placeholder="Type Bill" onChange={(e)=>{console.log(e.target.value,"bill")}}></input>,
+        totalUnit: 15000,
+        kElectricBill: 1200,
+      },
+    ],
+  };
+}
+function trashCharges(name,type) {
+  
+  return {
+    name,
+    type,
+    history: [
+      {
+        previousReading: <input placeholder="Trash Charges" onChange={(e)=>{console.log(e.target.value,"pressgc")}}></input>,
+      },
+    ],
+  };
+}
+function waterCharges(name,type) {
+  
+  return {
+    name,
+    type,
+    history: [
+      {
+        previousReading: <input placeholder="water Charges" onChange={(e)=>{console.log(e.target.value,"pressgc")}}></input>,
+      },
+    ],
+  };
+}
+function maintainanceCharges(name,type) {
+  
+  return {
+    name,
+    type,
+    history: [
+      {
+        previousReading: <input placeholder="Maintainance Charges" onChange={(e)=>{console.log(e.target.value,"pressgc")}}></input>,
       },
     ],
   };
@@ -124,11 +172,11 @@ function Row(props) {
 }
 
 const rows = [
-  createData("K-ELECTRIC", "2023", "1-1-2023"),
-  createData("SSGC", "2022", "5-1-2022"),
-  createData("WATER", "2021", "3-2-2021"),
-  createData("MAINTAINANCE", "2020", "2-3-2020"),
-  createData("TRASH CHARGES", "2019", "3-3-2019"),
+  kElectric("K-ELECTRIC", "2023", "1-1-2023"),
+  ssgc("SSGC", "2022", "5-1-2022"),
+  waterCharges("WATER", "2021", "3-2-2021"),
+  maintainanceCharges("MAINTAINANCE", "2020", "2-3-2020"),
+  trashCharges("TRASH CHARGES", "2019", "3-3-2019"),
 ];
 
 export default function UploadBill() {
