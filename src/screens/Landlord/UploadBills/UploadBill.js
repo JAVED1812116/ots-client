@@ -18,9 +18,6 @@ import { useState } from "react";
 import { useLocation } from "react-router";
 import title from "../../../components/title";
 
-
-
-
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
@@ -42,346 +39,417 @@ function Row(props) {
         </TableCell>
         {/* <TableCell align="right">{row.calories}</TableCell>*/}
       </TableRow>
-{
-  row?.type==="kelectric"?
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                History
-              </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Previous Reading</TableCell>
-                    <TableCell>Current Reading</TableCell>
-                    <TableCell align="right">Enter Bill</TableCell>
-                    <TableCell align="right">Total Unit</TableCell>
-                    <TableCell align="right">K-Electric Bill</TableCell>
-                    <TableCell align="right"></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.previousReading}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.previousReading}
-                      </TableCell>
-                      <TableCell>{historyRow.currentReading}</TableCell>
-                      <TableCell align="right">{historyRow.enterBill}</TableCell>
-                      <TableCell align="right">
-                        {historyRow.totalUnit}
-                      </TableCell>
-                      <TableCell align="right">
-                        {historyRow.kElectricBill}
-                      </TableCell>
-                      <TableCell align="right">
-                        {historyRow.permenantAddress}
-                      </TableCell>
+      {row?.type === "kelectric" ? (
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                <Typography variant="h6" gutterBottom component="div">
+                  History
+                </Typography>
+                <Table size="small" aria-label="purchases">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Previous Reading</TableCell>
+                      <TableCell>Current Reading</TableCell>
+                      <TableCell>Per Unit</TableCell>
+                      <TableCell align="right">Total Unit</TableCell>
+                      <TableCell>Enter Bill</TableCell>
+                      <TableCell>Total Bill</TableCell>
+                      <TableCell align="right"></TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-              <Button
-                variant="contained"
-                sx={{ marginTop: 2, marginRight: 1, background: "black" }}
-              >
-                Post
-              </Button>
-              {/* <Button
+                  </TableHead>
+                  <TableBody>
+                    {row.history.map((historyRow) => (
+                      <TableRow key={historyRow.previousReading}>
+                        <TableCell component="th" scope="row">
+                          {historyRow.previousReading}
+                        </TableCell>
+                        <TableCell>{historyRow.currentReading}</TableCell>
+                        <TableCell>{historyRow.perUnitCharge}</TableCell>
+                        <TableCell align="right">
+                          {historyRow.totalUnit || 0}
+                        </TableCell>
+                        <TableCell>{historyRow.enterBill}</TableCell>
+                        <TableCell align="right">
+                          {historyRow.showElectricUnit || 0}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                <Button
+                  variant="contained"
+                  sx={{ marginTop: 2, marginRight: 1, background: "black" }}
+                >
+                  Post
+                </Button>
+                {/* <Button
                 variant="contained"
                 sx={{ marginTop: 2, background: "black" }}
               >
                 Reject
               </Button> */}
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-:
-row?.type==="ssgc"?<TableRow>
-<TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-  <Collapse in={open} timeout="auto" unmountOnExit>
-    <Box sx={{ margin: 1 }}>
-      <Typography variant="h6" gutterBottom component="div">
-        History
-      </Typography>
-      <Table size="small" aria-label="purchases">
-        <TableHead>
-          <TableRow>
-            <TableCell>Previous Reading</TableCell>
-            <TableCell>Current Reading</TableCell>
-            <TableCell align="right">Enter Bill</TableCell>
-            <TableCell align="right">Total Unit</TableCell>
-            <TableCell align="right">SSGC Bill</TableCell>
-            <TableCell align="right"></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {row.history.map((historyRow) => (
-            <TableRow key={historyRow.previousReading}>
-              <TableCell component="th" scope="row">
-                {historyRow.previousReading}
-              </TableCell>
-              <TableCell>{historyRow.currentReading}</TableCell>
-              <TableCell align="right">{historyRow.enterBill}</TableCell>
-              <TableCell align="right">
-                {historyRow.totalUnit}
-              </TableCell>
-              <TableCell align="right">
-                {historyRow.kElectricBill}
-              </TableCell>
-              <TableCell align="right">
-                {historyRow.permenantAddress}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <Button
-        variant="contained"
-        sx={{ marginTop: 2, marginRight: 1, background: "black" }}
-      >
-        Post
-      </Button>
-      {/* <Button
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      ) : row?.type === "ssgc" ? (
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                <Typography variant="h6" gutterBottom component="div">
+                  History
+                </Typography>
+                <Table size="small" aria-label="purchases">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Previous Reading</TableCell>
+                      <TableCell>Current Reading</TableCell>
+                      <TableCell align="right">Enter Bill</TableCell>
+                      <TableCell align="right">Total Unit</TableCell>
+                      <TableCell align="right">SSGC Bill</TableCell>
+                      <TableCell align="right"></TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {row.history.map((historyRow) => (
+                      <TableRow key={historyRow.previousReading}>
+                        <TableCell component="th" scope="row">
+                          {historyRow.previousReading}
+                        </TableCell>
+                        <TableCell>{historyRow.currentReading}</TableCell>
+                        <TableCell align="right">
+                          {historyRow.enterBill}
+                        </TableCell>
+                        <TableCell align="right">
+                          {historyRow.totalUnit}
+                        </TableCell>
+                        <TableCell align="right">
+                          {historyRow.kElectricBill}
+                        </TableCell>
+                        <TableCell align="right">
+                          {historyRow.permenantAddress}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                <Button
+                  variant="contained"
+                  sx={{ marginTop: 2, marginRight: 1, background: "black" }}
+                >
+                  Post
+                </Button>
+                {/* <Button
         variant="contained"
         sx={{ marginTop: 2, background: "black" }}
       >
         Reject
       </Button> */}
-    </Box>
-  </Collapse>
-</TableCell>
-</TableRow>
-:row?.type==="water"?
-<TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                History
-              </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Water Charges</TableCell>
-                    
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.waterCharges}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.waterCharges}
-                      </TableCell>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      ) : row?.type === "water" ? (
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                <Typography variant="h6" gutterBottom component="div">
+                  History
+                </Typography>
+                <Table size="small" aria-label="purchases">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Water Charges</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-              <Button
-                variant="contained"
-                sx={{ marginTop: 2, marginRight: 1, background: "black" }}
-              >
-                Post
-              </Button>
-              {/* <Button
+                  </TableHead>
+                  <TableBody>
+                    {row.history.map((historyRow) => (
+                      <TableRow key={historyRow.waterCharges}>
+                        <TableCell component="th" scope="row">
+                          {historyRow.waterCharges}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                <Button
+                  variant="contained"
+                  sx={{ marginTop: 2, marginRight: 1, background: "black" }}
+                >
+                  Post
+                </Button>
+                {/* <Button
                 variant="contained"
                 sx={{ marginTop: 2, background: "black" }}
               >
                 Reject
               </Button> */}
-            </Box>
-          </Collapse>
-        </TableCell>
-</TableRow>
-:row?.type==="maintainance"?
-<TableRow>
-<TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-  <Collapse in={open} timeout="auto" unmountOnExit>
-    <Box sx={{ margin: 1 }}>
-      <Typography variant="h6" gutterBottom component="div">
-        History
-      </Typography>
-      <Table size="small" aria-label="purchases">
-        <TableHead>
-          <TableRow>
-            <TableCell>Maintainance Charges</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {row.history.map((historyRow) => (
-            <TableRow key={historyRow.waterCharges}>
-              <TableCell component="th" scope="row">
-                {historyRow.maintainanceCharges}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <Button
-        variant="contained"
-        sx={{ marginTop: 2, marginRight: 1, background: "black" }}
-      >
-        Post
-      </Button>
-      {/* <Button
-        variant="contained"
-        sx={{ marginTop: 2, background: "black" }}
-      >
-        Reject
-      </Button> */}
-    </Box>
-  </Collapse>
-</TableCell>
-</TableRow>
-:row?.type==="trash"?
-<TableRow>
-<TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-  <Collapse in={open} timeout="auto" unmountOnExit>
-    <Box sx={{ margin: 1 }}>
-      <Typography variant="h6" gutterBottom component="div">
-        History
-      </Typography>
-      <Table size="small" aria-label="purchases">
-        <TableHead>
-          <TableRow>
-            <TableCell>Trash Charges</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {row.history.map((historyRow) => (
-            <TableRow key={historyRow.waterCharges}>
-              <TableCell component="th" scope="row">
-                {historyRow.trashCharges}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <Button
-        variant="contained"
-        sx={{ marginTop: 2, marginRight: 1, background: "black" }}
-      >
-        Post
-      </Button>
-      {/* <Button
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      ) : row?.type === "maintainance" ? (
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                <Typography variant="h6" gutterBottom component="div">
+                  History
+                </Typography>
+                <Table size="small" aria-label="purchases">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Maintainance Charges</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {row.history.map((historyRow) => (
+                      <TableRow key={historyRow.waterCharges}>
+                        <TableCell component="th" scope="row">
+                          {historyRow.maintainanceCharges}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                <Button
+                  variant="contained"
+                  sx={{ marginTop: 2, marginRight: 1, background: "black" }}
+                >
+                  Post
+                </Button>
+                {/* <Button
         variant="contained"
         sx={{ marginTop: 2, background: "black" }}
       >
         Reject
       </Button> */}
-    </Box>
-  </Collapse>
-</TableCell>
-</TableRow>:""}
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      ) : row?.type === "trash" ? (
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                <Typography variant="h6" gutterBottom component="div">
+                  History
+                </Typography>
+                <Table size="small" aria-label="purchases">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Trash Charges</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {row.history.map((historyRow) => (
+                      <TableRow key={historyRow.waterCharges}>
+                        <TableCell component="th" scope="row">
+                          {historyRow.trashCharges}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                <Button
+                  variant="contained"
+                  sx={{ marginTop: 2, marginRight: 1, background: "black" }}
+                >
+                  Post
+                </Button>
+                {/* <Button
+        variant="contained"
+        sx={{ marginTop: 2, background: "black" }}
+      >
+        Reject
+      </Button> */}
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      ) : (
+        ""
+      )}
     </React.Fragment>
   );
 }
 
-
-
 export default function UploadBill() {
-  title("Upload Bill")
+  title("Upload Bill");
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
   ///////////////KELECTRIC//////////////////
-const [prevReadingKelectric,setprevReadingKelectric]=useState();
-const [currentReadingKelectric,setCurrentReadingKelectric]=useState();
-const [typeBillKelectric,setTypeBillKelectric]=useState();
-////////////////SSGC////////////////////////
-const [prevReadingSsgc,setprevReadingSsgc]=useState();
-const [currentReadingSsgc,setCurrentReadingSsgc]=useState();
-const [typeBillSsgc,setTypeBillSsgc]=useState();
-///////////////TRASH CHARGES///////////////
-const [trashCharge,setTrashCharge]=useState();
-///////////////WATER CHARGES/////////////////
-const [waterCharge,setWaterCharge]=useState();
-//////////////MAINTAINANCECHARGES////////////
-const [maintainanceCharge,setMaintainanceCharge]=useState();
-  function kElectric(name,type) {
-  
+  const [prevReadingKelectric, setprevReadingKelectric] = useState();
+  const [currentReadingKelectric, setCurrentReadingKelectric] = useState();
+  const [typeBillKelectric, setTypeBillKelectric] = useState();
+  const [perUnitCharges, setPerUnitCharges] = useState();
+  ////////////////SSGC////////////////////////
+  const [prevReadingSsgc, setprevReadingSsgc] = useState();
+  const [currentReadingSsgc, setCurrentReadingSsgc] = useState();
+  const [typeBillSsgc, setTypeBillSsgc] = useState();
+  ///////////////TRASH CHARGES///////////////
+  const [trashCharge, setTrashCharge] = useState();
+  ///////////////WATER CHARGES/////////////////
+  const [waterCharge, setWaterCharge] = useState();
+  //////////////MAINTAINANCECHARGES////////////
+  const [maintainanceCharge, setMaintainanceCharge] = useState();
+  function kElectric(name, type, index) {
     return {
       name,
       type,
       history: [
         {
-          previousReading: <input placeholder="Previous Reading" onChange={(e)=>{setprevReadingKelectric(e.target.value)}}></input>,
-          currentReading:  <input placeholder="current Reading" onChange={(e)=>{setCurrentReadingKelectric(e.target.value)}}></input>,
-          enterBill:  <input placeholder="Type Bill Here" onChange={(e)=>{setTypeBillKelectric(e.target.value)}}></input>,
-          totalUnit: currentReadingKelectric-prevReadingKelectric,
-          kElectricBill: 1200,
+          previousReading: (
+            <input
+              placeholder="Previous Reading"
+              onChange={(e) => {
+                setprevReadingKelectric(e.target.value);
+              }}
+            ></input>
+          ),
+          currentReading: (
+            <input
+              placeholder="current Reading"
+              onChange={(e) => {
+                setCurrentReadingKelectric(e.target.value);
+              }}
+            ></input>
+          ),
+          perUnitCharge: (
+            <input
+              placeholder="Per Unit"
+              onChange={(e) => {
+                setPerUnitCharges(e.target.value);
+              }}
+            ></input>
+          ),
+          totalUnit: currentReadingKelectric - prevReadingKelectric,
+          showElectricUnit:
+            parseInt(currentReadingKelectric - prevReadingKelectric) *
+            parseInt(perUnitCharges),
+          enterBill: (
+            <input
+              placeholder="Type Bill Here"
+              onChange={(e) => {
+                console.log("INDEX", index)
+                // setTypeBillKelectric(e.target.value);
+              }}
+            ></input>
+          ),
         },
       ],
     };
   }
-  function ssgc(name,type) {
-    
+  function ssgc(name, type) {
     return {
       name,
       type,
       history: [
         {
-          previousReading: <input placeholder="Previous Reading" onChange={(e)=>{setprevReadingSsgc(e.target.value)}}></input>,
-          currentReading:  <input placeholder="current Reading" onChange={(e)=>{setCurrentReadingSsgc(e.target.value)}}></input>,
-          enterBill:  <input placeholder="Type Bill" onChange={(e)=>{setTypeBillSsgc(e.target.value)}}></input>,
+          previousReading: (
+            <input
+              placeholder="Previous Reading"
+              onChange={(e) => {
+                setprevReadingSsgc(e.target.value);
+              }}
+            ></input>
+          ),
+          currentReading: (
+            <input
+              placeholder="current Reading"
+              onChange={(e) => {
+                setCurrentReadingSsgc(e.target.value);
+              }}
+            ></input>
+          ),
+          enterBill: (
+            <input
+              placeholder="Type Bill"
+              onChange={(e) => {
+                setTypeBillSsgc(e.target.value);
+              }}
+            ></input>
+          ),
           totalUnit: 15000,
           kElectricBill: 1200,
         },
       ],
     };
   }
-  function trashCharges(name,type) {
-    
+  function trashCharges(name, type) {
     return {
       name,
       type,
       history: [
         {
-          trashCharges: <input placeholder="Trash Charges" onChange={(e)=>{setTrashCharge(e.target.value)}}></input>,
+          trashCharges: (
+            <input
+              placeholder="Trash Charges"
+              onChange={(e) => {
+                setTrashCharge(e.target.value);
+              }}
+            ></input>
+          ),
         },
       ],
     };
   }
-  function waterCharges(name,type) {
-    
+  function waterCharges(name, type) {
     return {
       name,
       type,
       history: [
         {
-          waterCharges: <input placeholder="water Charges" onChange={(e)=>{setWaterCharge(e.target.value)}}></input>,
+          waterCharges: (
+            <input
+              placeholder="water Charges"
+              onChange={(e) => {
+                setWaterCharge(e.target.value);
+              }}
+            ></input>
+          ),
         },
       ],
     };
   }
-  function maintainanceCharges(name,type) {
-    
+  function maintainanceCharges(name, type) {
     return {
       name,
       type,
       history: [
         {
-          maintainanceCharges: <input placeholder="Maintainance Charges" onChange={(e)=>{setMaintainanceCharge(e.target.value)}}></input>,
+          maintainanceCharges: (
+            <input
+              placeholder="Maintainance Charges"
+              onChange={(e) => {
+                setMaintainanceCharge(e.target.value);
+              }}
+            ></input>
+          ),
         },
       ],
     };
   }
   const rows = [
-    kElectric("K-ELECTRIC", "kelectric", "1-1-2023"),
-    ssgc("SSGC", "ssgc", "5-1-2022"),
-    waterCharges("WATER", "water", "3-2-2021"),
-    maintainanceCharges("MAINTAINANCE", "maintainance", "2-3-2020"),
-    trashCharges("TRASH CHARGES", "trash", "3-3-2019"),
+    kElectric("K-ELECTRIC", "kelectric"),
+    ssgc("SSGC", "ssgc"),
+    waterCharges("WATER", "water"),
+    maintainanceCharges("MAINTAINANCE", "maintainance"),
+    trashCharges("TRASH CHARGES", "trash"),
   ];
   return (
     <>
-      <Wrapper open={open} setOpen={setOpen} mylocation= {mylocation}/>
+      <Wrapper open={open} setOpen={setOpen} mylocation={mylocation} />
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
-        <TableContainer component={Paper} 
-        // sx={{ marginTop: 4 }}
+        <TableContainer
+          component={Paper}
+          // sx={{ marginTop: 4 }}
         >
           <Table aria-label="collapsible table">
             <TableHead sx={{ background: "black" }}>
