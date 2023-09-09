@@ -24,6 +24,7 @@ function Row(props) {
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = useState('option1');
 const [kElectricBillEntry,setKElectricBillEntry]=useState();
+const [ssgcBillEntry,setSsgcBillEntry]=useState();
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
@@ -142,63 +143,159 @@ const [kElectricBillEntry,setKElectricBillEntry]=useState();
           </TableCell>
         </TableRow>
       ) : row?.type === "ssgc" ? (
-        <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
-                <Typography variant="h6" gutterBottom component="div">
-                  History
-                </Typography>
-                <Table size="small" aria-label="purchases">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Previous Reading</TableCell>
-                      <TableCell>Current Reading</TableCell>
-                      <TableCell align="right">Enter Bill</TableCell>
-                      <TableCell align="right">Total Unit</TableCell>
-                      <TableCell align="right">SSGC Bill</TableCell>
-                      <TableCell align="right"></TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {row.history.map((historyRow) => (
-                      <TableRow key={historyRow.previousReading}>
-                        <TableCell component="th" scope="row">
-                          {historyRow.previousReading}
-                        </TableCell>
-                        <TableCell>{historyRow.currentReading}</TableCell>
-                        <TableCell align="right">
-                          {historyRow.enterBill}
-                        </TableCell>
-                        <TableCell align="right">
-                          {historyRow.totalUnit}
-                        </TableCell>
-                        <TableCell align="right">
-                          {historyRow.kElectricBill}
-                        </TableCell>
-                        <TableCell align="right">
-                          {historyRow.permenantAddress}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-                <Button
-                  variant="contained"
-                  sx={{ marginTop: 2, marginRight: 1, background: "black" }}
-                >
-                  Post
-                </Button>
-                {/* <Button
-        variant="contained"
-        sx={{ marginTop: 2, background: "black" }}
-      >
-        Reject
-      </Button> */}
-              </Box>
-            </Collapse>
-          </TableCell>
-        </TableRow>
+      //   <TableRow>
+      //     <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+      //       <Collapse in={open} timeout="auto" unmountOnExit>
+      //         <Box sx={{ margin: 1 }}>
+      //           <Typography variant="h6" gutterBottom component="div">
+      //             History
+      //           </Typography>
+      //           <Table size="small" aria-label="purchases">
+      //             <TableHead>
+      //               <TableRow>
+      //                 <TableCell>Previous Reading</TableCell>
+      //                 <TableCell>Current Reading</TableCell>
+      //                 <TableCell align="right">Enter Bill</TableCell>
+      //                 <TableCell align="right">Total Unit</TableCell>
+      //                 <TableCell align="right">SSGC Bill</TableCell>
+      //                 <TableCell align="right"></TableCell>
+      //               </TableRow>
+      //             </TableHead>
+      //             <TableBody>
+      //               {row.history.map((historyRow) => (
+      //                 <TableRow key={historyRow.previousReading}>
+      //                   <TableCell component="th" scope="row">
+      //                     {historyRow.previousReading}
+      //                   </TableCell>
+      //                   <TableCell>{historyRow.currentReading}</TableCell>
+      //                   <TableCell align="right">
+      //                     {historyRow.enterBill}
+      //                   </TableCell>
+      //                   <TableCell align="right">
+      //                     {historyRow.totalUnit}
+      //                   </TableCell>
+      //                   <TableCell align="right">
+      //                     {historyRow.kElectricBill}
+      //                   </TableCell>
+      //                   <TableCell align="right">
+      //                     {historyRow.permenantAddress}
+      //                   </TableCell>
+      //                 </TableRow>
+      //               ))}
+      //             </TableBody>
+      //           </Table>
+      //           <Button
+      //             variant="contained"
+      //             sx={{ marginTop: 2, marginRight: 1, background: "black" }}
+      //           >
+      //             Post
+      //           </Button>
+      //           {/* <Button
+      //   variant="contained"
+      //   sx={{ marginTop: 2, background: "black" }}
+      // >
+      //   Reject
+      // </Button> */}
+      //         </Box>
+      //       </Collapse>
+      //     </TableCell>
+      //   </TableRow>
+      <TableRow>
+      <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <Box sx={{ margin: 1 }}>
+            {/* <Typography variant="h6" gutterBottom component="div">
+              History
+            </Typography> */}
+                <div>
+  <FormControl component="fieldset">
+    <Typography variant="h6">Select Bill Type</Typography>
+    <RadioGroup
+      aria-label="options"
+      name="options"
+      style={{flexDirection:"row"}}
+      // value={selectedValue}
+      onChange={handleChange}
+    >
+      <FormControlLabel value="byGasUnitReading" control={<Radio />} label="Enter Unit Reading" />
+      <FormControlLabel value="byGasBill" control={<Radio />} label="Enter Bill" />
+      <FormControlLabel value="byGasPicture" control={<Radio />} label="Insert Picture" />
+    </RadioGroup>
+  </FormControl>
+  
+  {/* Conditional rendering based on the selected radio button */}
+  {selectedValue === 'byGasUnitReading' && <div>
+  <Table size="small" aria-label="purchases">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Previous Reading</TableCell>
+                  <TableCell>Current Reading</TableCell>
+                  <TableCell>Per Unit</TableCell>
+                  <TableCell align="right">Total Unit</TableCell>
+                  <TableCell>Total Bill</TableCell>
+                  <TableCell align="right"></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {row.history.map((historyRow) => (
+                  <TableRow key={historyRow.previousReadingSsg}>
+                    <TableCell component="th" scope="row">
+                      {historyRow.previousReadingSsg}
+                    </TableCell>
+                    <TableCell>{historyRow.currentReadingSsg}</TableCell>
+                    <TableCell>{historyRow.perUnitSsgCharges}</TableCell>
+                    <TableCell align="right">
+                      {historyRow.totalSsgUnit || 0}
+                    </TableCell>
+                    {/* <TableCell>{historyRow.enterBill}</TableCell> */}
+                    <TableCell >
+                      {historyRow.showSsgcUnit || 0}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <Button
+              variant="contained"
+              sx={{ marginTop: 2, marginRight: 1, background: "black" }}
+            >
+              Post
+            </Button>
+    </div>}
+  {selectedValue === 'byGasBill' && <div>
+  <Table size="small" aria-label="purchases">
+              <TableHead>
+                <TableRow>
+                 
+                  <TableCell>Enter Bill</TableCell>
+                  <TableCell>Total Bill</TableCell>
+                  
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                
+                  <TableRow>                   
+                    <TableCell><input placeholder="Enter Bill" onChange={(e)=>{setSsgcBillEntry(e.target.value)}}/></TableCell>
+                    <TableCell>{ssgcBillEntry}</TableCell>
+                  
+                  </TableRow>
+               
+              </TableBody>
+            </Table>
+            <Button
+              variant="contained"
+              sx={{ marginTop: 2, marginRight: 1, background: "black" }}
+            >
+              Post
+            </Button>
+    </div>}
+  {selectedValue === 'byGasPicture' && <div>byPicture</div>}
+</div>
+      
+          </Box>
+        </Collapse>
+      </TableCell>
+    </TableRow>
       ) : row?.type === "water" ? (
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -334,12 +431,11 @@ export default function UploadBill() {
   ///////////////KELECTRIC//////////////////
   const [prevReadingKelectric, setprevReadingKelectric] = useState();
   const [currentReadingKelectric, setCurrentReadingKelectric] = useState();
-  const [typeBillKelectric, setTypeBillKelectric] = useState();
   const [perUnitCharges, setPerUnitCharges] = useState();
   ////////////////SSGC////////////////////////
   const [prevReadingSsgc, setprevReadingSsgc] = useState();
   const [currentReadingSsgc, setCurrentReadingSsgc] = useState();
-  const [typeBillSsgc, setTypeBillSsgc] = useState();
+  const [perUnitSsgCharge, setPerUnitSsgCharges] = useState();
   ///////////////TRASH CHARGES///////////////
   const [trashCharge, setTrashCharge] = useState();
   ///////////////WATER CHARGES/////////////////
@@ -391,7 +487,7 @@ export default function UploadBill() {
       type,
       history: [
         {
-          previousReading: (
+          previousReadingSsg: (
             <input
               placeholder="Previous Reading"
               onChange={(e) => {
@@ -399,7 +495,7 @@ export default function UploadBill() {
               }}
             ></input>
           ),
-          currentReading: (
+          currentReadingSsg: (
             <input
               placeholder="current Reading"
               onChange={(e) => {
@@ -407,16 +503,18 @@ export default function UploadBill() {
               }}
             ></input>
           ),
-          enterBill: (
+          perUnitSsgCharges: (
             <input
-              placeholder="Type Bill"
+              placeholder="Per Unit"
               onChange={(e) => {
-                setTypeBillSsgc(e.target.value);
+                setPerUnitSsgCharges(e.target.value);
               }}
             ></input>
           ),
-          totalUnit: 15000,
-          kElectricBill: 1200,
+          totalSsgUnit:currentReadingSsgc -prevReadingSsgc,
+          showSsgcUnit:
+          parseInt(currentReadingSsgc - prevReadingSsgc) *
+          parseInt(perUnitSsgCharge),
         },
       ],
     };
