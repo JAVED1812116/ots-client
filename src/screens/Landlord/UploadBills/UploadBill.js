@@ -17,11 +17,16 @@ import Wrapper from "../../../components/Wrapper";
 import { useState } from "react";
 import { useLocation } from "react-router";
 import title from "../../../components/title";
+import { FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
-
+  const [selectedValue, setSelectedValue] = useState('option1');
+const [kElectricBillEntry,setKElectricBillEntry]=useState();
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -44,17 +49,34 @@ function Row(props) {
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
-                <Typography variant="h6" gutterBottom component="div">
+                {/* <Typography variant="h6" gutterBottom component="div">
                   History
-                </Typography>
-                <Table size="small" aria-label="purchases">
+                </Typography> */}
+                    <div>
+      <FormControl component="fieldset">
+        <Typography variant="h6">Select Bill Type</Typography>
+        <RadioGroup
+          aria-label="options"
+          name="options"
+          style={{flexDirection:"row"}}
+          // value={selectedValue}
+          onChange={handleChange}
+        >
+          <FormControlLabel value="byUnitReading" control={<Radio />} label="Enter Unit Reading" />
+          <FormControlLabel value="byBill" control={<Radio />} label="Enter Bill" />
+          <FormControlLabel value="byPicture" control={<Radio />} label="Insert Picture" />
+        </RadioGroup>
+      </FormControl>
+      
+      {/* Conditional rendering based on the selected radio button */}
+      {selectedValue === 'byUnitReading' && <div>
+      <Table size="small" aria-label="purchases">
                   <TableHead>
                     <TableRow>
                       <TableCell>Previous Reading</TableCell>
                       <TableCell>Current Reading</TableCell>
                       <TableCell>Per Unit</TableCell>
                       <TableCell align="right">Total Unit</TableCell>
-                      <TableCell>Enter Bill</TableCell>
                       <TableCell>Total Bill</TableCell>
                       <TableCell align="right"></TableCell>
                     </TableRow>
@@ -70,8 +92,8 @@ function Row(props) {
                         <TableCell align="right">
                           {historyRow.totalUnit || 0}
                         </TableCell>
-                        <TableCell>{historyRow.enterBill}</TableCell>
-                        <TableCell align="right">
+                        {/* <TableCell>{historyRow.enterBill}</TableCell> */}
+                        <TableCell >
                           {historyRow.showElectricUnit || 0}
                         </TableCell>
                       </TableRow>
@@ -84,12 +106,37 @@ function Row(props) {
                 >
                   Post
                 </Button>
-                {/* <Button
-                variant="contained"
-                sx={{ marginTop: 2, background: "black" }}
-              >
-                Reject
-              </Button> */}
+        </div>}
+      {selectedValue === 'byBill' && <div>
+      <Table size="small" aria-label="purchases">
+                  <TableHead>
+                    <TableRow>
+                     
+                      <TableCell>Enter Bill</TableCell>
+                      <TableCell>Total Bill</TableCell>
+                      
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    
+                      <TableRow>                   
+                        <TableCell><input placeholder="Enter Bill" onChange={(e)=>{setKElectricBillEntry(e.target.value)}}/></TableCell>
+                        <TableCell>{kElectricBillEntry}</TableCell>
+                      
+                      </TableRow>
+                   
+                  </TableBody>
+                </Table>
+                <Button
+                  variant="contained"
+                  sx={{ marginTop: 2, marginRight: 1, background: "black" }}
+                >
+                  Post
+                </Button>
+        </div>}
+      {selectedValue === 'byPicture' && <div>byPicture</div>}
+    </div>
+          
               </Box>
             </Collapse>
           </TableCell>
@@ -333,15 +380,7 @@ export default function UploadBill() {
           showElectricUnit:
             parseInt(currentReadingKelectric - prevReadingKelectric) *
             parseInt(perUnitCharges),
-          enterBill: (
-            <input
-              placeholder="Type Bill Here"
-              onChange={(e) => {
-                console.log("INDEX", index)
-                // setTypeBillKelectric(e.target.value);
-              }}
-            ></input>
-          ),
+         
         },
       ],
     };
