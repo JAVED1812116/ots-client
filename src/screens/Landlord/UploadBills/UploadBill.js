@@ -27,7 +27,8 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
+import { ElectricBill } from "../../../Redux/Reducer/ElectricReading";
+import { useDispatch } from "react-redux";
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
@@ -40,6 +41,30 @@ function Row(props) {
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
+const dispatch=useDispatch();
+  const handleBillReading=(e)=>{
+    console.log(e.target.value,"test")
+    dispatch(ElectricBill({}))
+    // if(detail.monthlyRent&&detail.advance&&detail.maintainanceChearges&&detail.trashCharges!=null||""){
+    //   dispatch(RentSet({detail})).then((res)=>{
+    //    if(res?.payload?.data?.message==="Rent Set Successfully"){
+    //     toast.success(res?.payload?.data?.message, {
+    //       autoClose: 300,
+    //     });
+
+    //   }else{
+    //     toast.error(res?.payload?.data?.message,{
+    //       autoClose:300,
+    //     })
+       
+    //    }
+    //     });
+    // }else{
+    //   toast.error("Empty Field are not allowed", {
+    //     autoClose: 300,
+    //   });
+    // }
+  }
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -145,6 +170,7 @@ function Row(props) {
                           marginRight: 1,
                           background: "black",
                         }}
+                        onClick={handleBillReading}
                       >
                         Post
                       </Button>

@@ -3,6 +3,7 @@ import CreateUser from "./Reducer/CreateUser";
 import TenantRegestration from './Reducer/TenantRegestration';
 import RentSetting from './Reducer/RentSetting';
 import AccountSetting from './Reducer/AccountSetting';
+import ElectricReading from './Reducer/ElectricReading';
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     "TenantRegestration": TenantRegestration,
     "rentSetting": RentSetting,
     "accountSetting": AccountSetting,
+    "electricReading": ElectricReading,
   },
 })
