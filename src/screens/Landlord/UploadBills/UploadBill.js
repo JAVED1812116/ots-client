@@ -17,6 +17,7 @@ import Wrapper from "../../../components/Wrapper";
 import { useState } from "react";
 import { useLocation } from "react-router";
 import title from "../../../components/title";
+import Stack from "@mui/material/Stack";
 import {
   FormControl,
   FormControlLabel,
@@ -26,6 +27,7 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
@@ -179,7 +181,7 @@ function Row(props) {
                               <DatePicker />
                             </LocalizationProvider>
                             </TableCell>
-                            <TableCell>{kElectricBillEntry}</TableCell>
+                            <TableCell>{kElectricBillEntry||0}</TableCell>
                           </TableRow>
                         </TableBody>
                       </Table>
@@ -195,7 +197,14 @@ function Row(props) {
                       </Button>
                     </div>
                   )}
-                  {selectedValue === "byPicture" && <div>byPicture</div>}
+                  {selectedValue === "byPicture" &&
+                   <div> 
+                    <Stack direction="row" alignItems="center" spacing={2}>
+                   <Button variant="contained" component="label">
+                     Upload
+                     <input hidden accept="image/*" multiple type="file" />
+                   </Button>
+                 </Stack></div>}
                 </div>
               </Box>
             </Collapse>
@@ -329,7 +338,7 @@ function Row(props) {
                               <DatePicker />
                             </LocalizationProvider>
                             </TableCell>
-                            <TableCell>{ssgcBillEntry}</TableCell>
+                            <TableCell>{ssgcBillEntry||0}</TableCell>
                           </TableRow>
                         </TableBody>
                       </Table>
@@ -345,7 +354,12 @@ function Row(props) {
                       </Button>
                     </div>
                   )}
-                  {selectedValue === "byGasPicture" && <div>byPicture</div>}
+                  {selectedValue === "byGasPicture" && <div> <Stack direction="row" alignItems="center" spacing={2}>
+      <Button variant="contained" component="label">
+        Upload
+        <input hidden accept="image/*" multiple type="file" />
+      </Button>
+    </Stack></div>}
                 </div>
               </Box>
             </Collapse>
@@ -414,7 +428,7 @@ function Row(props) {
                               <DatePicker />
                             </LocalizationProvider>
                             </TableCell>
-                            <TableCell>{waterBill}</TableCell>
+                            <TableCell>{waterBill||0}</TableCell>
                           </TableRow>
                         </TableBody>
                       </Table>
@@ -430,7 +444,12 @@ function Row(props) {
                       </Button>
                     </div>
                   )}
-                  {selectedValue === "byWaterPicture" && <div>byPicture</div>}
+                  {selectedValue === "byWaterPicture" && <div> <Stack direction="row" alignItems="center" spacing={2}>
+      <Button variant="contained" component="label">
+        Upload
+        <input hidden accept="image/*" multiple type="file" />
+      </Button>
+    </Stack></div>}
                 </div>
               </Box>
             </Collapse>
@@ -499,7 +518,7 @@ function Row(props) {
                               <DatePicker />
                             </LocalizationProvider>
                             </TableCell>
-                            <TableCell>{maintainanceBill}</TableCell>
+                            <TableCell>{maintainanceBill||0}</TableCell>
                           </TableRow>
                         </TableBody>
                       </Table>
@@ -516,7 +535,12 @@ function Row(props) {
                     </div>
                   )}
                   {selectedValue === "byMaintainancePicture" && (
-                    <div>byPicture</div>
+                    <div> <Stack direction="row" alignItems="center" spacing={2}>
+                    <Button variant="contained" component="label">
+                      Upload
+                      <input hidden accept="image/*" multiple type="file" />
+                    </Button>
+                  </Stack></div>
                   )}
                 </div>
               </Box>
@@ -586,7 +610,7 @@ function Row(props) {
                               <DatePicker />
                             </LocalizationProvider>
                             </TableCell>
-                            <TableCell>{trashBill}</TableCell>
+                            <TableCell>{trashBill||0}</TableCell>
                           </TableRow>
                         </TableBody>
                       </Table>
@@ -602,7 +626,12 @@ function Row(props) {
                       </Button>
                     </div>
                   )}
-                  {selectedValue === "byTrashPicture" && <div>byPicture</div>}
+                  {selectedValue === "byTrashPicture" && <div> <Stack direction="row" alignItems="center" spacing={2}>
+      <Button variant="contained" component="label">
+        Upload
+        <input hidden accept="image/*" multiple type="file" />
+      </Button>
+    </Stack></div>}
                 </div>
               </Box>
             </Collapse>
