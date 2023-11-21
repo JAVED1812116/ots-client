@@ -8,7 +8,7 @@ import { useLocation } from "react-router";
 import title from "../../../components/title";
 import "./rentSetting.css"
 import { useDispatch } from "react-redux";
-import { RentSet } from "../../../Redux/Reducer/RentSetting";
+import { RentSet } from "../../../redux/Reducer/RentSetting";
 import { toast,ToastContainer } from "react-toastify";
 export default function RentSetting() {
   title("Rent Setting")

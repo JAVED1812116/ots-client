@@ -13,7 +13,7 @@ import {
   Container,
   FormControl,
 } from "@mui/material";
-import { RegisterTenant } from "../../../Redux/Reducer/TenantRegestration";
+import { RegisterTenant } from "../../../redux/Reducer/TenantRegestration";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 export default function Registration() {

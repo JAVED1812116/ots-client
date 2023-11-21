@@ -8,7 +8,7 @@ import { useLocation } from "react-router";
 import title from '../../../components/title';
 import "./bankDetails.css"
 import { useDispatch } from 'react-redux';
-import { AccountSet } from '../../../Redux/Reducer/AccountSetting';
+import { AccountSet } from '../../../redux/Reducer/AccountSetting';
 import { ToastContainer, toast } from 'react-toastify';
 export default function BankDetail() {
   title("Account Detail")

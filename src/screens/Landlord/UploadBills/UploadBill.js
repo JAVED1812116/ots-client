@@ -27,7 +27,7 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { ElectricBill } from "../../../Redux/Reducer/ElectricReading";
+import { ElectricBill } from "../../../redux/Reducer/ElectricReading";
 import { useDispatch } from "react-redux";
 function Row(props) {
   const { row } = props;
