@@ -46,7 +46,7 @@ function Row(props) {
   };
   const dispatch = useDispatch();
   const handleBillReading = (e) => {
-    console.log(prevReadingKelectric, "test");
+    console.log('', "test");
     // dispatch(ElectricBill({}));
     // if(detail.monthlyRent&&detail.advance&&detail.maintainanceChearges&&detail.trashCharges!=null||""){
     //   dispatch(RentSet({detail})).then((res)=>{
