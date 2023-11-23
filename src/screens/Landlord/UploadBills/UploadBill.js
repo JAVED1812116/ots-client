@@ -32,6 +32,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ElectricBill } from "../../../redux/Reducer/ElectricReading";
 import { useDispatch } from "react-redux";
+
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
@@ -41,12 +42,14 @@ function Row(props) {
   const [waterBill, setWaterBill] = useState();
   const [maintainanceBill, setMaintainanceBill] = useState();
   const [trashBill, setTrashBill] = useState();
+  const [billDate, setBillDate] = useState();
+  const [dueDate, setDueDate] = useState();
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
   const dispatch = useDispatch();
   const handleBillReading = (e) => {
-    console.log('', "test");
+    console.log(props.prevReadingKelectric, "test");
     // dispatch(ElectricBill({}));
     // if(detail.monthlyRent&&detail.advance&&detail.maintainanceChearges&&detail.trashCharges!=null||""){
     //   dispatch(RentSet({detail})).then((res)=>{
@@ -149,14 +152,14 @@ function Row(props) {
                                 <LocalizationProvider
                                   dateAdapter={AdapterDayjs}
                                 >
-                                  <DatePicker className="fulldate"/>
+                                  <DatePicker className="fulldate" onChange={(newValue) => setBillDate(newValue)}/>
                                 </LocalizationProvider>
                               </TableCell>
                               <TableCell>
                                 <LocalizationProvider
                                   dateAdapter={AdapterDayjs}
                                 >
-                                  <DatePicker className="fulldate"/>
+                                  <DatePicker className="fulldate" onChange={(newValue) => setDueDate(newValue)}/>
                                 </LocalizationProvider>
                               </TableCell>
                               <TableCell align="right">
@@ -688,7 +691,6 @@ function Row(props) {
     </React.Fragment>
   );
 }
-
 export default function UploadBill() {
   title("Upload Bill");
   const [open, setOpen] = useState(false);
@@ -899,7 +901,7 @@ export default function UploadBill() {
             </TableHead>
             <TableBody>
               {rows.map((row) => (
-                <Row key={row.name} row={row} />
+                <Row key={row.name} row={row} prevReadingKelectric={prevReadingKelectric} currentReadingKelectric={currentReadingKelectric} perUnitCharges={perUnitCharges}/>
               ))}
             </TableBody>
           </Table>
