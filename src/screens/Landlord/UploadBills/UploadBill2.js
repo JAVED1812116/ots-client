@@ -94,9 +94,9 @@ function Row(props) {
         kElectricTotalBill: inputs.kElectricEnterBill,
         //extra fields
         kElectricBillImage: "",
-        kElectricPreviousReading: inputs.kElectricPreviousReading,
-        kElectricCurrentReading: inputs.kElectricCurrentReading,
-        kElectricPerUnit: inputs.kElectricPerUnit,
+        kElectricPreviousReading: "",
+        kElectricCurrentReading: "",
+        kElectricPerUnit: "",
         kElectricTotalUnits: "",
       };
       console.log(values, "values");
@@ -252,6 +252,7 @@ function Row(props) {
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
                                   className="fulldate"
+                                  disabled={true}
                                   onChange={(newValue) => setBillDate(newValue)}
                                 />
                               </LocalizationProvider>
@@ -327,6 +328,7 @@ function Row(props) {
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
                                   className="fulldate"
+                                  disabled={true}
                                   onChange={(newValue) => setBillDate(newValue)}
                                 />
                               </LocalizationProvider>
@@ -440,28 +442,52 @@ function Row(props) {
                           {row.history.map((historyRow) => (
                             <TableRow key={historyRow.previousReadingSsg}>
                               <TableCell component="th" scope="row">
-                                {historyRow.previousReadingSsg}
-                              </TableCell>
-                              <TableCell>
-                                {historyRow.currentReadingSsg}
-                              </TableCell>
-                              <TableCell>
-                                {historyRow.perUnitSsgCharges}
-                              </TableCell>
-                              <TableCell>
-                                <LocalizationProvider
-                                  dateAdapter={AdapterDayjs}
-                                >
-                                  <DatePicker />
-                                </LocalizationProvider>
-                              </TableCell>
-                              <TableCell>
-                                <LocalizationProvider
-                                  dateAdapter={AdapterDayjs}
-                                >
-                                  <DatePicker />
-                                </LocalizationProvider>
-                              </TableCell>
+                              <TextField
+                                id="outlined-number"
+                                label="Previous Reading"
+                                type="number"
+                                size="small"
+                                name="previousReadingSsg"
+                                onChange={handleInputs}
+                              />
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              <TextField
+                                id="outlined-number"
+                                label="Current Reading"
+                                type="number"
+                                size="small"
+                                name="currentReadingSsg"
+                                onChange={handleInputs}
+                              />
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              <TextField
+                                id="outlined-number"
+                                label="Per Unit"
+                                type="number"
+                                size="small"
+                                name="perUnitSsgCharges"
+                                onChange={handleInputs}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                  className="fulldate"
+                                  disabled={true}
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                  className="fulldate"
+                                  onChange={(newValue) => setDueDate(newValue)}
+                                />
+                              </LocalizationProvider>
+                            </TableCell>
                               <TableCell align="right">
                                 {historyRow.totalSsgUnit || 0}
                               </TableCell>
@@ -498,22 +524,34 @@ function Row(props) {
                         </TableHead>
                         <TableBody>
                           <TableRow>
-                            <TableCell>
-                              <input
-                                placeholder="Enter Bill"
-                                onChange={(e) => {
-                                  setSsgcBillEntry(e.target.value);
-                                }}
+                          <TableCell>
+                              <TextField
+                                id="outlined-number"
+                                label="Enter Bill"
+                                type="number"
+                                size="small"
+                                // onChange={(e) => {
+                                //   setKElectricBillEntry(e.target.value);
+                                // }}
+                                name="ssgcEnterBill"
+                                onChange={handleInputs}
                               />
                             </TableCell>
                             <TableCell>
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker />
+                                <DatePicker
+                                  className="fulldate"
+                                  disabled={true}
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
                               </LocalizationProvider>
                             </TableCell>
                             <TableCell>
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker />
+                                <DatePicker
+                                  className="fulldate"
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
                               </LocalizationProvider>
                             </TableCell>
                             <TableCell>{ssgcBillEntry || 0}</TableCell>
@@ -594,21 +632,33 @@ function Row(props) {
                         <TableBody>
                           <TableRow>
                             <TableCell>
-                              <input
-                                placeholder="Enter Bill"
-                                onChange={(e) => {
-                                  setWaterBill(e.target.value);
-                                }}
+                            <TextField
+                                id="outlined-number"
+                                label="Enter Bill"
+                                type="number"
+                                size="small"
+                                // onChange={(e) => {
+                                //   setKElectricBillEntry(e.target.value);
+                                // }}
+                                name="waterEnterBill"
+                                onChange={handleInputs}
                               />
                             </TableCell>
                             <TableCell>
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker />
+                                <DatePicker
+                                  className="fulldate"
+                                  disabled={true}
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
                               </LocalizationProvider>
                             </TableCell>
                             <TableCell>
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker />
+                                <DatePicker
+                                  className="fulldate"
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
                               </LocalizationProvider>
                             </TableCell>
                             <TableCell>{waterBill || 0}</TableCell>
@@ -688,22 +738,34 @@ function Row(props) {
                         </TableHead>
                         <TableBody>
                           <TableRow>
-                            <TableCell>
-                              <input
-                                placeholder="Enter Bill"
-                                onChange={(e) => {
-                                  setMaintainanceBill(e.target.value);
-                                }}
+                          <TableCell>
+                            <TextField
+                                id="outlined-number"
+                                label="Enter Bill"
+                                type="number"
+                                size="small"
+                                // onChange={(e) => {
+                                //   setKElectricBillEntry(e.target.value);
+                                // }}
+                                name="maintainanceEnterBill"
+                                onChange={handleInputs}
                               />
                             </TableCell>
                             <TableCell>
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker />
+                                <DatePicker
+                                  className="fulldate"
+                                  disabled={true}
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
                               </LocalizationProvider>
                             </TableCell>
                             <TableCell>
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker />
+                                <DatePicker
+                                  className="fulldate"
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
                               </LocalizationProvider>
                             </TableCell>
                             <TableCell>{maintainanceBill || 0}</TableCell>
@@ -783,22 +845,34 @@ function Row(props) {
                         </TableHead>
                         <TableBody>
                           <TableRow>
-                            <TableCell>
-                              <input
-                                placeholder="Enter Bill"
-                                onChange={(e) => {
-                                  setTrashBill(e.target.value);
-                                }}
+                          <TableCell>
+                            <TextField
+                                id="outlined-number"
+                                label="Enter Bill"
+                                type="number"
+                                size="small"
+                                // onChange={(e) => {
+                                //   setKElectricBillEntry(e.target.value);
+                                // }}
+                                name="trashEnterBill"
+                                onChange={handleInputs}
                               />
                             </TableCell>
                             <TableCell>
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker />
+                                <DatePicker
+                                  className="fulldate"
+                                  disabled={true}
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
                               </LocalizationProvider>
                             </TableCell>
                             <TableCell>
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker />
+                                <DatePicker
+                                  className="fulldate"
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
                               </LocalizationProvider>
                             </TableCell>
                             <TableCell>{trashBill || 0}</TableCell>
