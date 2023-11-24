@@ -97,12 +97,12 @@ function Row(props) {
         kElectricPreviousReading: inputs.kElectricPreviousReading,
         kElectricCurrentReading: inputs.kElectricCurrentReading,
         kElectricPerUnit: inputs.kElectricPerUnit,
-        kElectricTotalUnits:""
+        kElectricTotalUnits: "",
       };
       console.log(values, "values");
       dispatch(ElectricBill(values));
     } else {
-      let values= {
+      let values = {
         kElectricBillImage: "", // image work pending
         //extra fields
         kElectricEnterBill: "",
@@ -112,8 +112,9 @@ function Row(props) {
         kElectricPreviousReading: "",
         kElectricCurrentReading: "",
         kElectricPerUnit: "",
-        kElectricTotalUnits:""
-      }
+        kElectricTotalUnits: "",
+      };
+      console.log(values, "values");
       dispatch(ElectricBill(values));
     }
     // if(detail.monthlyRent&&detail.advance&&detail.maintainanceChearges&&detail.trashCharges!=null||""){
