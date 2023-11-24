@@ -49,7 +49,8 @@ function Row(props) {
   };
   const dispatch = useDispatch();
   const handleBillReading = (e) => {
-    console.log(props.prevReadingKelectric, "test");
+    console.log(props.inputs, "test");
+    console.log(selectedValue, "test1");
     // dispatch(ElectricBill({}));
     // if(detail.monthlyRent&&detail.advance&&detail.maintainanceChearges&&detail.trashCharges!=null||""){
     //   dispatch(RentSet({detail})).then((res)=>{
@@ -710,6 +711,22 @@ export default function UploadBill() {
   const [waterCharge, setWaterCharge] = useState();
   //////////////MAINTAINANCECHARGES////////////
   const [maintainanceCharge, setMaintainanceCharge] = useState();
+
+
+  const [inputs, setInputs] = useState({
+    kElectricPreviousReading: "",
+    kElectricCurrentReading: "",
+    kElectricPerUnit: "",
+  })
+
+  const handleInputs = (e) => {
+    // console.log(e);
+    const value = e.target.value;
+    const name = e.target.name;
+
+    setInputs({ ...inputs, [name]: value });
+  };
+
   function kElectric(name, type, index) {
     return {
       name,
@@ -728,9 +745,11 @@ export default function UploadBill() {
               label="Previous Reading"
               type="number"
               size="small"
-              onChange={(e) => {
-                setprevReadingKelectric(e.target.value);
-              }}
+              name= "kElectricPreviousReading"
+              // onChange={(e) => {
+              //   setprevReadingKelectric(e.target.value);
+              // }}
+              onChange={handleInputs}
             />
           ),
           currentReading: (
@@ -745,9 +764,11 @@ export default function UploadBill() {
               label="Current Reading"
               type="number"
               size="small"
-              onChange={(e) => {
-                setCurrentReadingKelectric(e.target.value);
-              }}
+              name= "kElectricCurrentReading"
+              // onChange={(e) => {
+              //   setCurrentReadingKelectric(e.target.value);
+              // }}
+              onChange={handleInputs}
             />
           ),
           perUnitCharge: (
@@ -762,15 +783,17 @@ export default function UploadBill() {
               label="Per Unit"
               type="number"
               size="small"
-              onChange={(e) => {
-                setPerUnitCharges(e.target.value);
-              }}
+              // onChange={(e) => {
+              //   setPerUnitCharges(e.target.value);
+              // }}
+              name="kElectricPerUnit"
+              onChange={handleInputs}
             />
           ),
-          totalUnit: currentReadingKelectric - prevReadingKelectric,
+          totalUnit: inputs.kElectricCurrentReading- inputs.kElectricPreviousReading,
           showElectricUnit:
-            parseInt(currentReadingKelectric - prevReadingKelectric) *
-            parseInt(perUnitCharges),
+            parseInt(inputs.kElectricCurrentReading - inputs.kElectricPreviousReading) *
+            parseInt(inputs.kElectricPerUnit),
         },
       ],
     };
@@ -901,7 +924,10 @@ export default function UploadBill() {
             </TableHead>
             <TableBody>
               {rows.map((row) => (
-                <Row key={row.name} row={row} prevReadingKelectric={prevReadingKelectric} currentReadingKelectric={currentReadingKelectric} perUnitCharges={perUnitCharges}/>
+                <Row key={row.name} row={row}
+                //  prevReadingKelectric={prevReadingKelectric} currentReadingKelectric={currentReadingKelectric} perUnitCharges={perUnitCharges}
+                inputs={inputs}
+                />
               ))}
             </TableBody>
           </Table>
