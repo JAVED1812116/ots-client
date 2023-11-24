@@ -10,6 +10,7 @@ import "./bankDetails.css";
 import { useDispatch } from "react-redux";
 import { AccountSet } from "../../../redux/Reducer/AccountSetting";
 import { ToastContainer, toast } from "react-toastify";
+import { GetAccount } from "../../../redux/Reducer/GetAccountDetails";
 export default function BankDetail() {
   title("Account Detail");
   const dispatch = useDispatch();
@@ -38,8 +39,8 @@ export default function BankDetail() {
       ""
     ) {
       console.log("inIF");
-      detail.userId = localStorage.getItem("user_id")
-      detail.userName = localStorage.getItem("name")
+      detail.userId = localStorage.getItem("user_id");
+      detail.userName = localStorage.getItem("name");
       dispatch(AccountSet({ detail })).then((res) => {
         console.log(res?.payload?.data?.message);
         if (
@@ -61,6 +62,24 @@ export default function BankDetail() {
       });
     }
   };
+
+  React.useEffect(() => {
+    console.log("hello");
+    dispatch(GetAccount({ userId: localStorage.getItem("user_id") })).then(
+      (res) => {
+        // console.log(res?.payload?.data);
+        let { bankName, accountName, accountNumber, ibanNumber } =
+          res?.payload?.data?.data;
+        setDetail({
+          bankName,
+          accountName,
+          accountNumber,
+          ibanNumber,
+        });
+      }
+    );
+  }, []);
+
   return (
     <>
       <Wrapper open={open} setOpen={setOpen} mylocation={mylocation} />
@@ -77,6 +96,7 @@ export default function BankDetail() {
               maxRows={4}
               variant="standard"
               name="bankName"
+              value={detail.bankName}
               onChange={handleChange}
             />
             <TextField
@@ -86,6 +106,7 @@ export default function BankDetail() {
               multiline
               variant="standard"
               name="accountName"
+              value={detail.accountName}
               onChange={handleChange}
             />
             {/* <TextField
@@ -104,6 +125,7 @@ export default function BankDetail() {
               maxRows={4}
               variant="standard"
               name="accountNumber"
+              value={detail.accountNumber}
               onChange={handleChange}
             />
             <TextField
@@ -113,6 +135,7 @@ export default function BankDetail() {
               multiline
               variant="standard"
               name="ibanNumber"
+              value={detail.ibanNumber}
               onChange={handleChange}
             />
           </div>
