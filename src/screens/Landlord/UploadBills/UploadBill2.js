@@ -80,22 +80,41 @@ function Row(props) {
           parseInt(
             inputs.kElectricCurrentReading - inputs.kElectricPreviousReading
           ) * parseInt(inputs.kElectricPerUnit) || 0,
+        //extra fields
+        kElectricBillImage: "",
+        kElectricEnterBill: "",
       };
-      console.log(values, 'values');
+      console.log(values, "values");
       dispatch(ElectricBill(values));
-    }
-    else if (selectedValue === "byBill"){
+    } else if (selectedValue === "byBill") {
       let values = {
         kElectricEnterBill: inputs.kElectricEnterBill,
         kElectricBillDate: billDate,
         kElectricDueDate: dueDate,
         kElectricTotalBill: inputs.kElectricEnterBill,
+        //extra fields
+        kElectricBillImage: "",
+        kElectricPreviousReading: inputs.kElectricPreviousReading,
+        kElectricCurrentReading: inputs.kElectricCurrentReading,
+        kElectricPerUnit: inputs.kElectricPerUnit,
+        kElectricTotalUnits:""
       };
-      console.log(values, 'values');
+      console.log(values, "values");
       dispatch(ElectricBill(values));
-    }
-    else{
-      dispatch(ElectricBill({}));
+    } else {
+      let values= {
+        kElectricBillImage: "", // image work pending
+        //extra fields
+        kElectricEnterBill: "",
+        kElectricBillDate: "",
+        kElectricDueDate: "",
+        kElectricTotalBill: "",
+        kElectricPreviousReading: "",
+        kElectricCurrentReading: "",
+        kElectricPerUnit: "",
+        kElectricTotalUnits:""
+      }
+      dispatch(ElectricBill(values));
     }
     // if(detail.monthlyRent&&detail.advance&&detail.maintainanceChearges&&detail.trashCharges!=null||""){
     //   dispatch(RentSet({detail})).then((res)=>{
@@ -319,7 +338,9 @@ function Row(props) {
                                 />
                               </LocalizationProvider>
                             </TableCell>
-                            <TableCell>{inputs.kElectricEnterBill || 0}</TableCell>
+                            <TableCell>
+                              {inputs.kElectricEnterBill || 0}
+                            </TableCell>
                           </TableRow>
                         </TableBody>
                       </Table>
@@ -362,435 +383,456 @@ function Row(props) {
             </Collapse>
           </TableCell>
         </TableRow>
-      ) : (
-          row?.type === "ssgc" ? (
-            <TableRow>
-              <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                  <Box sx={{ margin: 1 }}>
-                    {/* <Typography variant="h6" gutterBottom component="div">
+      ) : row?.type === "ssgc" ? (
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                {/* <Typography variant="h6" gutterBottom component="div">
                   History
                 </Typography> */}
-                    <div>
-                      <FormControl component="fieldset">
-                        <Typography variant="h6">Select Bill Type</Typography>
-                        <RadioGroup
-                          aria-label="options"
-                          name="options"
-                          style={{ flexDirection: "row" }}
-                          // value={selectedValue}
-                          onChange={handleChange}
-                        >
-                          <FormControlLabel
-                            value="byGasUnitReading"
-                            control={<Radio />}
-                            label="Enter Unit Reading"
-                          />
-                          <FormControlLabel
-                            value="byGasBill"
-                            control={<Radio />}
-                            label="Enter Bill"
-                          />
-                          <FormControlLabel
-                            value="byGasPicture"
-                            control={<Radio />}
-                            label="Insert Picture"
-                          />
-                        </RadioGroup>
-                      </FormControl>
+                <div>
+                  <FormControl component="fieldset">
+                    <Typography variant="h6">Select Bill Type</Typography>
+                    <RadioGroup
+                      aria-label="options"
+                      name="options"
+                      style={{ flexDirection: "row" }}
+                      // value={selectedValue}
+                      onChange={handleChange}
+                    >
+                      <FormControlLabel
+                        value="byGasUnitReading"
+                        control={<Radio />}
+                        label="Enter Unit Reading"
+                      />
+                      <FormControlLabel
+                        value="byGasBill"
+                        control={<Radio />}
+                        label="Enter Bill"
+                      />
+                      <FormControlLabel
+                        value="byGasPicture"
+                        control={<Radio />}
+                        label="Insert Picture"
+                      />
+                    </RadioGroup>
+                  </FormControl>
 
-                      {/* Conditional rendering based on the selected radio button */}
-                      {selectedValue === "byGasUnitReading" && (
-                        <div>
-                          <Table size="small" aria-label="purchases">
-                            <TableHead>
-                              <TableRow>
-                                <TableCell>Previous Reading</TableCell>
-                                <TableCell>Current Reading</TableCell>
-                                <TableCell>Per Unit</TableCell>
-                                <TableCell>Bill Date</TableCell>
-                                <TableCell>Due Date</TableCell>
-                                <TableCell align="right">Total Unit</TableCell>
-                                <TableCell>Total Bill</TableCell>
-                                <TableCell align="right"></TableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-                              {row.history.map((historyRow) => (
-                                <TableRow key={historyRow.previousReadingSsg}>
-                                  <TableCell component="th" scope="row">
-                                    {historyRow.previousReadingSsg}
-                                  </TableCell>
-                                  <TableCell>
-                                    {historyRow.currentReadingSsg}
-                                  </TableCell>
-                                  <TableCell>
-                                    {historyRow.perUnitSsgCharges}
-                                  </TableCell>
-                                  <TableCell>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  {/* Conditional rendering based on the selected radio button */}
+                  {selectedValue === "byGasUnitReading" && (
+                    <div>
+                      <Table size="small" aria-label="purchases">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Previous Reading</TableCell>
+                            <TableCell>Current Reading</TableCell>
+                            <TableCell>Per Unit</TableCell>
+                            <TableCell>Bill Date</TableCell>
+                            <TableCell>Due Date</TableCell>
+                            <TableCell align="right">Total Unit</TableCell>
+                            <TableCell>Total Bill</TableCell>
+                            <TableCell align="right"></TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {row.history.map((historyRow) => (
+                            <TableRow key={historyRow.previousReadingSsg}>
+                              <TableCell component="th" scope="row">
+                                {historyRow.previousReadingSsg}
+                              </TableCell>
+                              <TableCell>
+                                {historyRow.currentReadingSsg}
+                              </TableCell>
+                              <TableCell>
+                                {historyRow.perUnitSsgCharges}
+                              </TableCell>
+                              <TableCell>
+                                <LocalizationProvider
+                                  dateAdapter={AdapterDayjs}
+                                >
                                   <DatePicker />
                                 </LocalizationProvider>
-                                </TableCell>
-                                <TableCell>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                              </TableCell>
+                              <TableCell>
+                                <LocalizationProvider
+                                  dateAdapter={AdapterDayjs}
+                                >
                                   <DatePicker />
                                 </LocalizationProvider>
-                                </TableCell>
-                                  <TableCell align="right">
-                                    {historyRow.totalSsgUnit || 0}
-                                  </TableCell>
-                                  {/* <TableCell>{historyRow.enterBill}</TableCell> */}
-                                  <TableCell>
-                                    {historyRow.showSsgcUnit || 0}
-                                  </TableCell>
-                                </TableRow>
-                              ))}
-                            </TableBody>
-                          </Table>
-                          <Button
-                            variant="contained"
-                            sx={{
-                              marginTop: 2,
-                              marginRight: 1,
-                              background: "black",
-                            }}
-                          >
-                            Post
-                          </Button>
-                        </div>
-                      )}
-                      {selectedValue === "byGasBill" && (
-                        <div>
-                          <Table size="small" aria-label="purchases">
-                            <TableHead>
-                              <TableRow>
-                                <TableCell>Enter Bill</TableCell>
-                                <TableCell>Bill Date</TableCell>
-                                <TableCell>Due Date</TableCell>
-                                <TableCell>Total Bill</TableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-                              <TableRow>
-                                <TableCell>
-                                  <input
-                                    placeholder="Enter Bill"
-                                    onChange={(e) => {
-                                      setSsgcBillEntry(e.target.value);
-                                    }}
-                                  />
-                                </TableCell>
-                                <TableCell>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                  <DatePicker />
-                                </LocalizationProvider>
-                                </TableCell>
-                                <TableCell>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                  <DatePicker />
-                                </LocalizationProvider>
-                                </TableCell>
-                                <TableCell>{ssgcBillEntry||0}</TableCell>
-                              </TableRow>
-                            </TableBody>
-                          </Table>
-                          <Button
-                            variant="contained"
-                            sx={{
-                              marginTop: 2,
-                              marginRight: 1,
-                              background: "black",
-                            }}
-                          >
-                            Post
-                          </Button>
-                        </div>
-                      )}
-                      {selectedValue === "byGasPicture" && <div> <Stack direction="row" alignItems="center" spacing={2}>
-          <Button variant="contained" component="label">
-            Upload
-            <input hidden accept="image/*" multiple type="file" />
-          </Button>
-        </Stack></div>}
+                              </TableCell>
+                              <TableCell align="right">
+                                {historyRow.totalSsgUnit || 0}
+                              </TableCell>
+                              {/* <TableCell>{historyRow.enterBill}</TableCell> */}
+                              <TableCell>
+                                {historyRow.showSsgcUnit || 0}
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          marginTop: 2,
+                          marginRight: 1,
+                          background: "black",
+                        }}
+                      >
+                        Post
+                      </Button>
                     </div>
-                  </Box>
-                </Collapse>
-              </TableCell>
-            </TableRow>
-          ) : row?.type === "water" ? (
-            <TableRow>
-              <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                  <Box sx={{ margin: 1 }}>
-                    {/* <Typography variant="h6" gutterBottom component="div">
-                  History
-                </Typography> */}
+                  )}
+                  {selectedValue === "byGasBill" && (
                     <div>
-                      <FormControl component="fieldset">
-                        <Typography variant="h6">Select Bill Type</Typography>
-                        <RadioGroup
-                          aria-label="options"
-                          name="options"
-                          style={{ flexDirection: "row" }}
-                          // value={selectedValue}
-                          onChange={handleChange}
-                        >
-                          <FormControlLabel
-                            value="byWaterBill"
-                            control={<Radio />}
-                            label="Enter Bill"
-                          />
-                          <FormControlLabel
-                            value="byWaterPicture"
-                            control={<Radio />}
-                            label="Insert Picture"
-                          />
-                        </RadioGroup>
-                      </FormControl>
-
-                      {/* Conditional rendering based on the selected radio button */}
-                      {selectedValue === "byWaterBill" && (
-                        <div>
-                          <Table size="small" aria-label="purchases">
-                            <TableHead>
-                              <TableRow>
-                                <TableCell>Enter Bill</TableCell>
-                                <TableCell>Bill Date</TableCell>
-                                <TableCell>Due Date</TableCell>
-                                <TableCell>Total Bill</TableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-                              <TableRow>
-                                <TableCell>
-                                  <input
-                                    placeholder="Enter Bill"
-                                    onChange={(e) => {
-                                      setWaterBill(e.target.value);
-                                    }}
-                                  />
-                                </TableCell>
-                                <TableCell>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                  <DatePicker />
-                                </LocalizationProvider>
-                                </TableCell>
-                                <TableCell>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                  <DatePicker />
-                                </LocalizationProvider>
-                                </TableCell>
-                                <TableCell>{waterBill||0}</TableCell>
-                              </TableRow>
-                            </TableBody>
-                          </Table>
-                          <Button
-                            variant="contained"
-                            sx={{
-                              marginTop: 2,
-                              marginRight: 1,
-                              background: "black",
-                            }}
-                          >
-                            Post
-                          </Button>
-                        </div>
-                      )}
-                      {selectedValue === "byWaterPicture" && <div> <Stack direction="row" alignItems="center" spacing={2}>
-          <Button variant="contained" component="label">
-            Upload
-            <input hidden accept="image/*" multiple type="file" />
-          </Button>
-        </Stack></div>}
+                      <Table size="small" aria-label="purchases">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Enter Bill</TableCell>
+                            <TableCell>Bill Date</TableCell>
+                            <TableCell>Due Date</TableCell>
+                            <TableCell>Total Bill</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          <TableRow>
+                            <TableCell>
+                              <input
+                                placeholder="Enter Bill"
+                                onChange={(e) => {
+                                  setSsgcBillEntry(e.target.value);
+                                }}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>{ssgcBillEntry || 0}</TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          marginTop: 2,
+                          marginRight: 1,
+                          background: "black",
+                        }}
+                      >
+                        Post
+                      </Button>
                     </div>
-                  </Box>
-                </Collapse>
-              </TableCell>
-            </TableRow>
-          ) : row?.type === "maintainance" ? (
-            <TableRow>
-              <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                  <Box sx={{ margin: 1 }}>
-                    {/* <Typography variant="h6" gutterBottom component="div">
-                    History
-                  </Typography> */}
+                  )}
+                  {selectedValue === "byGasPicture" && (
                     <div>
-                      <FormControl component="fieldset">
-                        <Typography variant="h6">Select Bill Type</Typography>
-                        <RadioGroup
-                          aria-label="options"
-                          name="options"
-                          style={{ flexDirection: "row" }}
-                          // value={selectedValue}
-                          onChange={handleChange}
-                        >
-                          <FormControlLabel
-                            value="byMaintainanceBill"
-                            control={<Radio />}
-                            label="Enter Bill"
-                          />
-                          <FormControlLabel
-                            value="byMaintainancePicture"
-                            control={<Radio />}
-                            label="Insert Picture"
-                          />
-                        </RadioGroup>
-                      </FormControl>
-
-                      {/* Conditional rendering based on the selected radio button */}
-                      {selectedValue === "byMaintainanceBill" && (
-                        <div>
-                          <Table size="small" aria-label="purchases">
-                            <TableHead>
-                              <TableRow>
-                                <TableCell>Enter Bill</TableCell>
-                                <TableCell>Bill Date</TableCell>
-                                <TableCell>Due Date</TableCell>
-                                <TableCell>Total Bill</TableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-                              <TableRow>
-                                <TableCell>
-                                  <input
-                                    placeholder="Enter Bill"
-                                    onChange={(e) => {
-                                      setMaintainanceBill(e.target.value);
-                                    }}
-                                  />
-                                </TableCell>
-                                <TableCell>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                  <DatePicker />
-                                </LocalizationProvider>
-                                </TableCell>
-                                <TableCell>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                  <DatePicker />
-                                </LocalizationProvider>
-                                </TableCell>
-                                <TableCell>{maintainanceBill||0}</TableCell>
-                              </TableRow>
-                            </TableBody>
-                          </Table>
-                          <Button
-                            variant="contained"
-                            sx={{
-                              marginTop: 2,
-                              marginRight: 1,
-                              background: "black",
-                            }}
-                          >
-                            Post
-                          </Button>
-                        </div>
-                      )}
-                      {selectedValue === "byMaintainancePicture" && (
-                        <div> <Stack direction="row" alignItems="center" spacing={2}>
+                      {" "}
+                      <Stack direction="row" alignItems="center" spacing={2}>
                         <Button variant="contained" component="label">
                           Upload
                           <input hidden accept="image/*" multiple type="file" />
                         </Button>
-                      </Stack></div>
-                      )}
+                      </Stack>
                     </div>
-                  </Box>
-                </Collapse>
-              </TableCell>
-            </TableRow>
-          ) : row?.type === "trash" ? (
-            <TableRow>
-              <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                  <Box sx={{ margin: 1 }}>
-                    {/* <Typography variant="h6" gutterBottom component="div">
+                  )}
+                </div>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      ) : row?.type === "water" ? (
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                {/* <Typography variant="h6" gutterBottom component="div">
+                  History
+                </Typography> */}
+                <div>
+                  <FormControl component="fieldset">
+                    <Typography variant="h6">Select Bill Type</Typography>
+                    <RadioGroup
+                      aria-label="options"
+                      name="options"
+                      style={{ flexDirection: "row" }}
+                      // value={selectedValue}
+                      onChange={handleChange}
+                    >
+                      <FormControlLabel
+                        value="byWaterBill"
+                        control={<Radio />}
+                        label="Enter Bill"
+                      />
+                      <FormControlLabel
+                        value="byWaterPicture"
+                        control={<Radio />}
+                        label="Insert Picture"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+
+                  {/* Conditional rendering based on the selected radio button */}
+                  {selectedValue === "byWaterBill" && (
+                    <div>
+                      <Table size="small" aria-label="purchases">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Enter Bill</TableCell>
+                            <TableCell>Bill Date</TableCell>
+                            <TableCell>Due Date</TableCell>
+                            <TableCell>Total Bill</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          <TableRow>
+                            <TableCell>
+                              <input
+                                placeholder="Enter Bill"
+                                onChange={(e) => {
+                                  setWaterBill(e.target.value);
+                                }}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>{waterBill || 0}</TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          marginTop: 2,
+                          marginRight: 1,
+                          background: "black",
+                        }}
+                      >
+                        Post
+                      </Button>
+                    </div>
+                  )}
+                  {selectedValue === "byWaterPicture" && (
+                    <div>
+                      {" "}
+                      <Stack direction="row" alignItems="center" spacing={2}>
+                        <Button variant="contained" component="label">
+                          Upload
+                          <input hidden accept="image/*" multiple type="file" />
+                        </Button>
+                      </Stack>
+                    </div>
+                  )}
+                </div>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      ) : row?.type === "maintainance" ? (
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                {/* <Typography variant="h6" gutterBottom component="div">
                     History
                   </Typography> */}
-                    <div>
-                      <FormControl component="fieldset">
-                        <Typography variant="h6">Select Bill Type</Typography>
-                        <RadioGroup
-                          aria-label="options"
-                          name="options"
-                          style={{ flexDirection: "row" }}
-                          // value={selectedValue}
-                          onChange={handleChange}
-                        >
-                          <FormControlLabel
-                            value="byTrashBill"
-                            control={<Radio />}
-                            label="Enter Bill"
-                          />
-                          <FormControlLabel
-                            value="byTrashPicture"
-                            control={<Radio />}
-                            label="Insert Picture"
-                          />
-                        </RadioGroup>
-                      </FormControl>
+                <div>
+                  <FormControl component="fieldset">
+                    <Typography variant="h6">Select Bill Type</Typography>
+                    <RadioGroup
+                      aria-label="options"
+                      name="options"
+                      style={{ flexDirection: "row" }}
+                      // value={selectedValue}
+                      onChange={handleChange}
+                    >
+                      <FormControlLabel
+                        value="byMaintainanceBill"
+                        control={<Radio />}
+                        label="Enter Bill"
+                      />
+                      <FormControlLabel
+                        value="byMaintainancePicture"
+                        control={<Radio />}
+                        label="Insert Picture"
+                      />
+                    </RadioGroup>
+                  </FormControl>
 
-                      {/* Conditional rendering based on the selected radio button */}
-                      {selectedValue === "byTrashBill" && (
-                        <div>
-                          <Table size="small" aria-label="purchases">
-                            <TableHead>
-                              <TableRow>
-                                <TableCell>Enter Bill</TableCell>
-                                <TableCell>Bill Date</TableCell>
-                                <TableCell>Due Date</TableCell>
-                                <TableCell>Total Bill</TableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-                              <TableRow>
-                                <TableCell>
-                                  <input
-                                    placeholder="Enter Bill"
-                                    onChange={(e) => {
-                                      setTrashBill(e.target.value);
-                                    }}
-                                  />
-                                </TableCell>
-                                <TableCell>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                  <DatePicker />
-                                </LocalizationProvider>
-                                </TableCell>
-                                <TableCell>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                  <DatePicker />
-                                </LocalizationProvider>
-                                </TableCell>
-                                <TableCell>{trashBill||0}</TableCell>
-                              </TableRow>
-                            </TableBody>
-                          </Table>
-                          <Button
-                            variant="contained"
-                            sx={{
-                              marginTop: 2,
-                              marginRight: 1,
-                              background: "black",
-                            }}
-                          >
-                            Post
-                          </Button>
-                        </div>
-                      )}
-                      {selectedValue === "byTrashPicture" && <div> <Stack direction="row" alignItems="center" spacing={2}>
-          <Button variant="contained" component="label">
-            Upload
-            <input hidden accept="image/*" multiple type="file" />
-          </Button>
-        </Stack></div>}
+                  {/* Conditional rendering based on the selected radio button */}
+                  {selectedValue === "byMaintainanceBill" && (
+                    <div>
+                      <Table size="small" aria-label="purchases">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Enter Bill</TableCell>
+                            <TableCell>Bill Date</TableCell>
+                            <TableCell>Due Date</TableCell>
+                            <TableCell>Total Bill</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          <TableRow>
+                            <TableCell>
+                              <input
+                                placeholder="Enter Bill"
+                                onChange={(e) => {
+                                  setMaintainanceBill(e.target.value);
+                                }}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>{maintainanceBill || 0}</TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          marginTop: 2,
+                          marginRight: 1,
+                          background: "black",
+                        }}
+                      >
+                        Post
+                      </Button>
                     </div>
-                  </Box>
-                </Collapse>
-              </TableCell>
-            </TableRow>
-          ): 
+                  )}
+                  {selectedValue === "byMaintainancePicture" && (
+                    <div>
+                      {" "}
+                      <Stack direction="row" alignItems="center" spacing={2}>
+                        <Button variant="contained" component="label">
+                          Upload
+                          <input hidden accept="image/*" multiple type="file" />
+                        </Button>
+                      </Stack>
+                    </div>
+                  )}
+                </div>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      ) : row?.type === "trash" ? (
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                {/* <Typography variant="h6" gutterBottom component="div">
+                    History
+                  </Typography> */}
+                <div>
+                  <FormControl component="fieldset">
+                    <Typography variant="h6">Select Bill Type</Typography>
+                    <RadioGroup
+                      aria-label="options"
+                      name="options"
+                      style={{ flexDirection: "row" }}
+                      // value={selectedValue}
+                      onChange={handleChange}
+                    >
+                      <FormControlLabel
+                        value="byTrashBill"
+                        control={<Radio />}
+                        label="Enter Bill"
+                      />
+                      <FormControlLabel
+                        value="byTrashPicture"
+                        control={<Radio />}
+                        label="Insert Picture"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+
+                  {/* Conditional rendering based on the selected radio button */}
+                  {selectedValue === "byTrashBill" && (
+                    <div>
+                      <Table size="small" aria-label="purchases">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Enter Bill</TableCell>
+                            <TableCell>Bill Date</TableCell>
+                            <TableCell>Due Date</TableCell>
+                            <TableCell>Total Bill</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          <TableRow>
+                            <TableCell>
+                              <input
+                                placeholder="Enter Bill"
+                                onChange={(e) => {
+                                  setTrashBill(e.target.value);
+                                }}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>{trashBill || 0}</TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          marginTop: 2,
+                          marginRight: 1,
+                          background: "black",
+                        }}
+                      >
+                        Post
+                      </Button>
+                    </div>
+                  )}
+                  {selectedValue === "byTrashPicture" && (
+                    <div>
+                      {" "}
+                      <Stack direction="row" alignItems="center" spacing={2}>
+                        <Button variant="contained" component="label">
+                          Upload
+                          <input hidden accept="image/*" multiple type="file" />
+                        </Button>
+                      </Stack>
+                    </div>
+                  )}
+                </div>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      ) : (
         ""
       )}
     </React.Fragment>
