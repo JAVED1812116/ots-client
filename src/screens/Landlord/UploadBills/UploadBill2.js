@@ -32,7 +32,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ElectricBill } from "../../../redux/Reducer/ElectricReading";
 import { useDispatch } from "react-redux";
-
+import dayjs from "dayjs";
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
@@ -42,8 +42,8 @@ function Row(props) {
   const [waterBill, setWaterBill] = useState();
   const [maintainanceBill, setMaintainanceBill] = useState();
   const [trashBill, setTrashBill] = useState();
-  const [billDate, setBillDate] = useState();
-  const [dueDate, setDueDate] = useState();
+  const [billDate, setBillDate] = React.useState(dayjs());
+  const [dueDate, setDueDate] = React.useState(dayjs());
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
@@ -253,6 +253,7 @@ function Row(props) {
                                 <DatePicker
                                   className="fulldate"
                                   disabled={true}
+                                  value={billDate}
                                   onChange={(newValue) => setBillDate(newValue)}
                                 />
                               </LocalizationProvider>
@@ -261,6 +262,7 @@ function Row(props) {
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
                                   className="fulldate"
+                                  value={dueDate}
                                   onChange={(newValue) => setDueDate(newValue)}
                                 />
                               </LocalizationProvider>
@@ -329,6 +331,7 @@ function Row(props) {
                                 <DatePicker
                                   className="fulldate"
                                   disabled={true}
+                                  value={billDate}
                                   onChange={(newValue) => setBillDate(newValue)}
                                 />
                               </LocalizationProvider>
@@ -337,6 +340,7 @@ function Row(props) {
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
                                   className="fulldate"
+                                  value={dueDate}
                                   onChange={(newValue) => setDueDate(newValue)}
                                 />
                               </LocalizationProvider>
@@ -442,52 +446,62 @@ function Row(props) {
                           {row.history.map((historyRow) => (
                             <TableRow key={historyRow.previousReadingSsg}>
                               <TableCell component="th" scope="row">
-                              <TextField
-                                id="outlined-number"
-                                label="Previous Reading"
-                                type="number"
-                                size="small"
-                                name="previousReadingSsg"
-                                onChange={handleInputs}
-                              />
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                              <TextField
-                                id="outlined-number"
-                                label="Current Reading"
-                                type="number"
-                                size="small"
-                                name="currentReadingSsg"
-                                onChange={handleInputs}
-                              />
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                              <TextField
-                                id="outlined-number"
-                                label="Per Unit"
-                                type="number"
-                                size="small"
-                                name="perUnitSsgCharges"
-                                onChange={handleInputs}
-                              />
-                            </TableCell>
-                            <TableCell>
-                              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker
-                                  className="fulldate"
-                                  disabled={true}
-                                  onChange={(newValue) => setBillDate(newValue)}
+                                <TextField
+                                  id="outlined-number"
+                                  label="Previous Reading"
+                                  type="number"
+                                  size="small"
+                                  name="previousReadingSsg"
+                                  onChange={handleInputs}
                                 />
-                              </LocalizationProvider>
-                            </TableCell>
-                            <TableCell>
-                              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker
-                                  className="fulldate"
-                                  onChange={(newValue) => setDueDate(newValue)}
+                              </TableCell>
+                              <TableCell component="th" scope="row">
+                                <TextField
+                                  id="outlined-number"
+                                  label="Current Reading"
+                                  type="number"
+                                  size="small"
+                                  name="currentReadingSsg"
+                                  onChange={handleInputs}
                                 />
-                              </LocalizationProvider>
-                            </TableCell>
+                              </TableCell>
+                              <TableCell component="th" scope="row">
+                                <TextField
+                                  id="outlined-number"
+                                  label="Per Unit"
+                                  type="number"
+                                  size="small"
+                                  name="perUnitSsgCharges"
+                                  onChange={handleInputs}
+                                />
+                              </TableCell>
+                              <TableCell>
+                                <LocalizationProvider
+                                  dateAdapter={AdapterDayjs}
+                                >
+                                  <DatePicker
+                                    className="fulldate"
+                                    disabled={true}
+                                    value={billDate}
+                                    onChange={(newValue) =>
+                                      setBillDate(newValue)
+                                    }
+                                  />
+                                </LocalizationProvider>
+                              </TableCell>
+                              <TableCell>
+                                <LocalizationProvider
+                                  dateAdapter={AdapterDayjs}
+                                >
+                                  <DatePicker
+                                    className="fulldate"
+                                    value={dueDate}
+                                    onChange={(newValue) =>
+                                      setDueDate(newValue)
+                                    }
+                                  />
+                                </LocalizationProvider>
+                              </TableCell>
                               <TableCell align="right">
                                 {historyRow.totalSsgUnit || 0}
                               </TableCell>
@@ -524,7 +538,7 @@ function Row(props) {
                         </TableHead>
                         <TableBody>
                           <TableRow>
-                          <TableCell>
+                            <TableCell>
                               <TextField
                                 id="outlined-number"
                                 label="Enter Bill"
@@ -542,6 +556,7 @@ function Row(props) {
                                 <DatePicker
                                   className="fulldate"
                                   disabled={true}
+                                  value={billDate}
                                   onChange={(newValue) => setBillDate(newValue)}
                                 />
                               </LocalizationProvider>
@@ -550,6 +565,7 @@ function Row(props) {
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
                                   className="fulldate"
+                                  value={billDate}
                                   onChange={(newValue) => setBillDate(newValue)}
                                 />
                               </LocalizationProvider>
@@ -632,7 +648,7 @@ function Row(props) {
                         <TableBody>
                           <TableRow>
                             <TableCell>
-                            <TextField
+                              <TextField
                                 id="outlined-number"
                                 label="Enter Bill"
                                 type="number"
@@ -649,6 +665,7 @@ function Row(props) {
                                 <DatePicker
                                   className="fulldate"
                                   disabled={true}
+                                  value={billDate}
                                   onChange={(newValue) => setBillDate(newValue)}
                                 />
                               </LocalizationProvider>
@@ -657,6 +674,7 @@ function Row(props) {
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
                                   className="fulldate"
+                                  value={billDate}
                                   onChange={(newValue) => setBillDate(newValue)}
                                 />
                               </LocalizationProvider>
@@ -738,8 +756,8 @@ function Row(props) {
                         </TableHead>
                         <TableBody>
                           <TableRow>
-                          <TableCell>
-                            <TextField
+                            <TableCell>
+                              <TextField
                                 id="outlined-number"
                                 label="Enter Bill"
                                 type="number"
@@ -756,6 +774,7 @@ function Row(props) {
                                 <DatePicker
                                   className="fulldate"
                                   disabled={true}
+                                  value={billDate} // Set the value to the current date
                                   onChange={(newValue) => setBillDate(newValue)}
                                 />
                               </LocalizationProvider>
@@ -764,6 +783,7 @@ function Row(props) {
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
                                   className="fulldate"
+                                  value={billDate}
                                   onChange={(newValue) => setBillDate(newValue)}
                                 />
                               </LocalizationProvider>
@@ -783,7 +803,7 @@ function Row(props) {
                         Post
                       </Button>
                     </div>
-                  )} 
+                  )}
                   {selectedValue === "byMaintainancePicture" && (
                     <div>
                       {" "}
@@ -845,8 +865,8 @@ function Row(props) {
                         </TableHead>
                         <TableBody>
                           <TableRow>
-                          <TableCell>
-                            <TextField
+                            <TableCell>
+                              <TextField
                                 id="outlined-number"
                                 label="Enter Bill"
                                 type="number"
@@ -863,6 +883,7 @@ function Row(props) {
                                 <DatePicker
                                   className="fulldate"
                                   disabled={true}
+                                  value={billDate}
                                   onChange={(newValue) => setBillDate(newValue)}
                                 />
                               </LocalizationProvider>
@@ -871,6 +892,7 @@ function Row(props) {
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
                                   className="fulldate"
+                                  value={billDate}
                                   onChange={(newValue) => setBillDate(newValue)}
                                 />
                               </LocalizationProvider>
