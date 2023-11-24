@@ -36,6 +36,13 @@ function createData(name, calories, fat, carbs, protein, price) {
         totalUnit: 15000,
         kElectricBill: 1200,
       },
+      {
+        previousReading: <Typography>2500</Typography>,
+        currentReading:  <Typography>1300</Typography>,
+        enterBill:  <Typography>200</Typography>,
+        totalUnit: 15000,
+        kElectricBill: 1200,
+      },
     ],
   };
 }

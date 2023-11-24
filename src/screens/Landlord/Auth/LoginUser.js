@@ -40,6 +40,7 @@ console.log(location?.state?.type,"loooooooooooo")
           dispatch(UserLogin({email,password})).then((res)=>{
             if(res?.payload?.data?.message==="User Login Successfully"){
               localStorage.setItem("name",res?.payload?.data?.data?.name)
+              localStorage.setItem("user_id",res?.payload?.data?.data?._id)
               console.log(res?.payload?.data?.data?.name,"data:res?.payload?.data?.data?.name")
               toast.success("Logging!", {
                 autoClose: 300,
