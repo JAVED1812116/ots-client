@@ -98,7 +98,13 @@ export default function LandlordFunctionality() {
               </Typography>
             </CardContent>
             <CardActions className="justifyend">
-              <Button className="view_button wm100" size="large">
+              <Button
+                className="view_button wm100"
+                size="large"
+                onClick={() => {
+                  navigate("/previous-bill");
+                }}
+              >
                 View
               </Button>
               {/* <Button size="small">Learn More</Button> */}

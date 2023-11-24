@@ -18,6 +18,7 @@ import Registeration from "../screens/Tenant/Register/Registeration";
 import TenantFunctionality from "../screens/Tenant/TenantFunction/TenantFunctionality";
 import PreviousBill from "../screens/Tenant/PreviousBill/PreviousBill";
 import UploadBill2 from "../screens/Landlord/UploadBills/UploadBill2";
+import PreviousBillLandlordPage from "../screens/Landlord/PreviousBills/PreviousBill";
 export default function AllRoutes() {
   return (
     <Router>
@@ -34,6 +35,7 @@ export default function AllRoutes() {
         <Route path="/landlord-functionality" element={<LandlordFunctionality />} />
         <Route path="/agreement" element={<Agreement />} />
         <Route path="/upload-Bill" element={<UploadBill />} />
+        <Route path="/previous-bill" element={<PreviousBillLandlordPage />} />
         <Route path="/upload-Bill2" element={<UploadBill2 />} />
         
 
