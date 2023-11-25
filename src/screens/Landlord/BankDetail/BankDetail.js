@@ -17,12 +17,14 @@ export default function BankDetail() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
+  const [getData, setGetData] = useState();
   const [detail, setDetail] = useState({
     bankName: "",
     accountName: "",
     accountNumber: "",
     ibanNumber: "",
   });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDetail((prev) => {
@@ -49,6 +51,21 @@ export default function BankDetail() {
           toast.success(res?.payload?.data?.message, {
             autoClose: 300,
           });
+
+          dispatch(GetAccount({ userId: localStorage.getItem("user_id") })).then(
+            (res) => {
+              setGetData(res?.payload?.data);
+              let { bankName, accountName, accountNumber, ibanNumber } =
+                res?.payload?.data?.data;
+              setDetail({
+                bankName,
+                accountName,
+                accountNumber,
+                ibanNumber,
+              });
+            }
+          );
+          
         } else {
           toast.error(res?.payload?.data?.message, {
             autoClose: 300,
@@ -67,7 +84,8 @@ export default function BankDetail() {
     console.log("hello");
     dispatch(GetAccount({ userId: localStorage.getItem("user_id") })).then(
       (res) => {
-        // console.log(res?.payload?.data);
+        setGetData(res?.payload?.data);
+        console.log(getData, "asim bhai");
         let { bankName, accountName, accountNumber, ibanNumber } =
           res?.payload?.data?.data;
         setDetail({
@@ -146,6 +164,20 @@ export default function BankDetail() {
           >
             Save
           </Button>
+          {getData?.data?.bankName === "" &&
+          getData?.data?.accountName === "" &&
+          getData?.data?.accountNumber === "" &&
+          getData?.data?.ibanNumber === "" ? (
+            "Set Account Detail"
+          ) : (
+            <Button
+              className="bankButton"
+              variant="contained"
+              // onClick={handleSubmit}
+            >
+              Edit
+            </Button>
+          )}
         </Container>
         <ToastContainer />
       </div>
