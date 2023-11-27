@@ -71,6 +71,20 @@
       transition: all 0.3s;
       margin-top: 15px !important;
     }
+  .bankEditButton {
+      background: black !important;
+      margin-bottom: 10px;
+      width: 100px;
+      height: 40px;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      /* line-height: 27px; */
+      color: #ffffff;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 15px !important;
+    }
     .bankButton:hover {
       opacity: 0.6;
       background-color: black;

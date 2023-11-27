@@ -18,6 +18,7 @@ export default function BankDetail() {
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
   const [getData, setGetData] = useState();
+  const [fieldDisable, setFieldDisable] = useState(false);
   const [detail, setDetail] = useState({
     bankName: "",
     accountName: "",
@@ -31,8 +32,8 @@ export default function BankDetail() {
       return { ...prev, [name]: value };
     });
   };
-
   const handleSubmit = () => {
+    setFieldDisable(true)
     if (
       (detail.bankName &&
         detail.accountName &&
@@ -40,11 +41,9 @@ export default function BankDetail() {
         detail.ibanNumber != null) ||
       ""
     ) {
-      console.log("inIF");
       detail.userId = localStorage.getItem("user_id");
       detail.userName = localStorage.getItem("name");
       dispatch(AccountSet({ detail })).then((res) => {
-        console.log(res?.payload?.data?.message);
         if (
           res?.payload?.data?.message === "Account Detail Save Successfully"
         ) {
@@ -52,20 +51,19 @@ export default function BankDetail() {
             autoClose: 300,
           });
 
-          dispatch(GetAccount({ userId: localStorage.getItem("user_id") })).then(
-            (res) => {
-              setGetData(res?.payload?.data);
-              let { bankName, accountName, accountNumber, ibanNumber } =
-                res?.payload?.data?.data;
-              setDetail({
-                bankName,
-                accountName,
-                accountNumber,
-                ibanNumber,
-              });
-            }
-          );
-          
+          dispatch(
+            GetAccount({ userId: localStorage.getItem("user_id") })
+          ).then((res) => {
+            setGetData(res?.payload?.data);
+            let { bankName, accountName, accountNumber, ibanNumber } =
+              res?.payload?.data?.data;
+            setDetail({
+              bankName,
+              accountName,
+              accountNumber,
+              ibanNumber,
+            });
+          });
         } else {
           toast.error(res?.payload?.data?.message, {
             autoClose: 300,
@@ -73,19 +71,21 @@ export default function BankDetail() {
         }
       });
     } else {
-      console.log("inElse");
       toast.error("Empty Field are not allowed", {
         autoClose: 300,
       });
     }
   };
+  const handleUpdate = () => {
+    setFieldDisable(false)
+  
+  };
 
   React.useEffect(() => {
-    console.log("hello");
     dispatch(GetAccount({ userId: localStorage.getItem("user_id") })).then(
       (res) => {
         setGetData(res?.payload?.data);
-        console.log(getData, "asim bhai");
+
         let { bankName, accountName, accountNumber, ibanNumber } =
           res?.payload?.data?.data;
         setDetail({
@@ -115,6 +115,7 @@ export default function BankDetail() {
               variant="standard"
               name="bankName"
               value={detail.bankName}
+              disabled={fieldDisable===true}
               onChange={handleChange}
             />
             <TextField
@@ -125,17 +126,9 @@ export default function BankDetail() {
               variant="standard"
               name="accountName"
               value={detail.accountName}
+              disabled={fieldDisable===true}
               onChange={handleChange}
             />
-            {/* <TextField
-          id="standard-multiline-static"
-          label="Multiline"
-          multiline
-          rows={4}
-          defaultValue="Default Value"
-          variant="standard"
-        /> */}
-
             <TextField
               id="standard-multiline-flexible"
               label="Account Number"
@@ -144,6 +137,7 @@ export default function BankDetail() {
               variant="standard"
               name="accountNumber"
               value={detail.accountNumber}
+              disabled={fieldDisable===true}
               onChange={handleChange}
             />
             <TextField
@@ -154,29 +148,45 @@ export default function BankDetail() {
               variant="standard"
               name="ibanNumber"
               value={detail.ibanNumber}
+              disabled={fieldDisable===true}
               onChange={handleChange}
             />
           </div>
-          <Button
-            className="bankButton"
-            variant="contained"
-            onClick={handleSubmit}
-          >
-            Save
-          </Button>
+
           {getData?.data?.bankName === "" &&
           getData?.data?.accountName === "" &&
           getData?.data?.accountNumber === "" &&
           getData?.data?.ibanNumber === "" ? (
-            "Set Account Detail"
-          ) : (
             <Button
+            className="bankButton"
+            variant="contained"
+            onClick={handleSubmit}
+            >
+              Save
+            </Button>
+          ) : (
+            " "
+          )}
+
+          {getData?.data?.bankName !== "" &&
+          getData?.data?.accountName !== "" &&
+          getData?.data?.accountNumber !== "" &&
+          getData?.data?.ibanNumber !== "" ? (
+            fieldDisable===false?   <Button
               className="bankButton"
               variant="contained"
-              // onClick={handleSubmit}
+              onClick={handleSubmit}
+            >
+              Update
+            </Button>:<Button
+              className="bankButton"
+              variant="contained"
+              onClick={handleUpdate}
             >
               Edit
             </Button>
+          ) : (
+            " "
           )}
         </Container>
         <ToastContainer />
