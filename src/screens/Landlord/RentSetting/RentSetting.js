@@ -11,23 +11,52 @@ import { useDispatch } from "react-redux";
 import { RentSet } from "../../../redux/Reducer/RentSetting";
 import { toast, ToastContainer } from "react-toastify";
 import GetRentDetails, { GetRent } from "../../../redux/Reducer/GetRentDetails";
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import moment from "moment/moment";
+
 export default function RentSetting() {
   title("Rent Setting");
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState();
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [detail, setDetail] = useState({
     monthlyRent: "",
     advance: "",
     maintenanceCharges: "",
     trashCharges: "",
   });
+  const columns = [
+    { id: 'monthlyRent', label: 'Monthly Rent', minWidth: 170 },
+    { id: 'advance', label: 'Advance', minWidth: 100 },
+    { id: 'maintenanceCharges', label: 'Maintainance Charges', minWidth: 170 },
+    { id: 'trashCharges', label: 'Trash Charges', minWidth: 100 },
+    { id: 'date', label: 'Date', minWidth: 100 },
+    
+  ];
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDetail((prev) => {
       return { ...prev, [name]: value };
     });
+  };
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
   };
 
   const handleSubmit = () => {
@@ -36,49 +65,50 @@ export default function RentSetting() {
         detail.advance &&
         detail.maintenanceCharges &&
         detail.trashCharges != null) ||
-      ""
-    ) {
-      detail.userId = localStorage.getItem("user_id");
-      detail.userName = localStorage.getItem("name");
-      dispatch(RentSet({ detail })).then((res) => {
-        if (res?.payload?.data?.message === "Rent Set Successfully") {
-          toast.success(res?.payload?.data?.message, {
-            autoClose: 300,
+        ""
+        ) {
+          detail.userId = localStorage.getItem("user_id");
+          detail.userName = localStorage.getItem("name");
+          dispatch(RentSet({ detail })).then((res) => {
+            if (res?.payload?.data?.message === "Rent Set Successfully") {
+              toast.success(res?.payload?.data?.message, {
+                autoClose: 300,
+              });
+            } else {
+              toast.error(res?.payload?.data?.message, {
+                autoClose: 300,
+              });
+            }
           });
         } else {
-          toast.error(res?.payload?.data?.message, {
+          toast.error("Empty Field are not allowed", {
             autoClose: 300,
           });
         }
-      });
-    } else {
-      toast.error("Empty Field are not allowed", {
-        autoClose: 300,
-      });
-    }
-  };
-
-  React.useEffect(() => {
-    console.log("hello");
-    dispatch(GetRent({ userId: localStorage.getItem("user_id") })).then(
-      (res) => {
-        // console.log(res?.payload?.data);
-        let { monthlyRent, advance, maintenanceCharges, trashCharges } =
-          res?.payload?.data?.data[0];
-          // console.log(res?.payload?.data?.data, 'res?.payload?.data?.data');
-        setDetail({
-          monthlyRent,
-          advance,
-          maintenanceCharges,
-          trashCharges,
-        });
-        console.log({detail});
+      };
+      
+      React.useEffect(() => {
+        console.log("hello");
+        dispatch(GetRent({ userId: localStorage.getItem("user_id") })).then(
+          (res) => {
+            setData(res?.payload?.data?.data)
+            let { monthlyRent, advance, maintenanceCharges, trashCharges } =
+            res?.payload?.data?.data[0];
+            // console.log(res?.payload?.data?.data, 'res?.payload?.data?.data');
+            setDetail({
+              monthlyRent,
+              advance,
+              maintenanceCharges,
+              trashCharges,
+            });
+            console.log({detail});
       }
-    );
-  }, []);
-
-  return (
-    <>
+      );
+    }, []);
+    
+    
+    return (
+      <>
       <Wrapper open={open} setOpen={setOpen} mylocation={mylocation} />
 
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
@@ -107,14 +137,14 @@ export default function RentSetting() {
               value={detail.advance}
               onChange={handleChange}
             />
-
+{console.log(detail,"baba")}
             <TextField
               id="standard-multiline-flexible"
               label="Maintenance Charges"
               multiline
               maxRows={4}
               variant="standard"
-              name="maintainanceChearges"
+              name="maintenanceCharges"
               value={detail.maintenanceCharges}
               onChange={handleChange}
             />
@@ -137,6 +167,80 @@ export default function RentSetting() {
             Save
           </Button>
         </Container>
+        
+        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+      <TableContainer sx={{ maxHeight: 440 }}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              {columns.map((column) => (
+                
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+        
+          <TableBody>
+              {data?.map((column) => (
+          <TableRow>
+                
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.monthlyRent}
+                </TableCell>
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.advance}
+                </TableCell>
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.maintenanceCharges}
+                </TableCell>
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.trashCharges}
+                </TableCell>
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {moment(column.date).format("MM-DD-YYYY")}
+                </TableCell>
+            </TableRow>
+              ))}
+         
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={data?.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </Paper>
         <ToastContainer />
       </div>
     </>
