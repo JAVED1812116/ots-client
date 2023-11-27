@@ -88,20 +88,19 @@ export default function RentSetting() {
       };
       
       React.useEffect(() => {
-        console.log("hello");
+      
         dispatch(GetRent({ userId: localStorage.getItem("user_id") })).then(
           (res) => {
             setData(res?.payload?.data?.data)
             let { monthlyRent, advance, maintenanceCharges, trashCharges } =
             res?.payload?.data?.data[0];
-            // console.log(res?.payload?.data?.data, 'res?.payload?.data?.data');
             setDetail({
               monthlyRent,
               advance,
               maintenanceCharges,
               trashCharges,
             });
-            console.log({detail});
+          
       }
       );
     }, []);
@@ -137,7 +136,7 @@ export default function RentSetting() {
               value={detail.advance}
               onChange={handleChange}
             />
-{console.log(detail,"baba")}
+
             <TextField
               id="standard-multiline-flexible"
               label="Maintenance Charges"
