@@ -85,7 +85,10 @@ export default function BankDetail() {
     dispatch(GetAccount({ userId: localStorage.getItem("user_id") })).then(
       (res) => {
         setGetData(res?.payload?.data);
-
+        if (res?.payload?.data?.data?.bankName !== "") {
+          
+          setFieldDisable(true)
+        }
         let { bankName, accountName, accountNumber, ibanNumber } =
           res?.payload?.data?.data;
         setDetail({
