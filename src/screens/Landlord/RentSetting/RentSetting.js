@@ -37,11 +37,11 @@ export default function RentSetting() {
     trashCharges: "",
   });
   const columns = [
-    { id: 'monthlyRent', label: 'Monthly Rent', minWidth: 170 },
-    { id: 'advance', label: 'Advance', minWidth: 100 },
-    { id: 'maintenanceCharges', label: 'Maintainance Charges', minWidth: 170 },
+    { id: 'date', label: 'Date', minWidth: 170 },
+    { id: 'monthlyRent', label: 'Monthly Rent', minWidth: 100 },
+    { id: 'advance', label: 'Advance', minWidth: 170 },
+    { id: 'maintananceCharges', label: 'Maintainance Charges', minWidth: 100 },
     { id: 'trashCharges', label: 'Trash Charges', minWidth: 100 },
-    { id: 'date', label: 'Date', minWidth: 100 },
     
   ];
   const handleChange = (e) => {
@@ -92,8 +92,8 @@ export default function RentSetting() {
         dispatch(GetRent({ userId: localStorage.getItem("user_id") })).then(
           (res) => {
             setData(res?.payload?.data?.data)
-            let { monthlyRent, advance, maintenanceCharges, trashCharges } =
-            res?.payload?.data?.data[0];
+            
+            let { monthlyRent, advance, maintenanceCharges, trashCharges } =res?.payload?.data?.data[0];
             setDetail({
               monthlyRent,
               advance,
@@ -186,9 +186,15 @@ export default function RentSetting() {
           </TableHead>
         
           <TableBody>
-              {data?.map((column) => (
+              {data&&data?.map((column) => (
           <TableRow>
-                
+                  <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {moment(column.date).format("MM-DD-YYYY")}
+                </TableCell>
                 <TableCell
                   key={column.id}
                   align={column.align}
@@ -217,13 +223,7 @@ export default function RentSetting() {
                 >
                   {column.trashCharges}
                 </TableCell>
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {moment(column.date).format("MM-DD-YYYY")}
-                </TableCell>
+              
             </TableRow>
               ))}
          
