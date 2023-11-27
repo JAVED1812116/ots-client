@@ -53,12 +53,12 @@ export default function RentSetting() {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
+  
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
+  
   const handleSubmit = () => {
     if (
       (detail.monthlyRent &&
@@ -88,7 +88,7 @@ export default function RentSetting() {
       };
       
       React.useEffect(() => {
-      
+        
         dispatch(GetRent({ userId: localStorage.getItem("user_id") })).then(
           (res) => {
             setData(res?.payload?.data?.data)
@@ -100,14 +100,13 @@ export default function RentSetting() {
               maintenanceCharges,
               trashCharges,
             });
-          
-      }
-      );
-    }, []);
-    
-    
-    return (
-      <>
+            
+          }
+          );
+        }, []);
+        
+        return (
+          <>
       <Wrapper open={open} setOpen={setOpen} mylocation={mylocation} />
 
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
@@ -166,7 +165,8 @@ export default function RentSetting() {
             Save
           </Button>
         </Container>
-        
+        {console.log(data,"saeed")}
+       {data && data[0]?.monthlyRent===''?" ":
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
@@ -240,6 +240,7 @@ export default function RentSetting() {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
+} 
         <ToastContainer />
       </div>
     </>
