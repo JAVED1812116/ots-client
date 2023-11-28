@@ -30,6 +30,7 @@ export default function RentSetting() {
   const [mylocation, setMyLocation] = useState(location.pathname);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [fieldDisable, setFieldDisable] = useState(false);
   const [detail, setDetail] = useState({
     monthlyRent: "",
     advance: "",
@@ -44,6 +45,7 @@ export default function RentSetting() {
     { id: 'trashCharges', label: 'Trash Charges', minWidth: 100 },
     
   ];
+  console.log(fieldDisable,"fieldDisable")
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDetail((prev) => {
@@ -58,8 +60,12 @@ export default function RentSetting() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  const handleUpdate = () => {
+    setFieldDisable(false)
   
+  };
   const handleSubmit = () => {
+    setFieldDisable(true)
     if (
       (detail.monthlyRent &&
         detail.advance &&
@@ -74,6 +80,24 @@ export default function RentSetting() {
               toast.success(res?.payload?.data?.message, {
                 autoClose: 300,
               });
+              dispatch(GetRent({ userId: localStorage.getItem("user_id") })).then(
+                (res) => {
+                  setData(res?.payload?.data?.data)
+                  
+                  if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+                  setFieldDisable(true)
+                  }
+                  let { monthlyRent, advance, maintenanceCharges, trashCharges } =res?.payload?.data?.data[0];
+                  setDetail({
+                    monthlyRent,
+                    advance,
+                    maintenanceCharges,
+                    trashCharges,
+                  });
+                  
+                }
+                );
+              
             } else {
               toast.error(res?.payload?.data?.message, {
                 autoClose: 300,
@@ -93,6 +117,9 @@ export default function RentSetting() {
           (res) => {
             setData(res?.payload?.data?.data)
             
+            if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+            setFieldDisable(true)
+            }
             let { monthlyRent, advance, maintenanceCharges, trashCharges } =res?.payload?.data?.data[0];
             setDetail({
               monthlyRent,
@@ -123,6 +150,7 @@ export default function RentSetting() {
               variant="standard"
               name="monthlyRent"
               value={detail.monthlyRent}
+              disabled={fieldDisable===true}
               onChange={handleChange}
             />
             <TextField
@@ -133,6 +161,7 @@ export default function RentSetting() {
               variant="standard"
               name="advance"
               value={detail.advance}
+              disabled={fieldDisable===true}
               onChange={handleChange}
             />
 
@@ -144,6 +173,7 @@ export default function RentSetting() {
               variant="standard"
               name="maintenanceCharges"
               value={detail.maintenanceCharges}
+              disabled={fieldDisable===true}
               onChange={handleChange}
             />
             <TextField
@@ -154,18 +184,50 @@ export default function RentSetting() {
               variant="standard"
               name="trashCharges"
               value={detail.trashCharges}
+              disabled={fieldDisable===true}
               onChange={handleChange}
             />
           </div>
-          <Button
-            className="rentButton"
+
+          {
+         data && data[0]?.monthlyRent === "" &&
+         data && data[0]?.advance === "" &&
+         data && data[0]?.maintenanceCharges === "" &&
+         data && data[0]?.trashCharges === "" ? (
+            <Button
+            className="bankButton"
             variant="contained"
             onClick={handleSubmit}
-          >
-            Save
-          </Button>
+            >
+              Save
+            </Button>
+          ) : (
+            " "
+          )}
+
+          {
+          data && data[0]?.monthlyRent !== "" &&
+          data && data[0]?.advance !== "" &&
+          data && data[0]?.maintenanceCharges !== "" &&
+          data && data[0]?.trashCharges !== "" ? (
+            fieldDisable===false?   <Button
+              className="bankButton"
+              variant="contained"
+              onClick={handleSubmit}
+            >
+              Update
+            </Button>:<Button
+              className="bankButton"
+              variant="contained"
+              onClick={handleUpdate}
+            >
+              Edit
+            </Button>
+          ) : (
+            " "
+          )}
         </Container>
-        {console.log(data,"saeed")}
+        
        {data && data[0]?.monthlyRent===''?" ":
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
