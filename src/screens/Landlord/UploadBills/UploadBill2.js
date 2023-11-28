@@ -31,6 +31,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ElectricBill } from "../../../redux/Reducer/ElectricReading";
+import { ElectricPhoto } from "../../../redux/Reducer/KElectricImg";
 import { useDispatch } from "react-redux";
 import dayjs from "dayjs";
 function Row(props) {
@@ -64,6 +65,11 @@ function Row(props) {
   };
 
   const dispatch = useDispatch();
+const imgUpload=(e)=>{
+console.log(e.target.files[0],"e.target.files")
+dispatch(ElectricPhoto(e.target.files[0]));
+}
+
   const handleBillReading = (e) => {
     console.log(inputs, "test");
     console.log(selectedValue, "test1");
@@ -102,6 +108,7 @@ function Row(props) {
       console.log(values, "values");
       dispatch(ElectricBill(values));
     } else {
+      
       let values = {
         kElectricBillImage: "", // image work pending
         //extra fields
@@ -367,9 +374,9 @@ function Row(props) {
                   {selectedValue === "byPicture" && (
                     <div>
                       <Stack direction="row" alignItems="center" spacing={2}>
-                        <Button variant="contained" component="label">
+                        <Button variant="contained" component="label" >
                           Upload
-                          <input hidden accept="image/*" multiple type="file" />
+                          <input hidden accept="image/*"  type="file" onChange={(e)=>imgUpload(e)}/>
                         </Button>
                         <Button
                           variant="contained"
