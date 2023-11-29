@@ -71,7 +71,7 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
 });
 }
 
-  const handleBillReading = (e) => {
+  const handleBillKELECReading = (e) => {
     
     if (selectedValue === "byUnitReading") {
       let values = {
@@ -134,6 +134,74 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         kElectricCurrentReading: "",
         kElectricPerUnit: "",
         kElectricTotalUnits: "",
+      };
+      dispatch(ElectricBill(values));
+    }
+  
+  };
+  const handleBillSSGCReading = (e) => {
+    
+    if (selectedValue === "byGasUnitReading") {
+      let values = {
+        currentReadingSsg: inputs.currentReadingSsg,
+        previousReadingSsg: inputs.previousReadingSsg,
+        perUnitSsgCharges: inputs.perUnitSsgCharges,
+        ssgcBillDate: (moment(billDate).format("DD-MM-YYYY")),
+        ssgcDueDate: (dueDate).format("DD-MM-YYYY"),
+        ssgcTotalUnits:
+          inputs.currentReadingSsg - inputs.previousReadingSsg,
+        ssgcTotalBill:
+          parseInt(
+            inputs.currentReadingSsg - inputs.previousReadingSsg
+          ) * parseInt(inputs.perUnitSsgCharges) || 0,
+        //extra fields
+        ssgcBillImage: "",
+        ssgcEnterBill: "",
+      };
+      dispatch(ElectricBill({values}));
+    } else if (selectedValue === "byGassBill") {
+      let values = {
+        ssgcEnterBill: inputs.ssgcEnterBill,
+        ssgcBillDate: (moment(billDate).format("DD-MM-YYYY")),
+        ssgcDueDate: (dueDate).format("DD-MM-YYYY"),
+        ssgcTotalBill: inputs.ssgcEnterBill,
+        //extra fields
+        ssgcBillImage: "",
+        prevReadingSsgc: "",
+        currentReadingSsg: "",
+        perUnitSsgCharges: "",
+        ssgcTotalUnits: "",
+      };
+      dispatch(ElectricBill({values}));
+    }
+    else if (selectedValue === "byGassPicture") {
+      let values = {
+        ssgcEnterBill: "",
+        ssgcBillDate: "",
+        ssgcDueDate: "",
+        ssgcTotalBill: "",
+        //extra fields
+        ssgcBillImage: url,
+        prevReadingSsgc: "",
+        currentReadingSsg: "",
+        perUnitSsgCharges: "",
+        ssgcTotalUnits: "",
+      };
+      dispatch(ElectricBill({values}));
+    }
+    else {
+      
+      let values = {
+        ssgcEnterBill: "", // image work pending
+        //extra fields
+        ssgcBillDate: "",
+        ssgcDueDate: "",
+        ssgcTotalBill: "",
+        ssgcBillImage: "",
+        prevReadingSsgc: "",
+        currentReadingSsg: "",
+        perUnitSsgCharges: "",
+        ssgcTotalUnits: "",
       };
       dispatch(ElectricBill(values));
     }
@@ -287,7 +355,7 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                           marginRight: 1,
                           background: "black",
                         }}
-                        onClick={handleBillReading}
+                        onClick={handleBillKELECReading}
                       >
                         Post
                       </Button>
@@ -357,7 +425,7 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                           marginRight: 1,
                           background: "black",
                         }}
-                        onClick={handleBillReading}
+                        onClick={handleBillKELECReading}
                       >
                         Post
                       </Button>
@@ -377,7 +445,7 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                             marginRight: 1,
                             background: "black",
                           }}
-                          onClick={handleBillReading}
+                          onClick={handleBillKELECReading}
                         >
                           Post
                         </Button>
@@ -410,12 +478,12 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                         label="Enter Unit Reading"
                       />
                       <FormControlLabel
-                        value="byGasBill"
+                        value="byGassBill"
                         control={<Radio />}
                         label="Enter Bill"
                       />
                       <FormControlLabel
-                        value="byGasPicture"
+                        value="byGassPicture"
                         control={<Radio />}
                         label="Insert Picture"
                       />
@@ -516,12 +584,13 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                           marginRight: 1,
                           background: "black",
                         }}
+                        onClick={handleBillSSGCReading}
                       >
                         Post
                       </Button>
                     </div>
                   )}
-                  {selectedValue === "byGasBill" && (
+                  {selectedValue === "byGassBill" && (
                     <div>
                       <Table size="small" aria-label="purchases">
                         <TableHead>
@@ -574,18 +643,30 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                           marginRight: 1,
                           background: "black",
                         }}
+                        onClick={handleBillSSGCReading}
                       >
                         Post
                       </Button>
                     </div>
                   )}
-                  {selectedValue === "byGasPicture" && (
+                  {selectedValue === "byGassPicture" && (
                     <div>
                       {" "}
                       <Stack direction="row" alignItems="center" spacing={2}>
-                        <Button variant="contained" component="label">
+                      <Button variant="contained" component="label" >
                           Upload
-                          <input hidden accept="image/*" multiple type="file" />
+                          <input hidden accept="image/*"  type="file" onChange={(e)=>imgUpload(e)}/>
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            marginTop: 2,
+                            marginRight: 1,
+                            background: "black",
+                          }}
+                          onClick={handleBillSSGCReading}
+                        >
+                          Post
                         </Button>
                       </Stack>
                     </div>
