@@ -31,6 +31,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ElectricBill } from "../../../redux/Reducer/ElectricReading";
+import { SsgcBill } from "../../../redux/Reducer/SsgcReading";
 import { ElectricPhoto } from "../../../redux/Reducer/KElectricImg";
 import { useDispatch } from "react-redux";
 import dayjs from "dayjs";
@@ -158,7 +159,7 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         ssgcBillImage: "",
         ssgcEnterBill: "",
       };
-      dispatch(ElectricBill({values}));
+      dispatch(SsgcBill({values}));
     } else if (selectedValue === "byGassBill") {
       let values = {
         ssgcEnterBill: inputs.ssgcEnterBill,
@@ -172,7 +173,7 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         perUnitSsgCharges: "",
         ssgcTotalUnits: "",
       };
-      dispatch(ElectricBill({values}));
+      dispatch(SsgcBill({values}));
     }
     else if (selectedValue === "byGassPicture") {
       let values = {
@@ -187,7 +188,7 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         perUnitSsgCharges: "",
         ssgcTotalUnits: "",
       };
-      dispatch(ElectricBill({values}));
+      dispatch(SsgcBill({values}));
     }
     else {
       

@@ -6,6 +6,7 @@ import AccountSetting from './Reducer/AccountSetting';
 import ElectricReading from './Reducer/ElectricReading';
 import SendEmail from './Reducer/SendEmail';
 import KElectricImg from './Reducer/KElectricImg';
+import SsgcReading from './Reducer/SsgcReading';
 export const store = configureStore({
   reducer: {
     "CreateUser": CreateUser,
@@ -13,6 +14,7 @@ export const store = configureStore({
     "rentSetting": RentSetting,
     "accountSetting": AccountSetting,
     "electricReading": ElectricReading,
+    "ssgcReading": SsgcReading,
     "SendEmail":SendEmail,
     "Photo": KElectricImg,
   },
