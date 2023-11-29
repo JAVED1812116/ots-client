@@ -44,7 +44,8 @@ function Row(props) {
   const [maintainanceBill, setMaintainanceBill] = useState();
   const [trashBill, setTrashBill] = useState();
   const [billDate, setBillDate] = React.useState(dayjs());
-  const [dueDate, setDueDate] = React.useState(dayjs());
+  const [dueDate, setDueDate] = React.useState((dayjs()));
+  const [url, setUrl] = useState();
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
@@ -67,7 +68,9 @@ function Row(props) {
   const dispatch = useDispatch();
 const imgUpload=(e)=>{
 console.log(e.target.files[0],"e.target.files")
-dispatch(ElectricPhoto(e.target.files[0]));
+dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
+  setUrl(res?.payload?.data?.url)
+});
 }
 
   const handleBillReading = (e) => {
@@ -78,8 +81,8 @@ dispatch(ElectricPhoto(e.target.files[0]));
         kElectricPreviousReading: inputs.kElectricPreviousReading,
         kElectricCurrentReading: inputs.kElectricCurrentReading,
         kElectricPerUnit: inputs.kElectricPerUnit,
-        kElectricBillDate: billDate,
-        kElectricDueDate: dueDate,
+        kElectricBillDate: (moment(billDate).format("DD-MM-YYYY")),
+        kElectricDueDate: (dueDate).format("DD-MM-YYYY"),
         kElectricTotalUnits:
           inputs.kElectricCurrentReading - inputs.kElectricPreviousReading,
         kElectricTotalBill:
@@ -91,12 +94,12 @@ dispatch(ElectricPhoto(e.target.files[0]));
         kElectricEnterBill: "",
       };
       console.log(values, "values");
-      dispatch(ElectricBill(values));
+      dispatch(ElectricBill({values}));
     } else if (selectedValue === "byBill") {
       let values = {
         kElectricEnterBill: inputs.kElectricEnterBill,
-        kElectricBillDate: billDate,
-        kElectricDueDate: dueDate,
+        kElectricBillDate: (moment(billDate).format("DD-MM-YYYY")),
+        kElectricDueDate: (dueDate).format("DD-MM-YYYY"),
         kElectricTotalBill: inputs.kElectricEnterBill,
         //extra fields
         kElectricBillImage: "",
@@ -106,8 +109,25 @@ dispatch(ElectricPhoto(e.target.files[0]));
         kElectricTotalUnits: "",
       };
       console.log(values, "values");
-      dispatch(ElectricBill(values));
-    } else {
+      dispatch(ElectricBill({values}));
+    }
+    else if (selectedValue === "byPicture") {
+      let values = {
+        kElectricEnterBill: "",
+        kElectricBillDate: "",
+        kElectricDueDate: "",
+        kElectricTotalBill: "",
+        //extra fields
+        kElectricBillImage: url,
+        kElectricPreviousReading: "",
+        kElectricCurrentReading: "",
+        kElectricPerUnit: "",
+        kElectricTotalUnits: "",
+      };
+      console.log(values, "values");
+      dispatch(ElectricBill({values}));
+    }
+    else {
       
       let values = {
         kElectricBillImage: "", // image work pending
@@ -124,25 +144,7 @@ dispatch(ElectricPhoto(e.target.files[0]));
       console.log(values, "values");
       dispatch(ElectricBill(values));
     }
-    // if(detail.monthlyRent&&detail.advance&&detail.maintainanceChearges&&detail.trashCharges!=null||""){
-    //   dispatch(RentSet({detail})).then((res)=>{
-    //    if(res?.payload?.data?.message==="Rent Set Successfully"){
-    //     toast.success(res?.payload?.data?.message, {
-    //       autoClose: 300,
-    //     });
-
-    //   }else{
-    //     toast.error(res?.payload?.data?.message,{
-    //       autoClose:300,
-    //     })
-
-    //    }
-    //     });
-    // }else{
-    //   toast.error("Empty Field are not allowed", {
-    //     autoClose: 300,
-    //   });
-    // }
+  
   };
   return (
     <React.Fragment>

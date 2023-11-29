@@ -3,16 +3,10 @@ import axios from "axios";
 import { BASE_URL } from "../../config/config";
 
 
-export const ElectricBill = createAsyncThunk("dummyData/ElectricReading", async ({prevReadingKelectric,
-    currentReadingKelectric,
-    perUnitCharges,}) => {
-        console.log(prevReadingKelectric,
-          currentReadingKelectric,
-          perUnitCharges,"prevReadingKelectric,currentReadingKelectric,perUnitCharges")
+export const ElectricBill = createAsyncThunk("dummyData/ElectricReading", async ({values}) => {
+       
     let response = await axios.post(`${BASE_URL}/electric-reading`,  {
-        prevReading:   prevReadingKelectric,
-         currentReading: currentReadingKelectric,
-         perUnitCharges: perUnitCharges,
+       values
     });
     return response;
 });
