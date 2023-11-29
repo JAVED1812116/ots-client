@@ -58,7 +58,6 @@ function Row(props) {
   });
 
   const handleInputs = (e) => {
-    // console.log(e);
     const value = e.target.value;
     const name = e.target.name;
 
@@ -67,15 +66,13 @@ function Row(props) {
 
   const dispatch = useDispatch();
 const imgUpload=(e)=>{
-console.log(e.target.files[0],"e.target.files")
 dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
   setUrl(res?.payload?.data?.url)
 });
 }
 
   const handleBillReading = (e) => {
-    console.log(inputs, "test");
-    console.log(selectedValue, "test1");
+    
     if (selectedValue === "byUnitReading") {
       let values = {
         kElectricPreviousReading: inputs.kElectricPreviousReading,
@@ -93,7 +90,6 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         kElectricBillImage: "",
         kElectricEnterBill: "",
       };
-      console.log(values, "values");
       dispatch(ElectricBill({values}));
     } else if (selectedValue === "byBill") {
       let values = {
@@ -108,7 +104,6 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         kElectricPerUnit: "",
         kElectricTotalUnits: "",
       };
-      console.log(values, "values");
       dispatch(ElectricBill({values}));
     }
     else if (selectedValue === "byPicture") {
@@ -124,7 +119,6 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         kElectricPerUnit: "",
         kElectricTotalUnits: "",
       };
-      console.log(values, "values");
       dispatch(ElectricBill({values}));
     }
     else {
@@ -141,7 +135,6 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         kElectricPerUnit: "",
         kElectricTotalUnits: "",
       };
-      console.log(values, "values");
       dispatch(ElectricBill(values));
     }
   
@@ -168,9 +161,6 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
-                {/* <Typography variant="h6" gutterBottom component="div">
-                  History
-                </Typography> */}
                 <div>
                   <FormControl component="fieldset">
                     <Typography variant="h6">Select Bill Type</Typography>
@@ -404,9 +394,6 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
-                {/* <Typography variant="h6" gutterBottom component="div">
-                  History
-                </Typography> */}
                 <div>
                   <FormControl component="fieldset">
                     <Typography variant="h6">Select Bill Type</Typography>
@@ -553,9 +540,6 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                                 label="Enter Bill"
                                 type="number"
                                 size="small"
-                                // onChange={(e) => {
-                                //   setKElectricBillEntry(e.target.value);
-                                // }}
                                 name="ssgcEnterBill"
                                 onChange={handleInputs}
                               />
@@ -616,9 +600,6 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
-                {/* <Typography variant="h6" gutterBottom component="div">
-                  History
-                </Typography> */}
                 <div>
                   <FormControl component="fieldset">
                     <Typography variant="h6">Select Bill Type</Typography>
@@ -626,7 +607,6 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                       aria-label="options"
                       name="options"
                       style={{ flexDirection: "row" }}
-                      // value={selectedValue}
                       onChange={handleChange}
                     >
                       <FormControlLabel
@@ -662,9 +642,6 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                                 label="Enter Bill"
                                 type="number"
                                 size="small"
-                                // onChange={(e) => {
-                                //   setKElectricBillEntry(e.target.value);
-                                // }}
                                 name="waterEnterBill"
                                 onChange={handleInputs}
                               />
@@ -725,9 +702,6 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
-                {/* <Typography variant="h6" gutterBottom component="div">
-                    History
-                  </Typography> */}
                 <div>
                   <FormControl component="fieldset">
                     <Typography variant="h6">Select Bill Type</Typography>
@@ -771,9 +745,6 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                                 label="Enter Bill"
                                 type="number"
                                 size="small"
-                                // onChange={(e) => {
-                                //   setKElectricBillEntry(e.target.value);
-                                // }}
                                 name="maintainanceEnterBill"
                                 onChange={handleInputs}
                               />
@@ -971,7 +942,6 @@ export default function UploadBill2() {
   });
 
   const handleInputs = (e) => {
-    // console.log(e);
     const value = e.target.value;
     const name = e.target.name;
 
@@ -985,58 +955,31 @@ export default function UploadBill2() {
       history: [
         {
           previousReading: (
-            // <input
-            //   placeholder="Previous Reading"
-            //   onChange={(e) => {
-            //     setprevReadingKelectric(e.target.value);
-            //   }}
-            // ></input>
             <TextField
               id="outlined-number"
               label="Previous Reading"
               type="number"
               size="small"
               name="kElectricPreviousReading"
-              // onChange={(e) => {
-              //   setprevReadingKelectric(e.target.value);
-              // }}
               onChange={handleInputs}
             />
           ),
           currentReading: (
-            // <input
-            //   placeholder="current Reading"
-            //   onChange={(e) => {
-            //     setCurrentReadingKelectric(e.target.value);
-            //   }}
-            // ></input>
             <TextField
               id="outlined-number"
               label="Current Reading"
               type="number"
               size="small"
               name="kElectricCurrentReading"
-              // onChange={(e) => {
-              //   setCurrentReadingKelectric(e.target.value);
-              // }}
               onChange={handleInputs}
             />
           ),
           perUnitCharge: (
-            // <input
-            //   placeholder="Per Unit"
-            //   onChange={(e) => {
-            //     setPerUnitCharges(e.target.value);
-            //   }}
-            // ></input>
             <TextField
               id="outlined-number"
               label="Per Unit"
               type="number"
               size="small"
-              // onChange={(e) => {
-              //   setPerUnitCharges(e.target.value);
-              // }}
               name="kElectricPerUnit"
               onChange={handleInputs}
             />
@@ -1165,12 +1108,6 @@ export default function UploadBill2() {
                 <TableCell sx={{ color: "white" }} align="center">
                   Bill Type
                 </TableCell>
-                {/* <TableCell sx={{ color: "white" }} align="right">
-                  Year
-                </TableCell>
-                <TableCell sx={{ color: "white" }} align="right">
-                  Date
-                </TableCell> */}
                 <TableCell align="right"></TableCell>
                 <TableCell align="right"></TableCell>
               </TableRow>
@@ -1180,7 +1117,6 @@ export default function UploadBill2() {
                 <Row
                   key={row.name}
                   row={row}
-                  //  prevReadingKelectric={prevReadingKelectric} currentReadingKelectric={currentReadingKelectric} perUnitCharges={perUnitCharges}
                   inputs={inputs}
                 />
               ))}
