@@ -19,7 +19,7 @@ import { useLocation } from "react-router";
 import title from "../../../components/title";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import "./uploadBill.css"
+import "./uploadBill.css";
 import moment from "moment";
 import {
   FormControl,
@@ -31,8 +31,13 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ElectricBill } from "../../../redux/Reducer/ElectricReading";
+import { SsgcBill } from "../../../redux/Reducer/SsgcReading";
+import { WaterReadings } from "../../../redux/Reducer/WaterReading";
+import { MaintananceReadings } from "../../../redux/Reducer/MaintananceReading";
+import { TrashReadings } from "../../../redux/Reducer/TrashReading";
+import { ElectricPhoto } from "../../../redux/Reducer/KElectricImg";
 import { useDispatch } from "react-redux";
-
+import dayjs from "dayjs";
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
@@ -42,36 +47,284 @@ function Row(props) {
   const [waterBill, setWaterBill] = useState();
   const [maintainanceBill, setMaintainanceBill] = useState();
   const [trashBill, setTrashBill] = useState();
-  const [billDate, setBillDate] = useState();
-  const [dueDate, setDueDate] = useState();
+  const [billDate, setBillDate] = React.useState(dayjs());
+  const [dueDate, setDueDate] = React.useState((dayjs()));
+  const [url, setUrl] = useState();
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
-  const dispatch = useDispatch();
-  const handleBillReading = (e) => {
-    console.log(props.inputs, "test");
-    console.log(selectedValue, "test1");
-    // dispatch(ElectricBill({}));
-    // if(detail.monthlyRent&&detail.advance&&detail.maintainanceChearges&&detail.trashCharges!=null||""){
-    //   dispatch(RentSet({detail})).then((res)=>{
-    //    if(res?.payload?.data?.message==="Rent Set Successfully"){
-    //     toast.success(res?.payload?.data?.message, {
-    //       autoClose: 300,
-    //     });
 
-    //   }else{
-    //     toast.error(res?.payload?.data?.message,{
-    //       autoClose:300,
-    //     })
+  const [inputs, setInputs] = useState({
+    kElectricPreviousReading: "",
+    kElectricCurrentReading: "",
+    kElectricPerUnit: "",
+    kElectricEnterBill: "",
+  });
 
-    //    }
-    //     });
-    // }else{
-    //   toast.error("Empty Field are not allowed", {
-    //     autoClose: 300,
-    //   });
-    // }
+  const handleInputs = (e) => {
+    const value = e.target.value;
+    const name = e.target.name;
+
+    setInputs({ ...inputs, [name]: value });
   };
+
+  const dispatch = useDispatch();
+const imgUpload=(e)=>{
+dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
+  setUrl(res?.payload?.data?.url)
+});
+}
+
+  const handleBillKELECReading = (e) => {
+    
+    if (selectedValue === "byUnitReading") {
+      let values = {
+        kElectricPreviousReading: inputs.kElectricPreviousReading,
+        kElectricCurrentReading: inputs.kElectricCurrentReading,
+        kElectricPerUnit: inputs.kElectricPerUnit,
+        kElectricBillDate: (moment(billDate).format("DD-MM-YYYY")),
+        kElectricDueDate: (dueDate).format("DD-MM-YYYY"),
+        kElectricTotalUnits:
+          inputs.kElectricCurrentReading - inputs.kElectricPreviousReading,
+        kElectricTotalBill:
+          parseInt(
+            inputs.kElectricCurrentReading - inputs.kElectricPreviousReading
+          ) * parseInt(inputs.kElectricPerUnit) || 0,
+        //extra fields
+        kElectricBillImage: "",
+        kElectricEnterBill: "",
+      };
+      dispatch(ElectricBill({values}));
+    } else if (selectedValue === "byBill") {
+      let values = {
+        kElectricEnterBill: inputs.kElectricEnterBill,
+        kElectricBillDate: (moment(billDate).format("DD-MM-YYYY")),
+        kElectricDueDate: (dueDate).format("DD-MM-YYYY"),
+        kElectricTotalBill: inputs.kElectricEnterBill,
+        //extra fields
+        kElectricBillImage: "",
+        kElectricPreviousReading: "",
+        kElectricCurrentReading: "",
+        kElectricPerUnit: "",
+        kElectricTotalUnits: "",
+      };
+      dispatch(ElectricBill({values}));
+    }
+    else if (selectedValue === "byPicture") {
+      let values = {
+        kElectricEnterBill: "",
+        kElectricBillDate: "",
+        kElectricDueDate: "",
+        kElectricTotalBill: "",
+        //extra fields
+        kElectricBillImage: url,
+        kElectricPreviousReading: "",
+        kElectricCurrentReading: "",
+        kElectricPerUnit: "",
+        kElectricTotalUnits: "",
+      };
+      dispatch(ElectricBill({values}));
+    }
+    else {
+      
+      let values = {
+        kElectricBillImage: "", // image work pending
+        //extra fields
+        kElectricEnterBill: "",
+        kElectricBillDate: "",
+        kElectricDueDate: "",
+        kElectricTotalBill: "",
+        kElectricPreviousReading: "",
+        kElectricCurrentReading: "",
+        kElectricPerUnit: "",
+        kElectricTotalUnits: "",
+      };
+      dispatch(ElectricBill(values));
+    }
+  
+  };
+  const handleBillSSGCReading = (e) => {
+    
+    if (selectedValue === "byGasUnitReading") {
+      let values = {
+        currentReadingSsg: inputs.currentReadingSsg,
+        previousReadingSsg: inputs.previousReadingSsg,
+        perUnitSsgCharges: inputs.perUnitSsgCharges,
+        ssgcBillDate: (moment(billDate).format("DD-MM-YYYY")),
+        ssgcDueDate: (dueDate).format("DD-MM-YYYY"),
+        ssgcTotalUnits:
+          inputs.currentReadingSsg - inputs.previousReadingSsg,
+        ssgcTotalBill:
+          parseInt(
+            inputs.currentReadingSsg - inputs.previousReadingSsg
+          ) * parseInt(inputs.perUnitSsgCharges) || 0,
+        //extra fields
+        ssgcBillImage: "",
+        ssgcEnterBill: "",
+      };
+      dispatch(SsgcBill({values}));
+    } else if (selectedValue === "byGassBill") {
+      let values = {
+        ssgcEnterBill: inputs.ssgcEnterBill,
+        ssgcBillDate: (moment(billDate).format("DD-MM-YYYY")),
+        ssgcDueDate: (dueDate).format("DD-MM-YYYY"),
+        ssgcTotalBill: inputs.ssgcEnterBill,
+        //extra fields
+        ssgcBillImage: "",
+        prevReadingSsgc: "",
+        currentReadingSsg: "",
+        perUnitSsgCharges: "",
+        ssgcTotalUnits: "",
+      };
+      dispatch(SsgcBill({values}));
+    }
+    else if (selectedValue === "byGassPicture") {
+      let values = {
+        ssgcEnterBill: "",
+        ssgcBillDate: "",
+        ssgcDueDate: "",
+        ssgcTotalBill: "",
+        //extra fields
+        ssgcBillImage: url,
+        prevReadingSsgc: "",
+        currentReadingSsg: "",
+        perUnitSsgCharges: "",
+        ssgcTotalUnits: "",
+      };
+      dispatch(SsgcBill({values}));
+    }
+    else {
+      
+      let values = {
+        ssgcEnterBill: "", // image work pending
+        //extra fields
+        ssgcBillDate: "",
+        ssgcDueDate: "",
+        ssgcTotalBill: "",
+        ssgcBillImage: "",
+        prevReadingSsgc: "",
+        currentReadingSsg: "",
+        perUnitSsgCharges: "",
+        ssgcTotalUnits: "",
+      };
+      dispatch(ElectricBill(values));
+    }
+  
+  };
+  const handleBillWaterReading = (e) => {
+    
+   if (selectedValue === "byWaterBill") {
+      let values = {
+        waterEnterBill: inputs.waterEnterBill,
+        waterBillDate: (moment(billDate).format("DD-MM-YYYY")),
+        waterDueDate: (dueDate).format("DD-MM-YYYY"),
+        waterTotalBill: inputs.waterEnterBill,
+        //extra fields
+        waterBillImage: "",
+      };
+      dispatch(WaterReadings({values}));
+    }
+    else if (selectedValue === "byWaterPicture") {
+      let values = {
+        waterEnterBill: "",
+        waterBillDate: "",
+        waterDueDate: "",
+        waterTotalBill: "",
+        //extra fields
+        waterBillImage: url,
+      };
+      dispatch(WaterReadings({values}));
+    }
+    else {
+      
+      let values = {
+        waterEnterBill: "", // image work pending
+        //extra fields
+        waterBillDate: "",
+        waterDueDate: "",
+        waterTotalBill: "",
+        waterBillImage: "",
+      };
+      dispatch(WaterReadings(values));
+    }
+  
+  };
+  const handleMaintainanceReading = (e) => {
+    
+   if (selectedValue === "byMaintainanceBill") {
+      let values = {
+        maintananceEnterBill: inputs.maintananceEnterBill,
+        maintananceBillDate: (moment(billDate).format("DD-MM-YYYY")),
+        maintananceDueDate: (dueDate).format("DD-MM-YYYY"),
+        maintananceTotalBill: inputs.maintananceEnterBill,
+        //extra fields
+        maintananceBillImage: "",
+      };
+      dispatch(MaintananceReadings({values}));
+    }
+    else if (selectedValue === "byMaintainancePicture") {
+      let values = {
+        maintananceEnterBill: "",
+        maintananceBillDate: "",
+        maintananceDueDate: "",
+        maintananceTotalBill: "",
+        //extra fields
+        maintananceBillImage: url,
+      };
+      dispatch(MaintananceReadings({values}));
+    }
+    else {
+      
+      let values = {
+        maintananceEnterBill: "", // image work pending
+        //extra fields
+        maintananceBillDate: "",
+        maintananceDueDate: "",
+        maintananceTotalBill: "",
+        maintananceBillImage: "",
+      };
+      dispatch(MaintananceReadings(values));
+    }
+  
+  };
+  const handleTrashReading = (e) => {
+    
+    if (selectedValue === "byTrashBill") {
+       let values = {
+        trashEnterBill: inputs.trashEnterBill,
+         trashBillDate: (moment(billDate).format("DD-MM-YYYY")),
+         trashDueDate: (dueDate).format("DD-MM-YYYY"),
+         trashTotalBill: inputs.trashEnterBill,
+         //extra fields
+         trashBillImage: "",
+       };
+       dispatch(TrashReadings({values}));
+     }
+     else if (selectedValue === "byTrashPicture") {
+       let values = {
+         trashEnterBill: "",
+         trashBillDate: "",
+         trashDueDate: "",
+         trashTotalBill: "",
+         //extra fields
+         trashBillImage: url,
+       };
+       dispatch(TrashReadings({values}));
+     }
+     else {
+       
+       let values = {
+         trashEnterBill: "", // image work pending
+         //extra fields
+         trashBillDate: "",
+         trashDueDate: "",
+         trashTotalBill: "",
+         trashBillImage: "",
+       };
+       dispatch(TrashReadings(values));
+     }
+   
+   };
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -84,7 +337,7 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" colSpan={6}>
           {row.name}
         </TableCell>
         {/* <TableCell align="right">{row.calories}</TableCell>*/}
@@ -94,9 +347,6 @@ function Row(props) {
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
-                {/* <Typography variant="h6" gutterBottom component="div">
-                  History
-                </Typography> */}
                 <div>
                   <FormControl component="fieldset">
                     <Typography variant="h6">Select Bill Type</Typography>
@@ -142,36 +392,78 @@ function Row(props) {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {row.history.map((historyRow) => (
-                            <TableRow key={historyRow.previousReading}>
-                              <TableCell component="th" scope="row">
-                                {historyRow.previousReading}
-                              </TableCell>
-                              <TableCell>{historyRow.currentReading}</TableCell>
-                              <TableCell>{historyRow.perUnitCharge}</TableCell>
-                              <TableCell>
-                                <LocalizationProvider
-                                  dateAdapter={AdapterDayjs}
-                                >
-                                  <DatePicker className="fulldate" onChange={(newValue) => setBillDate(newValue)}/>
-                                </LocalizationProvider>
-                              </TableCell>
-                              <TableCell>
-                                <LocalizationProvider
-                                  dateAdapter={AdapterDayjs}
-                                >
-                                  <DatePicker className="fulldate" onChange={(newValue) => setDueDate(newValue)}/>
-                                </LocalizationProvider>
-                              </TableCell>
-                              <TableCell align="right">
-                                {historyRow.totalUnit || 0}
-                              </TableCell>
-                              {/* <TableCell>{historyRow.enterBill}</TableCell> */}
-                              <TableCell>
-                                {historyRow.showElectricUnit || 0}
-                              </TableCell>
-                            </TableRow>
-                          ))}
+                          {/* {row.history.map((historyRow) => ( */}
+                          <TableRow>
+                            <TableCell component="th" scope="row">
+                              <TextField
+                                id="outlined-number"
+                                label="Previous Reading"
+                                type="number"
+                                size="small"
+                                name="kElectricPreviousReading"
+                                // onChange={(e) => {
+                                //   setprevReadingKelectric(e.target.value);
+                                // }}
+                                onChange={handleInputs}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <TextField
+                                id="outlined-number"
+                                label="Current Reading"
+                                type="number"
+                                size="small"
+                                name="kElectricCurrentReading"
+                                // onChange={(e) => {
+                                //   setCurrentReadingKelectric(e.target.value);
+                                // }}
+                                onChange={handleInputs}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <TextField
+                                id="outlined-number"
+                                label="Per Unit"
+                                type="number"
+                                size="small"
+                                // onChange={(e) => {
+                                //   setPerUnitCharges(e.target.value);
+                                // }}
+                                name="kElectricPerUnit"
+                                onChange={handleInputs}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                  className="fulldate"
+                                  disabled={true}
+                                  value={billDate}
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                  className="fulldate"
+                                  value={dueDate}
+                                  onChange={(newValue) => setDueDate(newValue)}
+                                />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell align="right">
+                              {inputs.kElectricCurrentReading -
+                                inputs.kElectricPreviousReading}
+                            </TableCell>
+                            {/* <TableCell>{historyRow.enterBill}</TableCell> */}
+                            <TableCell>
+                              {parseInt(
+                                inputs.kElectricCurrentReading -
+                                  inputs.kElectricPreviousReading
+                              ) * parseInt(inputs.kElectricPerUnit) || 0}
+                            </TableCell>
+                          </TableRow>
                         </TableBody>
                       </Table>
                       <Button
@@ -181,7 +473,7 @@ function Row(props) {
                           marginRight: 1,
                           background: "black",
                         }}
-                        onClick={handleBillReading}
+                        onClick={handleBillKELECReading}
                       >
                         Post
                       </Button>
@@ -212,22 +504,35 @@ function Row(props) {
                                 label="Enter Bill"
                                 type="number"
                                 size="small"
-                                onChange={(e) => {
-                                  setKElectricBillEntry(e.target.value);
-                                }}
+                                // onChange={(e) => {
+                                //   setKElectricBillEntry(e.target.value);
+                                // }}
+                                name="kElectricEnterBill"
+                                onChange={handleInputs}
                               />
                             </TableCell>
                             <TableCell>
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker  className="fulldate"/>
+                                <DatePicker
+                                  className="fulldate"
+                                  disabled={true}
+                                  value={billDate}
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
                               </LocalizationProvider>
                             </TableCell>
                             <TableCell>
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker  className="fulldate"/>
+                                <DatePicker
+                                  className="fulldate"
+                                  value={dueDate}
+                                  onChange={(newValue) => setDueDate(newValue)}
+                                />
                               </LocalizationProvider>
                             </TableCell>
-                            <TableCell>{kElectricBillEntry || 0}</TableCell>
+                            <TableCell>
+                              {inputs.kElectricEnterBill || 0}
+                            </TableCell>
                           </TableRow>
                         </TableBody>
                       </Table>
@@ -238,6 +543,7 @@ function Row(props) {
                           marginRight: 1,
                           background: "black",
                         }}
+                        onClick={handleBillKELECReading}
                       >
                         Post
                       </Button>
@@ -246,9 +552,589 @@ function Row(props) {
                   {selectedValue === "byPicture" && (
                     <div>
                       <Stack direction="row" alignItems="center" spacing={2}>
-                        <Button variant="contained" component="label">
+                        <Button variant="contained" component="label" >
                           Upload
-                          <input hidden accept="image/*" multiple type="file" />
+                          <input hidden accept="image/*"  type="file" onChange={(e)=>imgUpload(e)}/>
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            marginTop: 2,
+                            marginRight: 1,
+                            background: "black",
+                          }}
+                          onClick={handleBillKELECReading}
+                        >
+                          Post
+                        </Button>
+                      </Stack>
+                    </div>
+                  )}
+                </div>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      ) : row?.type === "ssgc" ? (
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                <div>
+                  <FormControl component="fieldset">
+                    <Typography variant="h6">Select Bill Type</Typography>
+                    <RadioGroup
+                      aria-label="options"
+                      name="options"
+                      style={{ flexDirection: "row" }}
+                      // value={selectedValue}
+                      onChange={handleChange}
+                    >
+                      <FormControlLabel
+                        value="byGasUnitReading"
+                        control={<Radio />}
+                        label="Enter Unit Reading"
+                      />
+                      <FormControlLabel
+                        value="byGassBill"
+                        control={<Radio />}
+                        label="Enter Bill"
+                      />
+                      <FormControlLabel
+                        value="byGassPicture"
+                        control={<Radio />}
+                        label="Insert Picture"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+
+                  {/* Conditional rendering based on the selected radio button */}
+                  {selectedValue === "byGasUnitReading" && (
+                    <div>
+                      <Table size="small" aria-label="purchases">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Previous Reading</TableCell>
+                            <TableCell>Current Reading</TableCell>
+                            <TableCell>Per Unit</TableCell>
+                            <TableCell>Bill Date</TableCell>
+                            <TableCell>Due Date</TableCell>
+                            <TableCell align="right">Total Unit</TableCell>
+                            <TableCell>Total Bill</TableCell>
+                            <TableCell align="right"></TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {row.history.map((historyRow) => (
+                            <TableRow key={historyRow.previousReadingSsg}>
+                              <TableCell component="th" scope="row">
+                                <TextField
+                                  id="outlined-number"
+                                  label="Previous Reading"
+                                  type="number"
+                                  size="small"
+                                  name="previousReadingSsg"
+                                  onChange={handleInputs}
+                                />
+                              </TableCell>
+                              <TableCell component="th" scope="row">
+                                <TextField
+                                  id="outlined-number"
+                                  label="Current Reading"
+                                  type="number"
+                                  size="small"
+                                  name="currentReadingSsg"
+                                  onChange={handleInputs}
+                                />
+                              </TableCell>
+                              <TableCell component="th" scope="row">
+                                <TextField
+                                  id="outlined-number"
+                                  label="Per Unit"
+                                  type="number"
+                                  size="small"
+                                  name="perUnitSsgCharges"
+                                  onChange={handleInputs}
+                                />
+                              </TableCell>
+                              <TableCell>
+                                <LocalizationProvider
+                                  dateAdapter={AdapterDayjs}
+                                >
+                                  <DatePicker
+                                    className="fulldate"
+                                    disabled={true}
+                                    value={billDate}
+                                    onChange={(newValue) =>
+                                      setBillDate(newValue)
+                                    }
+                                  />
+                                </LocalizationProvider>
+                              </TableCell>
+                              <TableCell>
+                                <LocalizationProvider
+                                  dateAdapter={AdapterDayjs}
+                                >
+                                  <DatePicker
+                                    className="fulldate"
+                                    value={dueDate}
+                                    onChange={(newValue) =>
+                                      setDueDate(newValue)
+                                    }
+                                  />
+                                </LocalizationProvider>
+                              </TableCell>
+                              <TableCell align="right">
+                                {historyRow.totalSsgUnit || 0}
+                              </TableCell>
+                              {/* <TableCell>{historyRow.enterBill}</TableCell> */}
+                              <TableCell>
+                                {historyRow.showSsgcUnit || 0}
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          marginTop: 2,
+                          marginRight: 1,
+                          background: "black",
+                        }}
+                        onClick={handleBillSSGCReading}
+                      >
+                        Post
+                      </Button>
+                    </div>
+                  )}
+                  {selectedValue === "byGassBill" && (
+                    <div>
+                      <Table size="small" aria-label="purchases">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Enter Bill</TableCell>
+                            <TableCell>Bill Date</TableCell>
+                            <TableCell>Due Date</TableCell>
+                            <TableCell>Total Bill</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          <TableRow>
+                            <TableCell>
+                              <TextField
+                                id="outlined-number"
+                                label="Enter Bill"
+                                type="number"
+                                size="small"
+                                name="ssgcEnterBill"
+                                onChange={handleInputs}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                  className="fulldate"
+                                  disabled={true}
+                                  value={billDate}
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                  className="fulldate"
+                                  value={billDate}
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>{inputs.ssgcEnterBill || 0}</TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          marginTop: 2,
+                          marginRight: 1,
+                          background: "black",
+                        }}
+                        onClick={handleBillSSGCReading}
+                      >
+                        Post
+                      </Button>
+                    </div>
+                  )}
+                  {selectedValue === "byGassPicture" && (
+                    <div>
+                      {" "}
+                      <Stack direction="row" alignItems="center" spacing={2}>
+                      <Button variant="contained" component="label" >
+                          Upload
+                          <input hidden accept="image/*"  type="file" onChange={(e)=>imgUpload(e)}/>
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            marginTop: 2,
+                            marginRight: 1,
+                            background: "black",
+                          }}
+                          onClick={handleBillSSGCReading}
+                        >
+                          Post
+                        </Button>
+                      </Stack>
+                    </div>
+                  )}
+                </div>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      ) : row?.type === "water" ? (
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                <div>
+                  <FormControl component="fieldset">
+                    <Typography variant="h6">Select Bill Type</Typography>
+                    <RadioGroup
+                      aria-label="options"
+                      name="options"
+                      style={{ flexDirection: "row" }}
+                      onChange={handleChange}
+                    >
+                      <FormControlLabel
+                        value="byWaterBill"
+                        control={<Radio />}
+                        label="Enter Bill"
+                      />
+                      <FormControlLabel
+                        value="byWaterPicture"
+                        control={<Radio />}
+                        label="Insert Picture"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+
+                  {/* Conditional rendering based on the selected radio button */}
+                  {selectedValue === "byWaterBill" && (
+                    <div>
+                      <Table size="small" aria-label="purchases">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Enter Bill</TableCell>
+                            <TableCell>Bill Date</TableCell>
+                            <TableCell>Due Date</TableCell>
+                            <TableCell>Total Bill</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          <TableRow>
+                            <TableCell>
+                              <TextField
+                                id="outlined-number"
+                                label="Enter Bill"
+                                type="number"
+                                size="small"
+                                name="waterEnterBill"
+                                onChange={handleInputs}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                  className="fulldate"
+                                  disabled={true}
+                                  value={billDate}
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                  className="fulldate"
+                                  value={billDate}
+                                  onChange={(newValue) => setDueDate(newValue)}
+                                />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>{inputs.waterEnterBill || 0}</TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          marginTop: 2,
+                          marginRight: 1,
+                          background: "black",
+                        }}
+                        onClick={handleBillWaterReading}
+                      >
+                        Post
+                      </Button>
+                    </div>
+                  )}
+                  {selectedValue === "byWaterPicture" && (
+                    <div>
+                      {" "}
+                      <Stack direction="row" alignItems="center" spacing={2}>
+                      <Button variant="contained" component="label" >
+                          Upload
+                          <input hidden accept="image/*"  type="file" onChange={(e)=>imgUpload(e)}/>
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            marginTop: 2,
+                            marginRight: 1,
+                            background: "black",
+                          }}
+                          onClick={handleBillWaterReading}
+                        >
+                          Post
+                        </Button>
+                      </Stack>
+                    </div>
+                  )}
+                </div>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      ) : row?.type === "maintainance" ? (
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                <div>
+                  <FormControl component="fieldset">
+                    <Typography variant="h6">Select Bill Type</Typography>
+                    <RadioGroup
+                      aria-label="options"
+                      name="options"
+                      style={{ flexDirection: "row" }}
+                      // value={selectedValue}
+                      onChange={handleChange}
+                    >
+                      <FormControlLabel
+                        value="byMaintainanceBill"
+                        control={<Radio />}
+                        label="Enter Bill"
+                      />
+                      <FormControlLabel
+                        value="byMaintainancePicture"
+                        control={<Radio />}
+                        label="Insert Picture"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+
+                  {/* Conditional rendering based on the selected radio button */}
+                  {selectedValue === "byMaintainanceBill" && (
+                    <div>
+                      <Table size="small" aria-label="purchases">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Enter Bill</TableCell>
+                            <TableCell>Bill Date</TableCell>
+                            <TableCell>Due Date</TableCell>
+                            <TableCell>Total Bill</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          <TableRow>
+                            <TableCell>
+                              <TextField
+                                id="outlined-number"
+                                label="Enter Bill"
+                                type="number"
+                                size="small"
+                                name="maintananceEnterBill"
+                                onChange={handleInputs}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                  className="fulldate"
+                                  disabled={true}
+                                  value={billDate} // Set the value to the current date
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                  className="fulldate"
+                                  value={billDate}
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>{inputs.maintananceEnterBill || 0}</TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          marginTop: 2,
+                          marginRight: 1,
+                          background: "black",
+                        }}
+                        onClick={handleMaintainanceReading}
+                      >
+                        Post
+                      </Button>
+                    </div>
+                  )}
+                  {selectedValue === "byMaintainancePicture" && (
+                    <div>
+                      {" "}
+                      <Stack direction="row" alignItems="center" spacing={2}>
+                      <Button variant="contained" component="label" >
+                          Upload
+                          <input hidden accept="image/*"  type="file" onChange={(e)=>imgUpload(e)}/>
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            marginTop: 2,
+                            marginRight: 1,
+                            background: "black",
+                          }}
+                          onClick={handleMaintainanceReading}
+                        >
+                          Post
+                        </Button>
+                      </Stack>
+                    </div>
+                  )}
+                </div>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      ) : row?.type === "trash" ? (
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                {/* <Typography variant="h6" gutterBottom component="div">
+                    History
+                  </Typography> */}
+                <div>
+                  <FormControl component="fieldset">
+                    <Typography variant="h6">Select Bill Type</Typography>
+                    <RadioGroup
+                      aria-label="options"
+                      name="options"
+                      style={{ flexDirection: "row" }}
+                      // value={selectedValue}
+                      onChange={handleChange}
+                    >
+                      <FormControlLabel
+                        value="byTrashBill"
+                        control={<Radio />}
+                        label="Enter Bill"
+                      />
+                      <FormControlLabel
+                        value="byTrashPicture"
+                        control={<Radio />}
+                        label="Insert Picture"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+
+                  {/* Conditional rendering based on the selected radio button */}
+                  {selectedValue === "byTrashBill" && (
+                    <div>
+                      <Table size="small" aria-label="purchases">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Enter Bill</TableCell>
+                            <TableCell>Bill Date</TableCell>
+                            <TableCell>Due Date</TableCell>
+                            <TableCell>Total Bill</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          <TableRow>
+                            <TableCell>
+                              <TextField
+                                id="outlined-number"
+                                label="Enter Bill"
+                                type="number"
+                                size="small"
+                                // onChange={(e) => {
+                                //   setKElectricBillEntry(e.target.value);
+                                // }}
+                                name="trashEnterBill"
+                                onChange={handleInputs}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                  className="fulldate"
+                                  disabled={true}
+                                  value={billDate}
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                  className="fulldate"
+                                  value={billDate}
+                                  onChange={(newValue) => setBillDate(newValue)}
+                                />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>{inputs.trashEnterBill || 0}</TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          marginTop: 2,
+                          marginRight: 1,
+                          background: "black",
+                        }}
+                        onClick={handleTrashReading}
+                      >
+                        Post
+                      </Button>
+                    </div>
+                  )}
+                  {selectedValue === "byTrashPicture" && (
+                    <div>
+                      {" "}
+                      <Stack direction="row" alignItems="center" spacing={2}>
+                      <Button variant="contained" component="label" >
+                          Upload
+                          <input hidden accept="image/*"  type="file" onChange={(e)=>imgUpload(e)}/>
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            marginTop: 2,
+                            marginRight: 1,
+                            background: "black",
+                          }}
+                          onClick={handleTrashReading}
+                        >
+                          Post
                         </Button>
                       </Stack>
                     </div>
@@ -259,434 +1145,6 @@ function Row(props) {
           </TableCell>
         </TableRow>
       ) : (
-        //   : row?.type === "ssgc" ? (
-        //     <TableRow>
-        //       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-        //         <Collapse in={open} timeout="auto" unmountOnExit>
-        //           <Box sx={{ margin: 1 }}>
-        //             {/* <Typography variant="h6" gutterBottom component="div">
-        //           History
-        //         </Typography> */}
-        //             <div>
-        //               <FormControl component="fieldset">
-        //                 <Typography variant="h6">Select Bill Type</Typography>
-        //                 <RadioGroup
-        //                   aria-label="options"
-        //                   name="options"
-        //                   style={{ flexDirection: "row" }}
-        //                   // value={selectedValue}
-        //                   onChange={handleChange}
-        //                 >
-        //                   <FormControlLabel
-        //                     value="byGasUnitReading"
-        //                     control={<Radio />}
-        //                     label="Enter Unit Reading"
-        //                   />
-        //                   <FormControlLabel
-        //                     value="byGasBill"
-        //                     control={<Radio />}
-        //                     label="Enter Bill"
-        //                   />
-        //                   <FormControlLabel
-        //                     value="byGasPicture"
-        //                     control={<Radio />}
-        //                     label="Insert Picture"
-        //                   />
-        //                 </RadioGroup>
-        //               </FormControl>
-
-        //               {/* Conditional rendering based on the selected radio button */}
-        //               {selectedValue === "byGasUnitReading" && (
-        //                 <div>
-        //                   <Table size="small" aria-label="purchases">
-        //                     <TableHead>
-        //                       <TableRow>
-        //                         <TableCell>Previous Reading</TableCell>
-        //                         <TableCell>Current Reading</TableCell>
-        //                         <TableCell>Per Unit</TableCell>
-        //                         <TableCell>Bill Date</TableCell>
-        //                         <TableCell>Due Date</TableCell>
-        //                         <TableCell align="right">Total Unit</TableCell>
-        //                         <TableCell>Total Bill</TableCell>
-        //                         <TableCell align="right"></TableCell>
-        //                       </TableRow>
-        //                     </TableHead>
-        //                     <TableBody>
-        //                       {row.history.map((historyRow) => (
-        //                         <TableRow key={historyRow.previousReadingSsg}>
-        //                           <TableCell component="th" scope="row">
-        //                             {historyRow.previousReadingSsg}
-        //                           </TableCell>
-        //                           <TableCell>
-        //                             {historyRow.currentReadingSsg}
-        //                           </TableCell>
-        //                           <TableCell>
-        //                             {historyRow.perUnitSsgCharges}
-        //                           </TableCell>
-        //                           <TableCell>
-        //                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-        //                           <DatePicker />
-        //                         </LocalizationProvider>
-        //                         </TableCell>
-        //                         <TableCell>
-        //                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-        //                           <DatePicker />
-        //                         </LocalizationProvider>
-        //                         </TableCell>
-        //                           <TableCell align="right">
-        //                             {historyRow.totalSsgUnit || 0}
-        //                           </TableCell>
-        //                           {/* <TableCell>{historyRow.enterBill}</TableCell> */}
-        //                           <TableCell>
-        //                             {historyRow.showSsgcUnit || 0}
-        //                           </TableCell>
-        //                         </TableRow>
-        //                       ))}
-        //                     </TableBody>
-        //                   </Table>
-        //                   <Button
-        //                     variant="contained"
-        //                     sx={{
-        //                       marginTop: 2,
-        //                       marginRight: 1,
-        //                       background: "black",
-        //                     }}
-        //                   >
-        //                     Post
-        //                   </Button>
-        //                 </div>
-        //               )}
-        //               {selectedValue === "byGasBill" && (
-        //                 <div>
-        //                   <Table size="small" aria-label="purchases">
-        //                     <TableHead>
-        //                       <TableRow>
-        //                         <TableCell>Enter Bill</TableCell>
-        //                         <TableCell>Bill Date</TableCell>
-        //                         <TableCell>Due Date</TableCell>
-        //                         <TableCell>Total Bill</TableCell>
-        //                       </TableRow>
-        //                     </TableHead>
-        //                     <TableBody>
-        //                       <TableRow>
-        //                         <TableCell>
-        //                           <input
-        //                             placeholder="Enter Bill"
-        //                             onChange={(e) => {
-        //                               setSsgcBillEntry(e.target.value);
-        //                             }}
-        //                           />
-        //                         </TableCell>
-        //                         <TableCell>
-        //                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-        //                           <DatePicker />
-        //                         </LocalizationProvider>
-        //                         </TableCell>
-        //                         <TableCell>
-        //                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-        //                           <DatePicker />
-        //                         </LocalizationProvider>
-        //                         </TableCell>
-        //                         <TableCell>{ssgcBillEntry||0}</TableCell>
-        //                       </TableRow>
-        //                     </TableBody>
-        //                   </Table>
-        //                   <Button
-        //                     variant="contained"
-        //                     sx={{
-        //                       marginTop: 2,
-        //                       marginRight: 1,
-        //                       background: "black",
-        //                     }}
-        //                   >
-        //                     Post
-        //                   </Button>
-        //                 </div>
-        //               )}
-        //               {selectedValue === "byGasPicture" && <div> <Stack direction="row" alignItems="center" spacing={2}>
-        //   <Button variant="contained" component="label">
-        //     Upload
-        //     <input hidden accept="image/*" multiple type="file" />
-        //   </Button>
-        // </Stack></div>}
-        //             </div>
-        //           </Box>
-        //         </Collapse>
-        //       </TableCell>
-        //     </TableRow>
-        //   ) : row?.type === "water" ? (
-        //     <TableRow>
-        //       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-        //         <Collapse in={open} timeout="auto" unmountOnExit>
-        //           <Box sx={{ margin: 1 }}>
-        //             {/* <Typography variant="h6" gutterBottom component="div">
-        //           History
-        //         </Typography> */}
-        //             <div>
-        //               <FormControl component="fieldset">
-        //                 <Typography variant="h6">Select Bill Type</Typography>
-        //                 <RadioGroup
-        //                   aria-label="options"
-        //                   name="options"
-        //                   style={{ flexDirection: "row" }}
-        //                   // value={selectedValue}
-        //                   onChange={handleChange}
-        //                 >
-        //                   <FormControlLabel
-        //                     value="byWaterBill"
-        //                     control={<Radio />}
-        //                     label="Enter Bill"
-        //                   />
-        //                   <FormControlLabel
-        //                     value="byWaterPicture"
-        //                     control={<Radio />}
-        //                     label="Insert Picture"
-        //                   />
-        //                 </RadioGroup>
-        //               </FormControl>
-
-        //               {/* Conditional rendering based on the selected radio button */}
-        //               {selectedValue === "byWaterBill" && (
-        //                 <div>
-        //                   <Table size="small" aria-label="purchases">
-        //                     <TableHead>
-        //                       <TableRow>
-        //                         <TableCell>Enter Bill</TableCell>
-        //                         <TableCell>Bill Date</TableCell>
-        //                         <TableCell>Due Date</TableCell>
-        //                         <TableCell>Total Bill</TableCell>
-        //                       </TableRow>
-        //                     </TableHead>
-        //                     <TableBody>
-        //                       <TableRow>
-        //                         <TableCell>
-        //                           <input
-        //                             placeholder="Enter Bill"
-        //                             onChange={(e) => {
-        //                               setWaterBill(e.target.value);
-        //                             }}
-        //                           />
-        //                         </TableCell>
-        //                         <TableCell>
-        //                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-        //                           <DatePicker />
-        //                         </LocalizationProvider>
-        //                         </TableCell>
-        //                         <TableCell>
-        //                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-        //                           <DatePicker />
-        //                         </LocalizationProvider>
-        //                         </TableCell>
-        //                         <TableCell>{waterBill||0}</TableCell>
-        //                       </TableRow>
-        //                     </TableBody>
-        //                   </Table>
-        //                   <Button
-        //                     variant="contained"
-        //                     sx={{
-        //                       marginTop: 2,
-        //                       marginRight: 1,
-        //                       background: "black",
-        //                     }}
-        //                   >
-        //                     Post
-        //                   </Button>
-        //                 </div>
-        //               )}
-        //               {selectedValue === "byWaterPicture" && <div> <Stack direction="row" alignItems="center" spacing={2}>
-        //   <Button variant="contained" component="label">
-        //     Upload
-        //     <input hidden accept="image/*" multiple type="file" />
-        //   </Button>
-        // </Stack></div>}
-        //             </div>
-        //           </Box>
-        //         </Collapse>
-        //       </TableCell>
-        //     </TableRow>
-        //   ) : row?.type === "maintainance" ? (
-        //     <TableRow>
-        //       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-        //         <Collapse in={open} timeout="auto" unmountOnExit>
-        //           <Box sx={{ margin: 1 }}>
-        //             {/* <Typography variant="h6" gutterBottom component="div">
-        //             History
-        //           </Typography> */}
-        //             <div>
-        //               <FormControl component="fieldset">
-        //                 <Typography variant="h6">Select Bill Type</Typography>
-        //                 <RadioGroup
-        //                   aria-label="options"
-        //                   name="options"
-        //                   style={{ flexDirection: "row" }}
-        //                   // value={selectedValue}
-        //                   onChange={handleChange}
-        //                 >
-        //                   <FormControlLabel
-        //                     value="byMaintainanceBill"
-        //                     control={<Radio />}
-        //                     label="Enter Bill"
-        //                   />
-        //                   <FormControlLabel
-        //                     value="byMaintainancePicture"
-        //                     control={<Radio />}
-        //                     label="Insert Picture"
-        //                   />
-        //                 </RadioGroup>
-        //               </FormControl>
-
-        //               {/* Conditional rendering based on the selected radio button */}
-        //               {selectedValue === "byMaintainanceBill" && (
-        //                 <div>
-        //                   <Table size="small" aria-label="purchases">
-        //                     <TableHead>
-        //                       <TableRow>
-        //                         <TableCell>Enter Bill</TableCell>
-        //                         <TableCell>Bill Date</TableCell>
-        //                         <TableCell>Due Date</TableCell>
-        //                         <TableCell>Total Bill</TableCell>
-        //                       </TableRow>
-        //                     </TableHead>
-        //                     <TableBody>
-        //                       <TableRow>
-        //                         <TableCell>
-        //                           <input
-        //                             placeholder="Enter Bill"
-        //                             onChange={(e) => {
-        //                               setMaintainanceBill(e.target.value);
-        //                             }}
-        //                           />
-        //                         </TableCell>
-        //                         <TableCell>
-        //                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-        //                           <DatePicker />
-        //                         </LocalizationProvider>
-        //                         </TableCell>
-        //                         <TableCell>
-        //                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-        //                           <DatePicker />
-        //                         </LocalizationProvider>
-        //                         </TableCell>
-        //                         <TableCell>{maintainanceBill||0}</TableCell>
-        //                       </TableRow>
-        //                     </TableBody>
-        //                   </Table>
-        //                   <Button
-        //                     variant="contained"
-        //                     sx={{
-        //                       marginTop: 2,
-        //                       marginRight: 1,
-        //                       background: "black",
-        //                     }}
-        //                   >
-        //                     Post
-        //                   </Button>
-        //                 </div>
-        //               )}
-        //               {selectedValue === "byMaintainancePicture" && (
-        //                 <div> <Stack direction="row" alignItems="center" spacing={2}>
-        //                 <Button variant="contained" component="label">
-        //                   Upload
-        //                   <input hidden accept="image/*" multiple type="file" />
-        //                 </Button>
-        //               </Stack></div>
-        //               )}
-        //             </div>
-        //           </Box>
-        //         </Collapse>
-        //       </TableCell>
-        //     </TableRow>
-        //   ) : row?.type === "trash" ? (
-        //     <TableRow>
-        //       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-        //         <Collapse in={open} timeout="auto" unmountOnExit>
-        //           <Box sx={{ margin: 1 }}>
-        //             {/* <Typography variant="h6" gutterBottom component="div">
-        //             History
-        //           </Typography> */}
-        //             <div>
-        //               <FormControl component="fieldset">
-        //                 <Typography variant="h6">Select Bill Type</Typography>
-        //                 <RadioGroup
-        //                   aria-label="options"
-        //                   name="options"
-        //                   style={{ flexDirection: "row" }}
-        //                   // value={selectedValue}
-        //                   onChange={handleChange}
-        //                 >
-        //                   <FormControlLabel
-        //                     value="byTrashBill"
-        //                     control={<Radio />}
-        //                     label="Enter Bill"
-        //                   />
-        //                   <FormControlLabel
-        //                     value="byTrashPicture"
-        //                     control={<Radio />}
-        //                     label="Insert Picture"
-        //                   />
-        //                 </RadioGroup>
-        //               </FormControl>
-
-        //               {/* Conditional rendering based on the selected radio button */}
-        //               {selectedValue === "byTrashBill" && (
-        //                 <div>
-        //                   <Table size="small" aria-label="purchases">
-        //                     <TableHead>
-        //                       <TableRow>
-        //                         <TableCell>Enter Bill</TableCell>
-        //                         <TableCell>Bill Date</TableCell>
-        //                         <TableCell>Due Date</TableCell>
-        //                         <TableCell>Total Bill</TableCell>
-        //                       </TableRow>
-        //                     </TableHead>
-        //                     <TableBody>
-        //                       <TableRow>
-        //                         <TableCell>
-        //                           <input
-        //                             placeholder="Enter Bill"
-        //                             onChange={(e) => {
-        //                               setTrashBill(e.target.value);
-        //                             }}
-        //                           />
-        //                         </TableCell>
-        //                         <TableCell>
-        //                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-        //                           <DatePicker />
-        //                         </LocalizationProvider>
-        //                         </TableCell>
-        //                         <TableCell>
-        //                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-        //                           <DatePicker />
-        //                         </LocalizationProvider>
-        //                         </TableCell>
-        //                         <TableCell>{trashBill||0}</TableCell>
-        //                       </TableRow>
-        //                     </TableBody>
-        //                   </Table>
-        //                   <Button
-        //                     variant="contained"
-        //                     sx={{
-        //                       marginTop: 2,
-        //                       marginRight: 1,
-        //                       background: "black",
-        //                     }}
-        //                   >
-        //                     Post
-        //                   </Button>
-        //                 </div>
-        //               )}
-        //               {selectedValue === "byTrashPicture" && <div> <Stack direction="row" alignItems="center" spacing={2}>
-        //   <Button variant="contained" component="label">
-        //     Upload
-        //     <input hidden accept="image/*" multiple type="file" />
-        //   </Button>
-        // </Stack></div>}
-        //             </div>
-        //           </Box>
-        //         </Collapse>
-        //       </TableCell>
-        //     </TableRow>
-        //   )
         ""
       )}
     </React.Fragment>
@@ -712,15 +1170,13 @@ export default function UploadBill() {
   //////////////MAINTAINANCECHARGES////////////
   const [maintainanceCharge, setMaintainanceCharge] = useState();
 
-
   const [inputs, setInputs] = useState({
     kElectricPreviousReading: "",
     kElectricCurrentReading: "",
     kElectricPerUnit: "",
-  })
+  });
 
   const handleInputs = (e) => {
-    // console.log(e);
     const value = e.target.value;
     const name = e.target.name;
 
@@ -734,66 +1190,41 @@ export default function UploadBill() {
       history: [
         {
           previousReading: (
-            // <input
-            //   placeholder="Previous Reading"
-            //   onChange={(e) => {
-            //     setprevReadingKelectric(e.target.value);
-            //   }}
-            // ></input>
             <TextField
               id="outlined-number"
               label="Previous Reading"
               type="number"
               size="small"
-              name= "kElectricPreviousReading"
-              // onChange={(e) => {
-              //   setprevReadingKelectric(e.target.value);
-              // }}
+              name="kElectricPreviousReading"
               onChange={handleInputs}
             />
           ),
           currentReading: (
-            // <input
-            //   placeholder="current Reading"
-            //   onChange={(e) => {
-            //     setCurrentReadingKelectric(e.target.value);
-            //   }}
-            // ></input>
             <TextField
               id="outlined-number"
               label="Current Reading"
               type="number"
               size="small"
-              name= "kElectricCurrentReading"
-              // onChange={(e) => {
-              //   setCurrentReadingKelectric(e.target.value);
-              // }}
+              name="kElectricCurrentReading"
               onChange={handleInputs}
             />
           ),
           perUnitCharge: (
-            // <input
-            //   placeholder="Per Unit"
-            //   onChange={(e) => {
-            //     setPerUnitCharges(e.target.value);
-            //   }}
-            // ></input>
             <TextField
               id="outlined-number"
               label="Per Unit"
               type="number"
               size="small"
-              // onChange={(e) => {
-              //   setPerUnitCharges(e.target.value);
-              // }}
               name="kElectricPerUnit"
               onChange={handleInputs}
             />
           ),
-          totalUnit: inputs.kElectricCurrentReading- inputs.kElectricPreviousReading,
+          totalUnit:
+            inputs.kElectricCurrentReading - inputs.kElectricPreviousReading,
           showElectricUnit:
-            parseInt(inputs.kElectricCurrentReading - inputs.kElectricPreviousReading) *
-            parseInt(inputs.kElectricPerUnit),
+            parseInt(
+              inputs.kElectricCurrentReading - inputs.kElectricPreviousReading
+            ) * parseInt(inputs.kElectricPerUnit),
         },
       ],
     };
@@ -912,21 +1343,16 @@ export default function UploadBill() {
                 <TableCell sx={{ color: "white" }} align="center">
                   Bill Type
                 </TableCell>
-                {/* <TableCell sx={{ color: "white" }} align="right">
-                  Year
-                </TableCell>
-                <TableCell sx={{ color: "white" }} align="right">
-                  Date
-                </TableCell> */}
                 <TableCell align="right"></TableCell>
                 <TableCell align="right"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {rows.map((row) => (
-                <Row key={row.name} row={row}
-                //  prevReadingKelectric={prevReadingKelectric} currentReadingKelectric={currentReadingKelectric} perUnitCharges={perUnitCharges}
-                inputs={inputs}
+                <Row
+                  key={row.name}
+                  row={row}
+                  inputs={inputs}
                 />
               ))}
             </TableBody>
