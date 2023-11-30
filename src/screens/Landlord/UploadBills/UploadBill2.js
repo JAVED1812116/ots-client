@@ -32,6 +32,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ElectricBill } from "../../../redux/Reducer/ElectricReading";
 import { SsgcBill } from "../../../redux/Reducer/SsgcReading";
+import { WaterReadings } from "../../../redux/Reducer/WaterReading";
+import { MaintananceReadings } from "../../../redux/Reducer/MaintananceReading";
 import { ElectricPhoto } from "../../../redux/Reducer/KElectricImg";
 import { useDispatch } from "react-redux";
 import dayjs from "dayjs";
@@ -213,24 +215,66 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
    if (selectedValue === "byWaterBill") {
       let values = {
         waterEnterBill: inputs.waterEnterBill,
-        ssgcBillDate: (moment(billDate).format("DD-MM-YYYY")),
-        ssgcDueDate: (dueDate).format("DD-MM-YYYY"),
-        waterTotalBill: inputs.waterTotalBill,
+        waterBillDate: (moment(billDate).format("DD-MM-YYYY")),
+        waterDueDate: (dueDate).format("DD-MM-YYYY"),
+        waterTotalBill: inputs.waterEnterBill,
         //extra fields
         waterBillImage: "",
       };
-      dispatch(SsgcBill({values}));
+      dispatch(WaterReadings({values}));
     }
     else if (selectedValue === "byWaterPicture") {
       let values = {
         waterEnterBill: "",
-        ssgcBillDate: "",
-        ssgcDueDate: "",
+        waterBillDate: "",
+        waterDueDate: "",
         waterTotalBill: "",
         //extra fields
         waterBillImage: url,
       };
-      dispatch(SsgcBill({values}));
+      dispatch(WaterReadings({values}));
+    }
+    else {
+      
+      let values = {
+        ssgcEnterBill: "", // image work pending
+        //extra fields
+        ssgcBillDate: "",
+        ssgcDueDate: "",
+        ssgcTotalBill: "",
+        ssgcBillImage: "",
+        prevReadingSsgc: "",
+        currentReadingSsg: "",
+        perUnitSsgCharges: "",
+        ssgcTotalUnits: "",
+      };
+      dispatch(ElectricBill(values));
+    }
+  
+  };
+  const handleMaintainanceReading = (e) => {
+    
+   if (selectedValue === "byMaintainanceBill") {
+      let values = {
+        maintananceEnterBill: inputs.maintananceEnterBill,
+        maintananceBillDate: (moment(billDate).format("DD-MM-YYYY")),
+        maintananceDueDate: (dueDate).format("DD-MM-YYYY"),
+        maintananceTotalBill: inputs.maintananceEnterBill,
+        //extra fields
+        maintananceBillImage: "",
+      };
+      dispatch(MaintananceReadings({values}));
+    }
+    else if (selectedValue === "byMaintainancePicture") {
+      let values = {
+        maintananceEnterBill: "",
+        maintananceBillDate: "",
+        maintananceDueDate: "",
+        maintananceTotalBill: "",
+        //extra fields
+        maintananceBillImage: url,
+      };
+      dispatch(MaintananceReadings({values}));
     }
     else {
       
@@ -675,7 +719,7 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                                 />
                               </LocalizationProvider>
                             </TableCell>
-                            <TableCell>{ssgcBillEntry || 0}</TableCell>
+                            <TableCell>{inputs.ssgcEnterBill || 0}</TableCell>
                           </TableRow>
                         </TableBody>
                       </Table>
@@ -785,11 +829,11 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                                 <DatePicker
                                   className="fulldate"
                                   value={billDate}
-                                  onChange={(newValue) => setBillDate(newValue)}
+                                  onChange={(newValue) => setDueDate(newValue)}
                                 />
                               </LocalizationProvider>
                             </TableCell>
-                            <TableCell>{waterBill || 0}</TableCell>
+                            <TableCell>{inputs.waterEnterBill || 0}</TableCell>
                           </TableRow>
                         </TableBody>
                       </Table>
@@ -881,7 +925,7 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                                 label="Enter Bill"
                                 type="number"
                                 size="small"
-                                name="maintainanceEnterBill"
+                                name="maintananceEnterBill"
                                 onChange={handleInputs}
                               />
                             </TableCell>
@@ -904,7 +948,7 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                                 />
                               </LocalizationProvider>
                             </TableCell>
-                            <TableCell>{maintainanceBill || 0}</TableCell>
+                            <TableCell>{inputs.maintananceEnterBill || 0}</TableCell>
                           </TableRow>
                         </TableBody>
                       </Table>
@@ -915,6 +959,7 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                           marginRight: 1,
                           background: "black",
                         }}
+                        onClick={handleMaintainanceReading}
                       >
                         Post
                       </Button>
@@ -924,9 +969,20 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                     <div>
                       {" "}
                       <Stack direction="row" alignItems="center" spacing={2}>
-                        <Button variant="contained" component="label">
+                      <Button variant="contained" component="label" >
                           Upload
-                          <input hidden accept="image/*" multiple type="file" />
+                          <input hidden accept="image/*"  type="file" onChange={(e)=>imgUpload(e)}/>
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            marginTop: 2,
+                            marginRight: 1,
+                            background: "black",
+                          }}
+                          onClick={handleMaintainanceReading}
+                        >
+                          Post
                         </Button>
                       </Stack>
                     </div>
