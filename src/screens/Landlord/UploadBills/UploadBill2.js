@@ -208,6 +208,48 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
     }
   
   };
+  const handleBillWaterReading = (e) => {
+    
+   if (selectedValue === "byWaterBill") {
+      let values = {
+        waterEnterBill: inputs.waterEnterBill,
+        ssgcBillDate: (moment(billDate).format("DD-MM-YYYY")),
+        ssgcDueDate: (dueDate).format("DD-MM-YYYY"),
+        waterTotalBill: inputs.waterTotalBill,
+        //extra fields
+        waterBillImage: "",
+      };
+      dispatch(SsgcBill({values}));
+    }
+    else if (selectedValue === "byWaterPicture") {
+      let values = {
+        waterEnterBill: "",
+        ssgcBillDate: "",
+        ssgcDueDate: "",
+        waterTotalBill: "",
+        //extra fields
+        waterBillImage: url,
+      };
+      dispatch(SsgcBill({values}));
+    }
+    else {
+      
+      let values = {
+        ssgcEnterBill: "", // image work pending
+        //extra fields
+        ssgcBillDate: "",
+        ssgcDueDate: "",
+        ssgcTotalBill: "",
+        ssgcBillImage: "",
+        prevReadingSsgc: "",
+        currentReadingSsg: "",
+        perUnitSsgCharges: "",
+        ssgcTotalUnits: "",
+      };
+      dispatch(ElectricBill(values));
+    }
+  
+  };
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -758,6 +800,7 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                           marginRight: 1,
                           background: "black",
                         }}
+                        onClick={handleBillWaterReading}
                       >
                         Post
                       </Button>
@@ -767,9 +810,20 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                     <div>
                       {" "}
                       <Stack direction="row" alignItems="center" spacing={2}>
-                        <Button variant="contained" component="label">
+                      <Button variant="contained" component="label" >
                           Upload
-                          <input hidden accept="image/*" multiple type="file" />
+                          <input hidden accept="image/*"  type="file" onChange={(e)=>imgUpload(e)}/>
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            marginTop: 2,
+                            marginRight: 1,
+                            background: "black",
+                          }}
+                          onClick={handleBillWaterReading}
+                        >
+                          Post
                         </Button>
                       </Stack>
                     </div>
