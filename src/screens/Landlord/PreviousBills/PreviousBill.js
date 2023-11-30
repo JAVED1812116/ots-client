@@ -17,6 +17,8 @@ import Wrapper from "../../../components/Wrapper";
 import { useState } from "react";
 import { useLocation } from "react-router";
 import title from "../../../components/title";
+import { GetBill } from "../../../redux/Reducer/GetBillDetails";
+import { useDispatch } from "react-redux";
 
 
 function createData(name, calories, fat, carbs, protein, price) {
@@ -138,12 +140,33 @@ const rows = [
   createData("TRASH CHARGES", "2019", "3-3-2019"),
 ];
 
+
 export default function PreviousBillLandlordPage() {
   title("Previous Bill")
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
-
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+        
+    dispatch(GetBill({ userId: localStorage.getItem("user_id") })).then(
+      (res) => {
+        // setData(res?.payload?.data?.data)
+        
+        if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+        // setFieldDisable(true)
+        }
+        // let { monthlyRent, advance, maintenanceCharges, trashCharges } =res?.payload?.data?.data[0];
+        // setDetail({
+        //   monthlyRent,
+        //   advance,
+        //   maintenanceCharges,
+        //   trashCharges,
+        // });
+        
+      }
+      );
+    }, []);
   return (
     <>
       <Wrapper open={open} setOpen={setOpen} mylocation= {mylocation}/>

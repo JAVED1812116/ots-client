@@ -93,6 +93,8 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         //extra fields
         kElectricBillImage: "",
         kElectricEnterBill: "",
+        userId: localStorage.getItem("user_id"),
+        userName: localStorage.getItem("name"),
       };
       dispatch(ElectricBill({values}));
     } else if (selectedValue === "byBill") {
@@ -107,6 +109,8 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         kElectricCurrentReading: "",
         kElectricPerUnit: "",
         kElectricTotalUnits: "",
+        userId: localStorage.getItem("user_id"),
+        userName: localStorage.getItem("name"),
       };
       dispatch(ElectricBill({values}));
     }
@@ -122,26 +126,11 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         kElectricCurrentReading: "",
         kElectricPerUnit: "",
         kElectricTotalUnits: "",
+        userId: localStorage.getItem("user_id"),
+        userName: localStorage.getItem("name"),
       };
       dispatch(ElectricBill({values}));
     }
-    else {
-      
-      let values = {
-        kElectricBillImage: "", // image work pending
-        //extra fields
-        kElectricEnterBill: "",
-        kElectricBillDate: "",
-        kElectricDueDate: "",
-        kElectricTotalBill: "",
-        kElectricPreviousReading: "",
-        kElectricCurrentReading: "",
-        kElectricPerUnit: "",
-        kElectricTotalUnits: "",
-      };
-      dispatch(ElectricBill(values));
-    }
-  
   };
   const handleBillSSGCReading = (e) => {
     
@@ -161,6 +150,8 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         //extra fields
         ssgcBillImage: "",
         ssgcEnterBill: "",
+        userId: localStorage.getItem("user_id"),
+        userName: localStorage.getItem("name"),
       };
       dispatch(SsgcBill({values}));
     } else if (selectedValue === "byGassBill") {
@@ -175,6 +166,8 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         currentReadingSsg: "",
         perUnitSsgCharges: "",
         ssgcTotalUnits: "",
+        userId: localStorage.getItem("user_id"),
+        userName: localStorage.getItem("name"),
       };
       dispatch(SsgcBill({values}));
     }
@@ -190,26 +183,11 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         currentReadingSsg: "",
         perUnitSsgCharges: "",
         ssgcTotalUnits: "",
+        userId: localStorage.getItem("user_id"),
+        userName: localStorage.getItem("name"),
       };
       dispatch(SsgcBill({values}));
     }
-    else {
-      
-      let values = {
-        ssgcEnterBill: "", // image work pending
-        //extra fields
-        ssgcBillDate: "",
-        ssgcDueDate: "",
-        ssgcTotalBill: "",
-        ssgcBillImage: "",
-        prevReadingSsgc: "",
-        currentReadingSsg: "",
-        perUnitSsgCharges: "",
-        ssgcTotalUnits: "",
-      };
-      dispatch(ElectricBill(values));
-    }
-  
   };
   const handleBillWaterReading = (e) => {
     
@@ -221,6 +199,8 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         waterTotalBill: inputs.waterEnterBill,
         //extra fields
         waterBillImage: "",
+        userId: localStorage.getItem("user_id"),
+        userName: localStorage.getItem("name"),
       };
       dispatch(WaterReadings({values}));
     }
@@ -232,22 +212,11 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         waterTotalBill: "",
         //extra fields
         waterBillImage: url,
+        userId: localStorage.getItem("user_id"),
+        userName: localStorage.getItem("name"),
       };
       dispatch(WaterReadings({values}));
     }
-    else {
-      
-      let values = {
-        waterEnterBill: "", // image work pending
-        //extra fields
-        waterBillDate: "",
-        waterDueDate: "",
-        waterTotalBill: "",
-        waterBillImage: "",
-      };
-      dispatch(WaterReadings(values));
-    }
-  
   };
   const handleMaintainanceReading = (e) => {
     
@@ -259,6 +228,8 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         maintananceTotalBill: inputs.maintananceEnterBill,
         //extra fields
         maintananceBillImage: "",
+        userId: localStorage.getItem("user_id"),
+        userName: localStorage.getItem("name"),
       };
       dispatch(MaintananceReadings({values}));
     }
@@ -270,22 +241,11 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         maintananceTotalBill: "",
         //extra fields
         maintananceBillImage: url,
+        userId: localStorage.getItem("user_id"),
+        userName: localStorage.getItem("name"),
       };
       dispatch(MaintananceReadings({values}));
     }
-    else {
-      
-      let values = {
-        maintananceEnterBill: "", // image work pending
-        //extra fields
-        maintananceBillDate: "",
-        maintananceDueDate: "",
-        maintananceTotalBill: "",
-        maintananceBillImage: "",
-      };
-      dispatch(MaintananceReadings(values));
-    }
-  
   };
   const handleTrashReading = (e) => {
     
@@ -297,6 +257,8 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
          trashTotalBill: inputs.trashEnterBill,
          //extra fields
          trashBillImage: "",
+         userId: localStorage.getItem("user_id"),
+         userName: localStorage.getItem("name"),
        };
        dispatch(TrashReadings({values}));
      }
@@ -308,22 +270,11 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
          trashTotalBill: "",
          //extra fields
          trashBillImage: url,
+         userId: localStorage.getItem("user_id"),
+         userName: localStorage.getItem("name"),
        };
        dispatch(TrashReadings({values}));
      }
-     else {
-       
-       let values = {
-         trashEnterBill: "", // image work pending
-         //extra fields
-         trashBillDate: "",
-         trashDueDate: "",
-         trashTotalBill: "",
-         trashBillImage: "",
-       };
-       dispatch(TrashReadings(values));
-     }
-   
    };
   return (
     <React.Fragment>
