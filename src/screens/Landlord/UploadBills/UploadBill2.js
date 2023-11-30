@@ -34,6 +34,7 @@ import { ElectricBill } from "../../../redux/Reducer/ElectricReading";
 import { SsgcBill } from "../../../redux/Reducer/SsgcReading";
 import { WaterReadings } from "../../../redux/Reducer/WaterReading";
 import { MaintananceReadings } from "../../../redux/Reducer/MaintananceReading";
+import { TrashReadings } from "../../../redux/Reducer/TrashReading";
 import { ElectricPhoto } from "../../../redux/Reducer/KElectricImg";
 import { useDispatch } from "react-redux";
 import dayjs from "dayjs";
@@ -237,18 +238,14 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
     else {
       
       let values = {
-        ssgcEnterBill: "", // image work pending
+        waterEnterBill: "", // image work pending
         //extra fields
-        ssgcBillDate: "",
-        ssgcDueDate: "",
-        ssgcTotalBill: "",
-        ssgcBillImage: "",
-        prevReadingSsgc: "",
-        currentReadingSsg: "",
-        perUnitSsgCharges: "",
-        ssgcTotalUnits: "",
+        waterBillDate: "",
+        waterDueDate: "",
+        waterTotalBill: "",
+        waterBillImage: "",
       };
-      dispatch(ElectricBill(values));
+      dispatch(WaterReadings(values));
     }
   
   };
@@ -279,21 +276,55 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
     else {
       
       let values = {
-        ssgcEnterBill: "", // image work pending
+        maintananceEnterBill: "", // image work pending
         //extra fields
-        ssgcBillDate: "",
-        ssgcDueDate: "",
-        ssgcTotalBill: "",
-        ssgcBillImage: "",
-        prevReadingSsgc: "",
-        currentReadingSsg: "",
-        perUnitSsgCharges: "",
-        ssgcTotalUnits: "",
+        maintananceBillDate: "",
+        maintananceDueDate: "",
+        maintananceTotalBill: "",
+        maintananceBillImage: "",
       };
-      dispatch(ElectricBill(values));
+      dispatch(MaintananceReadings(values));
     }
   
   };
+  const handleTrashReading = (e) => {
+    
+    if (selectedValue === "byTrashBill") {
+       let values = {
+        trashEnterBill: inputs.trashEnterBill,
+         trashBillDate: (moment(billDate).format("DD-MM-YYYY")),
+         trashDueDate: (dueDate).format("DD-MM-YYYY"),
+         trashTotalBill: inputs.trashEnterBill,
+         //extra fields
+         trashBillImage: "",
+       };
+       dispatch(TrashReadings({values}));
+     }
+     else if (selectedValue === "byTrashPicture") {
+       let values = {
+         trashEnterBill: "",
+         trashBillDate: "",
+         trashDueDate: "",
+         trashTotalBill: "",
+         //extra fields
+         trashBillImage: url,
+       };
+       dispatch(TrashReadings({values}));
+     }
+     else {
+       
+       let values = {
+         trashEnterBill: "", // image work pending
+         //extra fields
+         trashBillDate: "",
+         trashDueDate: "",
+         trashTotalBill: "",
+         trashBillImage: "",
+       };
+       dispatch(TrashReadings(values));
+     }
+   
+   };
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -1069,7 +1100,7 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                                 />
                               </LocalizationProvider>
                             </TableCell>
-                            <TableCell>{trashBill || 0}</TableCell>
+                            <TableCell>{inputs.trashEnterBill || 0}</TableCell>
                           </TableRow>
                         </TableBody>
                       </Table>
@@ -1080,6 +1111,7 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                           marginRight: 1,
                           background: "black",
                         }}
+                        onClick={handleTrashReading}
                       >
                         Post
                       </Button>
@@ -1089,9 +1121,20 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                     <div>
                       {" "}
                       <Stack direction="row" alignItems="center" spacing={2}>
-                        <Button variant="contained" component="label">
+                      <Button variant="contained" component="label" >
                           Upload
-                          <input hidden accept="image/*" multiple type="file" />
+                          <input hidden accept="image/*"  type="file" onChange={(e)=>imgUpload(e)}/>
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            marginTop: 2,
+                            marginRight: 1,
+                            background: "black",
+                          }}
+                          onClick={handleTrashReading}
+                        >
+                          Post
                         </Button>
                       </Stack>
                     </div>

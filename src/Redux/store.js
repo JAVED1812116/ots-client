@@ -9,6 +9,7 @@ import KElectricImg from './Reducer/KElectricImg';
 import SsgcReading from './Reducer/SsgcReading';
 import WaterReading from './Reducer/WaterReading';
 import MaintananceReading from './Reducer/MaintananceReading';
+import TrashReading from './Reducer/TrashReading';
 export const store = configureStore({
   reducer: {
     "CreateUser": CreateUser,
@@ -19,6 +20,7 @@ export const store = configureStore({
     "ssgcReading": SsgcReading,
     "waterReading": WaterReading,
     "maintananceReading": MaintananceReading,
+    "trashReading": TrashReading,
     "SendEmail":SendEmail,
     "Photo": KElectricImg,
   },
