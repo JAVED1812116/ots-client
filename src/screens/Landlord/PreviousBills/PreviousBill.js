@@ -19,39 +19,50 @@ import { useLocation } from "react-router";
 import title from "../../../components/title";
 import { GetBill } from "../../../redux/Reducer/GetBillDetails";
 import { useDispatch } from "react-redux";
+import { DataGrid } from "@mui/x-data-grid";
+
+const columns = [
+  { field: '_id', headerName: 'ID', width: 70 },
+  { field: 'firstName', headerName: 'First name', width: 130 },
+  { field: 'lastName', headerName: 'Last name', width: 130 },
+  {
+    field: 'age',
+    headerName: 'Age',
+    type: 'number',
+    width: 90,
+  },
+  {
+    field: 'fullName',
+    headerName: 'Full name',
+    description: 'This column has a value getter and is not sortable.',
+    sortable: false,
+    width: 160,
+    valueGetter: (params) =>
+      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+  },
+];
 
 
-function createData(name, calories, fat, carbs, protein, price) {
-  
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
-    history: [
-      {
-        previousReading: <Typography>2500</Typography>,
-        currentReading:  <Typography>1300</Typography>,
-        enterBill:  <Typography>200</Typography>,
-        totalUnit: 15000,
-        kElectricBill: 1200,
-      },
-      {
-        previousReading: <Typography>2500</Typography>,
-        currentReading:  <Typography>1300</Typography>,
-        enterBill:  <Typography>200</Typography>,
-        totalUnit: 15000,
-        kElectricBill: 1200,
-      },
-    ],
-  };
-}
+
+// const rows1 = [
+//   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
+//   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
+  // { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
+  // { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
+  // { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
+  // { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
+  // { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
+  // { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
+  // { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+// ];
+
 
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
+
+
+  console.log(props.electricity);
 
   return (
     <React.Fragment>
@@ -66,12 +77,12 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+          {/* {row.firstName} */}
         </TableCell>
-        <TableCell align="right">{row.calories}</TableCell>
+        {/* <TableCell align="right">{row.calories}</TableCell>
         <TableCell align="right">{row.fat}</TableCell>
         <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell>
+        <TableCell align="right">{row.protein}</TableCell> */}
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -83,16 +94,21 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Previous Reading</TableCell>
-                    <TableCell>Current Reading</TableCell>
-                    <TableCell align="right">Enter Bill</TableCell>
-                    <TableCell align="right">Total Unit</TableCell>
-                    <TableCell align="right">K-Electric Bill</TableCell>
-                    <TableCell align="right"></TableCell>
+                  <DataGrid
+        rows={props.electricity}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: { page: 0, pageSize: 5 },
+          },
+        }}
+        pageSizeOptions={[5, 10]}
+        checkboxSelection
+      />
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
+                  {/* {rows1.history.map((historyRow) => (
                     <TableRow key={historyRow.previousReading}>
                       <TableCell component="th" scope="row">
                         {historyRow.previousReading}
@@ -109,7 +125,7 @@ function Row(props) {
                         {historyRow.permenantAddress}
                       </TableCell>
                     </TableRow>
-                  ))}
+                  ))} */}
                 </TableBody>
               </Table>
               {/* <Button
@@ -132,18 +148,13 @@ function Row(props) {
   );
 }
 
-const rows = [
-  createData("K-ELECTRIC", "2023", "1-1-2023"),
-  createData("SSGC", "2022", "5-1-2022"),
-  createData("WATER", "2021", "3-2-2021"),
-  createData("MAINTAINANCE", "2020", "2-3-2020"),
-  createData("TRASH CHARGES", "2019", "3-3-2019"),
-];
+
 
 
 export default function PreviousBillLandlordPage() {
   title("Previous Bill")
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState();
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
   const dispatch = useDispatch();
@@ -151,7 +162,7 @@ export default function PreviousBillLandlordPage() {
         
     dispatch(GetBill({ userId: localStorage.getItem("user_id") })).then(
       (res) => {
-        // setData(res?.payload?.data?.data)
+        setData(res?.payload?.data?.data)
         
         if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
         // setFieldDisable(true)
@@ -167,6 +178,7 @@ export default function PreviousBillLandlordPage() {
       }
       );
     }, []);
+    const electricity = data?.electricity
   return (
     <>
       <Wrapper open={open} setOpen={setOpen} mylocation= {mylocation}/>
@@ -192,9 +204,15 @@ export default function PreviousBillLandlordPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <Row key={row.name} row={row} />
-              ))}
+              {console.log(data, 'data')}
+              {/* {rows1.map((row) => (
+                <Row key={row.firstName} rows1={rows1} />
+              ))} */}
+              <Row  electricity={data?.electricity} />
+              {/* <Row  rows1={rows1} />
+              <Row  rows1={rows1} />
+              <Row  rows1={rows1} />
+              <Row  rows1={rows1} /> */}
             </TableBody>
           </Table>
         </TableContainer>
