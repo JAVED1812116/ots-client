@@ -10,17 +10,9 @@ import "./rentSetting.css";
 import { useDispatch } from "react-redux";
 import { RentSet } from "../../../redux/Reducer/RentSetting";
 import { toast, ToastContainer } from "react-toastify";
-import GetRentDetails, { GetRent } from "../../../redux/Reducer/GetRentDetails";
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
+import { GetRent } from "../../../redux/Reducer/GetRentDetails";
 import moment from "moment/moment";
-
+import { DataGrid } from '@mui/x-data-grid';
 export default function RentSetting() {
   title("Rent Setting");
   const dispatch = useDispatch();
@@ -37,29 +29,43 @@ export default function RentSetting() {
     maintenanceCharges: "",
     trashCharges: "",
   });
+  const formatDate = (date) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Intl.DateTimeFormat('en-US', options).format(new Date(date));
+  };
   const columns = [
-    { id: 'date', label: 'Date', minWidth: 170 },
-    { id: 'monthlyRent', label: 'Monthly Rent', minWidth: 100 },
-    { id: 'advance', label: 'Advance', minWidth: 170 },
-    { id: 'maintananceCharges', label: 'Maintainance Charges', minWidth: 100 },
-    { id: 'trashCharges', label: 'Trash Charges', minWidth: 100 },
-    
+    { field: 'id', headerName: 'ID', width: 280 },
+    { field: 'date', headerName: 'Date', width: 280, valueFormatter: (params) => formatDate(params.value) },
+    { field: 'monthlyRent', headerName: 'Monthly Rent', width: 280 },
+    {
+      field: 'advance',
+      headerName: 'Advance',
+      type: 'number',
+      width: 280,
+    },
+    {
+      field: 'maintenanceCharges',
+      headerName: 'Maintanance Charges',
+      type: 'number',
+      width: 280,
+    },
+    {
+      field: 'trashCharges',
+      headerName: 'Trash Charges',
+      type: 'number',
+      width: 280,
+    },
   ];
-  console.log(fieldDisable,"fieldDisable")
+
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDetail((prev) => {
       return { ...prev, [name]: value };
     });
   };
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-  
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+
   const handleUpdate = () => {
     setFieldDisable(false)
   
@@ -227,82 +233,21 @@ export default function RentSetting() {
             " "
           )}
         </Container>
-        
-       {data && data[0]?.monthlyRent===''?" ":
-        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-        
-          <TableBody>
-              {data&&data?.map((column) => (
-          <TableRow>
-                  <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {moment(column.date).format("MM-DD-YYYY")}
-                </TableCell>
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.monthlyRent}
-                </TableCell>
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.advance}
-                </TableCell>
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.maintenanceCharges}
-                </TableCell>
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.trashCharges}
-                </TableCell>
-              
-            </TableRow>
-              ))}
-         
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={data?.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+       {data && data?.length>0?
+<div style={{ height: 400, width: '100%' }}>
+      <DataGrid
+        rows={data}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: { page: 0, pageSize: 5 },
+          },
+        }}
+        pageSizeOptions={[5, 10]}
+        checkboxSelection
       />
-    </Paper>
-} 
+    </div>:""
+}
         <ToastContainer />
       </div>
     </>
