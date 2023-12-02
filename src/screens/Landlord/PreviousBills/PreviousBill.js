@@ -106,7 +106,7 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {"Electricity"}
+          {props?.electricity ? 'Electricity' : props?.ssgc ? "SSGC" : props?.water ? "Water" : props?.maintainance ? "Maintainance" : props?.trash ? "Trash" : ""}
         </TableCell>
         {/* <TableCell align="right">{row.calories}</TableCell>
         <TableCell align="right">{row.fat}</TableCell>
