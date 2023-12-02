@@ -38,8 +38,33 @@ const electricityColumns = [
   },
   { field: "kElectricPerUnit", headerName: "Per Unit", width: 150 },
   { field: "kElectricTotalUnits", headerName: "Total Unit", width: 150 },
-  { field: "kElectricTotalBill", headerName: "Total Bill", width: 150 },
-  { field: "kElectricBillImage", headerName: "Image", width: 150 },
+  { field: "kElectricTotalBill", headerName: "Total Bill", width: 150 },  
+  {
+    field: 'kElectricBillImage',
+    headerName: 'Image',
+    width: 150,
+    renderCell: (params) => (
+      params.value===''?"":
+      <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+        <img
+          src={params.value}
+          alt="Electric Bill"
+          style={{ maxWidth: '100%', height: 'auto' }}
+        />
+        <a href={params.value} >
+          <button
+            className="download-button"
+            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: 'transparent', border: 'none', cursor: 'pointer', opacity: 0 }}
+          >
+            <img
+              style={{ width: '24px', height: '24px' }}
+            />
+          </button>
+        </a>
+      </div>
+    ),
+  },
+  
 ];
 const ssgcColumns = [
   { field: 'date', headerName: 'Post Date', width: 150, valueFormatter: (params) => moment(params.value).format("DD-MM-YYYY") },
@@ -57,6 +82,31 @@ const ssgcColumns = [
   { field: "perUnitSsgCharges", headerName: "Per Unit", width: 150 },
   { field: "ssgcTotalUnits", headerName: "Total Unit", width: 150 },
   { field: "ssgcTotalBill", headerName: "Total Bill", width: 150 },
+  {
+    field: 'ssgcBillImage',
+    headerName: 'Image',
+    width: 150,
+    renderCell: (params) => (
+      params.value===''?"":
+      <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+        <img
+          src={params.value}
+          alt="Electric Bill"
+          style={{ maxWidth: '100%', height: 'auto' }}
+        />
+        <a href={params.value} >
+          <button
+            className="download-button"
+            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: 'transparent', border: 'none', cursor: 'pointer', opacity: 0 }}
+          >
+            <img
+              style={{ width: '24px', height: '24px' }}
+            />
+          </button>
+        </a>
+      </div>
+    ),
+  },
 ];
 const waterColumns = [
   { field: 'date', headerName: 'Post Date', width: 150, valueFormatter: (params) => moment(params.value).format("DD-MM-YYYY") },
@@ -66,7 +116,31 @@ const waterColumns = [
     headerName: "Total Bill",
     width: 550,
   },
-  
+  {
+    field: 'waterBillImage',
+    headerName: 'Image',
+    width: 150,
+    renderCell: (params) => (
+      params.value===''?"":
+      <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+        <img
+          src={params.value}
+          alt="Electric Bill"
+          style={{ maxWidth: '100%', height: 'auto' }}
+        />
+        <a href={params.value} >
+          <button
+            className="download-button"
+            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: 'transparent', border: 'none', cursor: 'pointer', opacity: 0 }}
+          >
+            <img
+              style={{ width: '24px', height: '24px' }}
+            />
+          </button>
+        </a>
+      </div>
+    ),
+  },
 ];
 const maintainanceColumns = [
   { field: 'date', headerName: 'Post Date', width: 150, valueFormatter: (params) => moment(params.value).format("DD-MM-YYYY") },
@@ -76,7 +150,31 @@ const maintainanceColumns = [
     headerName: "Total Bill",
     width: 550,
   },
-  
+  {
+    field: 'maintananceBillImage',
+    headerName: 'Image',
+    width: 150,
+    renderCell: (params) => (
+      params.value===''?"":
+      <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+        <img
+          src={params.value}
+          alt="Electric Bill"
+          style={{ maxWidth: '100%', height: 'auto' }}
+        />
+        <a href={params.value} >
+          <button
+            className="download-button"
+            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: 'transparent', border: 'none', cursor: 'pointer', opacity: 0 }}
+          >
+            <img
+              style={{ width: '24px', height: '24px' }}
+            />
+          </button>
+        </a>
+      </div>
+    ),
+  },
 ];
 const trashColumns = [
   { field: 'date', headerName: 'Post Date', width: 150, valueFormatter: (params) => moment(params.value).format("DD-MM-YYYY") },
@@ -86,7 +184,31 @@ const trashColumns = [
     headerName: "Total Bill",
     width: 550,
   },
-  
+  {
+    field: 'trashBillImage',
+    headerName: 'Image',
+    width: 150,
+    renderCell: (params) => (
+      params.value===''?"":
+      <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+        <img
+          src={params.value}
+          alt="Electric Bill"
+          style={{ maxWidth: '100%', height: 'auto' }}
+        />
+        <a href={params.value} >
+          <button
+            className="download-button"
+            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: 'transparent', border: 'none', cursor: 'pointer', opacity: 0 }}
+          >
+            <img
+              style={{ width: '24%', height: '24px' }}
+            />
+          </button>
+        </a>
+      </div>
+    ),
+  },
 ];
 
 function Row(props) {
