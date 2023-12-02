@@ -19,30 +19,48 @@ import TenantFunctionality from "../screens/Tenant/TenantFunction/TenantFunction
 import PreviousBill from "../screens/Tenant/PreviousBill/PreviousBill";
 import PreviousBillLandlordPage from "../screens/Landlord/PreviousBills/PreviousBill";
 export default function AllRoutes() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/signup" element={<CreateUser />} />
-        <Route path="/login" element={<LoginUser />} />
-        <Route path="/landlord-dashboard" element={<LandLordDashboard />} />
-        <Route path="/new-request" element={<NewRequest />} />
-        <Route path="/user-detail" element={<RequestUserDetail />} />
-        <Route path="/all-tenant" element={<AllTenant />} />
-        <Route path="/rent-setting" element={<RentSetting />} />
-        <Route path="/bank-detail" element={<BankDetail />} />
-        <Route path="/landlord-functionality" element={<LandlordFunctionality />} />
-        <Route path="/agreement" element={<Agreement />} />
-        <Route path="/upload-Bill" element={<UploadBill />} />
-        <Route path="/previous-bill" element={<PreviousBillLandlordPage />} />
-        
+  console.log(localStorage.getItem("user_id"), 'localStorage.getItem("user_id")');
 
-        <Route path="/addNew-Tenant" element={<AddNew />} />
-        <Route path="/tenant-registration" element={<Registeration />} />
-        <Route path="/tenant-dashboard" element={<TenantFunctionality />} />
-        <Route path="/previous-TenantBill" element={<PreviousBill />} />
-        <Route path="/*" element={<NotFound />} />
-      </Routes>
-    </Router>
-  );
+
+  let savedUser = localStorage.getItem("user_id");
+
+  if (savedUser === null){
+    return (
+      <Router>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    );
+  }
+  else{
+    return (
+      <Router>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+  
+          <Route path="/signup" element={<CreateUser />} />
+          <Route path="/login" element={<LoginUser />} />
+          <Route path="/landlord-dashboard" element={<LandLordDashboard />} />
+          <Route path="/new-request" element={<NewRequest />} />
+          <Route path="/user-detail" element={<RequestUserDetail />} />
+          <Route path="/all-tenant" element={<AllTenant />} />
+          <Route path="/rent-setting" element={<RentSetting />} />
+          <Route path="/bank-detail" element={<BankDetail />} />
+          <Route path="/landlord-functionality" element={<LandlordFunctionality />} />
+          <Route path="/agreement" element={<Agreement />} />
+          <Route path="/upload-Bill" element={<UploadBill />} />
+          <Route path="/previous-bill" element={<PreviousBillLandlordPage />} />
+          
+  
+          <Route path="/addNew-Tenant" element={<AddNew />} />
+          <Route path="/tenant-registration" element={<Registeration />} />
+          <Route path="/tenant-dashboard" element={<TenantFunctionality />} />
+          <Route path="/previous-TenantBill" element={<PreviousBill />} />
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    );
+  }
 }
