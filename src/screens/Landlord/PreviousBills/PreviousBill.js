@@ -20,9 +20,11 @@ import title from "../../../components/title";
 import { GetBill } from "../../../redux/Reducer/GetBillDetails";
 import { useDispatch } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
+import moment from "moment";
+
 
 const electricityColumns = [
-  { field: "kElectricBillDate", headerName: "Post Date", width: 150 },
+  { field: 'date', headerName: 'Post Date', width: 150, valueFormatter: (params) => moment(params.value).format("DD-MM-YYYY") },
   { field: "kElectricDueDate", headerName: "Due Date", width: 150 },
   {
     field: "kElectricCurrentReading",
@@ -37,9 +39,10 @@ const electricityColumns = [
   { field: "kElectricPerUnit", headerName: "Per Unit", width: 150 },
   { field: "kElectricTotalUnits", headerName: "Total Unit", width: 150 },
   { field: "kElectricTotalBill", headerName: "Total Bill", width: 150 },
+  { field: "kElectricBillImage", headerName: "Image", width: 150 },
 ];
 const ssgcColumns = [
-  { field: "ssgcBillDate", headerName: "Post Date", width: 150 },
+  { field: 'date', headerName: 'Post Date', width: 150, valueFormatter: (params) => moment(params.value).format("DD-MM-YYYY") },
   { field: "ssgcDueDate", headerName: "Due Date", width: 150 },
   {
     field: "currentReadingSsg",
@@ -56,7 +59,7 @@ const ssgcColumns = [
   { field: "ssgcTotalBill", headerName: "Total Bill", width: 150 },
 ];
 const waterColumns = [
-  { field: "waterBillDate", headerName: "Post Date", width: 550 },
+  { field: 'date', headerName: 'Post Date', width: 150, valueFormatter: (params) => moment(params.value).format("DD-MM-YYYY") },
   { field: "waterDueDate", headerName: "Due Date", width: 550 },
   {
     field: "waterTotalBill",
@@ -66,7 +69,7 @@ const waterColumns = [
   
 ];
 const maintainanceColumns = [
-  { field: "maintananceBillDate", headerName: "Post Date", width: 550 },
+  { field: 'date', headerName: 'Post Date', width: 150, valueFormatter: (params) => moment(params.value).format("DD-MM-YYYY") },
   { field: "maintananceDueDate", headerName: "Due Date", width: 550 },
   {
     field: "maintananceTotalBill",
@@ -76,7 +79,7 @@ const maintainanceColumns = [
   
 ];
 const trashColumns = [
-  { field: "trashBillDate", headerName: "Post Date", width: 550 },
+  { field: 'date', headerName: 'Post Date', width: 150, valueFormatter: (params) => moment(params.value).format("DD-MM-YYYY") },
   { field: "trashDueDate", headerName: "Due Date", width: 550 },
   {
     field: "trashTotalBill",
