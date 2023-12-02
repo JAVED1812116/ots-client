@@ -29,6 +29,8 @@ export default function AllRoutes() {
       <Router>
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/signup" element={<CreateUser />} />
+          <Route path="/login" element={<LoginUser />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>
