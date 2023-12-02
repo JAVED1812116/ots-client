@@ -21,51 +21,80 @@ import { GetBill } from "../../../redux/Reducer/GetBillDetails";
 import { useDispatch } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
 
-const columns = [
-  { field: '_id', headerName: 'ID', width: 70 },
-  { field: 'firstName', headerName: 'First name', width: 130 },
-  { field: 'lastName', headerName: 'Last name', width: 130 },
+const electricityColumns = [
+  { field: "kElectricBillDate", headerName: "Post Date", width: 150 },
+  { field: "kElectricDueDate", headerName: "Due Date", width: 150 },
   {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 90,
+    field: "kElectricCurrentReading",
+    headerName: "Current Reading",
+    width: 150,
   },
   {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+    field: "kElectricPreviousReading",
+    headerName: "Previous Reading",
+    width: 150,
   },
+  { field: "kElectricPerUnit", headerName: "Per Unit", width: 150 },
+  { field: "kElectricTotalUnits", headerName: "Total Unit", width: 150 },
+  { field: "kElectricTotalBill", headerName: "Total Bill", width: 150 },
 ];
-
-
-
-// const rows1 = [
-//   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-//   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  // { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  // { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  // { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  // { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  // { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  // { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  // { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-// ];
-
+const ssgcColumns = [
+  { field: "ssgcBillDate", headerName: "Post Date", width: 150 },
+  { field: "ssgcDueDate", headerName: "Due Date", width: 150 },
+  {
+    field: "currentReadingSsg",
+    headerName: "Current Reading",
+    width: 150,
+  },
+  {
+    field: "prevReadingSsgc",
+    headerName: "Previous Reading",
+    width: 150,
+  },
+  { field: "perUnitSsgCharges", headerName: "Per Unit", width: 150 },
+  { field: "ssgcTotalUnits", headerName: "Total Unit", width: 150 },
+  { field: "ssgcTotalBill", headerName: "Total Bill", width: 150 },
+];
+const waterColumns = [
+  { field: "waterBillDate", headerName: "Post Date", width: 550 },
+  { field: "waterDueDate", headerName: "Due Date", width: 550 },
+  {
+    field: "waterTotalBill",
+    headerName: "Total Bill",
+    width: 550,
+  },
+  
+];
+const maintainanceColumns = [
+  { field: "maintananceBillDate", headerName: "Post Date", width: 550 },
+  { field: "maintananceDueDate", headerName: "Due Date", width: 550 },
+  {
+    field: "maintananceTotalBill",
+    headerName: "Total Bill",
+    width: 550,
+  },
+  
+];
+const trashColumns = [
+  { field: "trashBillDate", headerName: "Post Date", width: 550 },
+  { field: "trashDueDate", headerName: "Due Date", width: 550 },
+  {
+    field: "trashTotalBill",
+    headerName: "Total Bill",
+    width: 550,
+  },
+  
+];
 
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
 
-
-  console.log(props.electricity);
+  
 
   return (
     <React.Fragment>
+      {console.log(props,"props")}
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           <IconButton
@@ -77,7 +106,7 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {/* {row.firstName} */}
+          {"Electricity"}
         </TableCell>
         {/* <TableCell align="right">{row.calories}</TableCell>
         <TableCell align="right">{row.fat}</TableCell>
@@ -91,55 +120,99 @@ function Row(props) {
               <Typography variant="h6" gutterBottom component="div">
                 History
               </Typography>
+                {props?.electricity?
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                  <DataGrid
-        rows={props.electricity}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
-      />
+                    <DataGrid
+                      rows={props.electricity}
+                      columns={electricityColumns}
+                      initialState={{
+                        pagination: {
+                          paginationModel: { page: 0, pageSize: 5 },
+                        },
+                      }}
+                      pageSizeOptions={[5, 10]}
+                      checkboxSelection
+                    />
                   </TableRow>
                 </TableHead>
-                <TableBody>
-                  {/* {rows1.history.map((historyRow) => (
-                    <TableRow key={historyRow.previousReading}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.previousReading}
-                      </TableCell>
-                      <TableCell>{historyRow.currentReading}</TableCell>
-                      <TableCell align="right">{historyRow.enterBill}</TableCell>
-                      <TableCell align="right">
-                        {historyRow.totalUnit}
-                      </TableCell>
-                      <TableCell align="right">
-                        {historyRow.kElectricBill}
-                      </TableCell>
-                      <TableCell align="right">
-                        {historyRow.permenantAddress}
-                      </TableCell>
-                    </TableRow>
-                  ))} */}
-                </TableBody>
-              </Table>
-              {/* <Button
-                variant="contained"
-                sx={{ marginTop: 2, marginRight: 1, background: "black" }}
-              >
-                Post
-              </Button> */}
-              {/* <Button
-                variant="contained"
-                sx={{ marginTop: 2, background: "black" }}
-              >
-                Reject
-              </Button> */}
+       
+              </Table>:props?.ssgc?
+              <Table size="small" aria-label="purchases">
+              <TableHead>
+                <TableRow>
+                  <DataGrid
+                    rows={props.ssgc}
+                    columns={ssgcColumns}
+                    initialState={{
+                      pagination: {
+                        paginationModel: { page: 0, pageSize: 5 },
+                      },
+                    }}
+                    pageSizeOptions={[5, 10]}
+                    checkboxSelection
+                  />
+                </TableRow>
+              </TableHead>
+     
+            </Table>:props?.water?
+            <Table size="small" aria-label="purchases">
+            <TableHead>
+              <TableRow>
+                <DataGrid
+                  rows={props.water}
+                  columns={waterColumns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 5 },
+                    },
+                  }}
+                  pageSizeOptions={[5, 10]}
+                  checkboxSelection
+                />
+              </TableRow>
+            </TableHead>
+   
+          </Table>:props?.maintainance?
+            <Table size="small" aria-label="purchases">
+            <TableHead>
+              <TableRow>
+                <DataGrid
+                  rows={props.maintainance}
+                  columns={maintainanceColumns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 5 },
+                    },
+                  }}
+                  pageSizeOptions={[5, 10]}
+                  checkboxSelection
+                />
+              </TableRow>
+            </TableHead>
+   
+          </Table>:props?.trash?
+            <Table size="small" aria-label="purchases">
+            <TableHead>
+              <TableRow>
+                <DataGrid
+                  rows={props.trash}
+                  columns={trashColumns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 5 },
+                    },
+                  }}
+                  pageSizeOptions={[5, 10]}
+                  checkboxSelection
+                />
+              </TableRow>
+            </TableHead>
+   
+          </Table>:""
+}
+             
             </Box>
           </Collapse>
         </TableCell>
@@ -148,24 +221,20 @@ function Row(props) {
   );
 }
 
-
-
-
 export default function PreviousBillLandlordPage() {
-  title("Previous Bill")
+  title("Previous Bill");
   const [open, setOpen] = useState(false);
   const [data, setData] = useState();
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
   const dispatch = useDispatch();
   React.useEffect(() => {
-        
     dispatch(GetBill({ userId: localStorage.getItem("user_id") })).then(
       (res) => {
-        setData(res?.payload?.data?.data)
-        
+        setData(res?.payload?.data?.data);
+
         if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
-        // setFieldDisable(true)
+          // setFieldDisable(true)
         }
         // let { monthlyRent, advance, maintenanceCharges, trashCharges } =res?.payload?.data?.data[0];
         // setDetail({
@@ -174,17 +243,16 @@ export default function PreviousBillLandlordPage() {
         //   maintenanceCharges,
         //   trashCharges,
         // });
-        
       }
-      );
-    }, []);
-    const electricity = data?.electricity
+    );
+  }, []);
   return (
     <>
-      <Wrapper open={open} setOpen={setOpen} mylocation= {mylocation}/>
+      <Wrapper open={open} setOpen={setOpen} mylocation={mylocation} />
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
-        <TableContainer component={Paper} 
-        // sx={{ marginTop: 4 }}
+        <TableContainer
+          component={Paper}
+          // sx={{ marginTop: 4 }}
         >
           <Table aria-label="collapsible table">
             <TableHead sx={{ background: "black" }}>
@@ -204,15 +272,12 @@ export default function PreviousBillLandlordPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {console.log(data, 'data')}
-              {/* {rows1.map((row) => (
-                <Row key={row.firstName} rows1={rows1} />
-              ))} */}
-              <Row  electricity={data?.electricity} />
-              {/* <Row  rows1={rows1} />
-              <Row  rows1={rows1} />
-              <Row  rows1={rows1} />
-              <Row  rows1={rows1} /> */}
+              <Row electricity={data?.electricity} />
+              <Row ssgc={data?.ssgc} />
+              <Row water={data?.water} />
+              <Row maintainance={data?.maintainance} />
+              <Row trash={data?.trash} />
+
             </TableBody>
           </Table>
         </TableContainer>
