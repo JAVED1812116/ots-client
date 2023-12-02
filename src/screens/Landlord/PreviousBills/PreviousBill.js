@@ -96,7 +96,7 @@ function Row(props) {
     <React.Fragment>
       {console.log(props,"props")}
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell>
+        <TableCell style={{width:"10px"}}>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -133,7 +133,7 @@ function Row(props) {
                         },
                       }}
                       pageSizeOptions={[5, 10]}
-                      checkboxSelection
+                      // checkboxSelection
                     />
                   </TableRow>
                 </TableHead>
@@ -151,7 +151,7 @@ function Row(props) {
                       },
                     }}
                     pageSizeOptions={[5, 10]}
-                    checkboxSelection
+                    // checkboxSelection
                   />
                 </TableRow>
               </TableHead>
@@ -169,7 +169,7 @@ function Row(props) {
                     },
                   }}
                   pageSizeOptions={[5, 10]}
-                  checkboxSelection
+                  // checkboxSelection
                 />
               </TableRow>
             </TableHead>
@@ -187,7 +187,7 @@ function Row(props) {
                     },
                   }}
                   pageSizeOptions={[5, 10]}
-                  checkboxSelection
+                  // checkboxSelection
                 />
               </TableRow>
             </TableHead>
@@ -205,7 +205,7 @@ function Row(props) {
                     },
                   }}
                   pageSizeOptions={[5, 10]}
-                  checkboxSelection
+                  // checkboxSelection
                 />
               </TableRow>
             </TableHead>
