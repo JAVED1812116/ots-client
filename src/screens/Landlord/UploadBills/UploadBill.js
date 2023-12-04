@@ -37,28 +37,30 @@ import { MaintananceReadings } from "../../../redux/Reducer/MaintananceReading";
 import { TrashReadings } from "../../../redux/Reducer/TrashReading";
 import { ElectricPhoto } from "../../../redux/Reducer/KElectricImg";
 import { useDispatch } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 import dayjs from "dayjs";
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = useState("");
-  const [kElectricBillEntry, setKElectricBillEntry] = useState();
-  const [ssgcBillEntry, setSsgcBillEntry] = useState();
-  const [waterBill, setWaterBill] = useState();
-  const [maintainanceBill, setMaintainanceBill] = useState();
-  const [trashBill, setTrashBill] = useState();
   const [billDate, setBillDate] = React.useState(dayjs());
-  const [dueDate, setDueDate] = React.useState((dayjs()));
+  const [dueDate, setDueDate] = React.useState(dayjs());
   const [url, setUrl] = useState();
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
 
   const [inputs, setInputs] = useState({
-    kElectricPreviousReading: "",
-    kElectricCurrentReading: "",
-    kElectricPerUnit: "",
-    kElectricEnterBill: "",
+//     kElectricEnterBill:"",
+//     kElectricPreviousReading:"",
+// kElectricCurrentReading:"",
+// kElectricPerUnit:"",
+// kElectricBillDate:"",
+// kElectricDueDate:"",
+// kElectricTotalUnits:"",
+// kElectricTotalBill:"",
+// kElectricBillImage:"",
+// kElectricEnterBill:""
   });
 
   const handleInputs = (e) => {
@@ -69,39 +71,66 @@ function Row(props) {
   };
 
   const dispatch = useDispatch();
-const imgUpload=(e)=>{
-dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
-  setUrl(res?.payload?.data?.url)
-});
-}
+  const imgUpload = (e) => {
+    dispatch(ElectricPhoto(e.target.files[0])).then((res) => {
+      setUrl(res?.payload?.data?.url);
+    });
+  };
 
   const handleBillKELECReading = (e) => {
-    
     if (selectedValue === "byUnitReading") {
       let values = {
-        kElectricPreviousReading: inputs.kElectricPreviousReading,
-        kElectricCurrentReading: inputs.kElectricCurrentReading,
-        kElectricPerUnit: inputs.kElectricPerUnit,
-        kElectricBillDate: (moment(billDate).format("DD-MM-YYYY")),
-        kElectricDueDate: (dueDate).format("DD-MM-YYYY"),
+        kElectricPreviousReading: inputs?.kElectricPreviousReading,
+        kElectricCurrentReading: inputs?.kElectricCurrentReading,
+        kElectricPerUnit: inputs?.kElectricPerUnit,
+        kElectricBillDate: moment(billDate).format("DD-MM-YYYY"),
+        kElectricDueDate: dueDate.format("DD-MM-YYYY"),
         kElectricTotalUnits:
-          inputs.kElectricCurrentReading - inputs.kElectricPreviousReading,
+          inputs?.kElectricCurrentReading - inputs?.kElectricPreviousReading,
         kElectricTotalBill:
           parseInt(
-            inputs.kElectricCurrentReading - inputs.kElectricPreviousReading
-          ) * parseInt(inputs.kElectricPerUnit) || 0,
+            inputs?.kElectricCurrentReading - inputs?.kElectricPreviousReading
+          ) * parseInt(inputs?.kElectricPerUnit) || 0,
         //extra fields
         kElectricBillImage: "",
         kElectricEnterBill: "",
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(ElectricBill({values}));
+      if(values.kElectricPreviousReading&&values.kElectricCurrentReading&&values.kElectricPerUnit!==''){
+      dispatch(ElectricBill({ values })).then((res) => {
+        if (res?.payload?.data?.message === "Reading Saved Successfully") {
+          toast.success("Bill Uploaded Successfully!", {
+            autoClose: 300,
+          });
+
+         //////saeed isay dekh lena
+          // setInputs({
+          //   kElectricPreviousReading: "",
+          //   kElectricCurrentReading: "",
+          //   kElectricPerUnit: "",
+          //   // ... (other fields)
+          // });
+         
+          // setInputs()
+        } else {
+          toast.error("Something Wrong", {
+            position: "top-center",
+          });
+        }
+      })
+    }
+    else
+    {
+        toast.error("Fill All Fields", {
+          position: "top-center",
+        });
+      }
     } else if (selectedValue === "byBill") {
       let values = {
         kElectricEnterBill: inputs.kElectricEnterBill,
-        kElectricBillDate: (moment(billDate).format("DD-MM-YYYY")),
-        kElectricDueDate: (dueDate).format("DD-MM-YYYY"),
+        kElectricBillDate: moment(billDate).format("DD-MM-YYYY"),
+        kElectricDueDate: dueDate.format("DD-MM-YYYY"),
         kElectricTotalBill: inputs.kElectricEnterBill,
         //extra fields
         kElectricBillImage: "",
@@ -112,9 +141,37 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(ElectricBill({values}));
-    }
-    else if (selectedValue === "byPicture") {
+      
+      if(values?.kElectricEnterBill!==""&&values?.kElectricEnterBill!==undefined){
+      dispatch(ElectricBill({ values })).then((res)=>{
+        if (res?.payload?.data?.message === "Reading Saved Successfully") {
+          toast.success("Bill Uploaded Successfully!", {
+            autoClose: 300,
+          });
+
+         //////saeed isay dekh lena
+          // setInputs({
+          //   kElectricPreviousReading: "",
+          //   kElectricCurrentReading: "",
+          //   kElectricPerUnit: "",
+          //   // ... (other fields)
+          // });
+         
+          // setInputs()
+        } else {
+          toast.error("Something Wrong", {
+            position: "top-center",
+          });
+        }
+      })
+      }else
+        {
+            toast.error("Fill All Fields", {
+              position: "top-center",
+            });
+          }
+      
+    } else if (selectedValue === "byPicture") {
       let values = {
         kElectricEnterBill: "",
         kElectricBillDate: "",
@@ -129,36 +186,62 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(ElectricBill({values}));
+      
+      if(values?.kElectricBillImage!==""&&values?.kElectricBillImage!==undefined){
+        dispatch(ElectricBill({ values })).then((res)=>{
+          console.log(res?.payload?.data?.message,"res?.payload?.data?.message")
+          if (res?.payload?.data?.message === "Reading Saved Successfully") {
+            toast.success("Bill Uploaded Successfully!", {
+              autoClose: 300,
+            });
+  setUrl()
+           //////saeed isay dekh lena
+            // setInputs({
+            //   kElectricPreviousReading: "",
+            //   kElectricCurrentReading: "",
+            //   kElectricPerUnit: "",
+            //   // ... (other fields)
+            // });
+           
+            // setInputs()
+          } else {
+            toast.error("Something Wrong", {
+              position: "top-center",
+            });
+          }
+        })
+        }else
+          {
+              toast.error("Upload Image", {
+                position: "top-center",
+              });
+            }
     }
   };
   const handleBillSSGCReading = (e) => {
-    
     if (selectedValue === "byGasUnitReading") {
       let values = {
         currentReadingSsg: inputs.currentReadingSsg,
         previousReadingSsg: inputs.previousReadingSsg,
         perUnitSsgCharges: inputs.perUnitSsgCharges,
-        ssgcBillDate: (moment(billDate).format("DD-MM-YYYY")),
-        ssgcDueDate: (dueDate).format("DD-MM-YYYY"),
-        ssgcTotalUnits:
-          inputs.currentReadingSsg - inputs.previousReadingSsg,
+        ssgcBillDate: moment(billDate).format("DD-MM-YYYY"),
+        ssgcDueDate: dueDate.format("DD-MM-YYYY"),
+        ssgcTotalUnits: inputs.currentReadingSsg - inputs.previousReadingSsg,
         ssgcTotalBill:
-          parseInt(
-            inputs.currentReadingSsg - inputs.previousReadingSsg
-          ) * parseInt(inputs.perUnitSsgCharges) || 0,
+          parseInt(inputs.currentReadingSsg - inputs.previousReadingSsg) *
+            parseInt(inputs.perUnitSsgCharges) || 0,
         //extra fields
         ssgcBillImage: "",
         ssgcEnterBill: "",
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(SsgcBill({values}));
+      dispatch(SsgcBill({ values }));
     } else if (selectedValue === "byGassBill") {
       let values = {
         ssgcEnterBill: inputs.ssgcEnterBill,
-        ssgcBillDate: (moment(billDate).format("DD-MM-YYYY")),
-        ssgcDueDate: (dueDate).format("DD-MM-YYYY"),
+        ssgcBillDate: moment(billDate).format("DD-MM-YYYY"),
+        ssgcDueDate: dueDate.format("DD-MM-YYYY"),
         ssgcTotalBill: inputs.ssgcEnterBill,
         //extra fields
         ssgcBillImage: "",
@@ -169,9 +252,8 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(SsgcBill({values}));
-    }
-    else if (selectedValue === "byGassPicture") {
+      dispatch(SsgcBill({ values }));
+    } else if (selectedValue === "byGassPicture") {
       let values = {
         ssgcEnterBill: "",
         ssgcBillDate: "",
@@ -186,25 +268,23 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(SsgcBill({values}));
+      dispatch(SsgcBill({ values }));
     }
   };
   const handleBillWaterReading = (e) => {
-    
-   if (selectedValue === "byWaterBill") {
+    if (selectedValue === "byWaterBill") {
       let values = {
         waterEnterBill: inputs.waterEnterBill,
-        waterBillDate: (moment(billDate).format("DD-MM-YYYY")),
-        waterDueDate: (dueDate).format("DD-MM-YYYY"),
+        waterBillDate: moment(billDate).format("DD-MM-YYYY"),
+        waterDueDate: dueDate.format("DD-MM-YYYY"),
         waterTotalBill: inputs.waterEnterBill,
         //extra fields
         waterBillImage: "",
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(WaterReadings({values}));
-    }
-    else if (selectedValue === "byWaterPicture") {
+      dispatch(WaterReadings({ values }));
+    } else if (selectedValue === "byWaterPicture") {
       let values = {
         waterEnterBill: "",
         waterBillDate: "",
@@ -215,25 +295,23 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(WaterReadings({values}));
+      dispatch(WaterReadings({ values }));
     }
   };
   const handleMaintainanceReading = (e) => {
-    
-   if (selectedValue === "byMaintainanceBill") {
+    if (selectedValue === "byMaintainanceBill") {
       let values = {
         maintananceEnterBill: inputs.maintananceEnterBill,
-        maintananceBillDate: (moment(billDate).format("DD-MM-YYYY")),
-        maintananceDueDate: (dueDate).format("DD-MM-YYYY"),
+        maintananceBillDate: moment(billDate).format("DD-MM-YYYY"),
+        maintananceDueDate: dueDate.format("DD-MM-YYYY"),
         maintananceTotalBill: inputs.maintananceEnterBill,
         //extra fields
         maintananceBillImage: "",
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(MaintananceReadings({values}));
-    }
-    else if (selectedValue === "byMaintainancePicture") {
+      dispatch(MaintananceReadings({ values }));
+    } else if (selectedValue === "byMaintainancePicture") {
       let values = {
         maintananceEnterBill: "",
         maintananceBillDate: "",
@@ -244,38 +322,36 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(MaintananceReadings({values}));
+      dispatch(MaintananceReadings({ values }));
     }
   };
   const handleTrashReading = (e) => {
-    
     if (selectedValue === "byTrashBill") {
-       let values = {
+      let values = {
         trashEnterBill: inputs.trashEnterBill,
-         trashBillDate: (moment(billDate).format("DD-MM-YYYY")),
-         trashDueDate: (dueDate).format("DD-MM-YYYY"),
-         trashTotalBill: inputs.trashEnterBill,
-         //extra fields
-         trashBillImage: "",
-         userId: localStorage.getItem("user_id"),
-         userName: localStorage.getItem("name"),
-       };
-       dispatch(TrashReadings({values}));
-     }
-     else if (selectedValue === "byTrashPicture") {
-       let values = {
-         trashEnterBill: "",
-         trashBillDate: "",
-         trashDueDate: "",
-         trashTotalBill: "",
-         //extra fields
-         trashBillImage: url,
-         userId: localStorage.getItem("user_id"),
-         userName: localStorage.getItem("name"),
-       };
-       dispatch(TrashReadings({values}));
-     }
-   };
+        trashBillDate: moment(billDate).format("DD-MM-YYYY"),
+        trashDueDate: dueDate.format("DD-MM-YYYY"),
+        trashTotalBill: inputs.trashEnterBill,
+        //extra fields
+        trashBillImage: "",
+        userId: localStorage.getItem("user_id"),
+        userName: localStorage.getItem("name"),
+      };
+      dispatch(TrashReadings({ values }));
+    } else if (selectedValue === "byTrashPicture") {
+      let values = {
+        trashEnterBill: "",
+        trashBillDate: "",
+        trashDueDate: "",
+        trashTotalBill: "",
+        //extra fields
+        trashBillImage: url,
+        userId: localStorage.getItem("user_id"),
+        userName: localStorage.getItem("name"),
+      };
+      dispatch(TrashReadings({ values }));
+    }
+  };
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -404,15 +480,15 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                               </LocalizationProvider>
                             </TableCell>
                             <TableCell align="right">
-                              {inputs.kElectricCurrentReading -
-                                inputs.kElectricPreviousReading}
+                              {inputs?.kElectricCurrentReading -
+                                inputs?.kElectricPreviousReading}
                             </TableCell>
                             {/* <TableCell>{historyRow.enterBill}</TableCell> */}
                             <TableCell>
                               {parseInt(
-                                inputs.kElectricCurrentReading -
-                                  inputs.kElectricPreviousReading
-                              ) * parseInt(inputs.kElectricPerUnit) || 0}
+                                inputs?.kElectricCurrentReading -
+                                  inputs?.kElectricPreviousReading
+                              ) * parseInt(inputs?.kElectricPerUnit) || 0}
                             </TableCell>
                           </TableRow>
                         </TableBody>
@@ -503,9 +579,14 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                   {selectedValue === "byPicture" && (
                     <div>
                       <Stack direction="row" alignItems="center" spacing={2}>
-                        <Button variant="contained" component="label" >
+                        <Button variant="contained" component="label">
                           Upload
-                          <input hidden accept="image/*"  type="file" onChange={(e)=>imgUpload(e)}/>
+                          <input
+                            hidden
+                            accept="image/*"
+                            type="file"
+                            onChange={(e) => imgUpload(e)}
+                          />
                         </Button>
                         <Button
                           variant="contained"
@@ -722,9 +803,14 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                     <div>
                       {" "}
                       <Stack direction="row" alignItems="center" spacing={2}>
-                      <Button variant="contained" component="label" >
+                        <Button variant="contained" component="label">
                           Upload
-                          <input hidden accept="image/*"  type="file" onChange={(e)=>imgUpload(e)}/>
+                          <input
+                            hidden
+                            accept="image/*"
+                            type="file"
+                            onChange={(e) => imgUpload(e)}
+                          />
                         </Button>
                         <Button
                           variant="contained"
@@ -836,9 +922,14 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                     <div>
                       {" "}
                       <Stack direction="row" alignItems="center" spacing={2}>
-                      <Button variant="contained" component="label" >
+                        <Button variant="contained" component="label">
                           Upload
-                          <input hidden accept="image/*"  type="file" onChange={(e)=>imgUpload(e)}/>
+                          <input
+                            hidden
+                            accept="image/*"
+                            type="file"
+                            onChange={(e) => imgUpload(e)}
+                          />
                         </Button>
                         <Button
                           variant="contained"
@@ -930,7 +1021,9 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                                 />
                               </LocalizationProvider>
                             </TableCell>
-                            <TableCell>{inputs.maintananceEnterBill || 0}</TableCell>
+                            <TableCell>
+                              {inputs.maintananceEnterBill || 0}
+                            </TableCell>
                           </TableRow>
                         </TableBody>
                       </Table>
@@ -951,9 +1044,14 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                     <div>
                       {" "}
                       <Stack direction="row" alignItems="center" spacing={2}>
-                      <Button variant="contained" component="label" >
+                        <Button variant="contained" component="label">
                           Upload
-                          <input hidden accept="image/*"  type="file" onChange={(e)=>imgUpload(e)}/>
+                          <input
+                            hidden
+                            accept="image/*"
+                            type="file"
+                            onChange={(e) => imgUpload(e)}
+                          />
                         </Button>
                         <Button
                           variant="contained"
@@ -1072,9 +1170,14 @@ dispatch(ElectricPhoto(e.target.files[0])).then((res)=>{
                     <div>
                       {" "}
                       <Stack direction="row" alignItems="center" spacing={2}>
-                      <Button variant="contained" component="label" >
+                        <Button variant="contained" component="label">
                           Upload
-                          <input hidden accept="image/*"  type="file" onChange={(e)=>imgUpload(e)}/>
+                          <input
+                            hidden
+                            accept="image/*"
+                            type="file"
+                            onChange={(e) => imgUpload(e)}
+                          />
                         </Button>
                         <Button
                           variant="contained"
@@ -1300,15 +1403,12 @@ export default function UploadBill() {
             </TableHead>
             <TableBody>
               {rows.map((row) => (
-                <Row
-                  key={row.name}
-                  row={row}
-                  inputs={inputs}
-                />
+                <Row key={row.name} row={row} inputs={inputs} />
               ))}
             </TableBody>
           </Table>
         </TableContainer>
+        <ToastContainer />
       </div>
     </>
   );
