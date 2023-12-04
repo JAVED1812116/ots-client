@@ -3,9 +3,8 @@ import "./style.css"
 const NotFound = () => {
   return (
 <>
-<div className="mainBody">
 <h1>404 Page Not Found</h1>
-<p class="zoom-area"><b>CSS</b> animations to make a cool 404 page. </p>
+{/* <p class="zoom-area"><b>CSS</b> animations to make a cool 404 page. </p> */}
 <section class="error-container">
   <span class="four"><span class="screen-reader-text">4</span></span>
   <span class="zero"><span class="screen-reader-text">0</span></span>
@@ -14,7 +13,7 @@ const NotFound = () => {
 <div class="link-container">
   <a target="_blank" href="/" class="more-link">Go To Home</a>
 </div>
-</div>
+
 </>
   )
 }
