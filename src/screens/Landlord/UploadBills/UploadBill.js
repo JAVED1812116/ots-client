@@ -525,7 +525,34 @@ function Row(props) {
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(TrashReadings({ values }));
+      if(values?.trashEnterBill!==""&&values?.trashEnterBill!==undefined){
+        dispatch(TrashReadings({ values })).then((res)=>{
+          if (res?.payload?.data?.message === "Reading Saved Successfully") {
+            toast.success("Water Bill Uploaded Successfully!", {
+              autoClose: 300,
+            });
+  
+           //////saeed isay dekh lena
+            // setInputs({
+            //   kElectricPreviousReading: "",
+            //   kElectricCurrentReading: "",
+            //   kElectricPerUnit: "",
+            //   // ... (other fields)
+            // });
+           
+            // setInputs()
+          } else {
+            toast.error("Something Wrong", {
+              position: "top-center",
+            });
+          }
+        })
+        }else
+          {
+              toast.error("Fill All Fields", {
+                position: "top-center",
+              });
+            }
     } else if (selectedValue === "byTrashPicture") {
       let values = {
         trashEnterBill: "",
@@ -537,7 +564,34 @@ function Row(props) {
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(TrashReadings({ values }));
+      if(values?.trashBillImage!==""&&values?.trashBillImage!==undefined){
+        dispatch(TrashReadings({ values })).then((res)=>{
+          if (res?.payload?.data?.message === "Reading Saved Successfully") {
+            toast.success("Image Uploaded Successfully!", {
+              autoClose: 300,
+            });
+  setUrl()
+           //////saeed isay dekh lena
+            // setInputs({
+            //   kElectricPreviousReading: "",
+            //   kElectricCurrentReading: "",
+            //   kElectricPerUnit: "",
+            //   // ... (other fields)
+            // });
+           
+            // setInputs()
+          } else {
+            toast.error("Something Wrong", {
+              position: "top-center",
+            });
+          }
+        })
+        }else
+          {
+              toast.error("Upload Image", {
+                position: "top-center",
+              });
+            }
     }
   };
   return (
@@ -1123,6 +1177,7 @@ function Row(props) {
                             onChange={(e) => imgUpload(e)}
                           />
                         </Button>
+                        {url?.length>0?
                         <Button
                           variant="contained"
                           sx={{
@@ -1133,7 +1188,8 @@ function Row(props) {
                           onClick={handleBillWaterReading}
                         >
                           Post
-                        </Button>
+                        </Button>:""
+}
                       </Stack>
                     </div>
                   )}
@@ -1245,6 +1301,7 @@ function Row(props) {
                             onChange={(e) => imgUpload(e)}
                           />
                         </Button>
+                        {url?.length>0?
                         <Button
                           variant="contained"
                           sx={{
@@ -1256,6 +1313,7 @@ function Row(props) {
                         >
                           Post
                         </Button>
+:""}
                       </Stack>
                     </div>
                   )}
@@ -1371,6 +1429,7 @@ function Row(props) {
                             onChange={(e) => imgUpload(e)}
                           />
                         </Button>
+                        {url?.length>0?
                         <Button
                           variant="contained"
                           sx={{
@@ -1381,7 +1440,7 @@ function Row(props) {
                           onClick={handleTrashReading}
                         >
                           Post
-                        </Button>
+                        </Button>:""}
                       </Stack>
                     </div>
                   )}
