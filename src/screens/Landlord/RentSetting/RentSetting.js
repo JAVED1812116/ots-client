@@ -29,13 +29,13 @@ export default function RentSetting() {
     maintenanceCharges: "",
     trashCharges: "",
   });
-  const formatDate = (date) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Intl.DateTimeFormat('en-US', options).format(new Date(date));
-  };
+  // const formatDate = (date) => {
+  //   const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  //   return new Intl.DateTimeFormat('en-US', options)?.format(new Date(date));
+  // };
   const columns = [
     { field: 'id', headerName: 'ID', width: 280 },
-    { field: 'date', headerName: 'Date', width: 280, valueFormatter: (params) => formatDate(params.value) },
+    { field: 'date', headerName: 'Date', width: 280, valueFormatter: (params) => moment(params.value).format("DD-MM-YYYY") },
     { field: 'monthlyRent', headerName: 'Monthly Rent', width: 280 },
     {
       field: 'advance',
@@ -244,7 +244,7 @@ export default function RentSetting() {
           },
         }}
         pageSizeOptions={[5, 10]}
-        checkboxSelection
+        // checkboxSelection
       />
     </div>:""
 }
