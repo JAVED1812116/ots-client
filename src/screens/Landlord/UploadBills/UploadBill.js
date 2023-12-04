@@ -100,7 +100,7 @@ function Row(props) {
       if(values.kElectricPreviousReading&&values.kElectricCurrentReading&&values.kElectricPerUnit!==''){
       dispatch(ElectricBill({ values })).then((res) => {
         if (res?.payload?.data?.message === "Reading Saved Successfully") {
-          toast.success("Bill Uploaded Successfully!", {
+          toast.success("K-Electric Bill Uploaded Successfully!", {
             autoClose: 300,
           });
 
@@ -145,7 +145,7 @@ function Row(props) {
       if(values?.kElectricEnterBill!==""&&values?.kElectricEnterBill!==undefined){
       dispatch(ElectricBill({ values })).then((res)=>{
         if (res?.payload?.data?.message === "Reading Saved Successfully") {
-          toast.success("Bill Uploaded Successfully!", {
+          toast.success("K-Electric Bill Uploaded Successfully!", {
             autoClose: 300,
           });
 
@@ -189,9 +189,8 @@ function Row(props) {
       
       if(values?.kElectricBillImage!==""&&values?.kElectricBillImage!==undefined){
         dispatch(ElectricBill({ values })).then((res)=>{
-          console.log(res?.payload?.data?.message,"res?.payload?.data?.message")
           if (res?.payload?.data?.message === "Reading Saved Successfully") {
-            toast.success("Bill Uploaded Successfully!", {
+            toast.success("Image Uploaded Successfully!", {
               autoClose: 300,
             });
   setUrl()
@@ -236,7 +235,33 @@ function Row(props) {
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(SsgcBill({ values }));
+      if(values?.currentReadingSsg&&values?.previousReadingSsg&&values?.perUnitSsgCharges!==''){
+        dispatch(SsgcBill({ values })).then((res)=>{ 
+          if (res?.payload?.data?.message === "Reading Saved Successfully") {
+            toast.success("SSGC Bill Uploaded Successfully!", {
+              autoClose: 300,
+            });
+  setUrl()
+           //////saeed isay dekh lena
+            // setInputs({
+            //   kElectricPreviousReading: "",
+            //   kElectricCurrentReading: "",
+            //   kElectricPerUnit: "",
+            //   // ... (other fields)
+            // });
+           
+            // setInputs()
+          } else {
+            toast.error("Something Wrong", {
+              position: "top-center",
+            });
+          }
+        });
+      }else{
+        toast.error("Fill All Fields", {
+          position: "top-center",
+        });
+      }
     } else if (selectedValue === "byGassBill") {
       let values = {
         ssgcEnterBill: inputs.ssgcEnterBill,
@@ -252,7 +277,35 @@ function Row(props) {
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(SsgcBill({ values }));
+
+          if(values?.ssgcEnterBill!==""&&values?.ssgcEnterBill!==undefined){
+      dispatch(SsgcBill({ values })).then((res)=>{
+        if (res?.payload?.data?.message === "Reading Saved Successfully") {
+          toast.success("K-Electric Bill Uploaded Successfully!", {
+            autoClose: 300,
+          });
+
+         //////saeed isay dekh lena
+          // setInputs({
+          //   kElectricPreviousReading: "",
+          //   kElectricCurrentReading: "",
+          //   kElectricPerUnit: "",
+          //   // ... (other fields)
+          // });
+         
+          // setInputs()
+        } else {
+          toast.error("Something Wrong", {
+            position: "top-center",
+          });
+        }
+      })
+      }else
+        {
+            toast.error("Fill All Fields", {
+              position: "top-center",
+            });
+          }
     } else if (selectedValue === "byGassPicture") {
       let values = {
         ssgcEnterBill: "",
@@ -268,7 +321,34 @@ function Row(props) {
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(SsgcBill({ values }));
+      if(values?.ssgcBillImage!==""&&values?.ssgcBillImage!==undefined){
+        dispatch(SsgcBill({ values })).then((res)=>{
+          if (res?.payload?.data?.message === "Reading Saved Successfully") {
+            toast.success("Image Uploaded Successfully!", {
+              autoClose: 300,
+            });
+  setUrl()
+           //////saeed isay dekh lena
+            // setInputs({
+            //   kElectricPreviousReading: "",
+            //   kElectricCurrentReading: "",
+            //   kElectricPerUnit: "",
+            //   // ... (other fields)
+            // });
+           
+            // setInputs()
+          } else {
+            toast.error("Something Wrong", {
+              position: "top-center",
+            });
+          }
+        })
+        }else
+          {
+              toast.error("Upload Image", {
+                position: "top-center",
+              });
+            }
     }
   };
   const handleBillWaterReading = (e) => {
@@ -814,6 +894,7 @@ function Row(props) {
                             onChange={(e) => imgUpload(e)}
                           />
                         </Button>
+                        {url?.length>0?
                         <Button
                           variant="contained"
                           sx={{
@@ -824,7 +905,8 @@ function Row(props) {
                           onClick={handleBillSSGCReading}
                         >
                           Post
-                        </Button>
+                        </Button>:""
+                        }
                       </Stack>
                     </div>
                   )}
