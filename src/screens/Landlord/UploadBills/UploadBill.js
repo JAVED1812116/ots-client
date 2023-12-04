@@ -588,6 +588,7 @@ function Row(props) {
                             onChange={(e) => imgUpload(e)}
                           />
                         </Button>
+                        {url?.length>0?
                         <Button
                           variant="contained"
                           sx={{
@@ -598,7 +599,8 @@ function Row(props) {
                           onClick={handleBillKELECReading}
                         >
                           Post
-                        </Button>
+                        </Button>:""
+}
                       </Stack>
                     </div>
                   )}
