@@ -363,7 +363,34 @@ function Row(props) {
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(WaterReadings({ values }));
+      if(values?.waterEnterBill!==""&&values?.waterEnterBill!==undefined){
+        dispatch(WaterReadings({ values })).then((res)=>{
+          if (res?.payload?.data?.message === "Reading Saved Successfully") {
+            toast.success("Water Bill Uploaded Successfully!", {
+              autoClose: 300,
+            });
+  
+           //////saeed isay dekh lena
+            // setInputs({
+            //   kElectricPreviousReading: "",
+            //   kElectricCurrentReading: "",
+            //   kElectricPerUnit: "",
+            //   // ... (other fields)
+            // });
+           
+            // setInputs()
+          } else {
+            toast.error("Something Wrong", {
+              position: "top-center",
+            });
+          }
+        })
+        }else
+          {
+              toast.error("Fill All Fields", {
+                position: "top-center",
+              });
+            }
     } else if (selectedValue === "byWaterPicture") {
       let values = {
         waterEnterBill: "",
@@ -375,7 +402,34 @@ function Row(props) {
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(WaterReadings({ values }));
+      if(values?.waterBillImage!==""&&values?.waterBillImage!==undefined){
+        dispatch(WaterReadings({ values })).then((res)=>{
+          if (res?.payload?.data?.message === "Reading Saved Successfully") {
+            toast.success("Image Uploaded Successfully!", {
+              autoClose: 300,
+            });
+  setUrl()
+           //////saeed isay dekh lena
+            // setInputs({
+            //   kElectricPreviousReading: "",
+            //   kElectricCurrentReading: "",
+            //   kElectricPerUnit: "",
+            //   // ... (other fields)
+            // });
+           
+            // setInputs()
+          } else {
+            toast.error("Something Wrong", {
+              position: "top-center",
+            });
+          }
+        })
+        }else
+          {
+              toast.error("Upload Image", {
+                position: "top-center",
+              });
+            }
     }
   };
   const handleMaintainanceReading = (e) => {
@@ -390,7 +444,34 @@ function Row(props) {
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(MaintananceReadings({ values }));
+      if(values?.maintananceEnterBill!==""&&values?.maintananceEnterBill!==undefined){
+        dispatch(MaintananceReadings({ values })).then((res)=>{
+          if (res?.payload?.data?.message === "Reading Saved Successfully") {
+            toast.success("Water Bill Uploaded Successfully!", {
+              autoClose: 300,
+            });
+  
+           //////saeed isay dekh lena
+            // setInputs({
+            //   kElectricPreviousReading: "",
+            //   kElectricCurrentReading: "",
+            //   kElectricPerUnit: "",
+            //   // ... (other fields)
+            // });
+           
+            // setInputs()
+          } else {
+            toast.error("Something Wrong", {
+              position: "top-center",
+            });
+          }
+        })
+        }else
+          {
+              toast.error("Fill All Fields", {
+                position: "top-center",
+              });
+            }
     } else if (selectedValue === "byMaintainancePicture") {
       let values = {
         maintananceEnterBill: "",
@@ -402,7 +483,34 @@ function Row(props) {
         userId: localStorage.getItem("user_id"),
         userName: localStorage.getItem("name"),
       };
-      dispatch(MaintananceReadings({ values }));
+      if(values?.maintananceBillImage!==""&&values?.maintananceBillImage!==undefined){
+        dispatch(MaintananceReadings({ values })).then((res)=>{
+          if (res?.payload?.data?.message === "Reading Saved Successfully") {
+            toast.success("Image Uploaded Successfully!", {
+              autoClose: 300,
+            });
+  setUrl()
+           //////saeed isay dekh lena
+            // setInputs({
+            //   kElectricPreviousReading: "",
+            //   kElectricCurrentReading: "",
+            //   kElectricPerUnit: "",
+            //   // ... (other fields)
+            // });
+           
+            // setInputs()
+          } else {
+            toast.error("Something Wrong", {
+              position: "top-center",
+            });
+          }
+        })
+        }else
+          {
+              toast.error("Upload Image", {
+                position: "top-center",
+              });
+            }
     }
   };
   const handleTrashReading = (e) => {
