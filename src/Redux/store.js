@@ -10,6 +10,7 @@ import SsgcReading from './Reducer/SsgcReading';
 import WaterReading from './Reducer/WaterReading';
 import MaintananceReading from './Reducer/MaintananceReading';
 import TrashReading from './Reducer/TrashReading';
+import GetOneUploadBill from './Reducer/GetOneUploadBill';
 export const store = configureStore({
   reducer: {
     "CreateUser": CreateUser,
@@ -23,5 +24,6 @@ export const store = configureStore({
     "trashReading": TrashReading,
     "SendEmail":SendEmail,
     "Photo": KElectricImg,
+    "getOneUploadBillDetail": GetOneUploadBill,
   },
 })

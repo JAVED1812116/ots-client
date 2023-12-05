@@ -39,6 +39,7 @@ import { ElectricPhoto } from "../../../redux/Reducer/KElectricImg";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import dayjs from "dayjs";
+import { GetOneUploadBill } from "../../../redux/Reducer/GetOneUploadBill";
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
@@ -49,7 +50,26 @@ function Row(props) {
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
+  React.useEffect(() => {
+    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+      (res) => {
+        // let date=res?.payload?.data?.data?.electricity[0]?.kElectricBillDate
+        // console.log(res?.payload?.data?.data?.electricity[0]?.kElectricBillDate)
+        // setData(res?.payload?.data?.data);
 
+        if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+          // setFieldDisable(true)
+        }
+        // let { monthlyRent, advance, maintenanceCharges, trashCharges } =res?.payload?.data?.data[0];
+        // setDetail({
+        //   monthlyRent,
+        //   advance,
+        //   maintenanceCharges,
+        //   trashCharges,
+        // });
+      }
+    );
+  }, []);
   const [inputs, setInputs] = useState({
 //     kElectricEnterBill:"",
 //     kElectricPreviousReading:"",
@@ -722,7 +742,8 @@ function Row(props) {
                               </LocalizationProvider>
                             </TableCell>
                             <TableCell align="right">
-                              {inputs?.kElectricCurrentReading -
+                              {inputs?.kElectricCurrentReading===undefined?0:
+                              inputs?.kElectricCurrentReading -
                                 inputs?.kElectricPreviousReading}
                             </TableCell>
                             {/* <TableCell>{historyRow.enterBill}</TableCell> */}
