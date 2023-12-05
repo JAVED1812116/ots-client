@@ -758,7 +758,7 @@ export default function UploadBill() {
             <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
               <Collapse in={open} timeout="auto" unmountOnExit>
                 <Box sx={{ margin: 1 }}>
-                {hasData?.electricity===true?<p style={{color:"red"}}>This Month Bill has been Uploaded</p>:
+                {hasData?.electricity===true?<p style={{color:"red"}}>This Month Bill has been Uploaded. If you want to Update this month bill then contact support</p>:
                   <div>
                     <FormControl component="fieldset">
                       <Typography variant="h6">Select Bill Type</Typography>
@@ -1006,7 +1006,7 @@ export default function UploadBill() {
             <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
               <Collapse in={open} timeout="auto" unmountOnExit>
                 <Box sx={{ margin: 1 }}>
-                {hasData?.ssgc===true?<p style={{color:"red"}}>This Month Bill has been Uploaded</p>:
+                {hasData?.ssgc===true?<p style={{color:"red"}}>This Month Bill has been Uploaded. If you want to Update this month bill then contact support</p>:
                   <div>
                     <FormControl component="fieldset">
                       <Typography variant="h6">Select Bill Type</Typography>
@@ -1234,7 +1234,7 @@ export default function UploadBill() {
             <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
               <Collapse in={open} timeout="auto" unmountOnExit>
                 <Box sx={{ margin: 1 }}>
-                {hasData?.water===true?<p style={{color:"red"}}>This Month Bill has been Uploaded</p>:
+                {hasData?.water===true?<p style={{color:"red"}}>This Month Bill has been Uploaded. If you want to Update this month bill then contact support</p>:
                   <div>
                     <FormControl component="fieldset">
                       <Typography variant="h6">Select Bill Type</Typography>
@@ -1357,7 +1357,7 @@ export default function UploadBill() {
             <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
               <Collapse in={open} timeout="auto" unmountOnExit>
                 <Box sx={{ margin: 1 }}>
-                {hasData?.maintainance===true?<p style={{color:"red"}}>This Month Bill has been Uploaded</p>:
+                {hasData?.maintainance===true?<p style={{color:"red"}}>This Month Bill has been Uploaded. If you want to Update this month bill then contact support</p>:
                   <div>
                     <FormControl component="fieldset">
                       <Typography variant="h6">Select Bill Type</Typography>
@@ -1486,7 +1486,7 @@ export default function UploadBill() {
                   {/* <Typography variant="h6" gutterBottom component="div">
                       History
                     </Typography> */}
-                    {hasData?.trash===true?<p style={{color:"red"}}>This Month Bill has been Uploaded</p>:
+                    {hasData?.trash===true?<p style={{color:"red"}}>This Month Bill has been Uploaded. If you want to Update this month bill then contact support </p>:
                   <div>
                     <FormControl component="fieldset">
                       <Typography variant="h6">Select Bill Type</Typography>
