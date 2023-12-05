@@ -132,7 +132,16 @@ export default function UploadBill() {
             toast.success("K-Electric Bill Uploaded Successfully!", {
               autoClose: 300,
             });
-  
+            dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+              (res) => {
+        
+                setHasData(res?.payload?.data?.data)
+                if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+                  // setFieldDisable(true)
+                }
+               
+              }
+            );
            //////saeed isay dekh lena
             // setInputs({
             //   kElectricPreviousReading: "",
@@ -177,7 +186,16 @@ export default function UploadBill() {
             toast.success("K-Electric Bill Uploaded Successfully!", {
               autoClose: 300,
             });
-  
+            dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+              (res) => {
+        
+                setHasData(res?.payload?.data?.data)
+                if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+                  // setFieldDisable(true)
+                }
+               
+              }
+            );
            //////saeed isay dekh lena
             // setInputs({
             //   kElectricPreviousReading: "",
@@ -223,6 +241,16 @@ export default function UploadBill() {
                 autoClose: 300,
               });
     setUrl()
+    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+      (res) => {
+
+        setHasData(res?.payload?.data?.data)
+        if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+          // setFieldDisable(true)
+        }
+       
+      }
+    );
              //////saeed isay dekh lena
               // setInputs({
               //   kElectricPreviousReading: "",
@@ -270,7 +298,16 @@ export default function UploadBill() {
               toast.success("SSGC Bill Uploaded Successfully!", {
                 autoClose: 300,
               });
-    setUrl()
+              dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+                (res) => {
+          
+                  setHasData(res?.payload?.data?.data)
+                  if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+                    // setFieldDisable(true)
+                  }
+                 
+                }
+              );
              //////saeed isay dekh lena
               // setInputs({
               //   kElectricPreviousReading: "",
@@ -313,7 +350,16 @@ export default function UploadBill() {
             toast.success("K-Electric Bill Uploaded Successfully!", {
               autoClose: 300,
             });
-  
+            dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+              (res) => {
+        
+                setHasData(res?.payload?.data?.data)
+                if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+                  // setFieldDisable(true)
+                }
+               
+              }
+            );
            //////saeed isay dekh lena
             // setInputs({
             //   kElectricPreviousReading: "",
@@ -357,6 +403,16 @@ export default function UploadBill() {
                 autoClose: 300,
               });
     setUrl()
+    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+      (res) => {
+
+        setHasData(res?.payload?.data?.data)
+        if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+          // setFieldDisable(true)
+        }
+       
+      }
+    );
              //////saeed isay dekh lena
               // setInputs({
               //   kElectricPreviousReading: "",
@@ -398,7 +454,16 @@ export default function UploadBill() {
               toast.success("Water Bill Uploaded Successfully!", {
                 autoClose: 300,
               });
-    
+              dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+                (res) => {
+          
+                  setHasData(res?.payload?.data?.data)
+                  if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+                    // setFieldDisable(true)
+                  }
+                 
+                }
+              );
              //////saeed isay dekh lena
               // setInputs({
               //   kElectricPreviousReading: "",
@@ -438,6 +503,16 @@ export default function UploadBill() {
                 autoClose: 300,
               });
     setUrl()
+    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+      (res) => {
+
+        setHasData(res?.payload?.data?.data)
+        if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+          // setFieldDisable(true)
+        }
+       
+      }
+    );
              //////saeed isay dekh lena
               // setInputs({
               //   kElectricPreviousReading: "",
@@ -479,7 +554,16 @@ export default function UploadBill() {
               toast.success("Water Bill Uploaded Successfully!", {
                 autoClose: 300,
               });
-    
+              dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+                (res) => {
+          
+                  setHasData(res?.payload?.data?.data)
+                  if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+                    // setFieldDisable(true)
+                  }
+                 
+                }
+              );
              //////saeed isay dekh lena
               // setInputs({
               //   kElectricPreviousReading: "",
@@ -519,6 +603,16 @@ export default function UploadBill() {
                 autoClose: 300,
               });
     setUrl()
+    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+      (res) => {
+
+        setHasData(res?.payload?.data?.data)
+        if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+          // setFieldDisable(true)
+        }
+       
+      }
+    );
              //////saeed isay dekh lena
               // setInputs({
               //   kElectricPreviousReading: "",
@@ -560,7 +654,16 @@ export default function UploadBill() {
               toast.success("Water Bill Uploaded Successfully!", {
                 autoClose: 300,
               });
-    
+              dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+                (res) => {
+          
+                  setHasData(res?.payload?.data?.data)
+                  if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+                    // setFieldDisable(true)
+                  }
+                 
+                }
+              );
              //////saeed isay dekh lena
               // setInputs({
               //   kElectricPreviousReading: "",
@@ -600,6 +703,16 @@ export default function UploadBill() {
                 autoClose: 300,
               });
     setUrl()
+    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+      (res) => {
+
+        setHasData(res?.payload?.data?.data)
+        if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+          // setFieldDisable(true)
+        }
+       
+      }
+    );
              //////saeed isay dekh lena
               // setInputs({
               //   kElectricPreviousReading: "",
