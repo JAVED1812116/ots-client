@@ -3,7 +3,7 @@ import * as React from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import title from "../../../components/title";
 // import "./newRequest.css";
-import { Button, Container, TextField } from "@mui/material";
+import { Button, Container, MenuItem, Select, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 export default function PropertyRegister() {
   title("PropertyRegister");
@@ -225,6 +225,25 @@ export default function PropertyRegister() {
           // disabled={fieldDisable===true}
           // onChange={handleChange}
         />
+      ),
+    },
+    {
+      field: "flatStatus",
+      headerName: "Flat Status",
+      width: 150,
+      editable: true,
+      renderCell: (params) => (
+        <Select
+          labelId="demo-simple-select-autowidth-label"
+          id="demo-simple-select-autowidth"
+          // value={age}
+          // onChange={handleChange}
+          autoWidth
+          label="flatStatus"
+        >
+          <MenuItem value={0}>Vacant</MenuItem>
+          <MenuItem value={1}>RentOut</MenuItem>
+        </Select>
       ),
     },
   ];
