@@ -75,3 +75,32 @@ color: #000000;
   .addNewButton > span > svg{
     font-size: 16px !important;
   }
+
+  .boxShadow{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    margin: 20px;
+    padding: 20px;
+  }
+  .propertyRegContainer{
+    margin-top: 10vh !important;
+    justify-content: center;
+  }
+  .property-inputs{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .property-inputs > div{
+    margin-top: 10px;
+    width: 100%;
+  }
+  .flexCont{
+    display: flex;
+    flex-direction: column !important;
+  }
+  .registerButton{
+    display: flex;
+    justify-content: center;
+    width: 100%
+  }

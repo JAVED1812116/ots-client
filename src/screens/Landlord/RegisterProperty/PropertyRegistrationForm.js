@@ -1,10 +1,15 @@
 import * as React from "react";
 // import Grid from '@mui/material/Grid'; // Grid version 1
+import { styled, useTheme } from "@mui/material/styles";
+import MuiAppBar from "@mui/material/AppBar";
 import Grid from "@mui/material/Unstable_Grid2";
 import title from "../../../components/title";
-// import "./newRequest.css";
+import Box from "@mui/material/Box";
+import "./registerProperty.css";
+import Toolbar from "@mui/material/Toolbar";
 import { Button, Container, MenuItem, Select, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import Logo from "../../../assets/Logo.png";
 export default function PropertyRegister() {
   title("PropertyRegister");
   const [detail, setDetail] = React.useState({
@@ -260,28 +265,94 @@ export default function PropertyRegister() {
 
     return (
       <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={generatedRows}
-          columns={columns}
-          pageSize={5} // Set to the number of rows you want to display per page
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          pageSizeOptions={[5, 10]}
-        />
+        <Box sx={{ height: 400, width: "auto" }}>
+          <DataGrid
+            rows={generatedRows}
+            columns={columns}
+            pageSize={5} // Set to the number of rows you want to display per page
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+          />
+        </Box>
       </div>
     );
   };
+
+  const drawerWidth = 240;
+
+  const openedMixin = (theme) => ({
+    width: drawerWidth,
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    overflowX: "hidden",
+  });
+
+  const closedMixin = (theme) => ({
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: "hidden",
+    width: `calc(${theme.spacing(7)} + 1px)`,
+    [theme.breakpoints.up("sm")]: {
+      width: `calc(${theme.spacing(8)} + 1px)`,
+    },
+  });
+
+  const DrawerHeader = styled("div")(({ theme }) => ({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+  }));
+
+  const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== "open",
+  })(({ theme, open }) => ({
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    ...(open && {
+      marginLeft: drawerWidth,
+      width: `calc(100% - ${drawerWidth}px)`,
+      transition: theme.transitions.create(["width", "margin"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    }),
+  }));
+
   return (
     <>
-      <Grid container spacing={2}>
-        <Grid xs={6} md={8}>
+      <AppBar position="fixed">
+        <Toolbar style={{ backgroundColor: "black" }}>
+          <Box
+            component="img"
+            sx={{
+              height: 56,
+              margin: 1,
+            }}
+            alt="Your logo."
+            src={Logo}
+          />
+        </Toolbar>
+      </AppBar>
+      <Grid container spacing={0} className="propertyRegContainer">
+        <Grid className="boxShadow" md={3} sm={12}>
           <div>
             <h1>Owner Detail</h1>
-            <Container maxWidth="sm" className="rent-setting-container">
-              <div className="rent-inputs">
+            <Container maxWidth="sm">
+              <div className="property-inputs">
                 <TextField
                   id="standard-multiline-flexible"
                   label="Owner Name"
@@ -376,11 +447,11 @@ export default function PropertyRegister() {
           </div>
         </Grid>
 
-        <Grid xs={6} md={4}>
+        <Grid className="boxShadow " md={6} sm={12}>
           <div>
             <h1>Property Detail</h1>
-            <Container maxWidth="sm" className="rent-setting-container">
-              <div className="rent-inputs">
+            <Container maxWidth="sm">
+              <div className="property-inputs">
                 <TextField
                   id="standard-multiline-flexible"
                   label="Property Address"
@@ -423,16 +494,17 @@ export default function PropertyRegister() {
           </div>
         </Grid>
       </Grid>
-      <Button
-        variant="contained"
-        sx={{
-          marginTop: 10,
-          marginLeft:120,
-          background: "black",
-        }}
-      >
-        Post
-      </Button>
+      <div className="registerButton">
+        <Button
+          variant="contained"
+          sx={{
+            marginTop: 1,
+            background: "black",
+          }}
+        >
+          Post
+        </Button>
+      </div>
     </>
   );
 }
