@@ -18,6 +18,7 @@ import Registeration from "../screens/Tenant/Register/Registeration";
 import TenantFunctionality from "../screens/Tenant/TenantFunction/TenantFunctionality";
 import PreviousBill from "../screens/Tenant/PreviousBill/PreviousBill";
 import PreviousBillLandlordPage from "../screens/Landlord/PreviousBills/PreviousBill";
+import PropertyRegister from "../screens/Landlord/RegisterProperty/PropertyRegistrationForm";
 export default function AllRoutes() {
   console.log(localStorage.getItem("user_id"), 'localStorage.getItem("user_id")');
 
@@ -54,6 +55,7 @@ export default function AllRoutes() {
           <Route path="/agreement" element={<Agreement />} />
           <Route path="/upload-Bill" element={<UploadBill />} />
           <Route path="/previous-bill" element={<PreviousBillLandlordPage />} />
+          <Route path="/property-reg" element={<PropertyRegister />} />
           
   
           <Route path="/addNew-Tenant" element={<AddNew />} />
