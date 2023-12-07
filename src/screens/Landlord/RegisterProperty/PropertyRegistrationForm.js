@@ -310,7 +310,9 @@ email:detail?.email,
 propertyAddress:detail?.propertyAddress,
 totalFloor:detail?.totalFloor,
 totalFlat:detail?.totalFlat,
-flatDetail:rows
+flatDetail:rows,
+userId: localStorage.getItem("user_id"),
+userName: localStorage.getItem("name"),
   };
   dispatch(PropertyRegisters({values}))
 }
@@ -358,6 +360,7 @@ flatDetail:rows
                   id="standard-multiline-flexible"
                   label="CNIC"
                   multiline
+                  type="number"
                   maxRows={4}
                   variant="standard"
                   name="cnic"
