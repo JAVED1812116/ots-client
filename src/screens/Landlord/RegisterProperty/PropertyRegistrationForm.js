@@ -19,9 +19,45 @@ export default function PropertyRegister() {
   });
   const [rows, setRows] = React.useState();
   const [generatedRows, setGeneratedRows] = React.useState([]);
-
+  const [error, setError] = React.useState({
+   
+    // other fields...
+  });
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setDetail((prev) => {
+  //     return { ...prev, [name]: value };
+  //   });
+  // };
+  const isEmailValid = (email) => {
+    // Regular expression for basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
+   // Check if the entered value is not a valid number for "cnic" or "contactNumber" fields
+   if ((name === 'cnic' || name === 'contactNumber'|| name === 'alternateNumber'|| name === 'totalFloor'|| name === 'totalFlat') && !/^[0-9]*$/.test(value)) {
+    console.log(value, "value");
+    setError((prev) => ({ ...prev, [name]: true }));
+    // If it's not a valid number, you can choose to ignore the input or show an error message.
+    return;
+  }
+   if ((name === 'ownerName'||name==='fatherName') && !/^[A-Za-z\s]*$/.test(value)) {
+    console.log(value, "value");
+    setError((prev) => ({ ...prev, [name]: true }));
+    // If it's not a valid number, you can choose to ignore the input or show an error message.
+    return;
+  }
+  if (name === 'email' && !isEmailValid(value)) {
+    setError((prev) => ({ ...prev, email: true }));
+    return;
+  }
+  console.log(name,"name")
+  setError((prev) => ({ ...prev, [name]: false }));
+    // Check if the entered value is a number for the "CNIC" field
+  
+    // Update the state
     setDetail((prev) => {
       return { ...prev, [name]: value };
     });
@@ -345,6 +381,8 @@ userName: localStorage.getItem("name"),
                   variant="standard"
                   name="ownerName"
                   onChange={handleChange}
+                  error={error.ownerName}
+                  helperText={error.ownerName ? 'Please enter a valid Owner Name' : ''}
                 />
                 <TextField
                   id="standard-textarea"
@@ -354,6 +392,8 @@ userName: localStorage.getItem("name"),
                   variant="standard"
                   name="fatherName"
                   onChange={handleChange}
+                  error={error.fatherName}
+                  helperText={error.fatherName ? 'Please enter a valid Father Name' : ''}
                 />
 
                 <TextField
@@ -361,10 +401,14 @@ userName: localStorage.getItem("name"),
                   label="CNIC"
                   multiline
                   type="number"
+                  data-inputmask="'mask': '99999-9999999-9'"
+                  placeholder="XXXXX-XXXXXXX-X"
                   maxRows={4}
                   variant="standard"
                   name="cnic"
                   onChange={handleChange}
+                  error={error.cnic}
+                  helperText={error.cnic ? 'Please enter a valid CNIC' : ''}
                 />
                 <TextField
                   id="standard-textarea"
@@ -374,7 +418,10 @@ userName: localStorage.getItem("name"),
                   variant="standard"
                   name="contactNumber"
                   onChange={handleChange}
+                  error={error.contactNumber}
+                  helperText={error.contactNumber ? 'Please enter a valid Contact Number' : ''}
                 />
+                 {/* <input type="text"  data-inputmask="'mask': '99999-9999999-9'"  placeholder="XXXXX-XXXXXXX-X"  name="cnic" required="" ></input> */}
                 <TextField
                   id="standard-textarea"
                   label="Alternate Number"
@@ -383,6 +430,8 @@ userName: localStorage.getItem("name"),
                   variant="standard"
                   name="alternateNumber"
                   onChange={handleChange}
+                  error={error.alternateNumber}
+                  helperText={error.alternateNumber ? 'Please enter a valid Alternate Number' : ''}
                 />
                 <TextField
                   id="standard-textarea"
@@ -410,6 +459,8 @@ userName: localStorage.getItem("name"),
                   variant="standard"
                   name="email"
                   onChange={handleChange}
+                  error={error.email}
+                  helperText={error.email ? 'Please enter a valid Email Address' : ''}
                 />
               </div>
             </Container>
@@ -438,6 +489,8 @@ userName: localStorage.getItem("name"),
                   variant="standard"
                   name="totalFloor"
                   onChange={handleChange}
+                  error={error.totalFloor}
+                  helperText={error.totalFloor ? 'Please enter a valid Total Floor' : ''}
                 />
                 <TextField
                   id="standard-multiline-flexible"
@@ -447,6 +500,8 @@ userName: localStorage.getItem("name"),
                   variant="standard"
                   name="totalFlat"
                   onChange={handleChange}
+                  error={error.totalFlat}
+                  helperText={error.totalFlat ? 'Please enter a valid Total Flat' : ''}
                 />
 
                 {detail?.totalFlat === 0 || detail?.totalFlat?.length === 0
