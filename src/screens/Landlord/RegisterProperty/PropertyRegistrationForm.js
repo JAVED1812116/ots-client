@@ -15,14 +15,28 @@ export default function PropertyRegister() {
     totalFlat: 0, // Set a default value for totalFlat
   });
 
-  const [totalLength, setTotalLength] = React.useState()
   const [rows, setRows] = React.useState();
   const [generatedRows, setGeneratedRows] = React.useState([]);
+  const [combinedState, setCombinedState] = React.useState({
+    detail: {
+      // ... other fields in the detail state
+      maintenanceCharges: "",
+      // ... other fields
+    },
+    rows: [
+      { id: 1, flatName: "", flatNumber: "", flatFloor: "", flatStatus: 0 /* ...other fields... */ },
+      // Add more rows as needed
+    ],
+  });
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDetail((prev) => {
       return { ...prev, [name]: value };
     });
+    setCombinedState((prev) => ({
+      ...prev,
+      detail: { ...prev.detail, [name]: value },
+    }));
   };
   const handleCellChange = (rowId, field, value) => {
     // Update the state with the new value
@@ -31,7 +45,14 @@ export default function PropertyRegister() {
         row.id === rowId ? { ...row, [field]: value } : row
       );
     });
+    setCombinedState((prev) => ({
+      ...prev,
+      rows: rows.map((row) =>
+      row.id === rowId ? { ...row, [field]: value } : row
+      ),
+    }));
   };
+console.log(combinedState,"lala")
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     {
@@ -229,18 +250,11 @@ export default function PropertyRegister() {
     },
   ];
 
-
-
-console.log(rows,"saeed")
-
 React.useEffect(() => {
   const numToShow = parseInt(detail?.totalFlat, 10) || 0;
 
   const newRows = Array.from({ length: numToShow }, (_, index) => ({
       id: index + 1,
-      lastName: "Snow",
-      firstName: "Jon",
-      age: 35,
     }));
 
   setRows(Array.from({ length: numToShow }, (_, index) => ({
