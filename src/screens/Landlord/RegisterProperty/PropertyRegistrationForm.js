@@ -9,34 +9,22 @@ import Toolbar from "@mui/material/Toolbar";
 import { Button, Container, MenuItem, Select, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Logo from "../../../assets/Logo.png";
+import { PropertyRegisters } from "../../../redux/Reducer/PropertyRegistration";
+import { useDispatch } from "react-redux";
 export default function PropertyRegister() {
   title("PropertyRegister");
+  const dispatch = useDispatch();
   const [detail, setDetail] = React.useState({
     totalFlat: 0, // Set a default value for totalFlat
   });
-
   const [rows, setRows] = React.useState();
   const [generatedRows, setGeneratedRows] = React.useState([]);
-  const [combinedState, setCombinedState] = React.useState({
-    detail: {
-      // ... other fields in the detail state
-      maintenanceCharges: "",
-      // ... other fields
-    },
-    rows: [
-      { id: 1, flatName: "", flatNumber: "", flatFloor: "", flatStatus: 0 /* ...other fields... */ },
-      // Add more rows as needed
-    ],
-  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDetail((prev) => {
       return { ...prev, [name]: value };
     });
-    setCombinedState((prev) => ({
-      ...prev,
-      detail: { ...prev.detail, [name]: value },
-    }));
   };
   const handleCellChange = (rowId, field, value) => {
     // Update the state with the new value
@@ -45,14 +33,8 @@ export default function PropertyRegister() {
         row.id === rowId ? { ...row, [field]: value } : row
       );
     });
-    setCombinedState((prev) => ({
-      ...prev,
-      rows: rows.map((row) =>
-      row.id === rowId ? { ...row, [field]: value } : row
-      ),
-    }));
   };
-console.log(combinedState,"lala")
+
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     {
@@ -315,7 +297,23 @@ React.useEffect(() => {
       }),
     }),
   }));
-
+const onFinish = () => {
+  let values = {
+ownerName: detail?.ownerName,
+fatherName:detail?.fatherName,
+cnic:detail?.cnic,
+contactNumber:detail?.contactNumber,
+alternateNumber:detail?.alternateNumber,
+permenantAddress:detail?.permenantAddress,
+postalAddress:detail?.postalAddress,
+email:detail?.email,
+propertyAddress:detail?.propertyAddress,
+totalFloor:detail?.totalFloor,
+totalFlat:detail?.totalFlat,
+flatDetail:rows
+  };
+  dispatch(PropertyRegisters({values}))
+}
   return (
     <>
       <AppBar position="fixed">
@@ -463,7 +461,8 @@ React.useEffect(() => {
             marginTop: 1,
             background: "black",
           }}
-        >
+          onClick={onFinish}
+          >
           Post
         </Button>
       </div>

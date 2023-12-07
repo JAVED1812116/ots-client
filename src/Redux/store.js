@@ -11,6 +11,7 @@ import WaterReading from './Reducer/WaterReading';
 import MaintananceReading from './Reducer/MaintananceReading';
 import TrashReading from './Reducer/TrashReading';
 import GetOneUploadBill from './Reducer/GetOneUploadBill';
+import PropertyRegistration from './Reducer/PropertyRegistration';
 export const store = configureStore({
   reducer: {
     "CreateUser": CreateUser,
@@ -25,5 +26,6 @@ export const store = configureStore({
     "SendEmail":SendEmail,
     "Photo": KElectricImg,
     "getOneUploadBillDetail": GetOneUploadBill,
+    "propertyRegistration": PropertyRegistration,
   },
 })
