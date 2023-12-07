@@ -15,10 +15,9 @@ export default function PropertyRegister() {
     totalFlat: 0, // Set a default value for totalFlat
   });
 
-  const [rows, setRows] = React.useState([
-    { id: 1, /* ...other fields... */ },
-    // Add more rows as needed
-  ]);
+  const [totalLength, setTotalLength] = React.useState()
+  const [rows, setRows] = React.useState();
+  const [generatedRows, setGeneratedRows] = React.useState([]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDetail((prev) => {
@@ -229,16 +228,40 @@ export default function PropertyRegister() {
       ),
     },
   ];
-console.log(rows,"saeed")
-  const renderDataGrid = () => {
-    const numToShow = parseInt(detail?.totalFlat, 10) || 0;
 
-    const generatedRows = Array.from({ length: numToShow }, (_, index) => ({
+
+
+console.log(rows,"saeed")
+
+React.useEffect(() => {
+  const numToShow = parseInt(detail?.totalFlat, 10) || 0;
+
+  const newRows = Array.from({ length: numToShow }, (_, index) => ({
       id: index + 1,
       lastName: "Snow",
       firstName: "Jon",
       age: 35,
     }));
+
+  setRows(Array.from({ length: numToShow }, (_, index) => ({
+    id: index + 1,
+  })))
+
+  setGeneratedRows(newRows);
+}, [detail?.totalFlat]);
+
+
+  const renderDataGrid = () => {
+    //  numToShow = parseInt(detail?.totalFlat, 10) || 0;
+    //  setRows(Array.from({ length: numToShow }, (_, index) => ({
+    //   id: index + 1,
+    // })))
+    // const generatedRows = Array.from({ length: numToShow }, (_, index) => ({
+    //   id: index + 1,
+    //   lastName: "Snow",
+    //   firstName: "Jon",
+    //   age: 35,
+    // }));
 
     return (
       <div style={{ height: 400, width: "100%" }}>
