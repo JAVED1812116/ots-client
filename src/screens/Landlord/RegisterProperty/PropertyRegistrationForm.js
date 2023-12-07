@@ -34,17 +34,20 @@ export default function PropertyRegister() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+  const isCnicValid = (cnic) => {
+    // Regular expression for CNIC validation (e.g., 12345-6789012-3)
+    const cnicRegex = /^\d{5}-\d{7}-\d{1}$/;
+    return cnicRegex.test(cnic);
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
    // Check if the entered value is not a valid number for "cnic" or "contactNumber" fields
-   if ((name === 'cnic' || name === 'contactNumber'|| name === 'alternateNumber'|| name === 'totalFloor'|| name === 'totalFlat') && !/^[0-9]*$/.test(value)) {
-    console.log(value, "value");
+   if ((name === 'contactNumber'|| name === 'alternateNumber'|| name === 'totalFloor'|| name === 'totalFlat') && !/^[0-9]*$/.test(value)) {
     setError((prev) => ({ ...prev, [name]: true }));
     // If it's not a valid number, you can choose to ignore the input or show an error message.
     return;
   }
    if ((name === 'ownerName'||name==='fatherName') && !/^[A-Za-z\s]*$/.test(value)) {
-    console.log(value, "value");
     setError((prev) => ({ ...prev, [name]: true }));
     // If it's not a valid number, you can choose to ignore the input or show an error message.
     return;
@@ -53,7 +56,10 @@ export default function PropertyRegister() {
     setError((prev) => ({ ...prev, email: true }));
     return;
   }
-  console.log(name,"name")
+  if (name === 'cnic' && !isCnicValid(value)) {
+    setError((prev) => ({ ...prev, cnic: true }));
+    return;
+  }
   setError((prev) => ({ ...prev, [name]: false }));
     // Check if the entered value is a number for the "CNIC" field
   
