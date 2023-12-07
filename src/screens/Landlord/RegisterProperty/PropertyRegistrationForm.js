@@ -1,5 +1,4 @@
 import * as React from "react";
-// import Grid from '@mui/material/Grid'; // Grid version 1
 import { styled, useTheme } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -15,10 +14,23 @@ export default function PropertyRegister() {
   const [detail, setDetail] = React.useState({
     totalFlat: 0, // Set a default value for totalFlat
   });
+
+  const [rows, setRows] = React.useState([
+    { id: 1, /* ...other fields... */ },
+    // Add more rows as needed
+  ]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDetail((prev) => {
       return { ...prev, [name]: value };
+    });
+  };
+  const handleCellChange = (rowId, field, value) => {
+    // Update the state with the new value
+    setRows((prevRows) => {
+      return prevRows.map((row) =>
+        row.id === rowId ? { ...row, [field]: value } : row
+      );
     });
   };
   const columns = [
@@ -27,7 +39,6 @@ export default function PropertyRegister() {
       field: "flatName",
       headerName: "Flat Name",
       width: 150,
-      editable: true,
       renderCell: (params) => (
         <TextField
           id="standard-multiline-flexible"
@@ -36,9 +47,7 @@ export default function PropertyRegister() {
           maxRows={4}
           variant="standard"
           name="flatName"
-          // value={detail.maintenanceCharges}
-          // disabled={fieldDisable===true}
-          // onChange={handleChange}
+        onChange={(e) => handleCellChange(params.row.id, "flatName", e.target.value)}
         />
       ),
     },
@@ -46,7 +55,6 @@ export default function PropertyRegister() {
       field: "flatNumber",
       headerName: "Flat Number",
       width: 150,
-      editable: true,
       renderCell: (params) => (
         <TextField
           id="standard-multiline-flexible"
@@ -55,9 +63,7 @@ export default function PropertyRegister() {
           maxRows={4}
           variant="standard"
           name="flatNumber"
-          // value={detail.maintenanceCharges}
-          // disabled={fieldDisable===true}
-          // onChange={handleChange}
+          onChange={(e) => handleCellChange(params.row.id, "flatNumber", e.target.value)}
         />
       ),
     },
@@ -65,7 +71,6 @@ export default function PropertyRegister() {
       field: "flatFloor",
       headerName: "Floor",
       width: 150,
-      editable: true,
       renderCell: (params) => (
         <TextField
           id="standard-multiline-flexible"
@@ -74,17 +79,14 @@ export default function PropertyRegister() {
           maxRows={4}
           variant="standard"
           name="flatFloor"
-          // value={detail.maintenanceCharges}
-          // disabled={fieldDisable===true}
-          // onChange={handleChange}
+          onChange={(e) => handleCellChange(params.row.id, "flatFloor", e.target.value)}
         />
       ),
     },
     {
-      field: "room",
+      field: "flatRoom",
       headerName: "Room",
       width: 150,
-      editable: true,
       renderCell: (params) => (
         <TextField
           id="standard-multiline-flexible"
@@ -92,18 +94,15 @@ export default function PropertyRegister() {
           multiline
           maxRows={4}
           variant="standard"
-          name="room"
-          // value={detail.maintenanceCharges}
-          // disabled={fieldDisable===true}
-          // onChange={handleChange}
+          name="flatRoom"
+          onChange={(e) => handleCellChange(params.row.id, "flatRoom", e.target.value)}
         />
       ),
     },
     {
-      field: "toilet",
+      field: "flatToilet",
       headerName: "Toilet",
       width: 150,
-      editable: true,
       renderCell: (params) => (
         <TextField
           id="standard-multiline-flexible"
@@ -111,18 +110,15 @@ export default function PropertyRegister() {
           multiline
           maxRows={4}
           variant="standard"
-          name="toilet"
-          // value={detail.maintenanceCharges}
-          // disabled={fieldDisable===true}
-          // onChange={handleChange}
+          name="flatToilet"
+          onChange={(e) => handleCellChange(params.row.id, "flatToilet", e.target.value)}
         />
       ),
     },
     {
-      field: "kitchen",
+      field: "flatKitchen",
       headerName: "Kitchen",
       width: 150,
-      editable: true,
       renderCell: (params) => (
         <TextField
           id="standard-multiline-flexible"
@@ -130,10 +126,8 @@ export default function PropertyRegister() {
           multiline
           maxRows={4}
           variant="standard"
-          name="kitchen"
-          // value={detail.maintenanceCharges}
-          // disabled={fieldDisable===true}
-          // onChange={handleChange}
+          name="flatKitchen"
+          onChange={(e) => handleCellChange(params.row.id, "flatKitchen", e.target.value)}
         />
       ),
     },
@@ -141,7 +135,6 @@ export default function PropertyRegister() {
       field: "flatRent",
       headerName: "Flat Rent",
       width: 150,
-      editable: true,
       renderCell: (params) => (
         <TextField
           id="standard-multiline-flexible"
@@ -150,9 +143,7 @@ export default function PropertyRegister() {
           maxRows={4}
           variant="standard"
           name="flatRent"
-          // value={detail.maintenanceCharges}
-          // disabled={fieldDisable===true}
-          // onChange={handleChange}
+          onChange={(e) => handleCellChange(params.row.id, "flatRent", e.target.value)}
         />
       ),
     },
@@ -160,7 +151,6 @@ export default function PropertyRegister() {
       field: "flatDeposit",
       headerName: "Deposit",
       width: 150,
-      editable: true,
       renderCell: (params) => (
         <TextField
           id="standard-multiline-flexible"
@@ -169,9 +159,7 @@ export default function PropertyRegister() {
           maxRows={4}
           variant="standard"
           name="flatDeposit"
-          // value={detail.maintenanceCharges}
-          // disabled={fieldDisable===true}
-          // onChange={handleChange}
+          onChange={(e) => handleCellChange(params.row.id, "flatDeposit", e.target.value)}
         />
       ),
     },
@@ -179,7 +167,6 @@ export default function PropertyRegister() {
       field: "flatMaintainanceCharges",
       headerName: "Maintainance Charges",
       width: 200,
-      editable: true,
       renderCell: (params) => (
         <TextField
           id="standard-multiline-flexible"
@@ -188,9 +175,7 @@ export default function PropertyRegister() {
           maxRows={4}
           variant="standard"
           name="flatMaintainanceCharges"
-          // value={detail.maintenanceCharges}
-          // disabled={fieldDisable===true}
-          // onChange={handleChange}
+          onChange={(e) => handleCellChange(params.row.id, "flatMaintainanceCharges", e.target.value)}
         />
       ),
     },
@@ -198,7 +183,6 @@ export default function PropertyRegister() {
       field: "flattrashCharges",
       headerName: "Trash Charges",
       width: 150,
-      editable: true,
       renderCell: (params) => (
         <TextField
           id="standard-multiline-flexible"
@@ -207,9 +191,7 @@ export default function PropertyRegister() {
           maxRows={4}
           variant="standard"
           name="flattrashCharges"
-          // value={detail.maintenanceCharges}
-          // disabled={fieldDisable===true}
-          // onChange={handleChange}
+          onChange={(e) => handleCellChange(params.row.id, "flattrashCharges", e.target.value)}
         />
       ),
     },
@@ -217,7 +199,6 @@ export default function PropertyRegister() {
       field: "flatsecurityCharges",
       headerName: "Security Charges",
       width: 150,
-      editable: true,
       renderCell: (params) => (
         <TextField
           id="standard-multiline-flexible"
@@ -226,9 +207,7 @@ export default function PropertyRegister() {
           maxRows={4}
           variant="standard"
           name="flatsecurityCharges"
-          // value={detail.maintenanceCharges}
-          // disabled={fieldDisable===true}
-          // onChange={handleChange}
+          onChange={(e) => handleCellChange(params.row.id, "flatsecurityCharges", e.target.value)}
         />
       ),
     },
@@ -236,13 +215,11 @@ export default function PropertyRegister() {
       field: "flatStatus",
       headerName: "Flat Status",
       width: 150,
-      editable: true,
       renderCell: (params) => (
         <Select
           labelId="demo-simple-select-autowidth-label"
           id="demo-simple-select-autowidth"
-          // value={age}
-          // onChange={handleChange}
+          onChange={(e) => handleCellChange(params.row.id, "flatStatus", e.target.value)}
           autoWidth
           label="flatStatus"
         >
@@ -252,7 +229,7 @@ export default function PropertyRegister() {
       ),
     },
   ];
-
+console.log(rows,"saeed")
   const renderDataGrid = () => {
     const numToShow = parseInt(detail?.totalFlat, 10) || 0;
 
@@ -275,7 +252,7 @@ export default function PropertyRegister() {
                 paginationModel: { page: 0, pageSize: 5 },
               },
             }}
-            pageSizeOptions={[5, 10]}
+            pageSizeOptions={[2,5, 10]}
           />
         </Box>
       </div>
@@ -283,36 +260,6 @@ export default function PropertyRegister() {
   };
 
   const drawerWidth = 240;
-
-  const openedMixin = (theme) => ({
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    overflowX: "hidden",
-  });
-
-  const closedMixin = (theme) => ({
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: "hidden",
-    width: `calc(${theme.spacing(7)} + 1px)`,
-    [theme.breakpoints.up("sm")]: {
-      width: `calc(${theme.spacing(8)} + 1px)`,
-    },
-  });
-
-  const DrawerHeader = styled("div")(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-  }));
 
   const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== "open",
@@ -360,8 +307,6 @@ export default function PropertyRegister() {
                   maxRows={4}
                   variant="standard"
                   name="ownerName"
-                  // value={detail.monthlyRent}
-                  // disabled={fieldDisable===true}
                   onChange={handleChange}
                 />
                 <TextField
@@ -371,8 +316,6 @@ export default function PropertyRegister() {
                   multiline
                   variant="standard"
                   name="fatherName"
-                  // value={detail.advance}
-                  // disabled={fieldDisable===true}
                   onChange={handleChange}
                 />
 
@@ -383,8 +326,6 @@ export default function PropertyRegister() {
                   maxRows={4}
                   variant="standard"
                   name="cnic"
-                  // value={detail.maintenanceCharges}
-                  // disabled={fieldDisable===true}
                   onChange={handleChange}
                 />
                 <TextField
@@ -394,8 +335,6 @@ export default function PropertyRegister() {
                   multiline
                   variant="standard"
                   name="contactNumber"
-                  // value={detail.trashCharges}
-                  // disabled={fieldDisable===true}
                   onChange={handleChange}
                 />
                 <TextField
@@ -405,8 +344,6 @@ export default function PropertyRegister() {
                   multiline
                   variant="standard"
                   name="alternateNumber"
-                  // value={detail.trashCharges}
-                  // disabled={fieldDisable===true}
                   onChange={handleChange}
                 />
                 <TextField
@@ -416,8 +353,6 @@ export default function PropertyRegister() {
                   multiline
                   variant="standard"
                   name="permenantAddress"
-                  // value={detail.trashCharges}
-                  // disabled={fieldDisable===true}
                   onChange={handleChange}
                 />
                 <TextField
@@ -427,8 +362,6 @@ export default function PropertyRegister() {
                   multiline
                   variant="standard"
                   name="postalAddress"
-                  // value={detail.trashCharges}
-                  // disabled={fieldDisable===true}
                   onChange={handleChange}
                 />
                 <TextField
@@ -438,8 +371,6 @@ export default function PropertyRegister() {
                   multiline
                   variant="standard"
                   name="email"
-                  // value={detail.trashCharges}
-                  // disabled={fieldDisable===true}
                   onChange={handleChange}
                 />
               </div>
@@ -459,8 +390,6 @@ export default function PropertyRegister() {
                   maxRows={4}
                   variant="standard"
                   name="propertyAddress"
-                  // value={detail.maintenanceCharges}
-                  // disabled={fieldDisable===true}
                   onChange={handleChange}
                 />
                 <TextField
@@ -470,8 +399,6 @@ export default function PropertyRegister() {
                   multiline
                   variant="standard"
                   name="totalFloor"
-                  // value={detail.advance}
-                  // disabled={fieldDisable===true}
                   onChange={handleChange}
                 />
                 <TextField
@@ -481,8 +408,6 @@ export default function PropertyRegister() {
                   maxRows={4}
                   variant="standard"
                   name="totalFlat"
-                  // value={detail.monthlyRent}
-                  // disabled={fieldDisable===true}
                   onChange={handleChange}
                 />
 
