@@ -110,20 +110,35 @@ export default function PropertyRegister() {
   
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
+    // {
+    //   field: "flatName",
+    //   headerName: "Flat Name",
+    //   width: 150,
+    //   renderCell: (params) => (
+    //     <TextField
+    //       id="standard-multiline-flexible"
+    //       maxRows={4}
+    //       variant="standard"
+    //       name="flatName"
+    //       required={true}
+    //       onChange={(e) =>
+    //         handleCellChange(params.row.id, "flatName", e.target.value)
+    //       }
+    //     />
+    //   ),
+    // },
     {
-      field: "flatName",
-      headerName: "Flat Name",
+      field: 'firstName',
+      headerName: 'First name',
       width: 150,
+      editable: true,
       renderCell: (params) => (
-        <TextField
-          id="standard-multiline-flexible"
-          maxRows={4}
-          variant="standard"
-          name="flatName"
-          required={true}
+        <input
+          type="text"
+          value={params.row.firstName || ''}
           onChange={(e) =>
-            handleCellChange(params.row.id, "flatName", e.target.value)
-          }
+                    handleCellChange(params.row.id, "flatName", e.target.value)
+                  }
         />
       ),
     },
@@ -131,71 +146,60 @@ export default function PropertyRegister() {
       field: "flatNumber",
       headerName: "Flat Number",
       width: 150,
+      editable: true,
       renderCell: (params) => (
-        <TextField
-          id="standard-multiline-flexible"
-          // label="Property Address"
-          multiline
-          maxRows={4}
-          variant="standard"
-          name="flatNumber"
-          onChange={(e) =>
-            handleCellChange(params.row.id, "flatNumber", e.target.value)
-          }
-        />
+        console.log(params,"baba"),
+        <input
+        type="text"
+        value={params.row.flatNumber || ''}
+        onChange={(e) =>
+                  handleCellChange(params.row.id, "flatNumber", e.target.value)
+                }
+      />
       ),
     },
     {
       field: "flatFloor",
       headerName: "Floor",
       width: 150,
+      editable: true,
       renderCell: (params) => (
-        <TextField
-          id="standard-multiline-flexible"
-          // label="Property Address"
-          multiline
-          maxRows={4}
-          variant="standard"
-          name="flatFloor"
-          onChange={(e) =>
-            handleCellChange(params.row.id, "flatFloor", e.target.value)
-          }
-        />
+        <input
+        type="text"
+        value={params.row.flatFloor || ''}
+        onChange={(e) =>
+                  handleCellChange(params.row.id, "flatFloor", e.target.value)
+                }
+      />
       ),
     },
     {
       field: "flatRoom",
       headerName: "Room",
       width: 150,
+      editable: true,
       renderCell: (params) => (
-        <TextField
-          id="standard-multiline-flexible"
-          // label="Property Address"
-          multiline
-          maxRows={4}
-          variant="standard"
-          name="flatRoom"
-          onChange={(e) =>
-            handleCellChange(params.row.id, "flatRoom", e.target.value)
-          }
-        />
+        <input
+        type="text"
+        value={params.row.flatRoom || ''}
+        onChange={(e) =>
+                  handleCellChange(params.row.id, "flatRoom", e.target.value)
+                }
+      />
       ),
     },
     {
       field: "flatToilet",
       headerName: "Toilet",
       width: 150,
+      editable: true,
       renderCell: (params) => (
-        <TextField
-          id="standard-multiline-flexible"
-          // label="Property Address"
-          multiline
-          maxRows={4}
-          variant="standard"
-          name="flatToilet"
+        <input
+          type="text"
+          value={params.row.flatToilet || ''}
           onChange={(e) =>
-            handleCellChange(params.row.id, "flatToilet", e.target.value)
-          }
+                    handleCellChange(params.row.id, "flatToilet", e.target.value)
+                  }
         />
       ),
     },
@@ -203,120 +207,97 @@ export default function PropertyRegister() {
       field: "flatKitchen",
       headerName: "Kitchen",
       width: 150,
+      editable: true,
       renderCell: (params) => (
-        <TextField
-          id="standard-multiline-flexible"
-          maxRows={4}
-          variant="standard"
-          name="flatKitchen"
-          onChange={(e) =>
-            handleCellChange(params.row.id, "flatKitchen", e.target.value)
-          }
-        />
+        <input
+        type="text"
+        value={params.row.flatKitchen || ''}
+        onChange={(e) =>
+                  handleCellChange(params.row.id, "flatKitchen", e.target.value)
+                }
+      />
       ),
     },
     {
       field: "flatRent",
       headerName: "Flat Rent",
       width: 150,
+      editable: true,
       renderCell: (params) => (
-        <TextField
-          id="standard-multiline-flexible"
-          // label="Property Address"
-          // multiline
-          maxRows={4}
-          variant="standard"
-          name="flatRent"
-          onChange={(e) =>
-            handleCellChange(params.row.id, "flatRent", e.target.value)
-          }
-        />
+        <input
+        type="text"
+        value={params.row.flatRent || ''}
+        onChange={(e) =>
+                  handleCellChange(params.row.id, "flatRent", e.target.value)
+                }
+      />
       ),
     },
     {
       field: "flatDeposit",
       headerName: "Deposit",
       width: 150,
+      editable: true,
       renderCell: (params) => (
-        <TextField
-          id="standard-multiline-flexible"
-          // label="Property Address"
-          // multiline
-          maxRows={4}
-          variant="standard"
-          name="flatDeposit"
-          onChange={(e) =>
-            handleCellChange(params.row.id, "flatDeposit", e.target.value)
-          }
-        />
+        <input
+        type="text"
+        value={params.row.flatDeposit || ''}
+        onChange={(e) =>
+                  handleCellChange(params.row.id, "flatDeposit", e.target.value)
+                }
+      />
       ),
     },
     {
       field: "flatMaintainanceCharges",
       headerName: "Maintainance Charges",
       width: 200,
+      editable: true,
       renderCell: (params) => (
-        <TextField
-          id="standard-multiline-flexible"
-          // label="Property Address"
-          multiline
-          maxRows={4}
-          variant="standard"
-          name="flatMaintainanceCharges"
-          onChange={(e) =>
-            handleCellChange(
-              params.row.id,
-              "flatMaintainanceCharges",
-              e.target.value
-            )
-          }
-        />
+        <input
+        type="text"
+        value={params.row.flatMaintainanceCharges || ''}
+        onChange={(e) =>
+                  handleCellChange(params.row.id, "flatMaintainanceCharges", e.target.value)
+                }
+      />
       ),
     },
     {
       field: "flattrashCharges",
       headerName: "Trash Charges",
       width: 150,
+      editable: true,
       renderCell: (params) => (
-        <TextField
-          id="standard-multiline-flexible"
-          // label="Property Address"
-          multiline
-          maxRows={4}
-          variant="standard"
-          name="flattrashCharges"
-          onChange={(e) =>
-            handleCellChange(params.row.id, "flattrashCharges", e.target.value)
-          }
-        />
+        <input
+        type="text"
+        value={params.row.flattrashCharges || ''}
+        onChange={(e) =>
+                  handleCellChange(params.row.id, "flattrashCharges", e.target.value)
+                }
+      />
       ),
     },
     {
       field: "flatsecurityCharges",
       headerName: "Security Charges",
       width: 150,
+      editable: true,
       renderCell: (params) => (
-        <TextField
-          id="standard-multiline-flexible"
-          // label="Property Address"
-          multiline
-          maxRows={4}
-          variant="standard"
-          name="flatsecurityCharges"
-          onChange={(e) =>
-            handleCellChange(
-              params.row.id,
-              "flatsecurityCharges",
-              e.target.value
-            )
-          }
-        />
+        <input
+        type="text"
+        value={params.row.flatsecurityCharges || ''}
+        onChange={(e) =>
+                  handleCellChange(params.row.id, "flatsecurityCharges", e.target.value)
+                }
+      />
       ),
     },
     {
       field: "flatStatus",
       headerName: "Flat Status",
       width: 150,
+      editable: true,
       renderCell: (params) => (
         <Select
           labelId="demo-simple-select-autowidth-label"
