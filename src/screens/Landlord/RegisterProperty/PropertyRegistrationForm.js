@@ -76,7 +76,7 @@ export default function PropertyRegister() {
       );
     });
   };
-
+console.log(rows, 'rows');
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     {
@@ -356,7 +356,34 @@ flatDetail:rows,
 userId: localStorage.getItem("user_id"),
 userName: localStorage.getItem("name"),
   };
+
+
+  const requiredFields = [
+    'flatName',
+    'flatNumber',
+    'flatFloor',
+    'flatRoom',
+    'flatToilet',
+    'flatKitchen',
+    'flatRent',
+    'flatDeposit',
+    'flatMaintainanceCharges',
+    'flattrashCharges',
+    'flatsecurityCharges',
+    'flatStatus',
+  ];
+
+  const areAllFieldsPresent = rows.every(row =>
+    requiredFields.every(field => row.hasOwnProperty(field))
+  );
+  
+  if (areAllFieldsPresent) {
+    console.log('All fields are filled.');
+  } else {
+    console.log('Please fill in all required fields.');
+  }
   dispatch(PropertyRegisters({values}))
+
 }
   return (
     <>
