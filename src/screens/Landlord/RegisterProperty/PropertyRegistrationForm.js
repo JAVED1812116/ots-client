@@ -379,10 +379,10 @@ userName: localStorage.getItem("name"),
   
   if (areAllFieldsPresent) {
     console.log('All fields are filled.');
+    dispatch(PropertyRegisters({values}))
   } else {
     console.log('Please fill in all required fields.');
   }
-  dispatch(PropertyRegisters({values}))
 
 }
   return (
