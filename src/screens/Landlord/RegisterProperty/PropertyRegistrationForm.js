@@ -106,7 +106,8 @@ export default function PropertyRegister() {
       );
     });
   };
-  console.log(rows, "rows");
+  
+  
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     {
@@ -416,7 +417,25 @@ export default function PropertyRegister() {
       userId: localStorage.getItem("user_id"),
       userName: localStorage.getItem("name"),
     };
+    // const isEmptyField = Object.values(values).some(value => !value);
 
+    // if (isEmptyField) {
+    //   toast.error("Please fill in all fields.", {
+    //     position: "top-center",
+    //   });
+    //   return;
+    // }
+    const emptyFields = Object.entries(values)
+    .filter(([key, value]) => !value)
+    .map(([key]) => key);
+
+  if (emptyFields.length > 0) {
+    const errorMessage = `Please fill in the following fields: ${emptyFields.join(', ')}.`;
+    toast.error(errorMessage, {
+      position: "top-center",
+    });
+    return;
+  }
     const requiredFields = [
       "flatName",
       "flatNumber",
@@ -432,9 +451,17 @@ export default function PropertyRegister() {
       "flatStatus",
     ];
 
-    const areAllFieldsPresent = rows.every((row) =>
-      requiredFields.every((field) => row.hasOwnProperty(field))
-    );
+    // const areAllFieldsPresent = rows.every((row) =>
+    //   requiredFields.every((field) => row.hasOwnProperty(field))
+    // );
+    // const areAllFieldsPresent = requiredFields.filter((field) => !rows[field]);
+
+    // if (areAllFieldsPresent.length > 0) {
+    //   const errorMessage = `Please fill in the following fields: ${areAllFieldsPresent.join(', ')}.`;
+    //   toast.error(errorMessage, {
+    //     position: "top-center",
+    //   });
+    // } 
     if (
       values?.totalFlat !== 0 ||
       values?.ownerName !== "" ||
@@ -448,12 +475,13 @@ export default function PropertyRegister() {
       values?.propertyAddress !== "" ||
       values?.totalFloor !== ""
     ) {
-      if (areAllFieldsPresent) {
+      console.log(rows,"rowsrows")
+      if (rows?.flatName!==undefined||rows?.flatNumber!==undefined||rows?.flatFloor!==undefined||rows?.flatRoom!==undefined||rows?.flatToilet!==undefined||rows?.flatKitchen!==undefined||rows?.flatRent!==undefined||rows?.flatDeposit!==undefined||rows?.flatMaintainanceCharges!==undefined||rows?.flattrashCharges!==undefined||rows?.flatsecurityCharges!==undefined||rows?.flatStatus!==undefined) {
         dispatch(PropertyRegisters({ values })).then((res) => {
           console.log(res, "res");
         });
       } else {
-        toast.error("Please fill in all required fields.", {
+        toast.error("Please fill all flat detail", {
           position: "top-center",
         });
       }
