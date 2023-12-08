@@ -29,9 +29,9 @@ const dispatch = useDispatch();
     permanentAddress: "",
     gender: "",
     maritalStatus: "",
-    familyMembers: "",
+    adultFamilyMembers: "",
     children: "",
-    employed: "",
+    childrenFamilyMembers: "",
     language: "",
     cast: "",
     advance: "",
@@ -51,8 +51,8 @@ const dispatch = useDispatch();
     flatsecurityCharges: "",
     flatStatus: "",
   });
-  const [generatedRows, setGeneratedRows] = React.useState([]);
-  const [generatedEmployedRows, setGeneratedEmployedRows] = React.useState([]);
+  const [generatedAdultRows, setGeneratedAdultRows] = React.useState([]);
+  const [generatedChildrenRows, setGeneratedChildrenRows] = React.useState([]);
   useEffect(() => {
     document.title = "Registration";
   }, []);
@@ -156,26 +156,22 @@ const dispatch = useDispatch();
       ),
     },
     {
-      field: "familyMembersAliveorDeath",
-      headerName: "Alive/Death",
+      field: "occupation",
+      headerName: "Occupation",
       width: 150,
       editable: true,
       renderCell: (params) => (
-        <Select
-          labelId="demo-simple-select-autowidth-label"
-          id="demo-simple-select-autowidth"
-          style={{width:125}}
-          onChange={(e) =>
-            handleCellChange(params.row.id, "familyMembersAliveorDeath", e.target.value)
-          }
-          autoWidth
-          label="Alive Or Death"
-        >
-          <MenuItem value={1}>Alive</MenuItem>
-          <MenuItem value={0}>Death</MenuItem>
-        </Select>
+        <input
+        type="text"
+        style={{width:125}}
+        value={params.row.occupation || ''}
+        onChange={(e) =>
+                  handleCellChange(params.row.id, "occupation", e.target.value)
+                }
+      />
       ),
     },
+   
    
    
   ];
@@ -386,7 +382,7 @@ const dispatch = useDispatch();
     },
   ];
   useEffect(() => {
-    const numToShow = parseInt(detail?.familyMembers, 10) || 0;
+    const numToShow = parseInt(detail?.adultFamilyMembers, 10) || 0;
 
     const newRows = Array.from({ length: numToShow }, (_, index) => ({
       id: index + 1,
@@ -398,10 +394,10 @@ const dispatch = useDispatch();
       }))
     );
 
-    setGeneratedRows(newRows);
-  }, [detail?.familyMembers]);
+    setGeneratedAdultRows(newRows);
+  }, [detail?.adultFamilyMembers]);
   useEffect(() => {
-    const numToShow = parseInt(detail?.employed, 10) || 0;
+    const numToShow = parseInt(detail?.childrenFamilyMembers, 10) || 0;
 
     const newRows = Array.from({ length: numToShow }, (_, index) => ({
       id: index + 1,
@@ -413,15 +409,15 @@ const dispatch = useDispatch();
       }))
     );
 
-    setGeneratedEmployedRows(newRows);
-  }, [detail?.employed]);
+    setGeneratedChildrenRows(newRows);
+  }, [detail?.childrenFamilyMembers]);
   const renderFamilyMemberGrid = () => {
 
     return (
       <div style={{ height: 400, width: "100%" }}>
         <Box sx={{ height: 400, width: "auto" }}>
           <DataGrid
-            rows={generatedRows}
+            rows={generatedAdultRows}
             columns={familyColumns}
             pageSize={5} // Set to the number of rows you want to display per page
             initialState={{
@@ -441,7 +437,7 @@ const dispatch = useDispatch();
       <div style={{ height: 400, width: "100%" }}>
         <Box sx={{ height: 400, width: "auto" }}>
           <DataGrid
-            rows={generatedEmployedRows}
+            rows={generatedChildrenRows}
             columns={employeeColumns}
             pageSize={5} // Set to the number of rows you want to display per page
             initialState={{
@@ -575,32 +571,32 @@ const dispatch = useDispatch();
           
         <FormControl fullWidth margin="normal">
           <TextField
-            id="familyMembers"
-            label="Family Members"
+            id="adultFamilyMembers"
+            label="Total Adult"
             variant="outlined"
             placeholder="Total Family Members"
             fullWidth
             margin="normal"
-            name="familyMembers"
+            name="adultFamilyMembers"
             onChange={handleChange}
           />
-          {detail?.familyMembers === 0 || detail?.familyMembers?.length === 0
+          {detail?.adultFamilyMembers === 0 || detail?.adultFamilyMembers?.length === 0
                   ? " "
                   : renderFamilyMemberGrid()}
           </FormControl>
         <FormControl fullWidth margin="normal">
        
           <TextField
-            id="employed"
-            label="Employed"
+            id="childrenFamilyMembers"
+            label="Total Children"
             variant="outlined"
             placeholder="Total Employed Person"
             fullWidth
             margin="normal"
-            name="employed"
+            name="childrenFamilyMembers"
             onChange={handleChange}
           />
-          {detail?.employed === 0 || detail?.employed?.length === 0
+          {detail?.childrenFamilyMembers === 0 || detail?.childrenFamilyMembers?.length === 0
                   ? " "
                   : renderEmployedMemberGrid()}
           </FormControl>
