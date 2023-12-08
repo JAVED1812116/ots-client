@@ -71,7 +71,7 @@ const dispatch = useDispatch();
       );
     });
   };
-  const familyColumns = [
+  const adultColumns = [
     { field: "id", headerName: "ID", width: 70 },
     {
       field: 'familyMembersName',
@@ -155,18 +155,39 @@ const dispatch = useDispatch();
       />
       ),
     },
-    {
-      field: "occupation",
+ {
+      field: "adultOccupation",
       headerName: "Occupation",
+      width: 150,
+      editable: true,
+      renderCell: (params) => (
+        <Select
+          labelId="demo-simple-select-autowidth-label"
+          id="demo-simple-select-autowidth"
+          onChange={(e) =>
+            handleCellChange(params.row.id, "adultOccupation", e.target.value)
+          }
+          autoWidth
+          label="adultOccupation"
+        >
+          <MenuItem value={1}>Student</MenuItem>
+          <MenuItem value={2}>Employeed</MenuItem>
+          <MenuItem value={0}>Nothing</MenuItem>
+        </Select>
+      ),
+    },
+    {
+      field: "companyName",
+      headerName: "Company Name",
       width: 150,
       editable: true,
       renderCell: (params) => (
         <input
         type="text"
         style={{width:125}}
-        value={params.row.occupation || ''}
+        value={params.row.companyName || ''}
         onChange={(e) =>
-                  handleCellChange(params.row.id, "occupation", e.target.value)
+                  handleCellChange(params.row.id, "companyName", e.target.value)
                 }
       />
       ),
@@ -175,194 +196,60 @@ const dispatch = useDispatch();
    
    
   ];
-  const employeeColumns = [
+  const childrenColumns = [
     { field: "id", headerName: "ID", width: 70 },
-    // {
-    //   field: "flatName",
-    //   headerName: "Flat Name",
-    //   width: 150,
-    //   renderCell: (params) => (
-    //     <TextField
-    //       id="standard-multiline-flexible"
-    //       maxRows={4}
-    //       variant="standard"
-    //       name="flatName"
-    //       required={true}
-    //       onChange={(e) =>
-    //         handleCellChange(params.row.id, "flatName", e.target.value)
-    //       }
-    //     />
-    //   ),
-    // },
+
     {
-      field: 'firstName',
-      headerName: 'First name',
+      field: 'Name',
+      headerName: 'Name',
       width: 150,
       editable: true,
       renderCell: (params) => (
         <input
           type="text"
-          value={params.row.firstName || ''}
+          style={{width:125}}
+          value={params.row.Name || ''}
           onChange={(e) =>
-                    handleCellChange(params.row.id, "flatName", e.target.value)
+                    handleCellChange(params.row.id, "Name", e.target.value)
                   }
         />
       ),
     },
     {
-      field: "flatNumber",
-      headerName: "Flat Number",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        console.log(params,"baba"),
-        <input
-        type="text"
-        value={params.row.flatNumber || ''}
-        onChange={(e) =>
-                  handleCellChange(params.row.id, "flatNumber", e.target.value)
-                }
-      />
-      ),
-    },
-    {
-      field: "flatFloor",
-      headerName: "Floor",
+      field: "fatherName",
+      headerName: "Father Name",
       width: 150,
       editable: true,
       renderCell: (params) => (
         <input
         type="text"
-        value={params.row.flatFloor || ''}
+        style={{width:125}}
+        value={params.row.fatherName || ''}
         onChange={(e) =>
-                  handleCellChange(params.row.id, "flatFloor", e.target.value)
+                  handleCellChange(params.row.id, "fatherName", e.target.value)
                 }
       />
       ),
     },
     {
-      field: "flatRoom",
-      headerName: "Room",
+      field: "childrenAge",
+      headerName: "Age",
       width: 150,
       editable: true,
       renderCell: (params) => (
         <input
         type="text"
-        value={params.row.flatRoom || ''}
+        style={{width:125}}
+        value={params.row.childrenAge || ''}
         onChange={(e) =>
-                  handleCellChange(params.row.id, "flatRoom", e.target.value)
+                  handleCellChange(params.row.id, "childrenAge", e.target.value)
                 }
       />
       ),
     },
     {
-      field: "flatToilet",
-      headerName: "Toilet",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <input
-          type="text"
-          value={params.row.flatToilet || ''}
-          onChange={(e) =>
-                    handleCellChange(params.row.id, "flatToilet", e.target.value)
-                  }
-        />
-      ),
-    },
-    {
-      field: "flatKitchen",
-      headerName: "Kitchen",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <input
-        type="text"
-        value={params.row.flatKitchen || ''}
-        onChange={(e) =>
-                  handleCellChange(params.row.id, "flatKitchen", e.target.value)
-                }
-      />
-      ),
-    },
-    {
-      field: "flatRent",
-      headerName: "Flat Rent",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <input
-        type="text"
-        value={params.row.flatRent || ''}
-        onChange={(e) =>
-                  handleCellChange(params.row.id, "flatRent", e.target.value)
-                }
-      />
-      ),
-    },
-    {
-      field: "flatDeposit",
-      headerName: "Deposit",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <input
-        type="text"
-        value={params.row.flatDeposit || ''}
-        onChange={(e) =>
-                  handleCellChange(params.row.id, "flatDeposit", e.target.value)
-                }
-      />
-      ),
-    },
-    {
-      field: "flatMaintainanceCharges",
-      headerName: "Maintainance Charges",
-      width: 200,
-      editable: true,
-      renderCell: (params) => (
-        <input
-        type="text"
-        value={params.row.flatMaintainanceCharges || ''}
-        onChange={(e) =>
-                  handleCellChange(params.row.id, "flatMaintainanceCharges", e.target.value)
-                }
-      />
-      ),
-    },
-    {
-      field: "flattrashCharges",
-      headerName: "Trash Charges",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <input
-        type="text"
-        value={params.row.flattrashCharges || ''}
-        onChange={(e) =>
-                  handleCellChange(params.row.id, "flattrashCharges", e.target.value)
-                }
-      />
-      ),
-    },
-    {
-      field: "flatsecurityCharges",
-      headerName: "Security Charges",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <input
-        type="text"
-        value={params.row.flatsecurityCharges || ''}
-        onChange={(e) =>
-                  handleCellChange(params.row.id, "flatsecurityCharges", e.target.value)
-                }
-      />
-      ),
-    },
-    {
-      field: "flatStatus",
-      headerName: "Flat Status",
+      field: "childrenOccupation",
+      headerName: "Occupation",
       width: 150,
       editable: true,
       renderCell: (params) => (
@@ -370,16 +257,35 @@ const dispatch = useDispatch();
           labelId="demo-simple-select-autowidth-label"
           id="demo-simple-select-autowidth"
           onChange={(e) =>
-            handleCellChange(params.row.id, "flatStatus", e.target.value)
+            handleCellChange(params.row.id, "childrenOccupation", e.target.value)
           }
           autoWidth
-          label="flatStatus"
+          label="childrenOccupation"
         >
-          <MenuItem value={0}>Vacant</MenuItem>
-          <MenuItem value={1}>RentOut</MenuItem>
+          <MenuItem value={1}>Student</MenuItem>
+          <MenuItem value={2}>Employeed</MenuItem>
+          <MenuItem value={0}>Nothing</MenuItem>
         </Select>
       ),
     },
+    {
+      field: "instituteName",
+      headerName: "Institute Name",
+      width: 150,
+      editable: true,
+      renderCell: (params) => (
+        <input
+          type="text"
+          style={{width:125}}
+          value={params.row.instituteName || ''}
+          onChange={(e) =>
+                    handleCellChange(params.row.id, "instituteName", e.target.value)
+                  }
+        />
+      ),
+    },
+   
+   
   ];
   useEffect(() => {
     const numToShow = parseInt(detail?.adultFamilyMembers, 10) || 0;
@@ -418,7 +324,7 @@ const dispatch = useDispatch();
         <Box sx={{ height: 400, width: "auto" }}>
           <DataGrid
             rows={generatedAdultRows}
-            columns={familyColumns}
+            columns={adultColumns}
             pageSize={5} // Set to the number of rows you want to display per page
             initialState={{
               pagination: {
@@ -438,7 +344,7 @@ const dispatch = useDispatch();
         <Box sx={{ height: 400, width: "auto" }}>
           <DataGrid
             rows={generatedChildrenRows}
-            columns={employeeColumns}
+            columns={childrenColumns}
             pageSize={5} // Set to the number of rows you want to display per page
             initialState={{
               pagination: {
