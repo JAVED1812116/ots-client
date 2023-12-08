@@ -11,18 +11,39 @@ import { DataGrid } from "@mui/x-data-grid";
 import Logo from "../../../assets/Logo.png";
 import { PropertyRegisters } from "../../../redux/Reducer/PropertyRegistration";
 import { useDispatch } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 export default function PropertyRegister() {
   title("PropertyRegister");
   const dispatch = useDispatch();
   const [detail, setDetail] = React.useState({
     totalFlat: 0, // Set a default value for totalFlat
+    ownerName: "",
+    fatherName: "",
+    cnic: "",
+    contactNumber: "",
+    alternateNumber: "",
+    permenantAddress: "",
+    postalAddress: "",
+    email: "",
+    propertyAddress: "",
+    totalFloor: "",
   });
-  const [rows, setRows] = React.useState();
+  const [rows, setRows] = React.useState({
+    flatName: "",
+    flatNumber: "",
+    flatFloor: "",
+    flatRoom: "",
+    flatToilet: "",
+    flatKitchen: "",
+    flatRent: "",
+    flatDeposit: "",
+    flatMaintainanceCharges: "",
+    flattrashCharges: "",
+    flatsecurityCharges: "",
+    flatStatus: "",
+  });
   const [generatedRows, setGeneratedRows] = React.useState([]);
-  const [error, setError] = React.useState({
-   
-    // other fields...
-  });
+  const [error, setError] = React.useState({});
   // const handleChange = (e) => {
   //   const { name, value } = e.target;
   //   setDetail((prev) => {
@@ -41,28 +62,37 @@ export default function PropertyRegister() {
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
-   // Check if the entered value is not a valid number for "cnic" or "contactNumber" fields
-   if ((name === 'contactNumber'|| name === 'alternateNumber'|| name === 'totalFloor'|| name === 'totalFlat') && !/^[0-9]*$/.test(value)) {
-    setError((prev) => ({ ...prev, [name]: true }));
-    // If it's not a valid number, you can choose to ignore the input or show an error message.
-    return;
-  }
-   if ((name === 'ownerName'||name==='fatherName') && !/^[A-Za-z\s]*$/.test(value)) {
-    setError((prev) => ({ ...prev, [name]: true }));
-    // If it's not a valid number, you can choose to ignore the input or show an error message.
-    return;
-  }
-  if (name === 'email' && !isEmailValid(value)) {
-    setError((prev) => ({ ...prev, email: true }));
-    return;
-  }
-  if (name === 'cnic' && !isCnicValid(value)) {
-    setError((prev) => ({ ...prev, cnic: true }));
-    return;
-  }
-  setError((prev) => ({ ...prev, [name]: false }));
+    // Check if the entered value is not a valid number for "cnic" or "contactNumber" fields
+    if (
+      (name === "contactNumber" ||
+        name === "alternateNumber" ||
+        name === "totalFloor" ||
+        name === "totalFlat") &&
+      !/^[0-9]*$/.test(value)
+    ) {
+      setError((prev) => ({ ...prev, [name]: true }));
+      // If it's not a valid number, you can choose to ignore the input or show an error message.
+      return;
+    }
+    if (
+      (name === "ownerName" || name === "fatherName") &&
+      !/^[A-Za-z\s]*$/.test(value)
+    ) {
+      setError((prev) => ({ ...prev, [name]: true }));
+      // If it's not a valid number, you can choose to ignore the input or show an error message.
+      return;
+    }
+    if (name === "email" && !isEmailValid(value)) {
+      setError((prev) => ({ ...prev, email: true }));
+      return;
+    }
+    if (name === "cnic" && !isCnicValid(value)) {
+      setError((prev) => ({ ...prev, cnic: true }));
+      return;
+    }
+    setError((prev) => ({ ...prev, [name]: false }));
     // Check if the entered value is a number for the "CNIC" field
-  
+
     // Update the state
     setDetail((prev) => {
       return { ...prev, [name]: value };
@@ -76,7 +106,7 @@ export default function PropertyRegister() {
       );
     });
   };
-console.log(rows, 'rows');
+  console.log(rows, "rows");
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     {
@@ -86,12 +116,13 @@ console.log(rows, 'rows');
       renderCell: (params) => (
         <TextField
           id="standard-multiline-flexible"
-          // label="Property Address"
-          multiline
           maxRows={4}
           variant="standard"
           name="flatName"
-        onChange={(e) => handleCellChange(params.row.id, "flatName", e.target.value)}
+          required={true}
+          onChange={(e) =>
+            handleCellChange(params.row.id, "flatName", e.target.value)
+          }
         />
       ),
     },
@@ -107,7 +138,9 @@ console.log(rows, 'rows');
           maxRows={4}
           variant="standard"
           name="flatNumber"
-          onChange={(e) => handleCellChange(params.row.id, "flatNumber", e.target.value)}
+          onChange={(e) =>
+            handleCellChange(params.row.id, "flatNumber", e.target.value)
+          }
         />
       ),
     },
@@ -123,7 +156,9 @@ console.log(rows, 'rows');
           maxRows={4}
           variant="standard"
           name="flatFloor"
-          onChange={(e) => handleCellChange(params.row.id, "flatFloor", e.target.value)}
+          onChange={(e) =>
+            handleCellChange(params.row.id, "flatFloor", e.target.value)
+          }
         />
       ),
     },
@@ -139,7 +174,9 @@ console.log(rows, 'rows');
           maxRows={4}
           variant="standard"
           name="flatRoom"
-          onChange={(e) => handleCellChange(params.row.id, "flatRoom", e.target.value)}
+          onChange={(e) =>
+            handleCellChange(params.row.id, "flatRoom", e.target.value)
+          }
         />
       ),
     },
@@ -155,7 +192,9 @@ console.log(rows, 'rows');
           maxRows={4}
           variant="standard"
           name="flatToilet"
-          onChange={(e) => handleCellChange(params.row.id, "flatToilet", e.target.value)}
+          onChange={(e) =>
+            handleCellChange(params.row.id, "flatToilet", e.target.value)
+          }
         />
       ),
     },
@@ -166,12 +205,12 @@ console.log(rows, 'rows');
       renderCell: (params) => (
         <TextField
           id="standard-multiline-flexible"
-          // label="Property Address"
-          multiline
           maxRows={4}
           variant="standard"
           name="flatKitchen"
-          onChange={(e) => handleCellChange(params.row.id, "flatKitchen", e.target.value)}
+          onChange={(e) =>
+            handleCellChange(params.row.id, "flatKitchen", e.target.value)
+          }
         />
       ),
     },
@@ -183,11 +222,13 @@ console.log(rows, 'rows');
         <TextField
           id="standard-multiline-flexible"
           // label="Property Address"
-          multiline
+          // multiline
           maxRows={4}
           variant="standard"
           name="flatRent"
-          onChange={(e) => handleCellChange(params.row.id, "flatRent", e.target.value)}
+          onChange={(e) =>
+            handleCellChange(params.row.id, "flatRent", e.target.value)
+          }
         />
       ),
     },
@@ -199,11 +240,13 @@ console.log(rows, 'rows');
         <TextField
           id="standard-multiline-flexible"
           // label="Property Address"
-          multiline
+          // multiline
           maxRows={4}
           variant="standard"
           name="flatDeposit"
-          onChange={(e) => handleCellChange(params.row.id, "flatDeposit", e.target.value)}
+          onChange={(e) =>
+            handleCellChange(params.row.id, "flatDeposit", e.target.value)
+          }
         />
       ),
     },
@@ -219,7 +262,13 @@ console.log(rows, 'rows');
           maxRows={4}
           variant="standard"
           name="flatMaintainanceCharges"
-          onChange={(e) => handleCellChange(params.row.id, "flatMaintainanceCharges", e.target.value)}
+          onChange={(e) =>
+            handleCellChange(
+              params.row.id,
+              "flatMaintainanceCharges",
+              e.target.value
+            )
+          }
         />
       ),
     },
@@ -235,7 +284,9 @@ console.log(rows, 'rows');
           maxRows={4}
           variant="standard"
           name="flattrashCharges"
-          onChange={(e) => handleCellChange(params.row.id, "flattrashCharges", e.target.value)}
+          onChange={(e) =>
+            handleCellChange(params.row.id, "flattrashCharges", e.target.value)
+          }
         />
       ),
     },
@@ -251,7 +302,13 @@ console.log(rows, 'rows');
           maxRows={4}
           variant="standard"
           name="flatsecurityCharges"
-          onChange={(e) => handleCellChange(params.row.id, "flatsecurityCharges", e.target.value)}
+          onChange={(e) =>
+            handleCellChange(
+              params.row.id,
+              "flatsecurityCharges",
+              e.target.value
+            )
+          }
         />
       ),
     },
@@ -263,7 +320,9 @@ console.log(rows, 'rows');
         <Select
           labelId="demo-simple-select-autowidth-label"
           id="demo-simple-select-autowidth"
-          onChange={(e) => handleCellChange(params.row.id, "flatStatus", e.target.value)}
+          onChange={(e) =>
+            handleCellChange(params.row.id, "flatStatus", e.target.value)
+          }
           autoWidth
           label="flatStatus"
         >
@@ -274,20 +333,21 @@ console.log(rows, 'rows');
     },
   ];
 
-React.useEffect(() => {
-  const numToShow = parseInt(detail?.totalFlat, 10) || 0;
+  React.useEffect(() => {
+    const numToShow = parseInt(detail?.totalFlat, 10) || 0;
 
-  const newRows = Array.from({ length: numToShow }, (_, index) => ({
+    const newRows = Array.from({ length: numToShow }, (_, index) => ({
       id: index + 1,
     }));
 
-  setRows(Array.from({ length: numToShow }, (_, index) => ({
-    id: index + 1,
-  })))
+    setRows(
+      Array.from({ length: numToShow }, (_, index) => ({
+        id: index + 1,
+      }))
+    );
 
-  setGeneratedRows(newRows);
-}, [detail?.totalFlat]);
-
+    setGeneratedRows(newRows);
+  }, [detail?.totalFlat]);
 
   const renderDataGrid = () => {
     //  numToShow = parseInt(detail?.totalFlat, 10) || 0;
@@ -313,7 +373,7 @@ React.useEffect(() => {
                 paginationModel: { page: 0, pageSize: 5 },
               },
             }}
-            pageSizeOptions={[2,5, 10]}
+            pageSizeOptions={[2, 5, 10]}
           />
         </Box>
       </div>
@@ -339,52 +399,70 @@ React.useEffect(() => {
       }),
     }),
   }));
-const onFinish = () => {
-  let values = {
-ownerName: detail?.ownerName,
-fatherName:detail?.fatherName,
-cnic:detail?.cnic,
-contactNumber:detail?.contactNumber,
-alternateNumber:detail?.alternateNumber,
-permenantAddress:detail?.permenantAddress,
-postalAddress:detail?.postalAddress,
-email:detail?.email,
-propertyAddress:detail?.propertyAddress,
-totalFloor:detail?.totalFloor,
-totalFlat:detail?.totalFlat,
-flatDetail:rows,
-userId: localStorage.getItem("user_id"),
-userName: localStorage.getItem("name"),
+  const onFinish = () => {
+    let values = {
+      ownerName: detail?.ownerName,
+      fatherName: detail?.fatherName,
+      cnic: detail?.cnic,
+      contactNumber: detail?.contactNumber,
+      alternateNumber: detail?.alternateNumber,
+      permenantAddress: detail?.permenantAddress,
+      postalAddress: detail?.postalAddress,
+      email: detail?.email,
+      propertyAddress: detail?.propertyAddress,
+      totalFloor: detail?.totalFloor,
+      totalFlat: detail?.totalFlat,
+      flatDetail: rows,
+      userId: localStorage.getItem("user_id"),
+      userName: localStorage.getItem("name"),
+    };
+
+    const requiredFields = [
+      "flatName",
+      "flatNumber",
+      "flatFloor",
+      "flatRoom",
+      "flatToilet",
+      "flatKitchen",
+      "flatRent",
+      "flatDeposit",
+      "flatMaintainanceCharges",
+      "flattrashCharges",
+      "flatsecurityCharges",
+      "flatStatus",
+    ];
+
+    const areAllFieldsPresent = rows.every((row) =>
+      requiredFields.every((field) => row.hasOwnProperty(field))
+    );
+    if (
+      values?.totalFlat !== 0 ||
+      values?.ownerName !== "" ||
+      values?.fatherName !== "" ||
+      values?.cnic !== "" ||
+      values?.contactNumber !== "" ||
+      values?.alternateNumber !== "" ||
+      values?.permenantAddress !== "" ||
+      values?.postalAddress !== "" ||
+      values?.email !== "" ||
+      values?.propertyAddress !== "" ||
+      values?.totalFloor !== ""
+    ) {
+      if (areAllFieldsPresent) {
+        dispatch(PropertyRegisters({ values })).then((res) => {
+          console.log(res, "res");
+        });
+      } else {
+        toast.error("Please fill in all required fields.", {
+          position: "top-center",
+        });
+      }
+    } else {
+      toast.error("Please fill in all required fields.", {
+        position: "top-center",
+      });
+    }
   };
-
-
-  const requiredFields = [
-    'flatName',
-    'flatNumber',
-    'flatFloor',
-    'flatRoom',
-    'flatToilet',
-    'flatKitchen',
-    'flatRent',
-    'flatDeposit',
-    'flatMaintainanceCharges',
-    'flattrashCharges',
-    'flatsecurityCharges',
-    'flatStatus',
-  ];
-
-  const areAllFieldsPresent = rows.every(row =>
-    requiredFields.every(field => row.hasOwnProperty(field))
-  );
-  
-  if (areAllFieldsPresent) {
-    console.log('All fields are filled.');
-    dispatch(PropertyRegisters({values}))
-  } else {
-    console.log('Please fill in all required fields.');
-  }
-
-}
   return (
     <>
       <AppBar position="fixed">
@@ -415,7 +493,9 @@ userName: localStorage.getItem("name"),
                   name="ownerName"
                   onChange={handleChange}
                   error={error.ownerName}
-                  helperText={error.ownerName ? 'Please enter a valid Owner Name' : ''}
+                  helperText={
+                    error.ownerName ? "Please enter a valid Owner Name" : ""
+                  }
                 />
                 <TextField
                   id="standard-textarea"
@@ -426,7 +506,9 @@ userName: localStorage.getItem("name"),
                   name="fatherName"
                   onChange={handleChange}
                   error={error.fatherName}
-                  helperText={error.fatherName ? 'Please enter a valid Father Name' : ''}
+                  helperText={
+                    error.fatherName ? "Please enter a valid Father Name" : ""
+                  }
                 />
 
                 <TextField
@@ -441,7 +523,7 @@ userName: localStorage.getItem("name"),
                   name="cnic"
                   onChange={handleChange}
                   error={error.cnic}
-                  helperText={error.cnic ? 'Please enter a valid CNIC' : ''}
+                  helperText={error.cnic ? "Please enter a valid CNIC" : ""}
                 />
                 <TextField
                   id="standard-textarea"
@@ -452,9 +534,13 @@ userName: localStorage.getItem("name"),
                   name="contactNumber"
                   onChange={handleChange}
                   error={error.contactNumber}
-                  helperText={error.contactNumber ? 'Please enter a valid Contact Number' : ''}
+                  helperText={
+                    error.contactNumber
+                      ? "Please enter a valid Contact Number"
+                      : ""
+                  }
                 />
-                 {/* <input type="text"  data-inputmask="'mask': '99999-9999999-9'"  placeholder="XXXXX-XXXXXXX-X"  name="cnic" required="" ></input> */}
+                {/* <input type="text"  data-inputmask="'mask': '99999-9999999-9'"  placeholder="XXXXX-XXXXXXX-X"  name="cnic" required="" ></input> */}
                 <TextField
                   id="standard-textarea"
                   label="Alternate Number"
@@ -464,7 +550,11 @@ userName: localStorage.getItem("name"),
                   name="alternateNumber"
                   onChange={handleChange}
                   error={error.alternateNumber}
-                  helperText={error.alternateNumber ? 'Please enter a valid Alternate Number' : ''}
+                  helperText={
+                    error.alternateNumber
+                      ? "Please enter a valid Alternate Number"
+                      : ""
+                  }
                 />
                 <TextField
                   id="standard-textarea"
@@ -493,7 +583,9 @@ userName: localStorage.getItem("name"),
                   name="email"
                   onChange={handleChange}
                   error={error.email}
-                  helperText={error.email ? 'Please enter a valid Email Address' : ''}
+                  helperText={
+                    error.email ? "Please enter a valid Email Address" : ""
+                  }
                 />
               </div>
             </Container>
@@ -523,7 +615,9 @@ userName: localStorage.getItem("name"),
                   name="totalFloor"
                   onChange={handleChange}
                   error={error.totalFloor}
-                  helperText={error.totalFloor ? 'Please enter a valid Total Floor' : ''}
+                  helperText={
+                    error.totalFloor ? "Please enter a valid Total Floor" : ""
+                  }
                 />
                 <TextField
                   id="standard-multiline-flexible"
@@ -534,7 +628,9 @@ userName: localStorage.getItem("name"),
                   name="totalFlat"
                   onChange={handleChange}
                   error={error.totalFlat}
-                  helperText={error.totalFlat ? 'Please enter a valid Total Flat' : ''}
+                  helperText={
+                    error.totalFlat ? "Please enter a valid Total Flat" : ""
+                  }
                 />
 
                 {detail?.totalFlat === 0 || detail?.totalFlat?.length === 0
@@ -553,10 +649,11 @@ userName: localStorage.getItem("name"),
             background: "black",
           }}
           onClick={onFinish}
-          >
+        >
           Post
         </Button>
       </div>
+      <ToastContainer />
     </>
   );
 }
