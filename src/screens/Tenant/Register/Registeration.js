@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 import {
   Button,
   Stepper,
@@ -12,16 +12,20 @@ import {
   Box,
   Container,
   FormControl,
+  Toolbar,
 } from "@mui/material";
+import Logo from "../../../assets/Logo.png";
 import { RegisterTenant } from "../../../redux/Reducer/TenantRegestration";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { DataGrid } from "@mui/x-data-grid";
+import MuiAppBar from "@mui/material/AppBar";
+import { styled } from "@mui/material/styles";
 export default function Registration() {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
 const dispatch = useDispatch();
-  const [detail, setDetail] = useState({
+  const [detail, setDetail] = React.useState({
     name: "",
     fatherName: "",
     cnicNo: "",
@@ -38,39 +42,46 @@ const dispatch = useDispatch();
     rent: "",
   });
   const [rows, setRows] = React.useState({
-    flatName: "",
-    flatNumber: "",
-    flatFloor: "",
-    flatRoom: "",
-    flatToilet: "",
-    flatKitchen: "",
-    flatRent: "",
-    flatDeposit: "",
-    flatMaintainanceCharges: "",
-    flattrashCharges: "",
-    flatsecurityCharges: "",
-    flatStatus: "",
+    familyMembersName:"",
+    familyMembersFatherName:"",
+    familyMembersCnic:"",
+    familyMembersRelations:"",
+    familyMembersAge:"",
+    adultOccupation:"",
+    companyName:""
+  });
+  const [childrenRows, setChildrenRows] = React.useState({
+    childrenName:"",
+    childrenFatherName:"",
+childrenAge:"",
+childrenOccupation:"",
+childrenInstituteName:"",
   });
   const [generatedAdultRows, setGeneratedAdultRows] = React.useState([]);
   const [generatedChildrenRows, setGeneratedChildrenRows] = React.useState([]);
-  useEffect(() => {
+  React.useEffect(() => {
     document.title = "Registration";
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setDetail((prev) => {
-      return { ...prev, [name]: value };
-    });
-  };
   const handleCellChange = (rowId, field, value) => {
     // Update the state with the new value
+    console.log(value,"LLLLLLLLLLLLLLLLLLLLLL")
     setRows((prevRows) => {
       return prevRows.map((row) =>
         row.id === rowId ? { ...row, [field]: value } : row
       );
     });
   };
+  const handleChildrenCellChange = (rowId, field, value) => {
+    // Update the state with the new value
+    setChildrenRows((prevRows) => {
+      return prevRows.map((row) =>
+        row.id === rowId ? { ...row, [field]: value } : row
+      );
+    });
+  };
+
+ 
   const adultColumns = [
     { field: "id", headerName: "ID", width: 70 },
     {
@@ -79,6 +90,7 @@ const dispatch = useDispatch();
       width: 150,
       editable: true,
       renderCell: (params) => (
+        <FormControl>
         <input
           type="text"
           style={{width:125}}
@@ -87,6 +99,7 @@ const dispatch = useDispatch();
                     handleCellChange(params.row.id, "familyMembersName", e.target.value)
                   }
         />
+        </FormControl>
       ),
     },
     {
@@ -200,7 +213,7 @@ const dispatch = useDispatch();
     { field: "id", headerName: "ID", width: 70 },
 
     {
-      field: 'Name',
+      field: 'childrenName',
       headerName: 'Name',
       width: 150,
       editable: true,
@@ -208,15 +221,15 @@ const dispatch = useDispatch();
         <input
           type="text"
           style={{width:125}}
-          value={params.row.Name || ''}
+          value={params.row.childrenName || ''}
           onChange={(e) =>
-                    handleCellChange(params.row.id, "Name", e.target.value)
+                    handleChildrenCellChange(params.row.id, "childrenName", e.target.value)
                   }
         />
       ),
     },
     {
-      field: "fatherName",
+      field: "childrenFatherName",
       headerName: "Father Name",
       width: 150,
       editable: true,
@@ -224,9 +237,9 @@ const dispatch = useDispatch();
         <input
         type="text"
         style={{width:125}}
-        value={params.row.fatherName || ''}
+        value={params.row.childrenFatherName || ''}
         onChange={(e) =>
-                  handleCellChange(params.row.id, "fatherName", e.target.value)
+                  handleChildrenCellChange(params.row.id, "childrenFatherName", e.target.value)
                 }
       />
       ),
@@ -242,7 +255,7 @@ const dispatch = useDispatch();
         style={{width:125}}
         value={params.row.childrenAge || ''}
         onChange={(e) =>
-                  handleCellChange(params.row.id, "childrenAge", e.target.value)
+                  handleChildrenCellChange(params.row.id, "childrenAge", e.target.value)
                 }
       />
       ),
@@ -257,7 +270,7 @@ const dispatch = useDispatch();
           labelId="demo-simple-select-autowidth-label"
           id="demo-simple-select-autowidth"
           onChange={(e) =>
-            handleCellChange(params.row.id, "childrenOccupation", e.target.value)
+            handleChildrenCellChange(params.row.id, "childrenOccupation", e.target.value)
           }
           autoWidth
           label="childrenOccupation"
@@ -269,7 +282,7 @@ const dispatch = useDispatch();
       ),
     },
     {
-      field: "instituteName",
+      field: "childrenInstituteName",
       headerName: "Institute Name",
       width: 150,
       editable: true,
@@ -277,9 +290,9 @@ const dispatch = useDispatch();
         <input
           type="text"
           style={{width:125}}
-          value={params.row.instituteName || ''}
+          value={params.row.childrenInstituteName || ''}
           onChange={(e) =>
-                    handleCellChange(params.row.id, "instituteName", e.target.value)
+                    handleChildrenCellChange(params.row.id, "childrenInstituteName", e.target.value)
                   }
         />
       ),
@@ -287,7 +300,7 @@ const dispatch = useDispatch();
    
    
   ];
-  useEffect(() => {
+  React.useEffect(() => {
     const numToShow = parseInt(detail?.adultFamilyMembers, 10) || 0;
 
     const newRows = Array.from({ length: numToShow }, (_, index) => ({
@@ -302,14 +315,14 @@ const dispatch = useDispatch();
 
     setGeneratedAdultRows(newRows);
   }, [detail?.adultFamilyMembers]);
-  useEffect(() => {
+  React.useEffect(() => {
     const numToShow = parseInt(detail?.childrenFamilyMembers, 10) || 0;
 
     const newRows = Array.from({ length: numToShow }, (_, index) => ({
       id: index + 1,
     }));
 
-    setRows(
+    setChildrenRows(
       Array.from({ length: numToShow }, (_, index) => ({
         id: index + 1,
       }))
@@ -317,6 +330,8 @@ const dispatch = useDispatch();
 
     setGeneratedChildrenRows(newRows);
   }, [detail?.childrenFamilyMembers]);
+
+
   const renderFamilyMemberGrid = () => {
 
     return (
@@ -359,7 +374,27 @@ const dispatch = useDispatch();
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-        dispatch(RegisterTenant({detail})).then((res)=>{
+    let values = {
+      name:detail?.name,
+      fatherName:detail?.fatherName,
+      cnicNo:detail?.cnicNo,
+      occupation:detail?.occupation,
+      permanentAddress:detail?.permanentAddress,
+      gender:detail?.gender,
+      maritalStatus:detail?.maritalStatus,
+      adultFamilyMembers:detail?.adultFamilyMembers,
+      children:detail?.children,
+      childrenFamilyMembers:detail?.childrenFamilyMembers,
+      language:detail?.language,
+      cast:detail?.cast,
+      advance:detail?.advance,
+      rent:detail?.rent,
+      adultDetail: rows,
+      childrenDetail: childrenRows,
+      userId: localStorage.getItem("user_id"),
+      userName: localStorage.getItem("name"),
+    };
+        dispatch(RegisterTenant({values})).then((res)=>{
           // console.log(res?.payload?.data?.message,"res?.payload?.data?.message")
          if(res?.payload?.data?.message==="Tenant Registered Successfully"){
           
@@ -381,6 +416,12 @@ const dispatch = useDispatch();
     return ["Basic Information", "Personal Information", "Booking"];
   }
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setDetail((prev) => {
+      return { ...prev, [name]: value };
+    });
+  };
   function stepContent(step) {
     switch (step) {
   
@@ -562,6 +603,26 @@ const dispatch = useDispatch();
       
 
     }
+    const drawerWidth = 240;
+
+    const AppBar = styled(MuiAppBar, {
+      shouldForwardProp: (prop) => prop !== "open",
+    })(({ theme, open }) => ({
+      zIndex: theme.zIndex.drawer + 1,
+      transition: theme.transitions.create(["width", "margin"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      ...(open && {
+        marginLeft: drawerWidth,
+        width: `calc(100% - ${drawerWidth}px)`,
+        transition: theme.transitions.create(["width", "margin"], {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+      }),
+    }));
+ 
   return (
     <div>
       {activeStep === steps.length ? (
@@ -569,8 +630,22 @@ const dispatch = useDispatch();
           Thank You
         </Typography>
       ) : (
+        
         <Container maxWidth="sm">
-          Welcome {localStorage.getItem("name")}
+             <AppBar position="fixed">
+        <Toolbar style={{ backgroundColor: "black" }}>
+          <Box
+            component="img"
+            sx={{
+              height: 56,
+              margin: 1,
+            }}
+            alt="Your logo."
+            src={Logo}
+          />
+        </Toolbar>
+      </AppBar>
+          {/* Welcome {localStorage.getItem("name")} */}
           <Box mt={20}>
             <>
               <Stepper activeStep={activeStep}>

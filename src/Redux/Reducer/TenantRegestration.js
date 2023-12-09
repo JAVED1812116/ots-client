@@ -3,9 +3,9 @@ import axios from "axios";
 import { BASE_URL } from "../../config/config";
 
 
-export const RegisterTenant = createAsyncThunk("dummyData/RegisterTenant", async ({detail}) => {
+export const RegisterTenant = createAsyncThunk("dummyData/RegisterTenant", async ({values}) => {
     let response = await axios.post(`${BASE_URL}/tenant-registerForm`,  {
-        detail
+        values
     });
     return response;
 });

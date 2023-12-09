@@ -332,16 +332,6 @@ export default function PropertyRegister() {
   }, [detail?.totalFlat]);
 
   const renderDataGrid = () => {
-    //  numToShow = parseInt(detail?.totalFlat, 10) || 0;
-    //  setRows(Array.from({ length: numToShow }, (_, index) => ({
-    //   id: index + 1,
-    // })))
-    // const generatedRows = Array.from({ length: numToShow }, (_, index) => ({
-    //   id: index + 1,
-    //   lastName: "Snow",
-    //   firstName: "Jon",
-    //   age: 35,
-    // }));
 
     return (
       <div style={{ height: 400, width: "100%" }}>
