@@ -38,6 +38,7 @@ console.log(location?.state?.type,"loooooooooooo")
       if(regexEmail.test(email)){
         if(passwords.test(password)){
           dispatch(UserLogin({email,password})).then((res)=>{
+            
             if(res?.payload?.data?.message==="User Login Successfully"){
               localStorage.setItem("name",res?.payload?.data?.data?.name)
               localStorage.setItem("user_id",res?.payload?.data?.data?._id)
@@ -52,9 +53,13 @@ console.log(location?.state?.type,"loooooooooooo")
                   { navigate("/tenant-registration")}
                 }
               },2200)
-
              
-            }else{
+            }else if(res?.payload?.data?.result==="No User Found"){
+              toast.error(res?.payload?.data?.result, {
+                position: "top-center",
+              });
+            }
+            else{
               toast.error(res?.payload?.data?.message, {
                 position: "top-center",
               });
