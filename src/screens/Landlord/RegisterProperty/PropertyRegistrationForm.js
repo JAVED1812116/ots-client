@@ -12,6 +12,7 @@ import Logo from "../../../assets/Logo.png";
 import { PropertyRegisters } from "../../../redux/Reducer/PropertyRegistration";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import { Input } from '@mui/material';
 export default function PropertyRegister() {
   title("PropertyRegister");
   const dispatch = useDispatch();
@@ -71,7 +72,7 @@ export default function PropertyRegister() {
       !/^[0-9]*$/.test(value)
     ) {
       setError((prev) => ({ ...prev, [name]: true }));
-      // If it's not a valid number, you can choose to ignore the input or show an error message.
+      // If it's not a valid number, you can choose to ignore the Input or show an error message.
       return;
     }
     if (
@@ -79,7 +80,7 @@ export default function PropertyRegister() {
       !/^[A-Za-z\s]*$/.test(value)
     ) {
       setError((prev) => ({ ...prev, [name]: true }));
-      // If it's not a valid number, you can choose to ignore the input or show an error message.
+      // If it's not a valid number, you can choose to ignore the Input or show an error message.
       return;
     }
     if (name === "email" && !isEmailValid(value)) {
@@ -128,18 +129,20 @@ export default function PropertyRegister() {
     //   ),
     // },
     {
-      field: 'firstName',
+      field: 'flatName',
       headerName: 'First name',
       width: 150,
       editable: true,
       renderCell: (params) => (
-        <input
-          type="text"
-          value={params.row.firstName || ''}
-          onChange={(e) =>
-                    handleCellChange(params.row.id, "flatName", e.target.value)
-                  }
-        />
+        <Input
+        type="text"
+        value={params.row.flatName || ''}
+        onChange={(e) =>
+                  handleCellChange(params.row.id, "flatName", e.target.value)
+                }
+        ></Input>
+         
+        
       ),
     },
     {
@@ -149,7 +152,7 @@ export default function PropertyRegister() {
       editable: true,
       renderCell: (params) => (
         console.log(params,"baba"),
-        <input
+        <Input
         type="text"
         value={params.row.flatNumber || ''}
         onChange={(e) =>
@@ -164,7 +167,7 @@ export default function PropertyRegister() {
       width: 150,
       editable: true,
       renderCell: (params) => (
-        <input
+        <Input
         type="text"
         value={params.row.flatFloor || ''}
         onChange={(e) =>
@@ -179,7 +182,7 @@ export default function PropertyRegister() {
       width: 150,
       editable: true,
       renderCell: (params) => (
-        <input
+        <Input
         type="text"
         value={params.row.flatRoom || ''}
         onChange={(e) =>
@@ -194,7 +197,7 @@ export default function PropertyRegister() {
       width: 150,
       editable: true,
       renderCell: (params) => (
-        <input
+        <Input
           type="text"
           value={params.row.flatToilet || ''}
           onChange={(e) =>
@@ -209,7 +212,7 @@ export default function PropertyRegister() {
       width: 150,
       editable: true,
       renderCell: (params) => (
-        <input
+        <Input
         type="text"
         value={params.row.flatKitchen || ''}
         onChange={(e) =>
@@ -224,7 +227,7 @@ export default function PropertyRegister() {
       width: 150,
       editable: true,
       renderCell: (params) => (
-        <input
+        <Input
         type="text"
         value={params.row.flatRent || ''}
         onChange={(e) =>
@@ -239,7 +242,7 @@ export default function PropertyRegister() {
       width: 150,
       editable: true,
       renderCell: (params) => (
-        <input
+        <Input
         type="text"
         value={params.row.flatDeposit || ''}
         onChange={(e) =>
@@ -254,7 +257,7 @@ export default function PropertyRegister() {
       width: 200,
       editable: true,
       renderCell: (params) => (
-        <input
+        <Input
         type="text"
         value={params.row.flatMaintainanceCharges || ''}
         onChange={(e) =>
@@ -269,7 +272,7 @@ export default function PropertyRegister() {
       width: 150,
       editable: true,
       renderCell: (params) => (
-        <input
+        <Input
         type="text"
         value={params.row.flattrashCharges || ''}
         onChange={(e) =>
@@ -284,7 +287,7 @@ export default function PropertyRegister() {
       width: 150,
       editable: true,
       renderCell: (params) => (
-        <input
+        <Input
         type="text"
         value={params.row.flatsecurityCharges || ''}
         onChange={(e) =>
@@ -539,7 +542,7 @@ export default function PropertyRegister() {
                       : ""
                   }
                 />
-                {/* <input type="text"  data-inputmask="'mask': '99999-9999999-9'"  placeholder="XXXXX-XXXXXXX-X"  name="cnic" required="" ></input> */}
+                {/* <Input type="text"  data-inputmask="'mask': '99999-9999999-9'"  placeholder="XXXXX-XXXXXXX-X"  name="cnic" required="" ></Input> */}
                 <TextField
                   id="standard-textarea"
                   label="Alternate Number"
