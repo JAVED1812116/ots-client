@@ -37,18 +37,18 @@ export default function PropertyRegister() {
     totalFloor: "",
   });
   const [rows, setRows] = React.useState({
-    flatName: "",
-    flatNumber: "",
-    flatFloor: "",
-    flatRoom: "",
-    flatToilet: "",
-    flatKitchen: "",
-    flatRent: "",
-    flatDeposit: "",
-    flatMaintainanceCharges: "",
-    flattrashCharges: "",
-    flatsecurityCharges: "",
-    flatStatus: "",
+    flatName:"",
+    flatNumber:"",
+    flatFloor:"",
+    flatRooms:"",
+    flatToilet:"",
+    flatKitchen:"",
+    flatRent:"",
+    flatAdvance:"",
+    flatMaintananceCharges:"",
+    flatTrashCharges:"",
+    flatSecurityCharges:"",
+    flatStatus:""
   });
   const [generatedRows, setGeneratedRows] = React.useState([]);
   console.log(generatedRows,"generatedRowsgeneratedRowsgeneratedRowsgeneratedRowsgeneratedRowsgeneratedRows")
@@ -368,15 +368,15 @@ export default function PropertyRegister() {
       "flatName",
       "flatNumber",
       "flatFloor",
-      "flatRoom",
+      "flatRooms",
       "flatToilet",
       "flatKitchen",
       "flatRent",
-      "flatDeposit",
-      "flatMaintainanceCharges",
-      "flattrashCharges",
-      "flatsecurityCharges",
-      "flatStatus",
+      "flatAdvance",
+      "flatMaintananceCharges",
+      "flatTrashCharges",
+      "flatSecurityCharges",
+      "flatStatus"
     ];
 
     // const areAllFieldsPresent = rows.every((row) =>
