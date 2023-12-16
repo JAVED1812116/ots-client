@@ -12,7 +12,14 @@ import Logo from "../../../assets/Logo.png";
 import { PropertyRegisters } from "../../../redux/Reducer/PropertyRegistration";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
-import { Input } from '@mui/material';
+import { Input } from "@mui/material";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 export default function PropertyRegister() {
   title("PropertyRegister");
   const dispatch = useDispatch();
@@ -44,6 +51,7 @@ export default function PropertyRegister() {
     flatStatus: "",
   });
   const [generatedRows, setGeneratedRows] = React.useState([]);
+  console.log(generatedRows,"generatedRowsgeneratedRowsgeneratedRowsgeneratedRowsgeneratedRowsgeneratedRows")
   const [error, setError] = React.useState({});
   // const handleChange = (e) => {
   //   const { name, value } = e.target;
@@ -101,233 +109,24 @@ export default function PropertyRegister() {
   };
   const handleCellChange = (rowId, field, value) => {
     // Update the state with the new value
+
     setRows((prevRows) => {
       return prevRows.map((row) =>
         row.id === rowId ? { ...row, [field]: value } : row
       );
     });
   };
-  
-  
-  const columns = [
-    { field: "id", headerName: "ID", width: 70 },
-    // {
-    //   field: "flatName",
-    //   headerName: "Flat Name",
-    //   width: 150,
-    //   renderCell: (params) => (
-    //     <TextField
-    //       id="standard-multiline-flexible"
-    //       maxRows={4}
-    //       variant="standard"
-    //       name="flatName"
-    //       required={true}
-    //       onChange={(e) =>
-    //         handleCellChange(params.row.id, "flatName", e.target.value)
-    //       }
-    //     />
-    //   ),
-    // },
-    {
-      field: 'flatName',
-      headerName: 'First name',
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <Input
-        type="text"
-        value={params.row.flatName || ''}
-        onChange={(e) =>
-                  handleCellChange(params.row.id, "flatName", e.target.value)
-                }
-        ></Input>
-         
-        
-      ),
-    },
-    {
-      field: "flatNumber",
-      headerName: "Flat Number",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        console.log(params,"baba"),
-        <Input
-        type="text"
-        value={params.row.flatNumber || ''}
-        onChange={(e) =>
-                  handleCellChange(params.row.id, "flatNumber", e.target.value)
-                }
-      />
-      ),
-    },
-    {
-      field: "flatFloor",
-      headerName: "Floor",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <Input
-        type="text"
-        value={params.row.flatFloor || ''}
-        onChange={(e) =>
-                  handleCellChange(params.row.id, "flatFloor", e.target.value)
-                }
-      />
-      ),
-    },
-    {
-      field: "flatRoom",
-      headerName: "Room",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <Input
-        type="text"
-        value={params.row.flatRoom || ''}
-        onChange={(e) =>
-                  handleCellChange(params.row.id, "flatRoom", e.target.value)
-                }
-      />
-      ),
-    },
-    {
-      field: "flatToilet",
-      headerName: "Toilet",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <Input
-          type="text"
-          value={params.row.flatToilet || ''}
-          onChange={(e) =>
-                    handleCellChange(params.row.id, "flatToilet", e.target.value)
-                  }
-        />
-      ),
-    },
-    {
-      field: "flatKitchen",
-      headerName: "Kitchen",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <Input
-        type="text"
-        value={params.row.flatKitchen || ''}
-        onChange={(e) =>
-                  handleCellChange(params.row.id, "flatKitchen", e.target.value)
-                }
-      />
-      ),
-    },
-    {
-      field: "flatRent",
-      headerName: "Flat Rent",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <Input
-        type="text"
-        value={params.row.flatRent || ''}
-        onChange={(e) =>
-                  handleCellChange(params.row.id, "flatRent", e.target.value)
-                }
-      />
-      ),
-    },
-    {
-      field: "flatDeposit",
-      headerName: "Deposit",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <Input
-        type="text"
-        value={params.row.flatDeposit || ''}
-        onChange={(e) =>
-                  handleCellChange(params.row.id, "flatDeposit", e.target.value)
-                }
-      />
-      ),
-    },
-    {
-      field: "flatMaintainanceCharges",
-      headerName: "Maintainance Charges",
-      width: 200,
-      editable: true,
-      renderCell: (params) => (
-        <Input
-        type="text"
-        value={params.row.flatMaintainanceCharges || ''}
-        onChange={(e) =>
-                  handleCellChange(params.row.id, "flatMaintainanceCharges", e.target.value)
-                }
-      />
-      ),
-    },
-    {
-      field: "flattrashCharges",
-      headerName: "Trash Charges",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <Input
-        type="text"
-        value={params.row.flattrashCharges || ''}
-        onChange={(e) =>
-                  handleCellChange(params.row.id, "flattrashCharges", e.target.value)
-                }
-      />
-      ),
-    },
-    {
-      field: "flatsecurityCharges",
-      headerName: "Security Charges",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <Input
-        type="text"
-        value={params.row.flatsecurityCharges || ''}
-        onChange={(e) =>
-                  handleCellChange(params.row.id, "flatsecurityCharges", e.target.value)
-                }
-      />
-      ),
-    },
-    {
-      field: "flatStatus",
-      headerName: "Flat Status",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <Select
-          labelId="demo-simple-select-autowidth-label"
-          id="demo-simple-select-autowidth"
-          onChange={(e) =>
-            handleCellChange(params.row.id, "flatStatus", e.target.value)
-          }
-          autoWidth
-          label="flatStatus"
-        >
-          <MenuItem value={0}>Vacant</MenuItem>
-          <MenuItem value={1}>RentOut</MenuItem>
-        </Select>
-      ),
-    },
-  ];
-
+  console.log(rows, "reeeee");
   React.useEffect(() => {
     const numToShow = parseInt(detail?.totalFlat, 10) || 0;
 
     const newRows = Array.from({ length: numToShow }, (_, index) => ({
-      id: index + 1,
+      id: index,
     }));
 
     setRows(
       Array.from({ length: numToShow }, (_, index) => ({
-        id: index + 1,
+        id: index,
       }))
     );
 
@@ -335,21 +134,174 @@ export default function PropertyRegister() {
   }, [detail?.totalFlat]);
 
   const renderDataGrid = () => {
-
     return (
       <div style={{ height: 400, width: "100%" }}>
         <Box sx={{ height: 400, width: "auto" }}>
-          <DataGrid
-            rows={generatedRows}
-            columns={columns}
-            pageSize={5} // Set to the number of rows you want to display per page
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
-              },
-            }}
-            pageSizeOptions={[2, 5, 10]}
-          />
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table" className="propertyTable">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Flat Name</TableCell>
+                  <TableCell>Flat Number</TableCell>
+                  <TableCell>Flat Floor</TableCell>
+                  <TableCell>Rooms</TableCell>
+                  <TableCell>Toilet</TableCell>
+                  <TableCell>Kitchen</TableCell>
+                  <TableCell>Rent</TableCell>
+                  <TableCell>Advance</TableCell>
+                  <TableCell>Maintainance Charges</TableCell>
+                  <TableCell>Trash Charges</TableCell>
+                  <TableCell>Security Charges</TableCell>
+                  <TableCell>Status</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {generatedRows.map((e, i) => (
+                  <TableRow
+                    // key={row.name}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      <Input
+                        placeholder="Flat Name"
+                        onChange={(e) =>
+                          handleCellChange(i, "flatName", e.target.value)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Input
+                        placeholder="Flat Number"
+                        type="number"
+                        onChange={(e) =>
+                          handleCellChange(i, "flatNumber", e.target.value)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Input
+                        placeholder="Flat Floor"
+                        type="number"
+                        onChange={(e) =>
+                          handleCellChange(i, "flatFloor", e.target.value)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Input
+                        placeholder="Flat Rooms"
+                        type="number"
+                        onChange={(e) =>
+                          handleCellChange(i, "flatRooms", e.target.value)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Input
+                        placeholder="Flat Toilet"
+                        type="number"
+                        onChange={(e) =>
+                          handleCellChange(i, "flatToilet", e.target.value)
+                        }
+                      />
+                    </TableCell>
+
+                    <TableCell component="th" scope="row">
+                      <Input
+                        placeholder="Flat Kitchen"
+                        type="number"
+                        onChange={(e) =>
+                          handleCellChange(i, "flatKitchen", e.target.value)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Input
+                        placeholder="Flat Rent"
+                        type="number"
+                        onChange={(e) =>
+                          handleCellChange(i, "flatRent", e.target.value)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Input
+                        placeholder="Flat Advance"
+                        type="number"
+                        onChange={(e) =>
+                          handleCellChange(i, "flatAdvance", e.target.value)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Input
+                        placeholder="Maintainance Charges"
+                        type="number"
+                        onChange={(e) =>
+                          handleCellChange(
+                            i,
+                            "flatMaintananceCharges",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Input
+                        placeholder="Trash Charges"
+                        type="number"
+                        onChange={(e) =>
+                          handleCellChange(
+                            i,
+                            "flatTrashCharges",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Input
+                        placeholder="Security Charges"
+                        type="number"
+                        onChange={(e) =>
+                          handleCellChange(
+                            i,
+                            "flatSecurityCharges",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                    {/* <FormControl fullWidth>
+  <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+  <Select
+          // value={age}
+          onChange={(e) =>
+            handleCellChange(
+              i,
+              "flatStatus",
+              e.target.value
+            )
+          }
+          displayEmpty
+          inputProps={{ 'aria-label': 'Without label' }}
+        >
+          {/* <MenuItem value="">
+            <em>None</em>
+          </MenuItem> */}
+          <MenuItem value={0}>Vacant</MenuItem>
+          <MenuItem value={1}>RentOut</MenuItem>
+        </Select>
+{/* </FormControl> */}
+                    </TableCell>
+
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
         </Box>
       </div>
     );
@@ -400,16 +352,18 @@ export default function PropertyRegister() {
     //   return;
     // }
     const emptyFields = Object.entries(values)
-    .filter(([key, value]) => !value)
-    .map(([key]) => key);
+      .filter(([key, value]) => !value)
+      .map(([key]) => key);
 
-  if (emptyFields.length > 0) {
-    const errorMessage = `Please fill in the following fields: ${emptyFields.join(', ')}.`;
-    toast.error(errorMessage, {
-      position: "top-center",
-    });
-    return;
-  }
+    if (emptyFields.length > 0) {
+      const errorMessage = `Please fill in the following fields: ${emptyFields.join(
+        ", "
+      )}.`;
+      toast.error(errorMessage, {
+        position: "top-center",
+      });
+      return;
+    }
     const requiredFields = [
       "flatName",
       "flatNumber",
@@ -435,7 +389,7 @@ export default function PropertyRegister() {
     //   toast.error(errorMessage, {
     //     position: "top-center",
     //   });
-    // } 
+    // }
     if (
       values?.totalFlat !== 0 ||
       values?.ownerName !== "" ||
@@ -450,7 +404,7 @@ export default function PropertyRegister() {
       values?.totalFloor !== ""
     ) {
       // rows?.flatName!==undefined||rows?.flatNumber!==undefined||rows?.flatFloor!==undefined||rows?.flatRoom!==undefined||rows?.flatToilet!==undefined||rows?.flatKitchen!==undefined||rows?.flatRent!==undefined||rows?.flatDeposit!==undefined||rows?.flatMaintainanceCharges!==undefined||rows?.flattrashCharges!==undefined||rows?.flatsecurityCharges!==undefined||rows?.flatStatus!==undefined
-      if (values?.flatDetail!=='') {
+      if (values?.flatDetail !== "") {
         dispatch(PropertyRegisters({ values })).then((res) => {
           console.log(res, "res");
         });

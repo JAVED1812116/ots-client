@@ -104,3 +104,12 @@ color: #000000;
     justify-content: center;
     width: 100%
   }
+
+  .propertyTable > table > td, th{
+    text-wrap: nowrap;
+    width: max-content;
+  }
+
+  .propertyTable > table > td, th > div{
+    width: 150px !important;
+  }
