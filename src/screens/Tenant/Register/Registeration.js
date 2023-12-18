@@ -33,6 +33,7 @@ export default function Registration() {
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
   const dispatch = useDispatch();
+  const [error, setError] = React.useState({});
   const [detail, setDetail] = React.useState({
     name: "",
     fatherName: "",
@@ -288,6 +289,7 @@ export default function Registration() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     let values = {
       name: detail?.name,
       fatherName: detail?.fatherName,
@@ -309,8 +311,6 @@ export default function Registration() {
       userName: localStorage.getItem("name"),
     };
     dispatch(RegisterTenant({ values })).then((res) => {
-      console.log(res?.payload?.data?.message,"bbbbbbbbbbbbbbbb")
-      // console.log(res?.payload?.data?.message,"res?.payload?.data?.message")
       if (res?.payload?.data?.message === "Tenant Registered Successfully") {
         toast.success("Form Submitted", {
           position: "top-center",
@@ -320,9 +320,21 @@ export default function Registration() {
       }
     });
   };
-
+  // const isDetailDataEmpty = () => {
+  //   // Assuming your detail data is stored in a state variable named detailData
+  //   // Modify this logic based on your actual state structure
+  //   return Object.values(detail).every(value => value === '');
+  // };
+  // console.log(detail,"saeed")
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
+    // if (isDetailDataEmpty()) {
+    //   // Handle the case where the detail data is empty (e.g., show an error message)
+    //   toast.error("Please fill in the detail data.")
+      
+    // } else {
+      setActiveStep(activeStep + 1);
+    // }
+    // setActiveStep(activeStep + 1);
   };
 
   const handleBack = () => {
@@ -332,9 +344,36 @@ export default function Registration() {
   function getSteps() {
     return ["Basic Information", "Personal Information", "Booking"];
   }
-
+  const isCnicValid = (cnicNo) => {
+    // Regular expression for CNIC validation (e.g., 12345-6789012-3)
+    const cnicRegex = /^\d{5}-\d{7}-\d{1}$/;
+    return cnicRegex.test(cnicNo);
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(name,"jjjjjjjjjj")
+    if (
+      (name === "name" ||name==="fatherName"||name==="occupation") &&
+      !/^[A-Za-z\s]*$/.test(value)
+    ) {
+      setError((prev) => ({ ...prev, [name]: true }));
+      // If it's not a valid number, you can choose to ignore the Input or show an error message.
+      return;
+    }
+    if (
+      (name === "mobileNumber") &&
+      !/^[0-9]*$/.test(value)
+    ) {
+      setError((prev) => ({ ...prev, [name]: true }));
+      // If it's not a valid number, you can choose to ignore the Input or show an error message.
+      return;
+    }
+    if (name === "cnicNo" && !isCnicValid(value)) {
+      setError((prev) => ({ ...prev, cnicNo: true }));
+      return;
+    }
+
+    setError((prev) => ({ ...prev, [name]: false }));
     setDetail((prev) => {
       return { ...prev, [name]: value };
     });
@@ -354,6 +393,8 @@ export default function Registration() {
               name="name"
               required={true}
               onChange={handleChange}
+              error={error.name}
+              helperText={error.name ? "Please enter a valid Name" : ""}
             />
             <TextField
               id="fatherName"
@@ -364,15 +405,20 @@ export default function Registration() {
               margin="normal"
               name="fatherName"
               onChange={handleChange}
+              error={error.fatherName}
+              helperText={error.fatherName ? "Please enter a valid Father Name" : ""}
             />
             <TextField
-              id="cnicNo"
+              id="standard-multiline-flexible"
               label="CNIC Number"
               variant="outlined"
-              placeholder="Enter Your CNIC Number"
+              data-inputmask="'mask': '99999-9999999-9'"
+              placeholder="XXXXX-XXXXXXX-X"
               fullWidth
               margin="normal"
               name="cnicNo"
+              error={error.cnicNo}
+              helperText={error.cnicNo ? "Please enter a valid CNIC" : ""}
               onChange={handleChange}
             />
             <TextField
@@ -383,6 +429,20 @@ export default function Registration() {
               fullWidth
               margin="normal"
               name="occupation"
+              error={error.occupation}
+              helperText={error.occupation ? "Please enter a valid Occupation" : ""}
+              onChange={handleChange}
+            />
+            <TextField
+              id="mobileNumber"
+              label="Mobile Number"
+              variant="outlined"
+              placeholder="Enter Your Occupation"
+              fullWidth
+              margin="normal"
+              name="mobileNumber"
+              error={error.mobileNumber}
+              helperText={error.mobileNumber ? "Please enter a valid Mobile Number" : ""}
               onChange={handleChange}
             />
             <TextField
