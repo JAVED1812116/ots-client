@@ -39,6 +39,7 @@ export default function Registration() {
     fatherName: "",
     cnicNo: "",
     occupation: "",
+    mobileNumber:"",
     permanentAddress: "",
     gender: "",
     maritalStatus: "",
@@ -320,22 +321,49 @@ export default function Registration() {
       }
     });
   };
-  // const isDetailDataEmpty = () => {
-  //   // Assuming your detail data is stored in a state variable named detailData
-  //   // Modify this logic based on your actual state structure
-  //   return Object.values(detail).every(value => value === '');
-  // };
+ 
   // console.log(detail,"saeed")
   const handleNext = () => {
-    // if (isDetailDataEmpty()) {
-    //   // Handle the case where the detail data is empty (e.g., show an error message)
-    //   toast.error("Please fill in the detail data.")
-      
-    // } else {
-      setActiveStep(activeStep + 1);
-    // }
-    // setActiveStep(activeStep + 1);
-  };
+ if(activeStep===0){
+  const keysToCheck = ['name', 'fatherName', 'cnicNo', 'occupation', 'mobileNumber', 'permanentAddress','gender','maritialStatus'];
+
+// Assuming your detail data is stored in a state variable named detail
+const emptyFields = keysToCheck
+  .filter(key => !detail[key]) // Check if the value of the specified key is falsy (empty)
+  .map(key => key);
+
+
+if (emptyFields.length > 0) {
+  const errorMessage = `Please fill in the following fields: ${emptyFields.join(", ")}.`;
+  toast.error(errorMessage, {
+    position: "top-center",
+  });
+  return;
+}
+else{
+setActiveStep(activeStep + 1);
+}
+  }else if(activeStep===1){
+    const keysToCheck = ['adultFamilyMembers', 'childrenFamilyMembers', 'language', 'cast'];
+
+    // Assuming your detail data is stored in a state variable named detail
+    const emptyFields = keysToCheck
+      .filter(key => !detail[key]) // Check if the value of the specified key is falsy (empty)
+      .map(key => key);
+    
+    
+    if (emptyFields.length > 0) {
+      const errorMessage = `Please fill in the following fields: ${emptyFields.join(", ")}.`;
+      toast.error(errorMessage, {
+        position: "top-center",
+      });
+      return;
+    }
+    else{
+    setActiveStep(activeStep + 1);
+    }
+  }
+    };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
@@ -352,7 +380,7 @@ export default function Registration() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (
-      (name === "name" ||name==="fatherName"||name==="occupation") &&
+      (name === "name" ||name==="fatherName"||name==="occupation"||name==="language"||name==="cast") &&
       !/^[A-Za-z\s]*$/.test(value)
     ) {
       setError((prev) => ({ ...prev, [name]: true }));
@@ -497,6 +525,7 @@ export default function Registration() {
                 placeholder="Total Family Members"
                 fullWidth
                 margin="normal"
+                type="number"
                 name="adultFamilyMembers"
                 onChange={handleChange}
               />
@@ -512,6 +541,7 @@ export default function Registration() {
                 variant="outlined"
                 placeholder="Total Employed Person"
                 fullWidth
+                type="number"
                 margin="normal"
                 name="childrenFamilyMembers"
                 onChange={handleChange}
@@ -531,6 +561,8 @@ export default function Registration() {
               margin="normal"
               name="language"
               onChange={handleChange}
+              error={error.language}
+              helperText={error.language ? "Please enter a valid Language" : ""}
             />
             <TextField
               id="cast"
@@ -541,6 +573,8 @@ export default function Registration() {
               margin="normal"
               name="cast"
               onChange={handleChange}
+              error={error.cast}
+              helperText={error.cast ? "Please enter a valid Cast" : ""}
             />
           </>
         );
@@ -553,6 +587,7 @@ export default function Registration() {
               variant="outlined"
               placeholder="Enter Your Advance"
               fullWidth
+              type="number"
               margin="normal"
               name="advance"
               onChange={handleChange}
@@ -564,6 +599,7 @@ export default function Registration() {
               placeholder="Enter Your Monthly Rent"
               fullWidth
               margin="normal"
+              type="number"
               name="rent"
               onChange={handleChange}
             />
