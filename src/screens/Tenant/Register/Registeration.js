@@ -65,17 +65,50 @@ export default function Registration() {
     childrenOccupation: "",
     childrenInstituteName: "",
   });
+  // console.log(childrenRows,"childrenRowschildrenRowschildrenRows")
   const [generatedAdultRows, setGeneratedAdultRows] = React.useState([]);
   const [generatedChildrenRows, setGeneratedChildrenRows] = React.useState([]);
   React.useEffect(() => {
     document.title = "Registration";
   }, []);
+  React.useEffect(() => {
+    const numToShow = parseInt(detail?.adultFamilyMembers, 10) || 0;
 
-  const handleFamilyMembersCellChange = (rowId, field, value) => {
+    const newRows = Array.from({ length: numToShow }, (_, index) => ({
+      id: index,
+    }));
+
+    setFamilyMembers(
+      Array.from({ length: numToShow }, (_, index) => ({
+        id: index,
+      }))
+    );
+
+    setGeneratedAdultRows(newRows);
+  }, [detail?.adultFamilyMembers]);
+  React.useEffect(() => {
+    const numToShow = parseInt(detail?.childrenFamilyMembers, 10) || 0;
+
+    const newRows = Array.from({ length: numToShow }, (_, index) => ({
+      id: index,
+    }));
+
+    setChildrenRows(
+      Array.from({ length: numToShow }, (_, index) => ({
+        id: index,
+      }))
+    );
+
+    setGeneratedChildrenRows(newRows);
+  }, [detail?.childrenFamilyMembers]);
+
+
+  const handleFamilyMembersCellChange = (i,e) => {
     // Update the state with the new value
+    const {name,value}=e.target;
     setFamilyMembers((prevRows) => {
       return prevRows.map((row) =>
-        row.id === rowId ? { ...row, [field]: value } : row
+        row.id === i ? { ...row, [name]: value } : row
       );
     });
   };
@@ -84,10 +117,11 @@ export default function Registration() {
     const {name,value}=e.target;
     setChildrenRows((prevRows) => {
       return prevRows.map((row) =>
-        row.id === i ? { ...row, [name]: value } : row
+      row.id === i ? { ...row, [name]: value } : row
       );
     });
   };
+
 
   const renderFamilyMemberGrid = () => {
     return (
@@ -215,6 +249,7 @@ export default function Registration() {
                     </TableCell>
                     <TableCell component="th" scope="row">
                       <Input
+                      type="number"
                         name="childrenAge"
                         onChange={(e) => handleChildrenCellChange(i, e)}
                       />
@@ -248,37 +283,6 @@ export default function Registration() {
       </div>
     );
   };
-
-  React.useEffect(() => {
-    const numToShow = parseInt(detail?.adultFamilyMembers, 10) || 0;
-
-    const newRows = Array.from({ length: numToShow }, (_, index) => ({
-      id: index + 1,
-    }));
-
-    setFamilyMembers(
-      Array.from({ length: numToShow }, (_, index) => ({
-        id: index + 1,
-      }))
-    );
-
-    setGeneratedAdultRows(newRows);
-  }, [detail?.adultFamilyMembers]);
-  React.useEffect(() => {
-    const numToShow = parseInt(detail?.childrenFamilyMembers, 10) || 0;
-
-    const newRows = Array.from({ length: numToShow }, (_, index) => ({
-      id: index + 1,
-    }));
-
-    setChildrenRows(
-      Array.from({ length: numToShow }, (_, index) => ({
-        id: index + 1,
-      }))
-    );
-
-    setGeneratedChildrenRows(newRows);
-  }, [detail?.childrenFamilyMembers]);
 
 
 

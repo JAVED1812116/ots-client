@@ -336,6 +336,7 @@ export default function PropertyRegister() {
       }),
     }),
   }));
+  console.log(rows,"rows")
   const onFinish = () => {
     let values = {
       ownerName: detail?.ownerName,
