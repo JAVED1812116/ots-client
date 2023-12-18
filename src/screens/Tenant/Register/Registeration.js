@@ -21,6 +21,14 @@ import { toast } from "react-toastify";
 import { DataGrid } from "@mui/x-data-grid";
 import MuiAppBar from "@mui/material/AppBar";
 import { styled } from "@mui/material/styles";
+import { Input } from "@mui/material";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 export default function Registration() {
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
@@ -41,7 +49,7 @@ export default function Registration() {
     advance: "",
     rent: "",
   });
-  const [rows, setRows] = React.useState({
+  const [familyMembers, setFamilyMembers] = React.useState({
     familyMembersName: "",
     familyMembersFatherName: "",
     familyMembersCnic: "",
@@ -63,265 +71,184 @@ export default function Registration() {
     document.title = "Registration";
   }, []);
 
-  const handleCellChange = (rowId, field, value) => {
+  const handleFamilyMembersCellChange = (rowId, field, value) => {
     // Update the state with the new value
-    console.log(value, "LLLLLLLLLLLLLLLLLLLLLL");
-    setRows((prevRows) => {
+    setFamilyMembers((prevRows) => {
       return prevRows.map((row) =>
         row.id === rowId ? { ...row, [field]: value } : row
       );
     });
   };
-  const handleChildrenCellChange = (rowId, field, value) => {
+  const handleChildrenCellChange = (i,e) => {
     // Update the state with the new value
+    const {name,value}=e.target;
     setChildrenRows((prevRows) => {
       return prevRows.map((row) =>
-        row.id === rowId ? { ...row, [field]: value } : row
+        row.id === i ? { ...row, [name]: value } : row
       );
     });
   };
 
-  const adultColumns = [
-    { field: "id", headerName: "ID", width: 70 },
-    {
-      field: "familyMembersName",
-      headerName: "Name",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <input
-          type="text"
-          style={{ width: 125 }}
-          value={params.row.familyMembersName || ""}
-          onChange={(e) =>
-            handleCellChange(params.row.id, "familyMembersName", e.target.value)
-          }
-        />
-      ),
-    },
-    {
-      field: "familyMembersFatherName",
-      headerName: "Father Name",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        console.log(params, "baba"),
-        (
-          <input
-            type="text"
-            style={{ width: 125 }}
-            value={params.row.familyMembersFatherName || ""}
-            onChange={(e) =>
-              handleCellChange(
-                params.row.id,
-                "familyMembersFatherName",
-                e.target.value
-              )
-            }
-          />
-        )
-      ),
-    },
+  const renderFamilyMemberGrid = () => {
+    return (
+      <div style={{ height: 400, width: "100%" }}>
+        <Box sx={{ height: 400, width: "auto" }}>
+          <TableContainer component={Paper}>
+            <Table
+              sx={{ minWidth: 650 }}
+              aria-label="simple table"
+              className="propertyTable"
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Father Name</TableCell>
+                  <TableCell>Cnic</TableCell>
+                  <TableCell>Relation</TableCell>
+                  <TableCell>Age</TableCell>
+                  <TableCell>Occupation</TableCell>
+                  <TableCell>Company Name</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {generatedAdultRows.map((e, i) => (
+                  <TableRow
+                    // key={row.name}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      <Input
+                        name="familyMembersName"
+                        onChange={(e) => handleFamilyMembersCellChange(i, e)}
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Input
+                        name="familyMembersFatherName"
+                        onChange={(e) => handleFamilyMembersCellChange(i, e)}
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Input
+                        name="familyMembersCnic"
+                        onChange={(e) => handleFamilyMembersCellChange(i, e)}
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Input
+                        name="familyMembersRelation"
+                        onChange={(e) => handleFamilyMembersCellChange(i, e)}
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Input
+                        name="familyMembersAge"
+                        onChange={(e) => handleFamilyMembersCellChange(i, e)}
+                      />
+                    </TableCell>
+                  
+                    <TableCell component="th" scope="row">
+                      <Select
+                        name="familyMembersOccupation"
+                        onChange={(e) => handleFamilyMembersCellChange(i, e)}
+                        displayEmpty
+                        inputProps={{ "aria-label": "Without label" }}
+                      >
+                        <MenuItem value={0}>Nothing</MenuItem>
+                        <MenuItem value={1}>Student</MenuItem>
+                        <MenuItem value={2}>Work</MenuItem>
+                      </Select>
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Input
+                        name="familyMembersCompanyName"
+                        onChange={(e) => handleFamilyMembersCellChange(i, e)}
+                      />
+                    </TableCell>
+                  
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      </div>
+    );
+  };
+  
+  const renderChildrenGrid = () => {
+    return (
+      <div style={{ height: 400, width: "100%" }}>
+        <Box sx={{ height: 400, width: "auto" }}>
+          <TableContainer component={Paper}>
+            <Table
+              sx={{ minWidth: 650 }}
+              aria-label="simple table"
+              className="propertyTable"
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Father Name</TableCell>
+                  <TableCell>Age</TableCell>
+                  <TableCell>Occupation</TableCell>
+                  <TableCell>Institute Name</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {generatedChildrenRows.map((e, i) => (
+                  <TableRow
+                    // key={row.name}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      <Input
+                        name="childrenName"
+                        onChange={(e) => handleChildrenCellChange(i, e)}
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Input
+                        name="childrenFatherName"
+                        onChange={(e) => handleChildrenCellChange(i, e)}
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Input
+                        name="childrenAge"
+                        onChange={(e) => handleChildrenCellChange(i, e)}
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Select
+                        name="childrenOccupation"
+                        onChange={(e) => handleChildrenCellChange(i, e)}
+                        displayEmpty
+                        inputProps={{ "aria-label": "Without label" }}
+                      >
+                        <MenuItem value={0}>Nothing</MenuItem>
+                        <MenuItem value={1}>Student</MenuItem>
+                        <MenuItem value={2}>Work</MenuItem>
+                      </Select>
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Input
+                        name="childrenInstituteName"
+                        onChange={(e) => handleChildrenCellChange(i, e)}
+                      />
+                    </TableCell>
 
-    {
-      field: "familyMembersCnic",
-      headerName: "CNIC",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <input
-          type="text"
-          style={{ width: 125 }}
-          value={params.row.familyMembersCnic || ""}
-          onChange={(e) =>
-            handleCellChange(params.row.id, "familyMembersCnic", e.target.value)
-          }
-        />
-      ),
-    },
-    {
-      field: "familyMembersRelations",
-      headerName: "Relation",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <input
-          type="text"
-          style={{ width: 125 }}
-          value={params.row.familyMembersRelations || ""}
-          onChange={(e) =>
-            handleCellChange(
-              params.row.id,
-              "familyMembersRelations",
-              e.target.value
-            )
-          }
-        />
-      ),
-    },
-    {
-      field: "familyMembersAge",
-      headerName: "Age",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <input
-          type="text"
-          style={{ width: 125 }}
-          value={params.row.familyMembersAge || ""}
-          onChange={(e) =>
-            handleCellChange(params.row.id, "familyMembersAge", e.target.value)
-          }
-        />
-      ),
-    },
-    {
-      field: "adultOccupation",
-      headerName: "Occupation",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <Select
-          labelId="demo-simple-select-autowidth-label"
-          id="demo-simple-select-autowidth"
-          onChange={(e) =>
-            handleCellChange(params.row.id, "adultOccupation", e.target.value)
-          }
-          autoWidth
-          label="adultOccupation"
-        >
-          <MenuItem value={1}>Student</MenuItem>
-          <MenuItem value={2}>Employeed</MenuItem>
-          <MenuItem value={0}>Nothing</MenuItem>
-        </Select>
-      ),
-    },
-    {
-      field: "companyName",
-      headerName: "Company Name",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <input
-          type="text"
-          style={{ width: 125 }}
-          value={params.row.companyName || ""}
-          onChange={(e) =>
-            handleCellChange(params.row.id, "companyName", e.target.value)
-          }
-        />
-      ),
-    },
-  ];
-  const childrenColumns = [
-    { field: "id", headerName: "ID", width: 70 },
+                  
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      </div>
+    );
+  };
 
-    {
-      field: "childrenName",
-      headerName: "Name",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <input
-          type="text"
-          style={{ width: 125 }}
-          value={params.row.childrenName || ""}
-          onChange={(e) =>
-            handleChildrenCellChange(
-              params.row.id,
-              "childrenName",
-              e.target.value
-            )
-          }
-        />
-      ),
-    },
-    {
-      field: "childrenFatherName",
-      headerName: "Father Name",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <input
-          type="text"
-          style={{ width: 125 }}
-          value={params.row.childrenFatherName || ""}
-          onChange={(e) =>
-            handleChildrenCellChange(
-              params.row.id,
-              "childrenFatherName",
-              e.target.value
-            )
-          }
-        />
-      ),
-    },
-    {
-      field: "childrenAge",
-      headerName: "Age",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <input
-          type="text"
-          style={{ width: 125 }}
-          value={params.row.childrenAge || ""}
-          onChange={(e) =>
-            handleChildrenCellChange(
-              params.row.id,
-              "childrenAge",
-              e.target.value
-            )
-          }
-        />
-      ),
-    },
-    {
-      field: "childrenOccupation",
-      headerName: "Occupation",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <Select
-          labelId="demo-simple-select-autowidth-label"
-          id="demo-simple-select-autowidth"
-          onChange={(e) =>
-            handleChildrenCellChange(
-              params.row.id,
-              "childrenOccupation",
-              e.target.value
-            )
-          }
-          autoWidth
-          label="childrenOccupation"
-        >
-          <MenuItem value={1}>Student</MenuItem>
-          <MenuItem value={2}>Employeed</MenuItem>
-          <MenuItem value={0}>Nothing</MenuItem>
-        </Select>
-      ),
-    },
-    {
-      field: "childrenInstituteName",
-      headerName: "Institute Name",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <input
-          type="text"
-          style={{ width: 125 }}
-          value={params.row.childrenInstituteName || ""}
-          onChange={(e) =>
-            handleChildrenCellChange(
-              params.row.id,
-              "childrenInstituteName",
-              e.target.value
-            )
-          }
-        />
-      ),
-    },
-  ];
   React.useEffect(() => {
     const numToShow = parseInt(detail?.adultFamilyMembers, 10) || 0;
 
@@ -329,7 +256,7 @@ export default function Registration() {
       id: index + 1,
     }));
 
-    setRows(
+    setFamilyMembers(
       Array.from({ length: numToShow }, (_, index) => ({
         id: index + 1,
       }))
@@ -353,44 +280,8 @@ export default function Registration() {
     setGeneratedChildrenRows(newRows);
   }, [detail?.childrenFamilyMembers]);
 
-  const renderFamilyMemberGrid = () => {
-    return (
-      <div style={{ height: 400, width: "100%" }}>
-        <Box sx={{ height: 400, width: "auto" }}>
-          <DataGrid
-            rows={generatedAdultRows}
-            columns={adultColumns}
-            pageSize={5} // Set to the number of rows you want to display per page
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
-              },
-            }}
-            pageSizeOptions={[2, 5, 10]}
-          />
-        </Box>
-      </div>
-    );
-  };
-  const renderEmployedMemberGrid = () => {
-    return (
-      <div style={{ height: 400, width: "100%" }}>
-        <Box sx={{ height: 400, width: "auto" }}>
-          <DataGrid
-            rows={generatedChildrenRows}
-            columns={childrenColumns}
-            pageSize={5} // Set to the number of rows you want to display per page
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
-              },
-            }}
-            pageSizeOptions={[2, 5, 10]}
-          />
-        </Box>
-      </div>
-    );
-  };
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let values = {
@@ -408,7 +299,7 @@ export default function Registration() {
       cast: detail?.cast,
       advance: detail?.advance,
       rent: detail?.rent,
-      adultDetail: rows,
+      adultDetail: familyMembers,
       childrenDetail: childrenRows,
       userId: localStorage.getItem("user_id"),
       userName: localStorage.getItem("name"),
@@ -561,7 +452,7 @@ export default function Registration() {
               {detail?.childrenFamilyMembers === 0 ||
               detail?.childrenFamilyMembers?.length === 0
                 ? " "
-                : renderEmployedMemberGrid()}
+                : renderChildrenGrid()}
             </FormControl>
 
             <TextField
