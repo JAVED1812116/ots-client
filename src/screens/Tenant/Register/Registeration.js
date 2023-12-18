@@ -17,7 +17,7 @@ import {
 import Logo from "../../../assets/Logo.png";
 import { RegisterTenant } from "../../../redux/Reducer/TenantRegestration";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { DataGrid } from "@mui/x-data-grid";
 import MuiAppBar from "@mui/material/AppBar";
 import { styled } from "@mui/material/styles";
@@ -309,8 +309,12 @@ export default function Registration() {
       userName: localStorage.getItem("name"),
     };
     dispatch(RegisterTenant({ values })).then((res) => {
+      console.log(res?.payload?.data?.message,"bbbbbbbbbbbbbbbb")
       // console.log(res?.payload?.data?.message,"res?.payload?.data?.message")
       if (res?.payload?.data?.message === "Tenant Registered Successfully") {
+        toast.success("Form Submitted", {
+          position: "top-center",
+        });
       } else {
         console.log("else");
       }
@@ -585,6 +589,7 @@ export default function Registration() {
           </Box>
         </Container>
       )}
+      <ToastContainer />
     </div>
   );
 }
