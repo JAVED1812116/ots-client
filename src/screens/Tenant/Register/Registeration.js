@@ -66,7 +66,7 @@ export default function Registration() {
     childrenOccupation: "",
     childrenInstituteName: "",
   });
-  // console.log(childrenRows,"childrenRowschildrenRowschildrenRows")
+  
   const [generatedAdultRows, setGeneratedAdultRows] = React.useState([]);
   const [generatedChildrenRows, setGeneratedChildrenRows] = React.useState([]);
   React.useEffect(() => {
@@ -351,7 +351,6 @@ export default function Registration() {
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name,"jjjjjjjjjj")
     if (
       (name === "name" ||name==="fatherName"||name==="occupation") &&
       !/^[A-Za-z\s]*$/.test(value)
@@ -643,7 +642,7 @@ export default function Registration() {
                 >
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
                 </Button>
-                {console.log(steps.length, "activestep")}
+                
               </Box>
             </>
           </Box>
