@@ -290,7 +290,26 @@ export default function Registration() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+    if(activeStep===2){
+      const keysToCheck = ['advance', 'rent'];
+  
+      // Assuming your detail data is stored in a state variable named detail
+      const emptyFields = keysToCheck
+        .filter(key => !detail[key]) // Check if the value of the specified key is falsy (empty)
+        .map(key => key);
+      
+      
+      if (emptyFields.length > 0) {
+        const errorMessage = `Please fill in the following fields: ${emptyFields.join(", ")}.`;
+        toast.error(errorMessage, {
+          position: "top-center",
+        });
+        return;
+      }
+      else{
+      setActiveStep(activeStep + 1);
+      }
+    }
     let values = {
       name: detail?.name,
       fatherName: detail?.fatherName,
@@ -345,25 +364,6 @@ setActiveStep(activeStep + 1);
 }
   }else if(activeStep===1){
     const keysToCheck = ['adultFamilyMembers', 'childrenFamilyMembers', 'language', 'cast'];
-
-    // Assuming your detail data is stored in a state variable named detail
-    const emptyFields = keysToCheck
-      .filter(key => !detail[key]) // Check if the value of the specified key is falsy (empty)
-      .map(key => key);
-    
-    
-    if (emptyFields.length > 0) {
-      const errorMessage = `Please fill in the following fields: ${emptyFields.join(", ")}.`;
-      toast.error(errorMessage, {
-        position: "top-center",
-      });
-      return;
-    }
-    else{
-    setActiveStep(activeStep + 1);
-    }
-  }else if(activeStep===2){
-    const keysToCheck = ['advance', 'rent'];
 
     // Assuming your detail data is stored in a state variable named detail
     const emptyFields = keysToCheck
@@ -651,8 +651,8 @@ setActiveStep(activeStep + 1);
   return (
     <div>
       {activeStep === steps.length ? (
-        <Typography variant="h3" align="center">
-          Thank You
+        <Typography variant="h1" align="center">
+          Pending
         </Typography>
       ) : (
         <Container maxWidth="sm">
