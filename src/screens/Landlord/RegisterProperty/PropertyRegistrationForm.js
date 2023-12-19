@@ -354,8 +354,8 @@ export default function PropertyRegister() {
       totalFloor: detail?.totalFloor,
       totalFlat: detail?.totalFlat,
       flatDetail: rows,
-      userId: localStorage.getItem("user_id"),
-      userName: localStorage.getItem("name"),
+      userId: sessionStorage.getItem("user_id"),
+      userName: sessionStorage.getItem("name"),
     };
     // const isEmptyField = Object.values(values).some(value => !value);
 
