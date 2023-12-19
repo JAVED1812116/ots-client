@@ -39,7 +39,7 @@ export default function Registration() {
     fatherName: "",
     cnicNo: "",
     occupation: "",
-    mobileNumber:"",
+    mobileNumber: "",
     permanentAddress: "",
     gender: "",
     maritalStatus: "",
@@ -67,7 +67,7 @@ export default function Registration() {
     childrenOccupation: "",
     childrenInstituteName: "",
   });
-  
+
   const [generatedAdultRows, setGeneratedAdultRows] = React.useState([]);
   const [generatedChildrenRows, setGeneratedChildrenRows] = React.useState([]);
   React.useEffect(() => {
@@ -104,26 +104,24 @@ export default function Registration() {
     setGeneratedChildrenRows(newRows);
   }, [detail?.childrenFamilyMembers]);
 
-
-  const handleFamilyMembersCellChange = (i,e) => {
+  const handleFamilyMembersCellChange = (i, e) => {
     // Update the state with the new value
-    const {name,value}=e.target;
+    const { name, value } = e.target;
     setFamilyMembers((prevRows) => {
       return prevRows.map((row) =>
         row.id === i ? { ...row, [name]: value } : row
       );
     });
   };
-  const handleChildrenCellChange = (i,e) => {
+  const handleChildrenCellChange = (i, e) => {
     // Update the state with the new value
-    const {name,value}=e.target;
+    const { name, value } = e.target;
     setChildrenRows((prevRows) => {
       return prevRows.map((row) =>
-      row.id === i ? { ...row, [name]: value } : row
+        row.id === i ? { ...row, [name]: value } : row
       );
     });
   };
-
 
   const renderFamilyMemberGrid = () => {
     return (
@@ -182,7 +180,7 @@ export default function Registration() {
                         onChange={(e) => handleFamilyMembersCellChange(i, e)}
                       />
                     </TableCell>
-                  
+
                     <TableCell component="th" scope="row">
                       <Select
                         name="familyMembersOccupation"
@@ -201,7 +199,6 @@ export default function Registration() {
                         onChange={(e) => handleFamilyMembersCellChange(i, e)}
                       />
                     </TableCell>
-                  
                   </TableRow>
                 ))}
               </TableBody>
@@ -211,7 +208,7 @@ export default function Registration() {
       </div>
     );
   };
-  
+
   const renderChildrenGrid = () => {
     return (
       <div style={{ height: 400, width: "100%" }}>
@@ -251,7 +248,7 @@ export default function Registration() {
                     </TableCell>
                     <TableCell component="th" scope="row">
                       <Input
-                      type="number"
+                        type="number"
                         name="childrenAge"
                         onChange={(e) => handleChildrenCellChange(i, e)}
                       />
@@ -274,8 +271,6 @@ export default function Registration() {
                         onChange={(e) => handleChildrenCellChange(i, e)}
                       />
                     </TableCell>
-
-                  
                   </TableRow>
                 ))}
               </TableBody>
@@ -286,28 +281,26 @@ export default function Registration() {
     );
   };
 
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(activeStep===2){
-      const keysToCheck = ['advance', 'rent'];
-  
+    if (activeStep === 2) {
+      const keysToCheck = ["advance", "rent"];
+
       // Assuming your detail data is stored in a state variable named detail
       const emptyFields = keysToCheck
-        .filter(key => !detail[key]) // Check if the value of the specified key is falsy (empty)
-        .map(key => key);
-      
-      
+        .filter((key) => !detail[key]) // Check if the value of the specified key is falsy (empty)
+        .map((key) => key);
+
       if (emptyFields.length > 0) {
-        const errorMessage = `Please fill in the following fields: ${emptyFields.join(", ")}.`;
+        const errorMessage = `Please fill in the following fields: ${emptyFields.join(
+          ", "
+        )}.`;
         toast.error(errorMessage, {
           position: "top-center",
         });
         return;
-      }
-      else{
-      setActiveStep(activeStep + 1);
+      } else {
+        setActiveStep(activeStep + 1);
       }
     }
     let values = {
@@ -340,49 +333,63 @@ export default function Registration() {
       }
     });
   };
- 
+
   // console.log(detail,"saeed")
   const handleNext = () => {
- if(activeStep===0){
-  const keysToCheck = ['name', 'fatherName', 'cnicNo', 'occupation', 'mobileNumber', 'permanentAddress','gender','maritialStatus'];
+    if (activeStep === 0) {
+      const keysToCheck = [
+        "name",
+        "fatherName",
+        "cnicNo",
+        "occupation",
+        "mobileNumber",
+        "permanentAddress",
+        "gender",
+        "maritialStatus",
+      ];
 
-// Assuming your detail data is stored in a state variable named detail
-const emptyFields = keysToCheck
-  .filter(key => !detail[key]) // Check if the value of the specified key is falsy (empty)
-  .map(key => key);
+      // Assuming your detail data is stored in a state variable named detail
+      const emptyFields = keysToCheck
+        .filter((key) => !detail[key]) // Check if the value of the specified key is falsy (empty)
+        .map((key) => key);
 
+      if (emptyFields.length > 0) {
+        const errorMessage = `Please fill in the following fields: ${emptyFields.join(
+          ", "
+        )}.`;
+        toast.error(errorMessage, {
+          position: "top-center",
+        });
+        return;
+      } else {
+        setActiveStep(activeStep + 1);
+      }
+    } else if (activeStep === 1) {
+      const keysToCheck = [
+        "adultFamilyMembers",
+        "childrenFamilyMembers",
+        "language",
+        "cast",
+      ];
 
-if (emptyFields.length > 0) {
-  const errorMessage = `Please fill in the following fields: ${emptyFields.join(", ")}.`;
-  toast.error(errorMessage, {
-    position: "top-center",
-  });
-  return;
-}
-else{
-setActiveStep(activeStep + 1);
-}
-  }else if(activeStep===1){
-    const keysToCheck = ['adultFamilyMembers', 'childrenFamilyMembers', 'language', 'cast'];
+      // Assuming your detail data is stored in a state variable named detail
+      const emptyFields = keysToCheck
+        .filter((key) => !detail[key]) // Check if the value of the specified key is falsy (empty)
+        .map((key) => key);
 
-    // Assuming your detail data is stored in a state variable named detail
-    const emptyFields = keysToCheck
-      .filter(key => !detail[key]) // Check if the value of the specified key is falsy (empty)
-      .map(key => key);
-    
-    
-    if (emptyFields.length > 0) {
-      const errorMessage = `Please fill in the following fields: ${emptyFields.join(", ")}.`;
-      toast.error(errorMessage, {
-        position: "top-center",
-      });
-      return;
+      if (emptyFields.length > 0) {
+        const errorMessage = `Please fill in the following fields: ${emptyFields.join(
+          ", "
+        )}.`;
+        toast.error(errorMessage, {
+          position: "top-center",
+        });
+        return;
+      } else {
+        setActiveStep(activeStep + 1);
+      }
     }
-    else{
-    setActiveStep(activeStep + 1);
-    }
-  }
-    };
+  };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
@@ -399,17 +406,18 @@ setActiveStep(activeStep + 1);
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (
-      (name === "name" ||name==="fatherName"||name==="occupation"||name==="language"||name==="cast") &&
+      (name === "name" ||
+        name === "fatherName" ||
+        name === "occupation" ||
+        name === "language" ||
+        name === "cast") &&
       !/^[A-Za-z\s]*$/.test(value)
     ) {
       setError((prev) => ({ ...prev, [name]: true }));
       // If it's not a valid number, you can choose to ignore the Input or show an error message.
       return;
     }
-    if (
-      (name === "mobileNumber") &&
-      !/^[0-9]*$/.test(value)
-    ) {
+    if (name === "mobileNumber" && !/^[0-9]*$/.test(value)) {
       setError((prev) => ({ ...prev, [name]: true }));
       // If it's not a valid number, you can choose to ignore the Input or show an error message.
       return;
@@ -452,7 +460,9 @@ setActiveStep(activeStep + 1);
               name="fatherName"
               onChange={handleChange}
               error={error.fatherName}
-              helperText={error.fatherName ? "Please enter a valid Father Name" : ""}
+              helperText={
+                error.fatherName ? "Please enter a valid Father Name" : ""
+              }
             />
             <TextField
               id="standard-multiline-flexible"
@@ -469,26 +479,30 @@ setActiveStep(activeStep + 1);
             />
             <TextField
               id="occupation"
-              label="occupation"
+              label="Occupation"
               variant="outlined"
               placeholder="Enter Your Occupation"
               fullWidth
               margin="normal"
               name="occupation"
               error={error.occupation}
-              helperText={error.occupation ? "Please enter a valid Occupation" : ""}
+              helperText={
+                error.occupation ? "Please enter a valid Occupation" : ""
+              }
               onChange={handleChange}
             />
             <TextField
               id="mobileNumber"
               label="Mobile Number"
               variant="outlined"
-              placeholder="Enter Your Occupation"
+              placeholder="Enter Your Mobile Number"
               fullWidth
               margin="normal"
               name="mobileNumber"
               error={error.mobileNumber}
-              helperText={error.mobileNumber ? "Please enter a valid Mobile Number" : ""}
+              helperText={
+                error.mobileNumber ? "Please enter a valid Mobile Number" : ""
+              }
               onChange={handleChange}
             />
             <TextField
@@ -697,7 +711,6 @@ setActiveStep(activeStep + 1);
                 >
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
                 </Button>
-                
               </Box>
             </>
           </Box>
