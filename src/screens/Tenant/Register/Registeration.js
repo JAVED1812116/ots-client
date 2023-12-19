@@ -127,83 +127,88 @@ export default function Registration() {
     return (
       <div style={{ height: 400, width: "100%" }}>
         <Box sx={{ height: 400, width: "auto" }}>
-          <TableContainer component={Paper}>
-            <Table
-              sx={{ minWidth: 650 }}
-              aria-label="simple table"
-              className="propertyTable"
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Father Name</TableCell>
-                  <TableCell>Cnic</TableCell>
-                  <TableCell>Relation</TableCell>
-                  <TableCell>Age</TableCell>
-                  <TableCell>Occupation</TableCell>
-                  <TableCell>Company Name</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {generatedAdultRows.map((e, i) => (
-                  <TableRow
-                    // key={row.name}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      <Input
-                        name="familyMembersName"
-                        onChange={(e) => handleFamilyMembersCellChange(i, e)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Input
-                        name="familyMembersFatherName"
-                        onChange={(e) => handleFamilyMembersCellChange(i, e)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Input
-                        name="familyMembersCnic"
-                        onChange={(e) => handleFamilyMembersCellChange(i, e)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Input
-                        name="familyMembersRelation"
-                        onChange={(e) => handleFamilyMembersCellChange(i, e)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Input
-                        name="familyMembersAge"
-                        onChange={(e) => handleFamilyMembersCellChange(i, e)}
-                      />
-                    </TableCell>
-
-                    <TableCell component="th" scope="row">
-                      <Select
-                        name="familyMembersOccupation"
-                        onChange={(e) => handleFamilyMembersCellChange(i, e)}
-                        displayEmpty
-                        inputProps={{ "aria-label": "Without label" }}
-                      >
-                        <MenuItem value={0}>Nothing</MenuItem>
-                        <MenuItem value={1}>Student</MenuItem>
-                        <MenuItem value={2}>Work</MenuItem>
-                      </Select>
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Input
-                        name="familyMembersCompanyName"
-                        onChange={(e) => handleFamilyMembersCellChange(i, e)}
-                      />
-                    </TableCell>
+          <Paper sx={{ width: "100%", overflow: "hidden" }}>
+            <TableContainer sx={{ maxHeight: 400 }}>
+              <Table
+                sx={{ minWidth: 650 }}
+                aria-label="simple table"
+                className="propertyTable"
+                stickyHeader
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell>No.</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Father Name</TableCell>
+                    <TableCell>Cnic</TableCell>
+                    <TableCell>Relation</TableCell>
+                    <TableCell>Age</TableCell>
+                    <TableCell>Occupation</TableCell>
+                    <TableCell>Company Name</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {generatedAdultRows.map((e, i) => (
+                    <TableRow
+                      // key={row.name}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>{i + 1}.</TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          name="familyMembersName"
+                          onChange={(e) => handleFamilyMembersCellChange(i, e)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          name="familyMembersFatherName"
+                          onChange={(e) => handleFamilyMembersCellChange(i, e)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          name="familyMembersCnic"
+                          onChange={(e) => handleFamilyMembersCellChange(i, e)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          name="familyMembersRelation"
+                          onChange={(e) => handleFamilyMembersCellChange(i, e)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          name="familyMembersAge"
+                          onChange={(e) => handleFamilyMembersCellChange(i, e)}
+                        />
+                      </TableCell>
+
+                      <TableCell component="th" scope="row">
+                        <Select
+                          name="familyMembersOccupation"
+                          onChange={(e) => handleFamilyMembersCellChange(i, e)}
+                          displayEmpty
+                          inputProps={{ "aria-label": "Without label" }}
+                        >
+                          <MenuItem value={0}>Nothing</MenuItem>
+                          <MenuItem value={1}>Student</MenuItem>
+                          <MenuItem value={2}>Work</MenuItem>
+                        </Select>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          name="familyMembersCompanyName"
+                          onChange={(e) => handleFamilyMembersCellChange(i, e)}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
         </Box>
       </div>
     );
@@ -213,69 +218,74 @@ export default function Registration() {
     return (
       <div style={{ height: 400, width: "100%" }}>
         <Box sx={{ height: 400, width: "auto" }}>
-          <TableContainer component={Paper}>
-            <Table
-              sx={{ minWidth: 650 }}
-              aria-label="simple table"
-              className="propertyTable"
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Father Name</TableCell>
-                  <TableCell>Age</TableCell>
-                  <TableCell>Occupation</TableCell>
-                  <TableCell>Institute Name</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {generatedChildrenRows.map((e, i) => (
-                  <TableRow
-                    // key={row.name}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      <Input
-                        name="childrenName"
-                        onChange={(e) => handleChildrenCellChange(i, e)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Input
-                        name="childrenFatherName"
-                        onChange={(e) => handleChildrenCellChange(i, e)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Input
-                        type="number"
-                        name="childrenAge"
-                        onChange={(e) => handleChildrenCellChange(i, e)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Select
-                        name="childrenOccupation"
-                        onChange={(e) => handleChildrenCellChange(i, e)}
-                        displayEmpty
-                        inputProps={{ "aria-label": "Without label" }}
-                      >
-                        <MenuItem value={0}>Nothing</MenuItem>
-                        <MenuItem value={1}>Student</MenuItem>
-                        <MenuItem value={2}>Work</MenuItem>
-                      </Select>
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Input
-                        name="childrenInstituteName"
-                        onChange={(e) => handleChildrenCellChange(i, e)}
-                      />
-                    </TableCell>
+          <Paper sx={{ width: "100%", overflow: "hidden" }}>
+            <TableContainer sx={{ maxHeight: 400 }}>
+              <Table
+                sx={{ minWidth: 650 }}
+                aria-label="simple table"
+                className="propertyTable"
+                stickyHeader
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell>No.</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Father Name</TableCell>
+                    <TableCell>Age</TableCell>
+                    <TableCell>Occupation</TableCell>
+                    <TableCell>Institute Name</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {generatedChildrenRows.map((e, i) => (
+                    <TableRow
+                      // key={row.name}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>{i + 1}.</TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          name="childrenName"
+                          onChange={(e) => handleChildrenCellChange(i, e)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          name="childrenFatherName"
+                          onChange={(e) => handleChildrenCellChange(i, e)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          type="number"
+                          name="childrenAge"
+                          onChange={(e) => handleChildrenCellChange(i, e)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Select
+                          name="childrenOccupation"
+                          onChange={(e) => handleChildrenCellChange(i, e)}
+                          displayEmpty
+                          inputProps={{ "aria-label": "Without label" }}
+                        >
+                          <MenuItem value={0}>Nothing</MenuItem>
+                          <MenuItem value={1}>Student</MenuItem>
+                          <MenuItem value={2}>Work</MenuItem>
+                        </Select>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          name="childrenInstituteName"
+                          onChange={(e) => handleChildrenCellChange(i, e)}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
         </Box>
       </div>
     );
