@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./auth.css";
 import { Button } from "@mui/base";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -20,17 +20,20 @@ const LoginUser = () => {
   const location=useLocation();
   const navigate = useNavigate();
   // console.log(location.state.type,"Location")
-  title("Login")
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
   const [email,setEmail]=useState(null);
   const [password,setPassword]=useState(null);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-console.log(location?.state?.type,"loooooooooooo")
+  console.log(location?.state?.type,"loooooooooooo")
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  useEffect(()=>{
+    location?.state?.type===undefined&&  navigate("/")
+  },[])
   const login = () => {
+    title("Login")
     
     if((email && password!=null)||""){
       var regexEmail = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
@@ -147,7 +150,7 @@ console.log(location?.state?.type,"loooooooooooo")
         <div className="Login flex">
           <div className="newAccount">
             Don't Have Account?
-            {location.state.type==="Landlord"?
+            {location?.state?.type==="Landlord"?
             <Link to={"/signup"} state={{type:"Landlord"}} className="nodecoration signuplink">Signup</Link>:<Link to={"/signup"} state={{type:"Tenant"}} className="nodecoration signuplink">Signup</Link>
             }
           </div>

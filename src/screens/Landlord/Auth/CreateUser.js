@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./auth.css";
 import { Button } from "@mui/base";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -24,7 +24,6 @@ import { UserAdd } from "../../../Redux/Reducer/CreateUser";
 
 // import Button from '@mui/material/Button';
 const CreateUser = () => {
-  title("SignUp");
   const location = useLocation();
   // console.log(location.state.type, "Locationsignup");
   const dispatch = useDispatch();
@@ -41,7 +40,11 @@ const CreateUser = () => {
     event.preventDefault();
   };
   const navigate = useNavigate();
+  useEffect(()=>{
+    location?.state?.type===undefined&&  navigate("/")
+  },[])
   const Signup = () => {
+    title("SignUp");
     if ((name && email && password != null) || "") {
       var regexEmail = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
       var names =/^([^0-9]*)$/;
@@ -180,7 +183,7 @@ const CreateUser = () => {
               }}
             />
           </FormControl>
-          {location.state.type === "Tenant" ? (
+          {location?.state?.type === "Tenant" ? (
             <FormControl variant="outlined" fullWidth className="email_input">
               <InputLabel htmlFor="outlined-adornment-password">
                 Code
@@ -223,7 +226,7 @@ const CreateUser = () => {
           <text className="newAccount">
             Already have an account
             {/* <Link to={"/login"} className="nodecoration signuplink">Login</Link> */}
-            {location.state.type === "Landlord" ? (
+            {location?.state?.type === "Landlord" ? (
               <Link
                 to={"/login"}
                 state={{ type: "Landlord" }}
