@@ -8,9 +8,9 @@ import { useLocation } from "react-router";
 import title from "../../../components/title";
 import "./rentSetting.css";
 import { useDispatch } from "react-redux";
-import { RentSet } from "../../../redux/Reducer/RentSetting";
+import { RentSet } from "../../../Redux/Reducer/RentSetting";
 import { toast, ToastContainer } from "react-toastify";
-import { GetRent } from "../../../redux/Reducer/GetRentDetails";
+import { GetRent } from "../../../Redux/Reducer/GetRentDetails";
 import moment from "moment/moment";
 import { DataGrid } from '@mui/x-data-grid';
 export default function RentSetting() {

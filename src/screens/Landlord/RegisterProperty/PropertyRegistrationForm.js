@@ -9,7 +9,7 @@ import Toolbar from "@mui/material/Toolbar";
 import { Button, Container, MenuItem, Select, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Logo from "../../../assets/Logo.png";
-import { PropertyRegisters } from "../../../redux/Reducer/PropertyRegistration";
+import { PropertyRegisters } from "../../../Redux/Reducer/PropertyRegistration";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { Input } from "@mui/material";

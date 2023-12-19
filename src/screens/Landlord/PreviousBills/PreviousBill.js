@@ -17,7 +17,7 @@ import Wrapper from "../../../components/Wrapper";
 import { useState } from "react";
 import { useLocation } from "react-router";
 import title from "../../../components/title";
-import { GetBill } from "../../../redux/Reducer/GetBillDetails";
+import { GetBill } from "../../../Redux/Reducer/GetBillDetails";
 import { useDispatch } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
 import moment from "moment";

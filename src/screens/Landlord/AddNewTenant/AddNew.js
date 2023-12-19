@@ -14,7 +14,7 @@ import MarkunreadIcon from "@mui/icons-material/Markunread";
 import SendIcon from "@mui/icons-material/Send";
 import title from "../../../components/title";
 import "./newRequest.css";
-import { SendMail } from "../../../redux/Reducer/SendEmail";
+import { SendMail } from "../../../Redux/Reducer/SendEmail";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 export default function AddNew() {

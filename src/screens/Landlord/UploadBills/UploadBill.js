@@ -30,16 +30,16 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { ElectricBill } from "../../../redux/Reducer/ElectricReading";
-import { SsgcBill } from "../../../redux/Reducer/SsgcReading";
-import { WaterReadings } from "../../../redux/Reducer/WaterReading";
-import { MaintananceReadings } from "../../../redux/Reducer/MaintananceReading";
-import { TrashReadings } from "../../../redux/Reducer/TrashReading";
-import { ElectricPhoto } from "../../../redux/Reducer/KElectricImg";
+import { ElectricBill } from "../../../Redux/Reducer/ElectricReading";
+import { SsgcBill } from "../../../Redux/Reducer/SsgcReading";
+import { WaterReadings } from "../../../Redux/Reducer/WaterReading";
+import { MaintananceReadings } from "../../../Redux/Reducer/MaintananceReading";
+import { TrashReadings } from "../../../Redux/Reducer/TrashReading";
+import { ElectricPhoto } from "../../../Redux/Reducer/KElectricImg";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import dayjs from "dayjs";
-import { GetOneUploadBill } from "../../../redux/Reducer/GetOneUploadBill";
+import { GetOneUploadBill } from "../../../Redux/Reducer/GetOneUploadBill";
 
 
 export default function UploadBill() {

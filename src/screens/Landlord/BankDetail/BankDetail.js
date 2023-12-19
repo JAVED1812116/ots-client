@@ -8,9 +8,9 @@ import { useLocation } from "react-router";
 import title from "../../../components/title";
 import "./bankDetails.css";
 import { useDispatch } from "react-redux";
-import { AccountSet } from "../../../redux/Reducer/AccountSetting";
+import { AccountSet } from "../../../Redux/Reducer/AccountSetting";
 import { ToastContainer, toast } from "react-toastify";
-import { GetAccount } from "../../../redux/Reducer/GetAccountDetails";
+import { GetAccount } from "../../../Redux/Reducer/GetAccountDetails";
 export default function BankDetail() {
   title("Account Detail");
   const dispatch = useDispatch();

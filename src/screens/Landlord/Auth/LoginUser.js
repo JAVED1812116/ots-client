@@ -14,7 +14,7 @@ import { EmailRounded } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import title from "../../../components/title";
 import { useDispatch } from "react-redux";
-import { UserLogin } from "../../../redux/Reducer/LoginUser";
+import { UserLogin } from "../../../Redux/Reducer/LoginUser";
 import { ToastContainer, toast } from "react-toastify";
 const LoginUser = () => {
   const location=useLocation();

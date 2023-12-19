@@ -20,7 +20,7 @@ import { Alert } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import CodeIcon from "@mui/icons-material/Code";
 import "react-toastify/dist/ReactToastify.css";
-import { UserAdd } from "../../../redux/Reducer/CreateUser";
+import { UserAdd } from "../../../Redux/Reducer/CreateUser";
 
 // import Button from '@mui/material/Button';
 const CreateUser = () => {
