@@ -168,7 +168,8 @@ export default function PropertyRegister() {
     return (
       <div style={{ height: 400, width: "100%" }}>
         <Box sx={{ height: 400, width: "auto" }}>
-          <TableContainer component={Paper}>
+          <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+          <TableContainer sx={{ maxHeight: 400 }}>
             <Table
               sx={{ minWidth: 650 }}
               aria-label="simple table"
@@ -312,6 +313,7 @@ export default function PropertyRegister() {
               </TableBody>
             </Table>
           </TableContainer>
+          </Paper>
         </Box>
       </div>
     );
