@@ -117,24 +117,20 @@ export default function PropertyRegister() {
       (name === "flatNumber" ||
         name === "flatFloor" ||
         name === "flatRooms" ||
-        name === "flatToilet"||
+        name === "flatToilet" ||
         name === "flatKitchen" ||
         name === "flatRent" ||
         name === "flatAdvance" ||
-        name === "flatMaintananceCharges"||
+        name === "flatMaintananceCharges" ||
         name === "flatTrashCharges" ||
-        name === "flatSecurityCharges"
-        ) &&
+        name === "flatSecurityCharges") &&
       !/^[0-9]*$/.test(value)
     ) {
       setTableError((prev) => ({ ...prev, [name]: true }));
       // If it's not a valid number, you can choose to ignore the Input or show an error message.
       return;
     }
-    if (
-      (name === "flatName") &&
-      !/^[A-Za-z\s]*$/.test(value)
-    ) {
+    if (name === "flatName" && !/^[A-Za-z\s]*$/.test(value)) {
       setTableError((prev) => ({ ...prev, [name]: true }));
       // If it's not a valid number, you can choose to ignore the Input or show an error message.
       return;
@@ -168,152 +164,156 @@ export default function PropertyRegister() {
     return (
       <div style={{ height: 400, width: "100%" }}>
         <Box sx={{ height: 400, width: "auto" }}>
-          <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-          <TableContainer sx={{ maxHeight: 400 }}>
-            <Table
-              sx={{ minWidth: 650 }}
-              aria-label="simple table"
-              className="propertyTable"
-              stickyHeader 
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell>Flat Name</TableCell>
-                  <TableCell>Flat Number</TableCell>
-                  <TableCell>Flat Floor</TableCell>
-                  <TableCell>Rooms</TableCell>
-                  <TableCell>Toilet</TableCell>
-                  <TableCell>Kitchen</TableCell>
-                  <TableCell>Rent</TableCell>
-                  <TableCell>Advance</TableCell>
-                  <TableCell>Maintainance Charges</TableCell>
-                  <TableCell>Trash Charges</TableCell>
-                  <TableCell>Security Charges</TableCell>
-                  <TableCell>Status</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {console.log(tableError,"tableErrortableErrortableErrortableError")}
-                {generatedRows.map((e, i) => (
-                  <TableRow
-                    // key={row.name}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      <Input
-                        placeholder="Flat Name"
-                        name="flatName"
-                        // error={tableError.flatName}
-                        // helperText={
-                        //   tableError.flatName===true ? "Please enter a valid Owner Name" : ""
-                        // }
-                        onChange={(e) => handleCellChange(i, e)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Input
-                        placeholder="Flat Number"
-                        type="number"
-                        name="flatNumber"
-                        onChange={(e) => handleCellChange(i, e)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Input
-                        placeholder="Flat Floor"
-                        type="number"
-                        name="flatFloor"
-                        onChange={(e) => handleCellChange(i, e)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Input
-                        placeholder="Flat Rooms"
-                        type="number"
-                        name="flatRooms"
-                        onChange={(e) => handleCellChange(i, e)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Input
-                        placeholder="Flat Toilet"
-                        type="number"
-                        name="flatToilet"
-                        onChange={(e) => handleCellChange(i, e)}
-                      />
-                    </TableCell>
+          <Paper sx={{ width: "100%", overflow: "hidden" }}>
+            <TableContainer sx={{ maxHeight: 400 }}>
+              <Table
+                sx={{ minWidth: 650 }}
+                aria-label="simple table"
+                className="propertyTable"
+                stickyHeader
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Flat Name</TableCell>
+                    <TableCell>Flat Number</TableCell>
+                    <TableCell>Flat Floor</TableCell>
+                    <TableCell>Rooms</TableCell>
+                    <TableCell>Toilet</TableCell>
+                    <TableCell>Kitchen</TableCell>
+                    <TableCell>Rent</TableCell>
+                    <TableCell>Advance</TableCell>
+                    <TableCell>Maintainance Charges</TableCell>
+                    <TableCell>Trash Charges</TableCell>
+                    <TableCell>Security Charges</TableCell>
+                    <TableCell>Status</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {console.log(
+                    tableError,
+                    "tableErrortableErrortableErrortableError"
+                  )}
+                  {generatedRows.map((e, i) => (
+                    <TableRow
+                      // key={row.name}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        <Input
+                          placeholder="Flat Name"
+                          name="flatName"
+                          // error={tableError.flatName}
+                          // helperText={
+                          //   tableError.flatName===true ? "Please enter a valid Owner Name" : ""
+                          // }
+                          onChange={(e) => handleCellChange(i, e)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          placeholder="Flat Number"
+                          type="number"
+                          name="flatNumber"
+                          onChange={(e) => handleCellChange(i, e)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          placeholder="Flat Floor"
+                          type="number"
+                          name="flatFloor"
+                          onChange={(e) => handleCellChange(i, e)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          placeholder="Flat Rooms"
+                          type="number"
+                          name="flatRooms"
+                          onChange={(e) => handleCellChange(i, e)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          placeholder="Flat Toilet"
+                          type="number"
+                          name="flatToilet"
+                          onChange={(e) => handleCellChange(i, e)}
+                        />
+                      </TableCell>
 
-                    <TableCell component="th" scope="row">
-                      <Input
-                        placeholder="Flat Kitchen"
-                        type="number"
-                        name="flatKitchen"
-                        onChange={(e) => handleCellChange(i, e)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Input
-                        placeholder="Flat Rent"
-                        type="number"
-                        name="flatRent"
-                        onChange={(e) => handleCellChange(i, e)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Input
-                        placeholder="Flat Advance"
-                        type="number"
-                        name="flatAdvance"
-                        onChange={(e) => handleCellChange(i, e)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Input
-                        placeholder="Maintainance Charges"
-                        type="number"
-                        name="flatMaintananceCharges"
-                        onChange={(e) => handleCellChange(i, e)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Input
-                        placeholder="Trash Charges"
-                        type="number"
-                        name="flatTrashCharges"
-                        onChange={(e) => handleCellChange(i, e)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Input
-                        placeholder="Security Charges"
-                        type="number"
-                        name="flatSecurityCharges"
-                        onChange={(e) => handleCellChange(i, e)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {/* <FormControl fullWidth>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          placeholder="Flat Kitchen"
+                          type="number"
+                          name="flatKitchen"
+                          onChange={(e) => handleCellChange(i, e)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          placeholder="Flat Rent"
+                          type="number"
+                          name="flatRent"
+                          onChange={(e) => handleCellChange(i, e)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          placeholder="Flat Advance"
+                          type="number"
+                          name="flatAdvance"
+                          onChange={(e) => handleCellChange(i, e)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          placeholder="Maintainance Charges"
+                          type="number"
+                          name="flatMaintananceCharges"
+                          onChange={(e) => handleCellChange(i, e)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          placeholder="Trash Charges"
+                          type="number"
+                          name="flatTrashCharges"
+                          onChange={(e) => handleCellChange(i, e)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Input
+                          placeholder="Security Charges"
+                          type="number"
+                          name="flatSecurityCharges"
+                          onChange={(e) => handleCellChange(i, e)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {/* <FormControl fullWidth>
   <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
-                      <Select
-                        // value={age}
-                        name="flatStatus"
-                        onChange={(e) => handleCellChange(i, e)}
-                        displayEmpty
-                        inputProps={{ "aria-label": "Without label" }}
-                      >
-                        {/* <MenuItem value="">
+                        <Select
+                        defaultValue={0}
+                          // value={age}
+                          name="flatStatus"
+                          onChange={(e) => handleCellChange(i, e)}
+                          displayEmpty
+                          inputProps={{ "aria-label": "Without label" }}
+                        >
+                          {/* <MenuItem value="">
             <em>None</em>
           </MenuItem> */}
-                        <MenuItem value={0}>Vacant</MenuItem>
-                        <MenuItem value={1}>RentOut</MenuItem>
-                      </Select>
-                      {/* </FormControl> */}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                          <MenuItem value={0}>Vacant</MenuItem>
+                          <MenuItem value={1}>RentOut</MenuItem>
+                        </Select>
+                        {/* </FormControl> */}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Paper>
         </Box>
       </div>
@@ -339,7 +339,7 @@ export default function PropertyRegister() {
       }),
     }),
   }));
-  console.log(rows,"rows")
+  console.log(rows, "rows");
   const onFinish = () => {
     let values = {
       ownerName: detail?.ownerName,
@@ -420,12 +420,11 @@ export default function PropertyRegister() {
       // rows?.flatName!==undefined||rows?.flatNumber!==undefined||rows?.flatFloor!==undefined||rows?.flatRoom!==undefined||rows?.flatToilet!==undefined||rows?.flatKitchen!==undefined||rows?.flatRent!==undefined||rows?.flatDeposit!==undefined||rows?.flatMaintainanceCharges!==undefined||rows?.flattrashCharges!==undefined||rows?.flatsecurityCharges!==undefined||rows?.flatStatus!==undefined
       if (values?.flatDetail !== "") {
         dispatch(PropertyRegisters({ values })).then((res) => {
-          if(res?.payload?.data?.message==="Property Set Successfully"){
+          if (res?.payload?.data?.message === "Property Set Successfully") {
             toast.success("Property Register Successfully", {
               position: "top-center",
             });
           }
-          
         });
       } else {
         toast.error("Please fill all flat detail", {
