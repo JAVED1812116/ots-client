@@ -52,9 +52,16 @@ const CreateUser = () => {
         if (regexEmail.test(email)) {
           if (passwords.test(password)) {
             dispatch(UserAdd({name,email,password,code})).then((res)=>{
-              if(res?.payload?.data==="user Register Successfully"){
-                return(
+              if(res?.payload?.data==="User Register Successfully"){
+               return(
                   toast.success("Signup Successfully!",{
+                    position:"top-center"
+                  })
+               )
+              }
+              else if(res?.payload?.data==="User Already Registered"){
+                return(
+                  toast.error("User Already Registered!",{
                     position:"top-center"
                   })
       
