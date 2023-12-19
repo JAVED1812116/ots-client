@@ -42,7 +42,7 @@ const LoginUser = () => {
         if(passwords.test(password)){
           dispatch(UserLogin({email,password})).then((res)=>{
             
-            if(res?.payload?.data?.message==="User Login Successfully"){
+            if(res?.payload?.data?.message==="User Login Successfully" && res?.payload?.data?.data?.is_register === true && res?.payload?.data?.data?.is_active === true){
               localStorage.setItem("name",res?.payload?.data?.data?.name)
               localStorage.setItem("user_id",res?.payload?.data?.data?._id)
               console.log(res?.payload?.data?.data?.name,"data:res?.payload?.data?.data?.name")
@@ -57,7 +57,22 @@ const LoginUser = () => {
                 }
               },2200)
              
-            }else if(res?.payload?.data?.result==="No User Found"){
+            }
+            else if(res?.payload?.data?.message==="User Login Successfully" && res?.payload?.data?.data?.is_register === false && res?.payload?.data?.data?.is_active === false){
+              toast.success("Logging!", {
+                autoClose: 300,
+              });
+              setTimeout(()=>{
+                if(location?.state?.type==="Landlord"){
+                  { navigate("/property-reg")}
+                }else if(location?.state?.type==="Tenant"){
+                  { navigate("/tenant-registration")}
+                }
+              },2200)
+             
+            }
+            
+            else if(res?.payload?.data?.result==="No User Found"){
               toast.error(res?.payload?.data?.result, {
                 position: "top-center",
               });

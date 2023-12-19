@@ -32,6 +32,7 @@ export default function AllRoutes() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/signup" element={<CreateUser />} />
           <Route path="/login" element={<LoginUser />} />
+          <Route path="/property-reg" element={<PropertyRegister />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>
@@ -55,7 +56,7 @@ export default function AllRoutes() {
           <Route path="/agreement" element={<Agreement />} />
           <Route path="/upload-Bill" element={<UploadBill />} />
           <Route path="/previous-bill" element={<PreviousBillLandlordPage />} />
-          <Route path="/property-reg" element={<PropertyRegister />} />
+          {/* <Route path="/property-reg" element={<PropertyRegister />} /> */}
           
   
           <Route path="/addNew-Tenant" element={<AddNew />} />
