@@ -174,6 +174,7 @@ export default function PropertyRegister() {
               sx={{ minWidth: 650 }}
               aria-label="simple table"
               className="propertyTable"
+              stickyHeader 
             >
               <TableHead>
                 <TableRow>
