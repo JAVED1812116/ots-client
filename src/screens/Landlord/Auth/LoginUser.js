@@ -75,6 +75,24 @@ const LoginUser = () => {
               },2200)
              
             }
+            else if(res?.payload?.data?.message==="User Login Successfully" && res?.payload?.data?.data?.is_register === true && res?.payload?.data?.data?.is_active === false){
+              toast.success("Logging!", {
+                autoClose: 300,
+              });
+              sessionStorage.setItem("is_register", res?.payload?.data?.data?.is_register);
+              sessionStorage.setItem("name",res?.payload?.data?.data?.name)
+              sessionStorage.setItem("user_id",res?.payload?.data?.data?._id)
+              sessionStorage.setItem("user_email",res?.payload?.data?.data?.email)
+              setTimeout(()=>{
+                if(location?.state?.type==="Landlord"){
+                  { navigate("/pending-request")}
+                }
+                // else if(location?.state?.type==="Tenant"){
+                //   { navigate("/tenant-registration")}
+                // }
+              },2200)
+             
+            }
             
             else if(res?.payload?.data?.result==="No User Found"){
               toast.error(res?.payload?.data?.result, {

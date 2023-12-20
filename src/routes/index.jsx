@@ -19,6 +19,7 @@ import TenantFunctionality from "../screens/Tenant/TenantFunction/TenantFunction
 import PreviousBill from "../screens/Tenant/PreviousBill/PreviousBill";
 import PreviousBillLandlordPage from "../screens/Landlord/PreviousBills/PreviousBill";
 import PropertyRegister from "../screens/Landlord/RegisterProperty/PropertyRegistrationForm";
+import PendingRequest from "../screens/PendingRequest/PendingRequest";
 export default function AllRoutes() {
   console.log(localStorage.getItem("user_id"), 'localStorage.getItem("user_id")');
 
@@ -33,6 +34,7 @@ export default function AllRoutes() {
           <Route path="/signup" element={<CreateUser />} />
           <Route path="/login" element={<LoginUser />} />
           <Route path="/property-reg" element={<PropertyRegister />} />
+          <Route path="/pending-request" element={<PendingRequest />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>
