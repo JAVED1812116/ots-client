@@ -20,11 +20,17 @@ import PreviousBill from "../screens/Tenant/PreviousBill/PreviousBill";
 import PreviousBillLandlordPage from "../screens/Landlord/PreviousBills/PreviousBill";
 import PropertyRegister from "../screens/Landlord/RegisterProperty/PropertyRegistrationForm";
 import PendingRequest from "../screens/PendingRequest/PendingRequest";
+import { useEffect } from "react";
 export default function AllRoutes() {
   console.log(localStorage.getItem("user_id"), 'localStorage.getItem("user_id")');
+  let savedUser
+useEffect(()=> {
 
+  savedUser = localStorage.getItem("user_id");
+  console.log(savedUser, 'savedUser');
+},[])
 
-  let savedUser = localStorage.getItem("user_id");
+console.log(savedUser, 'savedUser');
 
   if (savedUser === null){
     return (

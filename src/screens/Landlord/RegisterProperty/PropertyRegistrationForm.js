@@ -20,9 +20,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { useLocation, useNavigate } from "react-router-dom";
 export default function PropertyRegister() {
   title("PropertyRegister");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [detail, setDetail] = React.useState({
     totalFlat: 0, // Set a default value for totalFlat
     ownerName: "",
@@ -74,6 +76,7 @@ export default function PropertyRegister() {
     return cnicRegex.test(cnic);
   };
   const handleChange = (e) => {
+    console.log('handle change running');
     const { name, value } = e.target;
     // Check if the entered value is not a valid number for "cnic" or "contactNumber" fields
     if (
@@ -143,8 +146,9 @@ export default function PropertyRegister() {
       );
     });
   };
-  console.log(rows, "reeeee");
+  console.log(rows, "rows");
   React.useEffect(() => {
+    console.log('use effect run');
     const numToShow = parseInt(detail?.totalFlat, 10) || 0;
 
     const newRows = Array.from({ length: numToShow }, (_, index) => ({
@@ -174,6 +178,7 @@ export default function PropertyRegister() {
               >
                 <TableHead>
                   <TableRow>
+                    <TableCell>No.</TableCell>
                     <TableCell>Flat Name</TableCell>
                     <TableCell>Flat Number</TableCell>
                     <TableCell>Flat Floor</TableCell>
@@ -198,6 +203,7 @@ export default function PropertyRegister() {
                       // key={row.name}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
+                      <TableCell>{i + 1}.</TableCell>
                       <TableCell component="th" scope="row">
                         <Input
                           placeholder="Flat Name"
@@ -396,7 +402,8 @@ export default function PropertyRegister() {
     // const areAllFieldsPresent = rows.every((row) =>
     //   requiredFields.every((field) => row.hasOwnProperty(field))
     // );
-    // const areAllFieldsPresent = requiredFields.filter((field) => !rows[field]);
+//     const areAllFieldsPresent = requiredFields.filter((field) => !rows[field]);
+// console.log(areAllFieldsPresent, 'areAllFieldsPresent');
 
     // if (areAllFieldsPresent.length > 0) {
     //   const errorMessage = `Please fill in the following fields: ${areAllFieldsPresent.join(', ')}.`;
@@ -419,11 +426,13 @@ export default function PropertyRegister() {
     ) {
       // rows?.flatName!==undefined||rows?.flatNumber!==undefined||rows?.flatFloor!==undefined||rows?.flatRoom!==undefined||rows?.flatToilet!==undefined||rows?.flatKitchen!==undefined||rows?.flatRent!==undefined||rows?.flatDeposit!==undefined||rows?.flatMaintainanceCharges!==undefined||rows?.flattrashCharges!==undefined||rows?.flatsecurityCharges!==undefined||rows?.flatStatus!==undefined
       if (values?.flatDetail !== "") {
+          console.log(values);
         dispatch(PropertyRegisters({ values })).then((res) => {
           if (res?.payload?.data?.message === "Property Set Successfully") {
             toast.success("Property Register Successfully", {
               position: "top-center",
             });
+            navigate("/pending-request")
           }
         });
       } else {

@@ -27,9 +27,8 @@ export default function AddNew() {
   const sendEMAIL = () => {
     if (email != null || "") {
       var regexEmail = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
-
       if (regexEmail.test(email)) {
-        dispatch(SendMail({ email })).then((res) => {
+        dispatch(SendMail({ email, userId : localStorage.getItem("user_id"), userName : localStorage.getItem("name") })).then((res) => {
           console.log(res?.payload?.data, "ressssssssss");
           if (res?.payload?.data === "Email Recieved") {
             toast.success(res?.payload?.data, {

@@ -20,7 +20,9 @@ const PendingRequest = () => {
         </div>
         <Button className="LoginButton"   onClick={() => {
               //  login();
-              sessionStorage.clear()
+              sessionStorage.clear();
+              localStorage.clear("name")
+              localStorage.clear("user_id")
               navigate("/");
              }}>Logout</Button>
       </div>
