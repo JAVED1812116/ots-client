@@ -37,7 +37,7 @@ console.log(savedUser, 'savedUser');
       <Router>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/signup" element={<CreateUser />} />
+          <Route path="/signup/:id?" element={<CreateUser />} />
           <Route path="/login" element={<LoginUser />} />
           <Route path="/property-reg" element={<PropertyRegister />} />
           <Route path="/pending-request" element={<PendingRequest />} />
@@ -52,7 +52,7 @@ console.log(savedUser, 'savedUser');
         <Routes>
           <Route path="/" element={<Dashboard />} />
   
-          <Route path="/signup" element={<CreateUser />} />
+          <Route path="/signup/:id?" element={<CreateUser />} />
           <Route path="/login" element={<LoginUser />} />
           <Route path="/landlord-dashboard" element={<LandLordDashboard />} />
           <Route path="/new-request" element={<NewRequest />} />

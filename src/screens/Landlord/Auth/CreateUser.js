@@ -33,6 +33,15 @@ const CreateUser = () => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [code, setCode] = useState(null);
+
+  function useQuery() {
+    const { search } = useLocation();
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+  }
+  let query = useQuery();
+
+  console.log(query.get("id"), "abc");
+
   <Alert variant="filled" severity="success">
     This is a success alert — check it out!
   </Alert>;
@@ -40,42 +49,41 @@ const CreateUser = () => {
     event.preventDefault();
   };
   const navigate = useNavigate();
-  useEffect(()=>{
-    location?.state?.type===undefined&&  navigate("/")
-  },[])
+  // const idRegex = /^\/signup\/([a-fA-F0-9]+)$/;
+  // const hasId = idRegex.test(location?.pathname);
+  const hasId = query.get("id");
+  // useEffect(()=>{
+  //   location?.state?.type===undefined&&  navigate("/")
+  // },[])
   const Signup = () => {
     title("SignUp");
     if ((name && email && password != null) || "") {
       var regexEmail = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
-      var names =/^([^0-9]*)$/;
-      var passwords =/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-      
-      if (names.test(name)) {
+      var names = /^([^0-9]*)$/;
+      var passwords = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
+      if (names.test(name)) {
         if (regexEmail.test(email)) {
           if (passwords.test(password)) {
-            dispatch(UserAdd({name,email,password,code})).then((res)=>{
-              if(res?.payload?.data==="User Register Successfully"){
-               return(
-                  toast.success("Signup Successfully!",{
-                    position:"top-center"
-                  })
-               )
+            dispatch(UserAdd({ name, email, password, code: hasId })).then(
+              (res) => {
+                if (res?.payload?.data === "User Register Successfully") {
+                  return (
+                    toast.success("Signup Successfully!", {
+                      position: "top-center",
+                    })
+                  );
+                } else if (res?.payload?.data === "User Already Registered") {
+                  return toast.error("User Already Registered!", {
+                    position: "top-center",
+                  });
+                } else {
+                  toast.error("Empty Field are not allowed", {
+                    position: "top-center",
+                  });
+                }
               }
-              else if(res?.payload?.data==="User Already Registered"){
-                return(
-                  toast.error("User Already Registered!",{
-                    position:"top-center"
-                  })
-      
-                )
-              }
-              else{
-                toast.error("Empty Field are not allowed", {
-                  position: "top-center",
-                });
-              }
-            });
+            );
           } else {
             toast.error("password is not valid", {
               position: "top-center",
@@ -86,21 +94,11 @@ const CreateUser = () => {
             position: "top-center",
           });
         }
-
-      }
-      
-      else {
+      } else {
         toast.error("name is not valid", {
           position: "top-center",
         });
       }
-
-     
-
-
-    
-
-     
     } else {
       toast.error("Please Fill All Field!", {
         position: "top-center",
@@ -183,14 +181,20 @@ const CreateUser = () => {
               }}
             />
           </FormControl>
-          {location?.state?.type === "Tenant" ? (
-            <FormControl variant="outlined" fullWidth className="email_input">
+          {location?.state?.type === "Tenant" || hasId ? (
+            <FormControl
+              variant="outlined"
+              fullWidth
+              className="email_input"
+              disabled
+            >
               <InputLabel htmlFor="outlined-adornment-password">
                 Code
               </InputLabel>
               <OutlinedInput
                 id="outlined-adornment-password"
-                type={"text"}
+                // type={"text"}
+                type={"password"}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -202,9 +206,10 @@ const CreateUser = () => {
                   </InputAdornment>
                 }
                 label="Email"
-                onChange={(e) => {
-                  setCode(e.target.value);
-                }}
+                value={"landlordcode"}
+                // onChange={(e) => {
+                //   setCode(e.target.value);
+                // }}
               />
             </FormControl>
           ) : (
