@@ -68,11 +68,9 @@ const CreateUser = () => {
             dispatch(UserAdd({ name, email, password, code: hasId })).then(
               (res) => {
                 if (res?.payload?.data === "User Register Successfully") {
-                  return (
-                    toast.success("Signup Successfully!", {
-                      position: "top-center",
-                    })
-                  );
+                  return toast.success("Signup Successfully!", {
+                    position: "top-center",
+                  });
                 } else if (res?.payload?.data === "User Already Registered") {
                   return toast.error("User Already Registered!", {
                     position: "top-center",
