@@ -29,6 +29,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { GetProperty } from "../../../Redux/Reducer/GetPropertyDetails";
+import Checkbox from "@mui/material/Checkbox";
 export default function Registration() {
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
@@ -70,9 +72,46 @@ export default function Registration() {
 
   const [generatedAdultRows, setGeneratedAdultRows] = React.useState([]);
   const [generatedChildrenRows, setGeneratedChildrenRows] = React.useState([]);
+  const [flatDetails, setFlatDetails] = React.useState([]);
+  const [selectedRows, setSelectedRows] = React.useState([]);
+
+  const handleCheckboxChange = (event, row) => {
+    console.log(event, row);
+    if (event.target.checked) {
+      // Add the selected row to the array
+      setSelectedRows((prevSelectedRows) => [...prevSelectedRows, row]);
+    } else {
+      // Remove the unselected row from the array
+      setSelectedRows((prevSelectedRows) =>
+        prevSelectedRows.filter((selectedRow) => selectedRow !== row)
+      );
+    }
+  };
+  console.log(selectedRows, "selectedRows");
   React.useEffect(() => {
     document.title = "Registration";
   }, []);
+  React.useEffect(() => {
+    dispatch(GetProperty({ userId: sessionStorage.getItem("code") })).then(
+      (res) => {
+        console.log(res);
+        setFlatDetails(res?.payload?.data?.data);
+        // setData(res?.payload?.data?.data)
+
+        // if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+        // setFieldDisable(true)
+        // }
+        // let { monthlyRent, advance, maintenanceCharges, trashCharges } =res?.payload?.data?.data[0];
+        // setDetail({
+        //   monthlyRent,
+        //   advance,
+        //   maintenanceCharges,
+        //   trashCharges,
+        // });
+      }
+    );
+  }, []);
+  console.log(flatDetails, "flatDetails");
   React.useEffect(() => {
     const numToShow = parseInt(detail?.adultFamilyMembers, 10) || 0;
 
@@ -646,6 +685,89 @@ export default function Registration() {
               name="rent"
               onChange={handleChange}
             />
+            <Box sx={{ height: 400, width: "auto" }}>
+              <Paper sx={{ width: "100%", overflow: "hidden" }}>
+                <TableContainer sx={{ maxHeight: 400 }}>
+                  <Table
+                    sx={{ minWidth: 650 }}
+                    aria-label="simple table"
+                    className="propertyTable"
+                    stickyHeader
+                  >
+                    <TableHead>
+                      <TableRow>
+                        <TableCell></TableCell>
+                        <TableCell>No.</TableCell>
+                        <TableCell>Flat Name</TableCell>
+                        <TableCell>Flat Number</TableCell>
+                        <TableCell>Flat Floor</TableCell>
+                        <TableCell>Rooms</TableCell>
+                        <TableCell>Toilet</TableCell>
+                        <TableCell>Kitchen</TableCell>
+                        <TableCell>Rent</TableCell>
+                        <TableCell>Advance</TableCell>
+                        <TableCell>Maintainance Charges</TableCell>
+                        <TableCell>Trash Charges</TableCell>
+                        <TableCell>Security Charges</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {flatDetails.map((e, i) => (
+                        <TableRow
+                          // key={row.name}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                          <TableCell>
+                            <Checkbox
+                              checked={selectedRows.includes(e)}
+                              onChange={(event) =>
+                                handleCheckboxChange(event, e)
+                              }
+                            />
+                          </TableCell>
+                          <TableCell>{i + 1}.</TableCell>
+                          <TableCell component="th" scope="row">
+                            {e.flatName}
+                          </TableCell>
+                          <TableCell component="th" scope="row" align="right">
+                            {e.flatNumber}
+                          </TableCell>
+                          <TableCell component="th" scope="row" align="right">
+                            {e.flatFloor}
+                          </TableCell>
+                          <TableCell component="th" scope="row" align="right">
+                            {e.flatRooms}
+                          </TableCell>
+                          <TableCell component="th" scope="row" align="right">
+                            {e.flatToilet}
+                          </TableCell>
+                          <TableCell component="th" scope="row" align="right">
+                            {e.flatKitchen}
+                          </TableCell>
+                          <TableCell component="th" scope="row" align="right">
+                            {e.flatRent}
+                          </TableCell>
+                          <TableCell component="th" scope="row" align="right">
+                            {e.flatAdvance}
+                          </TableCell>
+                          <TableCell component="th" scope="row" align="right">
+                            {e.flatMaintananceCharges}
+                          </TableCell>
+                          <TableCell component="th" scope="row" align="right">
+                            {e.flatTrashCharges}
+                          </TableCell>
+                          <TableCell component="th" scope="row" align="right">
+                            {e.flatSecurityCharges}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Paper>
+            </Box>
           </>
         );
       default:
