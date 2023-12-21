@@ -23,11 +23,14 @@ import PendingRequest from "../screens/PendingRequest/PendingRequest";
 import { useEffect } from "react";
 export default function AllRoutes() {
   console.log(localStorage.getItem("user_id"), 'localStorage.getItem("user_id")');
-  let savedUser
+  let savedUser;
+  let registeredUser;
 useEffect(()=> {
 
   savedUser = localStorage.getItem("user_id");
+  registeredUser = sessionStorage.getItem("is_register");
   console.log(savedUser, 'savedUser');
+  console.log(registeredUser, 'registeredUser');
 },[])
 
 console.log(savedUser, 'savedUser');
