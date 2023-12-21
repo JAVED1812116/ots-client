@@ -371,6 +371,7 @@ export default function Registration() {
       childrenDetail: childrenRows,
       userId: localStorage.getItem("user_id"),
       userName: localStorage.getItem("name"),
+      flatDetails: flatDetails
     };
     dispatch(RegisterTenant({ values })).then((res) => {
       if (res?.payload?.data?.message === "Tenant Registered Successfully") {
