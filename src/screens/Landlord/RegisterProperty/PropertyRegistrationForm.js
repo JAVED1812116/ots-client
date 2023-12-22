@@ -136,6 +136,7 @@ export default function PropertyRegister() {
   };
   const handleCellChange = (rowId, e) => {
     const { name, value } = e.target;
+
     if (
       (name === "flatNumber" ||
         name === "flatFloor" ||
@@ -166,7 +167,7 @@ export default function PropertyRegister() {
       );
     });
   };
-  console.log(rows, "rows");
+
   React.useEffect(() => {
     console.log("use effect run");
     const numToShow = parseInt(detail?.totalFlat, 10) || 0;
@@ -183,7 +184,17 @@ export default function PropertyRegister() {
 
     setGeneratedRows(newRows);
   }, [detail?.totalFlat]);
-
+  const generateFloorOptions = () => {
+    const options = [];
+    for (let i = 1; i <= detail?.totalFloor; i++) {
+      options.push(
+        <MenuItem key={i} value={i}>
+          {`${i} floor`}
+        </MenuItem>
+      );
+    }
+    return options;
+  };
   const renderDataGrid = () => {
     return (
       <div style={{ height: 400, width: "100%" }}>
@@ -244,12 +255,43 @@ export default function PropertyRegister() {
                         />
                       </TableCell>
                       <TableCell component="th" scope="row">
-                        <Input
-                          placeholder="Flat Floor"
-                          type="number"
+                        <Select
+                          defaultValue={0}
+                          // value={age}
                           name="flatFloor"
                           onChange={(e) => handleCellChange(i, e)}
-                        />
+                          displayEmpty
+                          // inputProps={{ "aria-label": "Without label" }}
+                        >
+                          {console.log(
+                            Array.from(
+                              { length: detail?.totalFloor },
+                              (_, index) => ({
+                                id: index,
+                              })
+                            ),
+                            "detail?.totalFloor"
+                          )}
+                          {detail?.totalFloor &&
+                            Array.from(
+                              { length: detail?.totalFloor },
+                              (_, index) => ({
+                                id: index,
+                              })
+                            ).map((e, i) => {
+                              return (
+                                <MenuItem key={i} value={i}>
+                                  {`${i} floor`}
+                                </MenuItem>
+                              );
+                            })}
+                          {/* <MenuItem value="">
+            <em>None</em>
+          </MenuItem> */}
+                          {/* {generateFloorOptions()} */}
+                          {/* <MenuItem value={0}>Vacant</MenuItem>
+                          <MenuItem value={1}>RentOut</MenuItem> */}
+                        </Select>
                       </TableCell>
                       <TableCell component="th" scope="row">
                         <Input
