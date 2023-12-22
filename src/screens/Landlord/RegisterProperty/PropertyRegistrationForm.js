@@ -76,7 +76,7 @@ export default function PropertyRegister() {
     return cnicRegex.test(cnic);
   };
   const handleChange = (e) => {
-    console.log('handle change running');
+    console.log("handle change running");
     const { name, value } = e.target;
     // Check if the entered value is not a valid number for "cnic" or "contactNumber" fields
     if (
@@ -148,7 +148,7 @@ export default function PropertyRegister() {
   };
   console.log(rows, "rows");
   React.useEffect(() => {
-    console.log('use effect run');
+    console.log("use effect run");
     const numToShow = parseInt(detail?.totalFlat, 10) || 0;
 
     const newRows = Array.from({ length: numToShow }, (_, index) => ({
@@ -300,7 +300,7 @@ export default function PropertyRegister() {
                         {/* <FormControl fullWidth>
   <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
                         <Select
-                        defaultValue={0}
+                          defaultValue={0}
                           // value={age}
                           name="flatStatus"
                           onChange={(e) => handleCellChange(i, e)}
@@ -402,8 +402,8 @@ export default function PropertyRegister() {
     // const areAllFieldsPresent = rows.every((row) =>
     //   requiredFields.every((field) => row.hasOwnProperty(field))
     // );
-//     const areAllFieldsPresent = requiredFields.filter((field) => !rows[field]);
-// console.log(areAllFieldsPresent, 'areAllFieldsPresent');
+    //     const areAllFieldsPresent = requiredFields.filter((field) => !rows[field]);
+    // console.log(areAllFieldsPresent, 'areAllFieldsPresent');
 
     // if (areAllFieldsPresent.length > 0) {
     //   const errorMessage = `Please fill in the following fields: ${areAllFieldsPresent.join(', ')}.`;
@@ -426,13 +426,16 @@ export default function PropertyRegister() {
     ) {
       // rows?.flatName!==undefined||rows?.flatNumber!==undefined||rows?.flatFloor!==undefined||rows?.flatRoom!==undefined||rows?.flatToilet!==undefined||rows?.flatKitchen!==undefined||rows?.flatRent!==undefined||rows?.flatDeposit!==undefined||rows?.flatMaintainanceCharges!==undefined||rows?.flattrashCharges!==undefined||rows?.flatsecurityCharges!==undefined||rows?.flatStatus!==undefined
       if (values?.flatDetail !== "") {
-          console.log(values);
+        console.log(values);
         dispatch(PropertyRegisters({ values })).then((res) => {
           if (res?.payload?.data?.message === "Property Set Successfully") {
             toast.success("Property Register Successfully", {
               position: "top-center",
             });
-            navigate("/pending-request")
+            sessionStorage.setItem("is_register", true);
+            setTimeout(() => {
+              navigate("/pending-request");
+            }, 2200);
           }
         });
       } else {

@@ -46,12 +46,17 @@ const LoginUser = () => {
               res?.payload?.data?.data?.is_register === true &&
               res?.payload?.data?.data?.is_active === true
             ) {
-              localStorage.setItem("name", res?.payload?.data?.data?.name);
-              localStorage.setItem("user_id", res?.payload?.data?.data?._id);
-              console.log(
-                res?.payload?.data?.data?.name,
-                "data:res?.payload?.data?.data?.name"
+              sessionStorage.setItem(
+                "is_register",
+                res?.payload?.data?.data?.is_register
               );
+              localStorage.setItem("name", res?.payload?.data?.data?.name);
+              localStorage.setItem("is_register", true);
+              localStorage.setItem("user_id", res?.payload?.data?.data?._id);
+              // console.log(
+              //   res?.payload?.data?.data?.name,
+              //   "data:res?.payload?.data?.data?.name"
+              // );
               toast.success("Logging!", {
                 autoClose: 300,
               });
