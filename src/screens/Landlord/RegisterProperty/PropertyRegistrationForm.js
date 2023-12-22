@@ -53,10 +53,7 @@ export default function PropertyRegister() {
     flatStatus: "",
   });
   const [generatedRows, setGeneratedRows] = React.useState([]);
-  console.log(
-    generatedRows,
-    "generatedRowsgeneratedRowsgeneratedRowsgeneratedRowsgeneratedRowsgeneratedRows"
-  );
+
   const [error, setError] = React.useState({});
   const [tableError, setTableError] = React.useState({});
   // const handleChange = (e) => {
@@ -668,6 +665,7 @@ export default function PropertyRegister() {
                     error.totalFloor ? "Please enter a valid Total Floor" : ""
                   }
                 />
+                {console.log(detail)}
                 <TextField
                   id="standard-multiline-flexible"
                   label="Total Flat"
@@ -677,6 +675,7 @@ export default function PropertyRegister() {
                   name="totalFlat"
                   onChange={handleChange}
                   error={error.totalFlat}
+                  disabled={detail?.totalFloor===''}
                   helperText={
                     error.totalFlat ? "Please enter a valid Total Flat" : ""
                   }
