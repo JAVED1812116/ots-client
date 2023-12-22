@@ -78,6 +78,7 @@ export default function PropertyRegister() {
   const handleChange = (e) => {
     console.log("handle change running");
     const { name, value } = e.target;
+    console.log(name, value, "name, value");
     // Check if the entered value is not a valid number for "cnic" or "contactNumber" fields
     if (
       (name === "contactNumber" ||
@@ -102,17 +103,36 @@ export default function PropertyRegister() {
       setError((prev) => ({ ...prev, email: true }));
       return;
     }
-    if (name === "cnic" && !isCnicValid(value)) {
-      setError((prev) => ({ ...prev, cnic: true }));
-      return;
+    if (
+      name === "cnic"
+      //  && !isCnicValid(value)
+    ) {
+      const numericCnic = value.replace(/\D/g, "");
+
+      // Format CNIC as XXXXX-XXXXXXX-X
+      const formattedCnic =
+        numericCnic.slice(0, 5) +
+        (numericCnic.length > 5 ? "-" + numericCnic.slice(5, 12) : "") +
+        (numericCnic.length > 12 ? "-" + numericCnic.slice(12, 13) : "");
+
+      setDetail((prev) => {
+        return { ...prev, [name]: formattedCnic };
+      });
+      console.log(detail);
+      // setError((prev) => ({ ...prev, cnic: true }));
+      // return;
     }
     setError((prev) => ({ ...prev, [name]: false }));
     // Check if the entered value is a number for the "CNIC" field
 
     // Update the state
-    setDetail((prev) => {
-      return { ...prev, [name]: value };
-    });
+
+    if (name === "cnic") {
+    } else {
+      setDetail((prev) => {
+        return { ...prev, [name]: value };
+      });
+    }
   };
   const handleCellChange = (rowId, e) => {
     const { name, value } = e.target;
@@ -506,6 +526,7 @@ export default function PropertyRegister() {
                   placeholder="XXXXX-XXXXXXX-X"
                   maxRows={4}
                   variant="standard"
+                  value={detail?.cnic}
                   name="cnic"
                   onChange={handleChange}
                   error={error.cnic}

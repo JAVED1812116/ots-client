@@ -42,6 +42,8 @@ export default function AllRoutes() {
     console.log(registeredUser, "registeredUser useeff");
   })
 
+  console.log(typeof registeredUser, "registeredUser type");
+
   // if (savedUser === null) {
   //   return (
   //     <Router>
@@ -101,7 +103,7 @@ export default function AllRoutes() {
         </Routes>
       </Router>
     );
-  } else if (registeredUser === false) {
+  } else if (registeredUser === 'false') {
     console.log("hello2");
     return (
       <Router>
@@ -115,7 +117,7 @@ export default function AllRoutes() {
         </Routes>
       </Router>
     );
-  } else if (registeredUser && savedUser === null) {
+  } else if (registeredUser === 'true' && savedUser === null) {
     console.log("hello3");
     return (
       <Router>

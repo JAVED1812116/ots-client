@@ -5,11 +5,11 @@ const NotFound = () => {
   // Reload the current page
   // window.location.reload();
   // };
-  let check = false;
-  useEffect(() => {
-    window.location.reload();
-    check = true;
-  }, []);
+  let check = true;
+  // useEffect(() => {
+  //   window.location.reload();
+  //   check = true;
+  // }, [check]);
 
   if (check) {
     return (
