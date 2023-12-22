@@ -149,6 +149,7 @@ export default function PropertyRegister() {
   };
 
   React.useEffect(() => {
+    console.log("use effect run");
     const numToShow = parseInt(detail?.totalFlat, 10) || 0;
 
     const newRows = Array.from({ length: numToShow }, (_, index) => ({
@@ -473,7 +474,10 @@ export default function PropertyRegister() {
             toast.success("Property Register Successfully", {
               position: "top-center",
             });
-            navigate("/pending-request");
+            sessionStorage.setItem("is_register", true);
+            setTimeout(() => {
+              navigate("/pending-request");
+            }, 2200);
           }
         });
       } else {
