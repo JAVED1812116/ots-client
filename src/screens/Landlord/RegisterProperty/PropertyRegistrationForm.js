@@ -181,17 +181,17 @@ export default function PropertyRegister() {
 
     setGeneratedRows(newRows);
   }, [detail?.totalFlat]);
-  const generateFloorOptions = () => {
-    const options = [];
-    for (let i = 1; i <= detail?.totalFloor; i++) {
-      options.push(
-        <MenuItem key={i} value={i}>
-          {`${i} floor`}
-        </MenuItem>
-      );
-    }
-    return options;
-  };
+  // const generateFloorOptions = () => {
+  //   const options = [];
+  //   for (let i = 1; i <= detail?.totalFloor; i++) {
+  //     options.push(
+  //       <MenuItem key={i} value={i}>
+  //         {`${i} floor`}
+  //       </MenuItem>
+  //     );
+  //   }
+  //   return options;
+  // };
   const renderDataGrid = () => {
     return (
       <div style={{ height: 400, width: "100%" }}>
@@ -260,22 +260,11 @@ export default function PropertyRegister() {
                           displayEmpty
                           // inputProps={{ "aria-label": "Without label" }}
                         >
-                          {console.log(
-                            Array.from(
-                              { length: detail?.totalFloor },
-                              (_, index) => ({
-                                id: index,
-                              })
-                            ),
-                            "detail?.totalFloor"
-                          )}
-                          {detail?.totalFloor &&
-                            Array.from(
-                              { length: detail?.totalFloor },
-                              (_, index) => ({
-                                id: index,
-                              })
-                            ).map((e, i) => {
+                          
+                          {
+                            Array.from({ length: detail?.totalFloor?.length > 0 ? detail?.totalFloor : 1 }, (_, index) => ({
+                              id: index,
+                            })).map((e, i) => {
                               return (
                                 <MenuItem key={i} value={i}>
                                   {`${i} floor`}
@@ -675,7 +664,7 @@ export default function PropertyRegister() {
                   name="totalFlat"
                   onChange={handleChange}
                   error={error.totalFlat}
-                  disabled={detail?.totalFloor===''}
+                  // disabled={detail?.totalFloor===''}
                   helperText={
                     error.totalFlat ? "Please enter a valid Total Flat" : ""
                   }
