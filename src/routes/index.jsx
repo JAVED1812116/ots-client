@@ -34,6 +34,7 @@ export default function AllRoutes() {
   // console.log(savedUser, "savedUser");
   // },[]);
 
+
   console.log(savedUser, "savedUser");
   console.log(registeredUser, "registeredUser1");
   useEffect(()=> {

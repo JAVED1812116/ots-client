@@ -1,21 +1,42 @@
-import React from 'react'
-import "./style.css"
+import React, { useEffect } from "react";
+import "./style.css";
 const NotFound = () => {
-  return (
-<>
-<h1>404 Page Not Found</h1>
-{/* <p class="zoom-area"><b>CSS</b> animations to make a cool 404 page. </p> */}
-<section class="error-container">
-  <span class="four"><span class="screen-reader-text">4</span></span>
-  <span class="zero"><span class="screen-reader-text">0</span></span>
-  <span class="four"><span class="screen-reader-text">4</span></span>
-</section>
-<div class="link-container">
-  <a target="_blank" href="/" class="more-link">Go To Home</a>
-</div>
+  // const handleGoToHome = () => {
+  // Reload the current page
+  // window.location.reload();
+  // };
+  let check = false;
+  useEffect(() => {
+    window.location.reload();
+    check = true;
+  }, []);
 
-</>
-  )
-}
+  if (check) {
+    return (
+      <>
+        <h1>404 Page Not Found</h1>
+        {/* <p class="zoom-area"><b>CSS</b> animations to make a cool 404 page. </p> */}
+        <section class="error-container">
+          <span class="four">
+            <span class="screen-reader-text">4</span>
+          </span>
+          <span class="zero">
+            <span class="screen-reader-text">0</span>
+          </span>
+          <span class="four">
+            <span class="screen-reader-text">4</span>
+          </span>
+        </section>
+        <div class="link-container">
+          <a target="_blank" href="/" class="more-link">
+            Go To Home
+          </a>
+        </div>
+      </>
+    );
+  } else {
+    <></>;
+  }
+};
 
-export default NotFound
+export default NotFound;
