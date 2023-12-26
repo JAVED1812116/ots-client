@@ -369,8 +369,8 @@ export default function Registration() {
       rent: detail?.rent,
       adultDetail: familyMembers,
       childrenDetail: childrenRows,
-      userId: localStorage.getItem("user_id"),
-      userName: localStorage.getItem("name"),
+      userId: sessionStorage.getItem("user_id"),
+      userName: sessionStorage.getItem("name"),
       flatDetails: flatDetails
     };
     dispatch(RegisterTenant({ values })).then((res) => {
