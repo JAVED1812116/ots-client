@@ -12,6 +12,7 @@ import MaintananceReading from './Reducer/MaintananceReading';
 import TrashReading from './Reducer/TrashReading';
 import GetOneUploadBill from './Reducer/GetOneUploadBill';
 import PropertyRegistration from './Reducer/PropertyRegistration';
+import GetTenantDetail from './Reducer/GetTenantDetail';
 export const store = configureStore({
   reducer: {
     "CreateUser": CreateUser,
@@ -27,5 +28,6 @@ export const store = configureStore({
     "Photo": KElectricImg,
     "getOneUploadBillDetail": GetOneUploadBill,
     "propertyRegistration": PropertyRegistration,
+    "tenantDetail": GetTenantDetail,
   },
 })

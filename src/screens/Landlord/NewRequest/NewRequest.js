@@ -17,34 +17,58 @@ import Wrapper from "../../../components/Wrapper";
 import { useState } from "react";
 import { useLocation } from "react-router";
 import title from "../../../components/title";
+import { useDispatch } from "react-redux";
+import { GetTenant } from "../../../Redux/Reducer/GetTenantDetail";
 
 
-function createData(name, calories, fat, carbs, protein, price) {
+
+export default function NewRequest() {
+  title("New Request")
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const [mylocation, setMyLocation] = useState(location.pathname);
+  const [data, setData] = useState();
+  const dispatch=useDispatch()
+  React.useEffect(()=>{
+    
+    dispatch(GetTenant({ userId: localStorage.getItem("user_id") })).then((res)=>{
+      console.log(res?.payload?.data?.data[0]?.data,"yy")
+      setData(res?.payload?.data?.data[0]?.data)
+    })
+  },[])
   
+function createData(name, fatherName, flatName, flatNumber, flatFloor, flatRent,flatAdvance) {
   return {
     name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
+    fatherName,
+    flatName,
+    flatNumber,
+    flatFloor,
+    flatRent,
+    flatAdvance,
     history: [
       {
-        date: "2020-01-05",
-        totalFamilyMembers: 5,
-        advance: 30000,
-        monthlyRent: 15000,
-        previousAddress: "naganChowrangi",
-        permenantAddress: "Shikarpur",
+        
+        date:data?.map((e)=>{return e?.date}),
+        totalFamilyMembers: data?.map((e)=>{return e?.adultFamilyMembers}),
+        children: data?.map((e)=>{return e?.childrenFamilyMembers}),
+        occupation: data?.map((e)=>{return e?.occupation}),
+        gender: data?.map((e)=>{return e?.gender}),
+        language: data?.map((e)=>{return e?.language}),
+        cast: data?.map((e)=>{return e?.cast}),
+        permanentAddress: data?.map((e)=>{return e?.permanentAddress}),
+        // advance: data?.map((res)=>{return res?.flatDetail?.map((e)=>{return (e?.flatAdvance)})}),
+
       },
     ],
   };
 }
 
+
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
-
+  
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -60,26 +84,30 @@ function Row(props) {
         <TableCell component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell align="right">{row.calories}</TableCell>
-        <TableCell align="right">{row.fat}</TableCell>
-        <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell>
+        <TableCell align="right">{row.fatherName}</TableCell>
+        <TableCell align="right">{row.flatName}</TableCell>
+        <TableCell align="right">{row.flatNumber}</TableCell>
+        <TableCell align="right">{row.flatFloor}</TableCell>
+        <TableCell align="right">{row.flatRent}</TableCell>
+        <TableCell align="right">{row.flatAdvance}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                History
+                Tenant Detail
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
                     <TableCell>Date</TableCell>
-                    <TableCell>Total Family Members</TableCell>
-                    <TableCell align="right">Advance</TableCell>
-                    <TableCell align="right">Monthly Rent</TableCell>
-                    <TableCell align="right">Prev Address</TableCell>
+                    <TableCell>Adult</TableCell>
+                    <TableCell align="right">Children</TableCell>
+                    <TableCell align="right">Occupation</TableCell>
+                    <TableCell align="right">Gender</TableCell>
+                    <TableCell align="right">Language</TableCell>
+                    <TableCell align="right">Cast</TableCell>
                     <TableCell align="right">Permenant Address</TableCell>
                   </TableRow>
                 </TableHead>
@@ -90,15 +118,21 @@ function Row(props) {
                         {historyRow.date}
                       </TableCell>
                       <TableCell>{historyRow.totalFamilyMembers}</TableCell>
-                      <TableCell align="right">{historyRow.advance}</TableCell>
+                      <TableCell align="right">{historyRow.children}</TableCell>
                       <TableCell align="right">
-                        {historyRow.monthlyRent}
+                        {historyRow.occupation}
                       </TableCell>
                       <TableCell align="right">
-                        {historyRow.previousAddress}
+                        {historyRow.gender}
                       </TableCell>
                       <TableCell align="right">
-                        {historyRow.permenantAddress}
+                        {historyRow.language}
+                      </TableCell>
+                      <TableCell align="right">
+                        {historyRow.cast}
+                      </TableCell>
+                      <TableCell align="right">
+                        {historyRow.permanentAddress}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -123,20 +157,11 @@ function Row(props) {
     </React.Fragment>
   );
 }
+  const rows = [
+    // console.log(data)
+    createData(data?.map((e)=>{return e.name}), data?.map((e)=>{return e.fatherName}),data?.map((res)=>{return res?.flatDetail?.map((e)=>{return (e?.flatName)})}),data?.map((res)=>{return res?.flatDetail?.map((e)=>{return (e?.flatNumber)})}),data?.map((res)=>{return res?.flatDetail?.map((e)=>{return (e?.flatFloor)})}),data?.map((res)=>{return res?.flatDetail?.map((e)=>{return (e?.flatRent)})}),data?.map((res)=>{return res?.flatDetail?.map((e)=>{return (e?.flatAdvance)})})),
 
-const rows = [
-  createData("Zia-ur-rehman", "Khalil-ur-rehman", 500),
-  createData("Ritick", "Bhawani shankar", 420),
-  createData("saeed", "afzal", 200),
-  createData("shameel", "idrees", 100),
-  createData("rahul", "Gianchandani", 50),
-];
-
-export default function NewRequest() {
-  title("New Request")
-  const [open, setOpen] = useState(false);
-  const location = useLocation();
-  const [mylocation, setMyLocation] = useState(location.pathname);
+  ];
 
   return (
     <>
@@ -157,13 +182,27 @@ export default function NewRequest() {
                   Father Name
                 </TableCell>
                 <TableCell sx={{ color: "white" }} align="right">
-                  CNIC No
+                  Flat Name
+                </TableCell>
+                <TableCell sx={{ color: "white" }} align="right">
+                  Flat Number
+                </TableCell>
+                <TableCell sx={{ color: "white" }} align="right">
+                  Floor
+                </TableCell>
+                <TableCell sx={{ color: "white" }} align="right">
+                  Rent
+                </TableCell>
+                <TableCell sx={{ color: "white" }} align="right">
+                  Advance
                 </TableCell>
                 <TableCell align="right"></TableCell>
                 <TableCell align="right"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
+
+              {/* {console.log(data,"yyyy")} */}
               {rows.map((row) => (
                 <Row key={row.name} row={row} />
               ))}
