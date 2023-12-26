@@ -7,12 +7,12 @@ const NotFound = () => {
   };
   let check = true;
 
-  useEffect(() => {
-    if (check) {
-      window.location.reload();
-      check = false;
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (check) {
+  //     window.location.reload();
+  //     check = false;
+  //   }
+  // }, []);
 
   if (check) {
     return (
