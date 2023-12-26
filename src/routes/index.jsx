@@ -113,6 +113,9 @@ export default function AllRoutes() {
           <Route path="/login" element={<LoginUser />} />
           <Route path="/property-reg" element={<PropertyRegister />} />
           <Route path="/pending-request" element={<PendingRequest />} />
+          <Route path="/tenant-registration" element={<Registeration />} />
+
+
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>
