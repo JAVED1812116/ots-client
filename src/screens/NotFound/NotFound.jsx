@@ -1,22 +1,26 @@
 import React, { useEffect } from "react";
 import "./style.css";
 const NotFound = () => {
-  // const handleGoToHome = () => {
+  const handleGoToHome = () => {
   // Reload the current page
-  // window.location.reload();
-  // };
+  window.location.reload();
+  };
   let check = true;
-  // useEffect(() => {
-  //   window.location.reload();
-  //   check = true;
-  // }, [check]);
+
+  useEffect(() => {
+    if (check) {
+      window.location.reload();
+      check = false;
+    }
+  }, []);
 
   if (check) {
     return (
       <>
-        <h1>404 Page Not Found</h1>
+      <h1>Refresh the Page</h1>
+        {/* <h1>404 Page Not Found</h1> */}
         {/* <p class="zoom-area"><b>CSS</b> animations to make a cool 404 page. </p> */}
-        <section class="error-container">
+        {/* <section class="error-container">
           <span class="four">
             <span class="screen-reader-text">4</span>
           </span>
@@ -26,10 +30,10 @@ const NotFound = () => {
           <span class="four">
             <span class="screen-reader-text">4</span>
           </span>
-        </section>
+        </section> */}
         <div class="link-container">
-          <a target="_blank" href="/" class="more-link">
-            Go To Home
+          <a target="_blank" href="/" onClick={handleGoToHome} class="more-link">
+            Reload
           </a>
         </div>
       </>
