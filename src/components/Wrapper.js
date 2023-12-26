@@ -267,7 +267,7 @@ export default function Wrapper({ open, setOpen, mylocation }) {
               </ListItemButton>
             </ListItem>
 
-            <ListItem
+            {/* <ListItem
               disablePadding
               sx={{ display: "block" }}
               className={`${mylocation === "/rent-setting" ? "active-li" : ""}`}
@@ -293,7 +293,7 @@ export default function Wrapper({ open, setOpen, mylocation }) {
                 </ListItemIcon>
                 <ListItemText primary={open ? "Rent Setting" : null} />
               </ListItemButton>
-            </ListItem>
+            </ListItem> */}
 
             <ListItem
               disablePadding

@@ -97,7 +97,7 @@ export default function AllRoutes() {
         <Route path="/new-request" element={<NewRequest />} />
         <Route path="/user-detail" element={<RequestUserDetail />} />
         <Route path="/all-tenant" element={<AllTenant />} />
-        <Route path="/rent-setting" element={<RentSetting />} />
+        {/* <Route path="/rent-setting" element={<RentSetting />} /> */}
         <Route path="/bank-detail" element={<BankDetail />} />
         <Route path="/landlord-functionality" element={<LandlordFunctionality />} />
         <Route path="/agreement" element={<Agreement />} />
