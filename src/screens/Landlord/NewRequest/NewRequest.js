@@ -30,7 +30,7 @@ export default function NewRequest() {
   React.useEffect(() => {
     dispatch(GetTenant({ userId: localStorage.getItem("user_id") })).then(
       (res) => {
-        console.log(res?.payload?.data?.data, "yy");
+    
         setData(res?.payload?.data?.data);
       }
     );
@@ -90,7 +90,7 @@ export default function NewRequest() {
   function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
-    console.log(row, "22222222233333333333");
+    
     return (
       <React.Fragment>
         <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
