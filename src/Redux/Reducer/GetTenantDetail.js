@@ -4,7 +4,7 @@ import { BASE_URL } from "../../config/config";
 
 
 export const GetTenant = createAsyncThunk("dummyData/TenantDetail", async ({userId}) => {
-    let response = await axios.get(`${BASE_URL}/tenant-details/${userId}`);
+    let response = await axios.get(`${BASE_URL}/new-request/${userId}`);
     return response;
 });
 
