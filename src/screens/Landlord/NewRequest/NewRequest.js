@@ -52,7 +52,6 @@ export default function NewRequest() {
     language,
     cast,
     permanentAddress
-
   ) {
     return {
       name,
@@ -109,7 +108,7 @@ export default function NewRequest() {
   function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
-console.log(row, '22222222233333333333');
+    console.log(row, "22222222233333333333");
     return (
       <React.Fragment>
         <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -133,7 +132,7 @@ console.log(row, '22222222233333333333');
           <TableCell align="right">{row.flatAdvance}</TableCell>
         </TableRow>
         <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography variant="h6" gutterBottom component="div">
@@ -154,28 +153,24 @@ console.log(row, '22222222233333333333');
                   </TableHead>
                   <TableBody>
                     {/* {row.history.map((historyRow) => ( */}
-                      <TableRow 
-                      // key={row.date}
-                      >
-                        <TableCell component="th" scope="row">
-                          {row.date}
-                        </TableCell>
-                       <TableCell>{row.adultFamilyMembers}</TableCell>
-                        <TableCell align="right">
-                          {row.childrenFamilyMembers}
-                        </TableCell>
-                        <TableCell align="right">
-                          {row.occupation}
-                        </TableCell>
-                        <TableCell align="right">{row.gender}</TableCell>
-                        <TableCell align="right">
-                          {row.language}
-                        </TableCell>
-                        <TableCell align="right">{row.cast}</TableCell>
-                        <TableCell align="right">
-                          {row.permanentAddress}
-                        </TableCell>
-                      </TableRow>
+                    <TableRow
+                    // key={row.date}
+                    >
+                      <TableCell component="th" scope="row">
+                        {row.date}
+                      </TableCell>
+                      <TableCell>{row.adultFamilyMembers}</TableCell>
+                      <TableCell align="right">
+                        {row.childrenFamilyMembers}
+                      </TableCell>
+                      <TableCell align="right">{row.occupation}</TableCell>
+                      <TableCell align="right">{row.gender}</TableCell>
+                      <TableCell align="right">{row.language}</TableCell>
+                      <TableCell align="right">{row.cast}</TableCell>
+                      <TableCell align="right">
+                        {row.permanentAddress}
+                      </TableCell>
+                    </TableRow>
                     {/* ))} */}
                   </TableBody>
                 </Table>
@@ -198,7 +193,7 @@ console.log(row, '22222222233333333333');
       </React.Fragment>
     );
   }
-  console.log(data, '2222222data');
+  console.log(data, "2222222data");
   const rows = [
     data?.map((resp) => {
       return createData(
@@ -256,8 +251,7 @@ console.log(row, '22222222233333333333');
         }),
         resp?.data?.map((e) => {
           return e.permanentAddress;
-        }),
-         
+        })
       );
     }),
   ];
@@ -302,8 +296,8 @@ console.log(row, '22222222233333333333');
                 <TableCell sx={{ color: "white" }} align="right">
                   Advance
                 </TableCell>
-                <TableCell align="right"></TableCell>
-                <TableCell align="right"></TableCell>
+                {/* <TableCell align="right"></TableCell>
+                <TableCell align="right"></TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
