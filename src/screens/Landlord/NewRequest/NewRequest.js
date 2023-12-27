@@ -81,25 +81,7 @@ export default function NewRequest() {
               return e.adultFamilyMembers;
             });
           }),
-          // children: data?.map((e) => {
-          //   return e?.childrenFamilyMembers;
-          // }),
-          // occupation: data?.map((e) => {
-          //   return e?.occupation;
-          // }),
-          // gender: data?.map((e) => {
-          //   return e?.gender;
-          // }),
-          // language: data?.map((e) => {
-          //   return e?.language;
-          // }),
-          // cast: data?.map((e) => {
-          //   return e?.cast;
-          // }),
-          // permanentAddress: data?.map((e) => {
-          //   return e?.permanentAddress;
-          // }),
-          // advance: data?.map((res)=>{return res?.flatDetail?.map((e)=>{return (e?.flatAdvance)})}),
+          
         },
       ],
     };
@@ -152,9 +134,7 @@ export default function NewRequest() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* {row.history.map((historyRow) => ( */}
                     <TableRow
-                    // key={row.date}
                     >
                       <TableCell component="th" scope="row">
                         {row.date}
@@ -193,7 +173,6 @@ export default function NewRequest() {
       </React.Fragment>
     );
   }
-  console.log(data, "2222222data");
   const rows = [
     data?.map((resp) => {
       return createData(
@@ -256,12 +235,6 @@ export default function NewRequest() {
     }),
   ];
 
-  // const rows = [
-  //   data?.map((resp) => {
-  //    return createData(resp?.data?.map((e)=> {return e.name}))
-  //   }),
-  // ];
-
   return (
     <>
       <Wrapper open={open} setOpen={setOpen} mylocation={mylocation} />
@@ -296,17 +269,12 @@ export default function NewRequest() {
                 <TableCell sx={{ color: "white" }} align="right">
                   Advance
                 </TableCell>
-                {/* <TableCell align="right"></TableCell>
-                <TableCell align="right"></TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
-              {/* {console.log(data,"yyyy")} */}
-              {console.log(rows.includes(undefined), "2222222222")}
               {!rows.includes(undefined) &&
                 rows[0].map((row) => (
                   <Row
-                    // key={row.name}
                     row={row}
                   />
                 ))}
