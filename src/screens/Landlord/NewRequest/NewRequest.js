@@ -51,7 +51,8 @@ export default function NewRequest() {
     gender,
     language,
     cast,
-    permanentAddress
+    permanentAddress,
+    userId,
   ) {
     return {
       name,
@@ -69,6 +70,7 @@ export default function NewRequest() {
       language,
       cast,
       permanentAddress,
+      userId,
       history: [
         {
           date: data?.map((res) => {
@@ -85,6 +87,11 @@ export default function NewRequest() {
         },
       ],
     };
+  }
+
+
+  const handleChange = (row) => {
+    console.log(row, 'r');
   }
 
   function Row(props) {
@@ -157,6 +164,7 @@ export default function NewRequest() {
                 <Button
                   variant="contained"
                   sx={{ marginTop: 2, marginRight: 1, background: "black" }}
+                  onClick={()=> handleChange(row)}
                 >
                   Accept
                 </Button>
@@ -230,6 +238,9 @@ export default function NewRequest() {
         }),
         resp?.data?.map((e) => {
           return e.permanentAddress;
+        }),
+        resp?.data?.map((e) => {
+          return e.userId;
         })
       );
     }),
