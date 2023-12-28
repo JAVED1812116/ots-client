@@ -21,6 +21,7 @@ import PreviousBillLandlordPage from "../screens/Landlord/PreviousBills/Previous
 import PropertyRegister from "../screens/Landlord/RegisterProperty/PropertyRegistrationForm";
 import PendingRequest from "../screens/PendingRequest/PendingRequest";
 import { useEffect } from "react";
+import LandingPage from "../screens/LandingPage/LandingPage";
 export default function AllRoutes() {
   // console.log(
   //   localStorage.getItem("user_id"),
@@ -110,6 +111,7 @@ export default function AllRoutes() {
         <Route path="/tenant-registration" element={<Registeration />} />
         <Route path="/tenant-dashboard" element={<TenantFunctionality />} />
         <Route path="/previous-TenantBill" element={<PreviousBill />} />
+        <Route path="/Landing-page" element={<LandingPage />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </Router>
