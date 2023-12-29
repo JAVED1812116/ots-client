@@ -49,7 +49,7 @@ export default function AllRoutes() {
     return (
       <Router>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginUser />} />
           <Route path="/signup" element={<CreateUser />} />
           <Route path="/*" element={<NotFound />} />
@@ -61,7 +61,7 @@ export default function AllRoutes() {
     return (
       <Router>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/signup/:id?" element={<CreateUser />} />
           <Route path="/login" element={<LoginUser />} />
           <Route path="/property-reg" element={<PropertyRegister />} />
@@ -78,7 +78,7 @@ export default function AllRoutes() {
     return (
       <Router>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/signup/:id?" element={<CreateUser />} />
           <Route path="/login" element={<LoginUser />} />
           <Route path="/pending-request" element={<PendingRequest />} />
@@ -92,7 +92,7 @@ export default function AllRoutes() {
     return (
       <Router>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginUser />} />
         <Route path="/landlord-dashboard" element={<LandLordDashboard />} />
         <Route path="/new-request" element={<NewRequest />} />
@@ -111,7 +111,7 @@ export default function AllRoutes() {
         <Route path="/tenant-registration" element={<Registeration />} />
         <Route path="/tenant-dashboard" element={<TenantFunctionality />} />
         <Route path="/previous-TenantBill" element={<PreviousBill />} />
-        <Route path="/Landing-page" element={<LandingPage />} />
+        {/* <Route path="/Landing-page" element={<LandingPage />} /> */}
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </Router>

@@ -7,11 +7,7 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import Logo from "../../assets/Logo.png";
 import Banglow from "../../assets/Banglow.jpg";
 import {
@@ -22,16 +18,14 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
-const pages = ["About Us", "Services", "Login"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import { useNavigate } from "react-router-dom";
 
 function LandingPage() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [message, setMessage] = React.useState("");
-
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     //
@@ -39,17 +33,10 @@ function LandingPage() {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (event) => {
     setAnchorElNav(null);
   };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+ 
 
   return (
     <>
@@ -111,11 +98,22 @@ function LandingPage() {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))}
+                  <Button
+                  sx={{ my: 2, color: "black", display: "block" }}
+                >
+                  About Us
+                </Button>
+                <Button
+                  sx={{ my: 2, color: "black", display: "block" }}
+                >
+                  Contact Us
+                </Button>
+                <Button
+                   onClick={() => navigate("/login",{state:{type:"Landlord"}})}
+                  sx={{ my: 2, color: "black", display: "block" }}
+                >
+                  Login
+                </Button>
               </Menu>
             </Box>
             {/* Center */}
@@ -145,47 +143,26 @@ function LandingPage() {
                 src={Logo}
               />
             </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page) => (
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" },justifyContent:'right' }}>
+            
                 <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: "white", display: "block" }}
                 >
-                  {page}
+                  About Us
                 </Button>
-              ))}
+                <Button
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  Contact Us
+                </Button>
+                <Button
+                  onClick={() => navigate("/login",{state:{type:"Landlord"}})}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  Login
+                </Button>
             </Box>
 
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
           </Toolbar>
         </Container>
       </AppBar>
@@ -470,7 +447,8 @@ function LandingPage() {
           </Box>
         </Box>
       </Container>
-      <Container sx={{mt:2}}>
+      {/* FOOTER */}
+      <Container sx={{mt:5}}>
         <Typography sx={{color:'black'}}>
           At Integritort, we are revolutionizing the mass tort industry and
           prioritizing patient well-being by harnessing the power of real-time
