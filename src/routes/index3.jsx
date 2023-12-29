@@ -30,11 +30,9 @@ export default function AllRoutes() {
   if (loginUser) {
     is_register = loginUser?.login.length > 0 && loginUser?.login?.data?.data.is_register;
     is_active = loginUser?.login.length > 0 && loginUser?.login?.data?.data.is_active;
-
-    console.log(loginUser?.login?.data?.data.is_register, loginUser?.login?.data?.data.is_active, 'loginUser?.login?.data?.data.is_register');
   }
 
-  // console.log(is_register, is_active, 'is_active');
+  console.log(is_register, is_active, 'is_active');
   // console.log(
   //   localStorage.getItem("user_id"),
   //   'localStorage.getItem("user_id")'
@@ -70,8 +68,8 @@ export default function AllRoutes() {
   //     </Router>
   //   );
   // } else
-  if (loginUser?.login?.data?.data.is_register == false && loginUser?.login?.data?.data.is_active == false) {
-    console.log("hello1");
+  if (is_register == true && is_active == false) {
+    console.log("hello2");
     return (
       <Router>
         <Routes>
@@ -79,13 +77,14 @@ export default function AllRoutes() {
           <Route path="/signup/:id?" element={<CreateUser />} />
           <Route path="/login" element={<LoginUser />} />
           <Route path="/property-reg" element={<PropertyRegister />} />
+          <Route path="/pending-request" element={<PendingRequest />} />
           <Route path="/tenant-registration" element={<Registeration />} />
 
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>
     );
-  } else if (loginUser?.login?.data?.data.is_register == true && loginUser?.login?.data?.data.is_active == false) {
+  } else if (registeredUser === "true" && savedUser === null) {
     console.log("hello3");
     return (
       <Router>
@@ -98,7 +97,7 @@ export default function AllRoutes() {
         </Routes>
       </Router>
     );
-  } else  {
+  } else {
     console.log("hello4");
     return (
       <Router>
