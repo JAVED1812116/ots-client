@@ -3,7 +3,7 @@ import axios from "axios";
 import { BASE_URL } from "../../config/config";
 
 
-export const UserLogin = createAsyncThunk("dummyData/UserAdd", async ({email,password}) => {
+export const UserLogin = createAsyncThunk("dummyData/loginUser", async ({email,password}) => {
     let response = await axios.post(`${BASE_URL}/loginUser`,  {
         email,
         password
@@ -14,7 +14,7 @@ export const UserLogin = createAsyncThunk("dummyData/UserAdd", async ({email,pas
 
 
 const LoginUser = createSlice({
-    name: "login",
+    name: "loginUser",
     initialState: {
         loading: false,
         login: [],

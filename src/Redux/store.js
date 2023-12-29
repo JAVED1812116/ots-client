@@ -13,9 +13,11 @@ import TrashReading from './Reducer/TrashReading';
 import GetOneUploadBill from './Reducer/GetOneUploadBill';
 import PropertyRegistration from './Reducer/PropertyRegistration';
 import GetTenantDetail from './Reducer/GetTenantDetail';
+import LoginUser from './Reducer/LoginUser';
 export const store = configureStore({
   reducer: {
-    "CreateUser": CreateUser,
+    "UserAdd": CreateUser,
+    "loginUser": LoginUser,
     "TenantRegestration": TenantRegestration,
     "rentSetting": RentSetting,
     "accountSetting": AccountSetting,

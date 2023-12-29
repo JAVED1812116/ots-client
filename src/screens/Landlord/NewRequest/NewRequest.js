@@ -253,6 +253,7 @@ export default function NewRequest() {
         <div className="mainHeading">
           <h1>New Requests</h1>
         </div>
+        {data?.legth>0?
         <TableContainer
           component={Paper}
           // sx={{ marginTop: 4 }}
@@ -291,7 +292,12 @@ export default function NewRequest() {
                 ))}
             </TableBody>
           </Table>
-        </TableContainer>
+          
+        </TableContainer>:
+        <Box sx={{flex:'1',justifyContent:'center',alignContent:'center',alignItems:'center'}}>
+          <Typography>No Request</Typography>
+        </Box>
+}
       </div>
     </>
   );

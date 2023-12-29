@@ -16,7 +16,7 @@ export const UserAdd = createAsyncThunk("dummyData/UserAdd", async ({name,email,
 
 
 const CreateUser = createSlice({
-    name: "CreateUser",
+    name: "UserAdd",
     initialState: {
         loading: false,
         CreateUser: [],
