@@ -19,7 +19,7 @@ import { useLocation } from "react-router";
 import title from "../../../components/title";
 import { useDispatch } from "react-redux";
 import { GetTenant } from "../../../Redux/Reducer/GetTenantDetail";
-
+import "./newRequest.css"
 export default function NewRequest() {
   title("New Request");
   const [open, setOpen] = useState(false);
@@ -294,8 +294,12 @@ export default function NewRequest() {
           </Table>
           
         </TableContainer>:
-        <Box sx={{flex:'1',justifyContent:'center',alignContent:'center',alignItems:'center'}}>
-          <Typography>No Request</Typography>
+        <Box sx={{ display: 'flex',justifyContent:'center', m:10 }}>
+          <Typography sx={{fontSize:40}}>
+          <span className="noData">R</span><span>e</span><span className="noData">q</span><span>u</span><span className="noData">e</span><span>s</span><span className="noData">t</span> 
+          <span> N</span><span className="noData">o</span><span>T</span>
+          <span className="noData"> F</span><span>o</span><span className="noData">u</span><span>n</span><span className="noData">d</span>
+          </Typography>
         </Box>
 }
       </div>
