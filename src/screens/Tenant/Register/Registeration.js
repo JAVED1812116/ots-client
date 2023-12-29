@@ -31,6 +31,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { GetProperty } from "../../../Redux/Reducer/GetPropertyDetails";
 import Checkbox from "@mui/material/Checkbox";
+import { useNavigate } from "react-router-dom";
 export default function Registration() {
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
@@ -50,8 +51,7 @@ export default function Registration() {
     childrenFamilyMembers: "",
     language: "",
     cast: "",
-    advance: "",
-    rent: "",
+    selectedRows:""
   });
   const [familyMembers, setFamilyMembers] = React.useState({
     familyMembersName: "",
@@ -74,7 +74,7 @@ export default function Registration() {
   const [generatedChildrenRows, setGeneratedChildrenRows] = React.useState([]);
   const [flatDetails, setFlatDetails] = React.useState([]);
   const [selectedRows, setSelectedRows] = React.useState([]);
-
+  const navigate = useNavigate();
   const handleCheckboxChange = (event, row) => {
     console.log(event, row);
     if (event.target.checked) {
@@ -330,29 +330,32 @@ export default function Registration() {
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (activeStep === 2) {
-      const keysToCheck = ["advance", "rent"];
+ 
 
-      // Assuming your detail data is stored in a state variable named detail
-      const emptyFields = keysToCheck
-        .filter((key) => !detail[key]) // Check if the value of the specified key is falsy (empty)
-        .map((key) => key);
+    if(selectedRows?.length>0){
+      console.log('if');
 
-      if (emptyFields.length > 0) {
-        const errorMessage = `Please fill in the following fields: ${emptyFields.join(
-          ", "
-        )}.`;
-        toast.error(errorMessage, {
-          position: "top-center",
-        });
-        return;
-      } else {
-        setActiveStep(activeStep + 1);
-      }
-    }
-    let values = {
+      // for (let i = 0; i < selectedRows.length; i++) {
+        
+      //   values.flatDetails = []
+      //   values.flatDetails = selectedRows[i]
+      //   console.log(values.flatDetails, i);
+      //   dispatch(RegisterTenant({ values })).then((res) => {
+      //     if (res?.payload?.data?.message === "Tenant Registered Successfully") {
+      //       toast.success("Form Submitted", {
+      //         position: "top-center",
+      //       });
+      //     } else {
+      //       console.log("else");
+      //     }
+      //   })
+      // }
+
+      const promises = selectedRows.map((selectedRow) => {
+    
+        let values = {
       name: detail?.name,
       fatherName: detail?.fatherName,
       cnicNo: detail?.cnicNo,
@@ -365,23 +368,38 @@ export default function Registration() {
       childrenFamilyMembers: detail?.childrenFamilyMembers,
       language: detail?.language,
       cast: detail?.cast,
-      advance: detail?.advance,
-      rent: detail?.rent,
       adultDetail: familyMembers,
       childrenDetail: childrenRows,
       userId: sessionStorage.getItem("user_id"),
       userName: sessionStorage.getItem("name"),
-      flatDetails: flatDetails
+      flatDetails: [selectedRow]
     };
-    dispatch(RegisterTenant({ values })).then((res) => {
-      if (res?.payload?.data?.message === "Tenant Registered Successfully") {
-        toast.success("Form Submitted", {
-          position: "top-center",
+        return dispatch(RegisterTenant({ values })).then((res) => {
+          if (res?.payload?.data?.message !== "Tenant Registered Successfully") {
+            throw new Error("API call failed");
+          }
         });
-      } else {
-        console.log("else");
+      })
+      try {
+        // Wait for all API calls to complete
+        await Promise.all(promises);
+        toast.success("Form Submitted", { position: "top-center" });
+        setTimeout(() => {
+          navigate("/pending-request");
+        }, 2200);
+      } catch (error) {
+        console.error("Error during API calls:", error);
+    
+        // Rollback in case of an error
+        // await rollback(selectedRows);
+    
+        // Handle error as needed
       }
+  }else{
+    toast.error("Select Atleast One Flat", {
+      position: "top-center",
     });
+  }
   };
 
   // console.log(detail,"saeed")
@@ -664,28 +682,7 @@ export default function Registration() {
       case 2:
         return (
           <>
-            <TextField
-              id="advance"
-              label="Advance"
-              variant="outlined"
-              placeholder="Enter Your Advance"
-              fullWidth
-              type="number"
-              margin="normal"
-              name="advance"
-              onChange={handleChange}
-            />
-            <TextField
-              id="rent"
-              label="Monthly Rent"
-              variant="outlined"
-              placeholder="Enter Your Monthly Rent"
-              fullWidth
-              margin="normal"
-              type="number"
-              name="rent"
-              onChange={handleChange}
-            />
+           <Typography sx={{color:'black',display:'flex',justifyContent:'center'}}>These Flats Are Available</Typography>
             <Box sx={{ height: 400, width: "auto" }}>
               <Paper sx={{ width: "100%", overflow: "hidden" }}>
                 <TableContainer sx={{ maxHeight: 400 }}>
