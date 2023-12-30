@@ -28,10 +28,10 @@ export default function AllRoutes() {
   console.log(loginUser?.login?.data?.data, "state");
   let is_register, is_active;
   if (loginUser) {
-    is_register = loginUser?.login.length > 0 && loginUser?.login?.data?.data.is_register;
-    is_active = loginUser?.login.length > 0 && loginUser?.login?.data?.data.is_active;
+    is_register = loginUser?.login?.length > 0 && loginUser?.login?.data?.data.is_register;
+    is_active = loginUser?.login?.length > 0 && loginUser?.login?.data?.data.is_active;
 
-    console.log(loginUser?.login?.data?.data.is_register, loginUser?.login?.data?.data.is_active, 'loginUser?.login?.data?.data.is_register');
+    console.log(loginUser?.login?.data?.data?.is_register, loginUser?.login?.data?.data?.is_active, 'loginUser?.login?.data?.data.is_register');
   }
 
   // console.log(is_register, is_active, 'is_active');
@@ -70,6 +70,19 @@ export default function AllRoutes() {
   //     </Router>
   //   );
   // } else
+  if (!loginUser?.login?.data?.data?.is_register) {
+    return (
+          <Router>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/login" element={<LoginUser />} />
+              <Route path="/signup" element={<CreateUser />} />
+              <Route path="/*" element={<NotFound />} />
+            </Routes>
+          </Router>
+        );
+  }
+  else
   if (loginUser?.login?.data?.data.is_register == false && loginUser?.login?.data?.data.is_active == false) {
     console.log("hello1");
     return (
