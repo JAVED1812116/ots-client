@@ -514,6 +514,8 @@ export default function Registration() {
         return { ...prev, [name]: value };
       });
     }
+
+    console.log(detail, 'de');
   };
   function stepContent(step) {
     switch (step) {
@@ -603,9 +605,10 @@ export default function Registration() {
             <FormControl fullWidth margin="normal">
               <InputLabel id="demo-simple-select-label">Gender</InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                // labelId="demo-simple-select-label"
+                // id="demo-simple-select"
                 label="Gender"
+                defaultValue={0}
                 onChange={handleChange}
                 name="gender"
               >
@@ -619,10 +622,11 @@ export default function Registration() {
                 Martial Status
               </InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                // labelId="demo-simple-select-label"
+                // id="demo-simple-select"
+                defaultValue={0}
                 label="Martial Status"
-                name="maritialStatus"
+                name="maritalStatus"
                 onChange={handleChange}
               >
                 <MenuItem value={0}>Married</MenuItem>

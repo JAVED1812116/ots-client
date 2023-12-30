@@ -28,10 +28,16 @@ export default function AllRoutes() {
   console.log(loginUser?.login?.data?.data, "state");
   let is_register, is_active;
   if (loginUser) {
-    is_register = loginUser?.login?.length > 0 && loginUser?.login?.data?.data.is_register;
-    is_active = loginUser?.login?.length > 0 && loginUser?.login?.data?.data.is_active;
+    is_register =
+      loginUser?.login?.length > 0 && loginUser?.login?.data?.data.is_register;
+    is_active =
+      loginUser?.login?.length > 0 && loginUser?.login?.data?.data.is_active;
 
-    console.log(loginUser?.login?.data?.data?.is_register, loginUser?.login?.data?.data?.is_active, 'loginUser?.login?.data?.data.is_register');
+    console.log(
+      loginUser?.login?.data?.data?.is_register,
+      loginUser?.login?.data?.data?.is_active,
+      "loginUser?.login?.data?.data.is_register"
+    );
   }
 
   // console.log(is_register, is_active, 'is_active');
@@ -73,18 +79,19 @@ export default function AllRoutes() {
   if (loginUser?.login?.data?.result == "No User Found") {
     console.log("hello0");
     return (
-          <Router>
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/login" element={<LoginUser />} />
-              <Route path="/signup" element={<CreateUser />} />
-              <Route path="/*" element={<NotFound />} />
-            </Routes>
-          </Router>
-        );
-  }
-  else
-  if (loginUser?.login?.data?.data.is_register == false && loginUser?.login?.data?.data.is_active == false) {
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginUser />} />
+          <Route path="/signup" element={<CreateUser />} />
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    );
+  } else if (
+    loginUser?.login?.data?.data.is_register == false &&
+    loginUser?.login?.data?.data.is_active == false
+  ) {
     console.log("hello1");
     return (
       <Router>
@@ -99,7 +106,10 @@ export default function AllRoutes() {
         </Routes>
       </Router>
     );
-  } else if (loginUser?.login?.data?.data.is_register == true && loginUser?.login?.data?.data.is_active == false) {
+  } else if (
+    loginUser?.login?.data?.data.is_register == true &&
+    loginUser?.login?.data?.data.is_active == false
+  ) {
     console.log("hello3");
     return (
       <Router>
@@ -112,7 +122,7 @@ export default function AllRoutes() {
         </Routes>
       </Router>
     );
-  } else  {
+  } else {
     console.log("hello4");
     return (
       <Router>
@@ -135,6 +145,7 @@ export default function AllRoutes() {
           {/* <Route path="/property-reg" element={<PropertyRegister />} /> */}
 
           <Route path="/addNew-Tenant" element={<AddNew />} />
+          <Route path="/property-reg" element={<PropertyRegister />} />
           <Route path="/tenant-registration" element={<Registeration />} />
           <Route path="/tenant-dashboard" element={<TenantFunctionality />} />
           <Route path="/previous-TenantBill" element={<PreviousBill />} />

@@ -163,6 +163,7 @@ export default function PropertyRegister() {
         row.id === rowId ? { ...row, [name]: value } : row
       );
     });
+    console.log(rows);
   };
 
   React.useEffect(() => {
