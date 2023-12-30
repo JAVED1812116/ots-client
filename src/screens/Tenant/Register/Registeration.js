@@ -490,15 +490,30 @@ export default function Registration() {
       // If it's not a valid number, you can choose to ignore the Input or show an error message.
       return;
     }
-    if (name === "cnicNo" && !isCnicValid(value)) {
-      setError((prev) => ({ ...prev, cnicNo: true }));
-      return;
+    if (name === "cnicNo") {
+      const numericCnic = value.replace(/\D/g, "");
+      const formattedCnic =
+      numericCnic.slice(0, 5) +
+      (numericCnic.length > 5 ? "-" + numericCnic.slice(5, 12) : "") +
+      (numericCnic.length > 12 ? "-" + numericCnic.slice(12, 13) : "");
+      console.log(formattedCnic);
+      setDetail((prev) => {
+        return { ...prev, [name]: formattedCnic };
+      });
+      console.log(detail);
+      // setError((prev) => ({ ...prev, cnicNo: true }));
+      // return;
     }
 
     setError((prev) => ({ ...prev, [name]: false }));
-    setDetail((prev) => {
-      return { ...prev, [name]: value };
-    });
+    if (name === 'cnicNo') {
+      
+    }
+    else{
+      setDetail((prev) => {
+        return { ...prev, [name]: value };
+      });
+    }
   };
   function stepContent(step) {
     switch (step) {
@@ -541,6 +556,7 @@ export default function Registration() {
               fullWidth
               margin="normal"
               name="cnicNo"
+              value={detail?.cnicNo}
               error={error.cnicNo}
               helperText={error.cnicNo ? "Please enter a valid CNIC" : ""}
               onChange={handleChange}

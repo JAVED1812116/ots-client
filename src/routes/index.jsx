@@ -70,7 +70,8 @@ export default function AllRoutes() {
   //     </Router>
   //   );
   // } else
-  if (!loginUser?.login?.data?.data?.is_register) {
+  if (loginUser?.login?.data?.result == "No User Found") {
+    console.log("hello0");
     return (
           <Router>
             <Routes>

@@ -329,6 +329,7 @@ export default function Wrapper({ open, setOpen, mylocation }) {
               onClick={() => {
                 localStorage.clear("name")
                 localStorage.clear("user_id")
+                sessionStorage.clear();
                 navigate("/");
 
               }}
