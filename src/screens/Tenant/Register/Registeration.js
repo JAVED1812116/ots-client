@@ -32,6 +32,7 @@ import Paper from "@mui/material/Paper";
 import { GetProperty } from "../../../Redux/Reducer/GetPropertyDetails";
 import Checkbox from "@mui/material/Checkbox";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 export default function Registration() {
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
@@ -44,14 +45,16 @@ export default function Registration() {
     occupation: "",
     mobileNumber: "",
     permanentAddress: "",
-    gender: "",
-    maritalStatus: "",
+    // gender: "",
+    gender: 0,
+    // maritalStatus: "",
+    maritalStatus: 0,
     adultFamilyMembers: "",
     children: "",
     childrenFamilyMembers: "",
     language: "",
     cast: "",
-    selectedRows:""
+    selectedRows: "",
   });
   const [familyMembers, setFamilyMembers] = React.useState({
     familyMembersName: "",
@@ -332,13 +335,12 @@ export default function Registration() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
- 
 
-    if(selectedRows?.length>0){
-      console.log('if');
+    if (selectedRows?.length > 0) {
+      console.log("if");
 
       // for (let i = 0; i < selectedRows.length; i++) {
-        
+
       //   values.flatDetails = []
       //   values.flatDetails = selectedRows[i]
       //   console.log(values.flatDetails, i);
@@ -354,32 +356,33 @@ export default function Registration() {
       // }
 
       const promises = selectedRows.map((selectedRow) => {
-    
         let values = {
-      name: detail?.name,
-      fatherName: detail?.fatherName,
-      cnicNo: detail?.cnicNo,
-      occupation: detail?.occupation,
-      permanentAddress: detail?.permanentAddress,
-      gender: detail?.gender,
-      maritalStatus: detail?.maritalStatus,
-      adultFamilyMembers: detail?.adultFamilyMembers,
-      children: detail?.children,
-      childrenFamilyMembers: detail?.childrenFamilyMembers,
-      language: detail?.language,
-      cast: detail?.cast,
-      adultDetail: familyMembers,
-      childrenDetail: childrenRows,
-      userId: sessionStorage.getItem("user_id"),
-      userName: sessionStorage.getItem("name"),
-      flatDetails: [selectedRow]
-    };
+          name: detail?.name,
+          fatherName: detail?.fatherName,
+          cnicNo: detail?.cnicNo,
+          occupation: detail?.occupation,
+          permanentAddress: detail?.permanentAddress,
+          gender: detail?.gender,
+          maritalStatus: detail?.maritalStatus,
+          adultFamilyMembers: detail?.adultFamilyMembers,
+          children: detail?.children,
+          childrenFamilyMembers: detail?.childrenFamilyMembers,
+          language: detail?.language,
+          cast: detail?.cast,
+          adultDetail: familyMembers,
+          childrenDetail: childrenRows,
+          userId: sessionStorage.getItem("user_id"),
+          userName: sessionStorage.getItem("name"),
+          flatDetails: [selectedRow],
+        };
         return dispatch(RegisterTenant({ values })).then((res) => {
-          if (res?.payload?.data?.message !== "Tenant Registered Successfully") {
+          if (
+            res?.payload?.data?.message !== "Tenant Registered Successfully"
+          ) {
             throw new Error("API call failed");
           }
         });
-      })
+      });
       try {
         // Wait for all API calls to complete
         await Promise.all(promises);
@@ -389,17 +392,17 @@ export default function Registration() {
         }, 2200);
       } catch (error) {
         console.error("Error during API calls:", error);
-    
+
         // Rollback in case of an error
         // await rollback(selectedRows);
-    
+
         // Handle error as needed
       }
-  }else{
-    toast.error("Select Atleast One Flat", {
-      position: "top-center",
-    });
-  }
+    } else {
+      toast.error("Select Atleast One Flat", {
+        position: "top-center",
+      });
+    }
   };
 
   // console.log(detail,"saeed")
@@ -413,14 +416,12 @@ export default function Registration() {
         "mobileNumber",
         "permanentAddress",
         "gender",
-        "maritialStatus",
+        "maritalStatus",
       ];
-
       // Assuming your detail data is stored in a state variable named detail
       const emptyFields = keysToCheck
-        .filter((key) => !detail[key]) // Check if the value of the specified key is falsy (empty)
+        .filter((key) => !detail[key].toString()) // Check if the value of the specified key is falsy (empty)
         .map((key) => key);
-
       if (emptyFields.length > 0) {
         const errorMessage = `Please fill in the following fields: ${emptyFields.join(
           ", "
@@ -493,9 +494,9 @@ export default function Registration() {
     if (name === "cnicNo") {
       const numericCnic = value.replace(/\D/g, "");
       const formattedCnic =
-      numericCnic.slice(0, 5) +
-      (numericCnic.length > 5 ? "-" + numericCnic.slice(5, 12) : "") +
-      (numericCnic.length > 12 ? "-" + numericCnic.slice(12, 13) : "");
+        numericCnic.slice(0, 5) +
+        (numericCnic.length > 5 ? "-" + numericCnic.slice(5, 12) : "") +
+        (numericCnic.length > 12 ? "-" + numericCnic.slice(12, 13) : "");
       console.log(formattedCnic);
       setDetail((prev) => {
         return { ...prev, [name]: formattedCnic };
@@ -506,16 +507,14 @@ export default function Registration() {
     }
 
     setError((prev) => ({ ...prev, [name]: false }));
-    if (name === 'cnicNo') {
-      
-    }
-    else{
+    if (name === "cnicNo") {
+    } else {
       setDetail((prev) => {
         return { ...prev, [name]: value };
       });
     }
 
-    console.log(detail, 'de');
+    console.log(detail, "de");
   };
   function stepContent(step) {
     switch (step) {
@@ -672,37 +671,46 @@ export default function Registration() {
                 ? " "
                 : renderChildrenGrid()}
             </FormControl>
-
-            <TextField
-              id="language"
-              label="Language"
-              variant="outlined"
-              placeholder="Enter Your Language"
-              fullWidth
-              margin="normal"
-              name="language"
-              onChange={handleChange}
-              error={error.language}
-              helperText={error.language ? "Please enter a valid Language" : ""}
-            />
-            <TextField
-              id="cast"
-              label="Cast"
-              variant="outlined"
-              placeholder="Enter Your Cast"
-              fullWidth
-              margin="normal"
-              name="cast"
-              onChange={handleChange}
-              error={error.cast}
-              helperText={error.cast ? "Please enter a valid Cast" : ""}
-            />
+            <FormControl fullWidth margin="normal">
+              <TextField
+                id="language"
+                label="Language"
+                variant="outlined"
+                placeholder="Enter Your Language"
+                fullWidth
+                margin="normal"
+                name="language"
+                onChange={handleChange}
+                error={error.language}
+                helperText={
+                  error.language ? "Please enter a valid Language" : ""
+                }
+              />
+            </FormControl>
+            <FormControl fullWidth margin="normal">
+              <TextField
+                id="cast"
+                label="Cast"
+                variant="outlined"
+                placeholder="Enter Your Cast"
+                fullWidth
+                margin="normal"
+                name="cast"
+                onChange={handleChange}
+                error={error.cast}
+                helperText={error.cast ? "Please enter a valid Cast" : ""}
+              />
+            </FormControl>
           </>
         );
       case 2:
         return (
           <>
-           <Typography sx={{color:'black',display:'flex',justifyContent:'center'}}>These Flats Are Available</Typography>
+            <Typography
+              sx={{ color: "black", display: "flex", justifyContent: "center" }}
+            >
+              These Flats Are Available
+            </Typography>
             <Box sx={{ height: 400, width: "auto" }}>
               <Paper sx={{ width: "100%", overflow: "hidden" }}>
                 <TableContainer sx={{ maxHeight: 400 }}>
