@@ -22,6 +22,7 @@ import PropertyRegister from "../screens/Landlord/RegisterProperty/PropertyRegis
 import PendingRequest from "../screens/PendingRequest/PendingRequest";
 import { useEffect } from "react";
 import LandingPage from "../screens/LandingPage/LandingPage";
+import AboutUs from "../screens/AboutUs/AboutUs";
 import { useSelector } from "react-redux";
 export default function AllRoutes() {
   const { loginUser } = useSelector((state) => state);
@@ -149,6 +150,7 @@ export default function AllRoutes() {
           <Route path="/tenant-registration" element={<Registeration />} />
           <Route path="/tenant-dashboard" element={<TenantFunctionality />} />
           <Route path="/previous-TenantBill" element={<PreviousBill />} />
+          <Route path="/about-us" element={<AboutUs />} />
           {/* <Route path="/Landing-page" element={<LandingPage />} /> */}
           <Route path="/*" element={<NotFound />} />
         </Routes>

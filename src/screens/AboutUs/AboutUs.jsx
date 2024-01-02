@@ -19,7 +19,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
+import FlagIcon from '@mui/icons-material/Flag';
 function LandingPage() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [name, setName] = React.useState("");
@@ -100,9 +100,6 @@ function LandingPage() {
               >
                   <Button
                   sx={{ my: 2, color: "black", display: "block" }}
-                  onClick={() => {
-                    navigate("/about-us");
-                  }}
                 >
                   About Us
                 </Button>
@@ -150,9 +147,6 @@ function LandingPage() {
             
                 <Button
                   sx={{ my: 2, color: "white", display: "block" }}
-                  onClick={() => {
-                    navigate("/about-us");
-                  }}
                 >
                   About Us
                 </Button>
@@ -176,24 +170,19 @@ function LandingPage() {
       <Container
         maxWidth="xl"
         sx={{
-          background: "linear-gradient(45deg, #66CCFF 30%, #FFCC99 90%)", // Adjust the colors as needed
+          background: "linear-gradient(45deg, #FFCC99 30%, #66CCFF 90%)", // Adjust the colors as needed
           borderRadius: 8,
           boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
           padding: "20px",
           marginTop: 2,
         }}
       >
-        <Grid
-          container
-          rowSpacing={1}
-          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          sx={{ mt: 2 }}
-        >
+      
           {/* First column */}
-          <Grid item xs={12} md={6}>
-            <Box sx={{ color: "black", fontWeight: "bold", marginBottom: 2 }}>
+         
+            {/* <Box sx={{ color: "black", fontWeight: "bold", marginBottom: 2 }}>
               Welcome to OTS
-            </Box>
+            </Box> */}
             <Box
               sx={{
                 fontWeight: "bold",
@@ -201,120 +190,19 @@ function LandingPage() {
                 fontSize: { xs: 40, md: 80 },
               }}
             >
-              Manage Your <br /> Property
+              What is OTS<br />
             </Box>
-            <Box sx={{ color: "black", fontWeight: "bold", marginBottom: 2 }}>
-              you will have everything nearby supermarket, busses, stations,
-              cinemas the carmen neighbourhood, etc.
+            <Box sx={{ color: "black",mt:3 }}>
+            We are a property portal which aims to take Pakistani real estate to another level of excellence. The internet has revolutionised almost every sector, and real estate should be no different. So, we directly connect buyers with sellers and tenants with landlords to make the whole property process as simple as possible. Whatever your property buying or selling requirements are, we give you a large number of options to cater to them.
+
+Imagine having access to the real estate market of Pakistan in the palm of your hand! That's what Lamudi.pk is giving you. Our highly qualified team is working to provide a premium property experience in the most convenient way.
             </Box>
-          </Grid>
+       
 
           {/* Second column */}
-          <Grid item xs={12} md={6}>
-            <Container
-              component="img"
-              alt="Your logo."
-              src={Banglow}
-              sx={{
-                width: "100%", // Make the image responsive within its container
-                height: "auto", // Maintain aspect ratio
-                borderRadius: 8, // Optional: Add rounded corners
-              }}
-            />
-          </Grid>
-        </Grid>
+         
+        
       </Container>
-      {/* Every Thing Should be this easy */}
-      <Container sx={{ mt: 2 }}>
-        <Box
-          sx={{
-            textAlign: "center",
-            color: "black",
-            fontWeight: "bold",
-            fontSize: 24,
-          }}
-        >
-          Every Thing Should be this easy
-        </Box>
-        {/* <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}> */}
-        <Grid container spacing={3}>
-          <Grid item xs>
-            <Card sx={{ maxWidth: 345 }}>
-              <CardMedia
-                component="img"
-                alt="green iguana"
-                height="140"
-                image="../../assets/Banglow.jpg"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Answer Questions
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Lizards are a widespread group of squamate reptiles, with over
-                  6,000 species, ranging across all continents except Antarctica
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small">Share</Button>
-                <Button size="small">Learn More</Button>
-              </CardActions>
-            </Card>
-          </Grid>
-
-          <Grid item xs={6}>
-            <Card sx={{ maxWidth: 345 }}>
-              <CardMedia
-                component="img"
-                alt="green iguana"
-                height="140"
-                image="/static/images/cards/contemplative-reptile.jpg"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Select a quote
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Lizards are a widespread group of squamate reptiles, with over
-                  6,000 species, ranging across all continents except Antarctica
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small">Share</Button>
-                <Button size="small">Learn More</Button>
-              </CardActions>
-            </Card>
-          </Grid>
-
-          <Grid item xs>
-            <Card sx={{ maxWidth: 345 }}>
-              <CardMedia
-                component="img"
-                alt="green iguana"
-                height="140"
-                image="/static/images/cards/contemplative-reptile.jpg"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Get Registered
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Lizards are a widespread group of squamate reptiles, with over
-                  6,000 species, ranging across all continents except Antarctica
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small">Share</Button>
-                <Button size="small">Learn More</Button>
-              </CardActions>
-            </Card>
-          </Grid>
-        </Grid>
-
-        {/* </Grid> */}
-      </Container>
-
-      {/* Insurance Better */}
       <Container
         maxWidth="xl"
         sx={{
@@ -333,6 +221,62 @@ function LandingPage() {
         >
           {/* First column */}
           <Grid item xs={12} md={6}>
+            {/* <Box sx={{ color: "black", fontWeight: "bold", marginBottom: 2 }}>
+              Welcome to OTS
+            </Box> */}
+            <Box
+              sx={{
+                fontWeight: "bold",
+                color: "black",
+                fontSize: { xs: 40, md: 80 },
+              }}
+            >
+              We started OTS<br />
+Software with the mission to bring innovation 
+            </Box>
+            <Box sx={{ color: "black" }}>
+           <FlagIcon sx={{color:"red"}}/>Trust Build Both<br />
+           <FlagIcon sx={{color:"red"}}/>Make agreement<br />
+           <FlagIcon sx={{color:"red"}}/>Both have record<br />
+            </Box>
+          </Grid>
+
+          {/* Second column */}
+          <Grid item xs={12} md={6}>
+            <Container
+              component="img"
+              alt="Your logo."
+              src={Banglow}
+              sx={{
+                width: "100%", // Make the image responsive within its container
+                height: "auto", // Maintain aspect ratio
+                borderRadius: 8, // Optional: Add rounded corners
+              }}
+            />
+          </Grid>
+        </Grid>
+      </Container>
+      
+
+      {/* Insurance Better */}
+      <Container
+        maxWidth="xl"
+        sx={{
+          background: "linear-gradient(45deg, #FFCC99 30%, #66CCFF 90%)", // Adjust the colors as needed
+          borderRadius: 8,
+          boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+          padding: "20px",
+          marginTop: 2,
+        }}
+      >
+        <Grid
+          container
+          rowSpacing={1}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          sx={{ mt: 2 }}
+        >
+          {/* First column */}
+          <Grid item xs={12} md={6}>
             <Container
               component="img"
               alt="Your logo."
@@ -346,9 +290,6 @@ function LandingPage() {
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <Box sx={{ color: "black", fontWeight: "bold", marginBottom: 2 }}>
-              Our best services
-            </Box>
             <Box
               sx={{
                 fontWeight: "bold",
@@ -356,15 +297,13 @@ function LandingPage() {
                 fontSize: { xs: 40, md: 50 },
               }}
             >
-              And here's how?We do insurance better <br /> Property
+              Our <br /> Services
             </Box>
             <Box sx={{ color: "black", mt: 2 }}>
-              save an average of$250 per year <br />
-              File a claim in 3 min <br />
-              Easily Manage your policy online
-              <br /> the carmen neighbourhood, etc.
-              <br />
-              Get and Support <br />
+             <FlagIcon sx={{color:"brown"}}/>Add Multiple Tenant <br />
+             <FlagIcon sx={{color:"brown"}}/>Upload Bills and read previous bills<br />
+             <FlagIcon sx={{color:"brown"}}/>UnRegister with one month warning<br />
+              
             </Box>
           </Grid>
 
