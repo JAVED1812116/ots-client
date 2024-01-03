@@ -152,7 +152,14 @@ export default function NewRequest() {
                         {row.childrenFamilyMembers}
                       </TableCell>
                       <TableCell align="right">{row.occupation}</TableCell>
-                      <TableCell align="right">{row.gender}</TableCell>
+                      {/* <TableCell align="right">{row.gender}</TableCell> */}
+                      <TableCell align="right">
+                        {row.gender[0] === "1"
+                          ? "Male"
+                          : row.gender[0] === "0"
+                          ? "Female"
+                          : "Unknown"}
+                      </TableCell>
                       <TableCell align="right">{row.language}</TableCell>
                       <TableCell align="right">{row.cast}</TableCell>
                       <TableCell align="right">
