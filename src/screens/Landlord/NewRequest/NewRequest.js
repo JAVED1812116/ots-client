@@ -19,7 +19,7 @@ import { useLocation } from "react-router";
 import title from "../../../components/title";
 import { useDispatch } from "react-redux";
 import { GetTenant } from "../../../Redux/Reducer/GetTenantDetail";
-import "./newRequest.css"
+import "./newRequest.css";
 export default function NewRequest() {
   title("New Request");
   const [open, setOpen] = useState(false);
@@ -30,7 +30,6 @@ export default function NewRequest() {
   React.useEffect(() => {
     dispatch(GetTenant({ userId: localStorage.getItem("user_id") })).then(
       (res) => {
-    
         setData(res?.payload?.data?.data);
       }
     );
@@ -52,7 +51,7 @@ export default function NewRequest() {
     language,
     cast,
     permanentAddress,
-    userId,
+    userId
   ) {
     return {
       name,
@@ -83,21 +82,19 @@ export default function NewRequest() {
               return e.adultFamilyMembers;
             });
           }),
-          
         },
       ],
     };
   }
 
-
   const handleChange = (row) => {
-    console.log(row, 'r');
-  }
+    console.log(row, "r");
+  };
 
   function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
-    
+
     return (
       <React.Fragment>
         <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -141,8 +138,7 @@ export default function NewRequest() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    <TableRow
-                    >
+                    <TableRow>
                       <TableCell component="th" scope="row">
                         {row.date}
                       </TableCell>
@@ -164,7 +160,7 @@ export default function NewRequest() {
                 <Button
                   variant="contained"
                   sx={{ marginTop: 2, marginRight: 1, background: "black" }}
-                  onClick={()=> handleChange(row)}
+                  onClick={() => handleChange(row)}
                 >
                   Accept
                 </Button>
@@ -253,55 +249,63 @@ export default function NewRequest() {
         <div className="mainHeading">
           <h1>New Requests</h1>
         </div>
-        {data?.legth>0?
-        <TableContainer
-          component={Paper}
-          // sx={{ marginTop: 4 }}
-        >
-          <Table aria-label="collapsible table">
-            <TableHead sx={{ background: "black" }}>
-              <TableRow>
-                <TableCell />
-                <TableCell sx={{ color: "white" }}>Name</TableCell>
-                <TableCell sx={{ color: "white" }} align="right">
-                  Father Name
-                </TableCell>
-                <TableCell sx={{ color: "white" }} align="right">
-                  Flat Name
-                </TableCell>
-                <TableCell sx={{ color: "white" }} align="right">
-                  Flat Number
-                </TableCell>
-                <TableCell sx={{ color: "white" }} align="right">
-                  Floor
-                </TableCell>
-                <TableCell sx={{ color: "white" }} align="right">
-                  Rent
-                </TableCell>
-                <TableCell sx={{ color: "white" }} align="right">
-                  Advance
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {!rows.includes(undefined) &&
-                rows[0].map((row) => (
-                  <Row
-                    row={row}
-                  />
-                ))}
-            </TableBody>
-          </Table>
-          
-        </TableContainer>:
-        <Box sx={{ display: 'flex',justifyContent:'center', m:10 }}>
-          <Typography sx={{fontSize:40}}>
-          <span className="noData">R</span><span>e</span><span className="noData">q</span><span>u</span><span className="noData">e</span><span>s</span><span className="noData">t</span> 
-          <span> N</span><span className="noData">o</span><span>T</span>
-          <span className="noData"> F</span><span>o</span><span className="noData">u</span><span>n</span><span className="noData">d</span>
-          </Typography>
-        </Box>
-}
+        {data?.length > 0 ? (
+          <TableContainer
+            component={Paper}
+            // sx={{ marginTop: 4 }}
+          >
+            <Table aria-label="collapsible table">
+              <TableHead sx={{ background: "black" }}>
+                <TableRow>
+                  <TableCell />
+                  <TableCell sx={{ color: "white" }}>Name</TableCell>
+                  <TableCell sx={{ color: "white" }} align="right">
+                    Father Name
+                  </TableCell>
+                  <TableCell sx={{ color: "white" }} align="right">
+                    Flat Name
+                  </TableCell>
+                  <TableCell sx={{ color: "white" }} align="right">
+                    Flat Number
+                  </TableCell>
+                  <TableCell sx={{ color: "white" }} align="right">
+                    Floor
+                  </TableCell>
+                  <TableCell sx={{ color: "white" }} align="right">
+                    Rent
+                  </TableCell>
+                  <TableCell sx={{ color: "white" }} align="right">
+                    Advance
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {!rows.includes(undefined) &&
+                  rows[0].map((row) => <Row row={row} />)}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        ) : (
+          <Box sx={{ display: "flex", justifyContent: "center", m: 10 }}>
+            <Typography sx={{ fontSize: 40 }}>
+              <span className="noData">R</span>
+              <span>e</span>
+              <span className="noData">q</span>
+              <span>u</span>
+              <span className="noData">e</span>
+              <span>s</span>
+              <span className="noData">t</span>
+              <span> N</span>
+              <span className="noData">o</span>
+              <span>T</span>
+              <span className="noData"> F</span>
+              <span>o</span>
+              <span className="noData">u</span>
+              <span>n</span>
+              <span className="noData">d</span>
+            </Typography>
+          </Box>
+        )}
       </div>
     </>
   );

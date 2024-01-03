@@ -77,7 +77,7 @@ export default function AllRoutes() {
   //     </Router>
   //   );
   // } else
-  if (loginUser?.login?.data?.result == "No User Found" || (registeredUser == undefined && savedUser == undefined)) {
+  if (loginUser?.login?.data?.result == "No User Found") {
     console.log("hello0");
     return (
       <Router>
@@ -131,6 +131,7 @@ export default function AllRoutes() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginUser />} />
+          <Route path="/signup/:id?" element={<CreateUser />} />
           {/* <Route path="/signup/:id?" element={<CreateUser />} /> */}
           <Route path="/landlord-dashboard" element={<LandLordDashboard />} />
           <Route path="/new-request" element={<NewRequest />} />
