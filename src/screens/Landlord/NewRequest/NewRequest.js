@@ -36,6 +36,7 @@ export default function NewRequest() {
   }, []);
 
   function createData(
+    email,
     name,
     fatherName,
     flatName,
@@ -54,6 +55,7 @@ export default function NewRequest() {
     userId
   ) {
     return {
+      email,
       name,
       fatherName,
       flatName,
@@ -106,6 +108,9 @@ export default function NewRequest() {
             >
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
+          </TableCell>
+          <TableCell component="th" scope="row">
+            {row.email}
           </TableCell>
           <TableCell component="th" scope="row">
             {row.name}
@@ -180,6 +185,7 @@ export default function NewRequest() {
   const rows = [
     data?.map((resp) => {
       return createData(
+        resp?.email,
         resp?.data?.map((e) => {
           return e.name;
         }),
@@ -258,6 +264,7 @@ export default function NewRequest() {
               <TableHead sx={{ background: "black" }}>
                 <TableRow>
                   <TableCell />
+                  <TableCell sx={{ color: "white" }}>Email</TableCell>
                   <TableCell sx={{ color: "white" }}>Name</TableCell>
                   <TableCell sx={{ color: "white" }} align="right">
                     Father Name
