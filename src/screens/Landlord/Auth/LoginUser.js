@@ -71,7 +71,8 @@ const LoginUser = () => {
                   }
                 }
               }, 2200);
-            } else if (res?.payload?.data?.data?.code) {
+            } else if (res?.payload?.data?.data?.code && (res?.payload?.data?.data?.is_register == true &&
+              res?.payload?.data?.data?.is_active === false)) {
               toast.success("Logging!", {
                 autoClose: 300,
               });
@@ -87,7 +88,7 @@ const LoginUser = () => {
               );
               sessionStorage.setItem("code", res?.payload?.data?.data?.code);
               setTimeout(() => {
-                navigate("/tenant-registration");
+                navigate("/pending-request");
               }, 2200);
             } else if (
               res?.payload?.data?.message === "User Login Successfully" &&
@@ -108,11 +109,11 @@ const LoginUser = () => {
                 res?.payload?.data?.data?.email
               );
               setTimeout(() => {
-                if (location?.state?.type === "Landlord") {
+                if (res?.payload?.data?.data?.type === "landlord") {
                   {
                     navigate("/property-reg");
                   }
-                } else if (location?.state?.type === "Tenant") {
+                } else if (res?.payload?.data?.data?.type === "tenant") {
                   {
                     navigate("/tenant-registration");
                   }

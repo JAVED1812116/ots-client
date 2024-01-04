@@ -132,6 +132,7 @@ export default function AllRoutes() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginUser />} />
           <Route path="/signup/:id?" element={<CreateUser />} />
+          <Route path="/pending-request" element={<PendingRequest />} />
           {/* <Route path="/signup/:id?" element={<CreateUser />} /> */}
           <Route path="/landlord-dashboard" element={<LandLordDashboard />} />
           <Route path="/new-request" element={<NewRequest />} />
