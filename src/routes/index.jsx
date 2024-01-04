@@ -124,7 +124,9 @@ export default function AllRoutes() {
         </Routes>
       </Router>
     );
-  } else {
+  } else
+  
+  {
     console.log("hello4");
     return (
       <Router>

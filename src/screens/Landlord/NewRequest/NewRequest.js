@@ -20,17 +20,23 @@ import title from "../../../components/title";
 import { useDispatch } from "react-redux";
 import { GetTenant } from "../../../Redux/Reducer/GetTenantDetail";
 import "./newRequest.css";
+import { CircularProgress } from "@mui/material";
 export default function NewRequest() {
   title("New Request");
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
   const [data, setData] = useState();
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   React.useEffect(() => {
+    setLoading(true)
     dispatch(GetTenant({ userId: localStorage.getItem("user_id") })).then(
       (res) => {
+        if(res?.payload?.data?.message==="Get New Request Successfully"){
         setData(res?.payload?.data?.data);
+        setLoading(false)
+        }
       }
     );
   }, []);
@@ -262,7 +268,9 @@ export default function NewRequest() {
         <div className="mainHeading">
           <h1>New Requests</h1>
         </div>
-        {data?.length > 0 ? (
+        {console.log(data,"testttttt")}
+       
+        {data?.length > 0? (
           <TableContainer
             component={Paper}
             // sx={{ marginTop: 4 }}
@@ -299,27 +307,36 @@ export default function NewRequest() {
               </TableBody>
             </Table>
           </TableContainer>
-        ) : (
-          <Box sx={{ display: "flex", justifyContent: "center", m: 10 }}>
-            <Typography sx={{ fontSize: 40 }}>
-              <span className="noData">R</span>
-              <span>e</span>
-              <span className="noData">q</span>
-              <span>u</span>
-              <span className="noData">e</span>
-              <span>s</span>
-              <span className="noData">t</span>
-              <span> N</span>
-              <span className="noData">o</span>
-              <span>T</span>
-              <span className="noData"> F</span>
-              <span>o</span>
-              <span className="noData">u</span>
-              <span>n</span>
-              <span className="noData">d</span>
-            </Typography>
-          </Box>
-        )}
+        ) :loading===true ?
+        
+        <Box sx={{ display: "flex", justifyContent: "center", m: 10 }}>
+        <Typography sx={{ fontSize: 40 }}>
+        <CircularProgress />
+        </Typography>
+      </Box> 
+        :
+      
+      <Box sx={{ display: "flex", justifyContent: "center", m: 10 }}>
+        <Typography sx={{ fontSize: 40 }}>
+          <span className="noData">R</span>
+          <span>e</span>
+          <span className="noData">q</span>
+          <span>u</span>
+          <span className="noData">e</span>
+          <span>s</span>
+          <span className="noData">t</span>
+          <span> N</span>
+          <span className="noData">o</span>
+          <span>T</span>
+          <span className="noData"> F</span>
+          <span>o</span>
+          <span className="noData">u</span>
+          <span>n</span>
+          <span className="noData">d</span>
+        </Typography>
+      </Box> 
+    }
+    
       </div>
     </>
   );
