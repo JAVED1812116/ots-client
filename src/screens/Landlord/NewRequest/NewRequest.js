@@ -58,7 +58,8 @@ export default function NewRequest() {
     language,
     cast,
     permanentAddress,
-    userId
+    userId,
+    id
   ) {
     return {
       email,
@@ -78,6 +79,7 @@ export default function NewRequest() {
       cast,
       permanentAddress,
       userId,
+      id,
       history: [
         {
           date: data?.map((res) => {
@@ -96,8 +98,14 @@ export default function NewRequest() {
   }
 
   const handleChange = (row) => {
-    console.log(row, "r");
-  };
+  if (row?.id) {
+    
+    setData((prevData) => prevData.filter((item) => item?.id !== row?.id));
+   
+    // data.filter((item) => item?.id !== row?.id);
+  }
+};
+console.log(data,"data")
 
   function Row(props) {
     const { row } = props;
@@ -175,6 +183,7 @@ export default function NewRequest() {
                     {/* ))} */}
                   </TableBody>
                 </Table>
+                
                 <Button
                   variant="contained"
                   sx={{ marginTop: 2, marginRight: 1, background: "black" }}
@@ -196,6 +205,7 @@ export default function NewRequest() {
     );
   }
   const rows = [
+    
     data?.map((resp) => {
       return createData(
         resp?.email,
@@ -256,7 +266,8 @@ export default function NewRequest() {
         }),
         resp?.data?.map((e) => {
           return e.userId;
-        })
+        }),
+        resp?.id,
       );
     }),
   ];
