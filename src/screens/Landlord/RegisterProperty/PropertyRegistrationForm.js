@@ -50,7 +50,7 @@ export default function PropertyRegister() {
     flatMaintananceCharges: "",
     flatTrashCharges: "",
     flatSecurityCharges: "",
-    flatStatus: "",
+    is_rent: "",
   });
   const [generatedRows, setGeneratedRows] = React.useState([]);
 
@@ -73,9 +73,9 @@ export default function PropertyRegister() {
     return cnicRegex.test(cnic);
   };
   const handleChange = (e) => {
-    console.log("handle change running");
+    
     const { name, value } = e.target;
-    console.log(name, value, "name, value");
+    
     // Check if the entered value is not a valid number for "cnic" or "contactNumber" fields
     if (
       (name === "contactNumber" ||
@@ -115,7 +115,7 @@ export default function PropertyRegister() {
       setDetail((prev) => {
         return { ...prev, [name]: formattedCnic };
       });
-      console.log(detail);
+      
       // setError((prev) => ({ ...prev, cnic: true }));
       // return;
     }
@@ -163,11 +163,11 @@ export default function PropertyRegister() {
         row.id === rowId ? { ...row, [name]: value } : row
       );
     });
-    console.log(rows);
+    
   };
 
   React.useEffect(() => {
-    console.log("use effect run");
+    
     const numToShow = parseInt(detail?.totalFlat, 10) || 0;
 
     const newRows = Array.from({ length: numToShow }, (_, index) => ({
@@ -182,17 +182,7 @@ export default function PropertyRegister() {
 
     setGeneratedRows(newRows);
   }, [detail?.totalFlat]);
-  // const generateFloorOptions = () => {
-  //   const options = [];
-  //   for (let i = 1; i <= detail?.totalFloor; i++) {
-  //     options.push(
-  //       <MenuItem key={i} value={i}>
-  //         {`${i} floor`}
-  //       </MenuItem>
-  //     );
-  //   }
-  //   return options;
-  // };
+
   const renderDataGrid = () => {
     return (
       <div style={{ height: 400, width: "100%" }}>
@@ -223,10 +213,6 @@ export default function PropertyRegister() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {console.log(
-                    tableError,
-                    "tableErrortableErrortableErrortableError"
-                  )}
                   {generatedRows.map((e, i) => (
                     <TableRow
                       // key={row.name}
@@ -272,12 +258,6 @@ export default function PropertyRegister() {
                                 </MenuItem>
                               );
                             })}
-                          {/* <MenuItem value="">
-            <em>None</em>
-          </MenuItem> */}
-                          {/* {generateFloorOptions()} */}
-                          {/* <MenuItem value={0}>Vacant</MenuItem>
-                          <MenuItem value={1}>RentOut</MenuItem> */}
                         </Select>
                       </TableCell>
                       <TableCell component="th" scope="row">
@@ -351,7 +331,7 @@ export default function PropertyRegister() {
                         <Select
                           defaultValue={0}
                           // value={age}
-                          name="flatStatus"
+                          name="is_rent"
                           onChange={(e) => handleCellChange(i, e)}
                           displayEmpty
                           inputProps={{ "aria-label": "Without label" }}
@@ -394,7 +374,7 @@ export default function PropertyRegister() {
       }),
     }),
   }));
-  console.log(rows, "rows");
+  
   const onFinish = () => {
     let values = {
       ownerName: detail?.ownerName,
@@ -445,21 +425,10 @@ export default function PropertyRegister() {
       "flatMaintananceCharges",
       "flatTrashCharges",
       "flatSecurityCharges",
-      "flatStatus",
+      "is_rent",
     ];
 
-    // const areAllFieldsPresent = rows.every((row) =>
-    //   requiredFields.every((field) => row.hasOwnProperty(field))
-    // );
-    //     const areAllFieldsPresent = requiredFields.filter((field) => !rows[field]);
-    // console.log(areAllFieldsPresent, 'areAllFieldsPresent');
-
-    // if (areAllFieldsPresent.length > 0) {
-    //   const errorMessage = `Please fill in the following fields: ${areAllFieldsPresent.join(', ')}.`;
-    //   toast.error(errorMessage, {
-    //     position: "top-center",
-    //   });
-    // }
+  
     if (
       values?.totalFlat !== 0 ||
       values?.ownerName !== "" ||
@@ -473,9 +442,9 @@ export default function PropertyRegister() {
       values?.propertyAddress !== "" ||
       values?.totalFloor !== ""
     ) {
-      // rows?.flatName!==undefined||rows?.flatNumber!==undefined||rows?.flatFloor!==undefined||rows?.flatRoom!==undefined||rows?.flatToilet!==undefined||rows?.flatKitchen!==undefined||rows?.flatRent!==undefined||rows?.flatDeposit!==undefined||rows?.flatMaintainanceCharges!==undefined||rows?.flattrashCharges!==undefined||rows?.flatsecurityCharges!==undefined||rows?.flatStatus!==undefined
+      // rows?.flatName!==undefined||rows?.flatNumber!==undefined||rows?.flatFloor!==undefined||rows?.flatRoom!==undefined||rows?.flatToilet!==undefined||rows?.flatKitchen!==undefined||rows?.flatRent!==undefined||rows?.flatDeposit!==undefined||rows?.flatMaintainanceCharges!==undefined||rows?.flattrashCharges!==undefined||rows?.flatsecurityCharges!==undefined||rows?.is_rent!==undefined
       if (values?.flatDetail !== "") {
-        console.log(values);
+        
         dispatch(PropertyRegisters({ values })).then((res) => {
           if (res?.payload?.data?.message === "Property Set Successfully") {
             toast.success("Property Register Successfully", {
@@ -655,7 +624,7 @@ export default function PropertyRegister() {
                     error.totalFloor ? "Please enter a valid Total Floor" : ""
                   }
                 />
-                {console.log(detail)}
+                
                 <TextField
                   id="standard-multiline-flexible"
                   label="Total Flat"
