@@ -83,7 +83,8 @@ export default function Registration() {
     if (event.target.checked) {
       // Add the selected row to the array
       setSelectedRows((prevSelectedRows) => [...prevSelectedRows, row]);
-    } else {
+    } 
+    else {
       // Remove the unselected row from the array
       setSelectedRows((prevSelectedRows) =>
         prevSelectedRows.filter((selectedRow) => selectedRow !== row)
@@ -94,23 +95,36 @@ export default function Registration() {
   React.useEffect(() => {
     document.title = "Registration";
   }, []);
+  // React.useEffect(() => {
+  //   dispatch(GetProperty({ userId: sessionStorage.getItem("code") })).then(
+  //     (res) => {
+  //       setLandlordId(res?.payload?.data?.landlordId);
+  //       setFlatDetails(res?.payload?.data?.data);
+  //       // setData(res?.payload?.data?.data)
+
+  //       // if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+  //       // setFieldDisable(true)
+  //       // }
+  //       // let { monthlyRent, advance, maintenanceCharges, trashCharges } =res?.payload?.data?.data[0];
+  //       // setDetail({
+  //       //   monthlyRent,
+  //       //   advance,
+  //       //   maintenanceCharges,
+  //       //   trashCharges,
+  //       // });
+  //     }
+  //   );
+  // }, []);
   React.useEffect(() => {
     dispatch(GetProperty({ userId: sessionStorage.getItem("code") })).then(
       (res) => {
-        console.log(res);
-        setFlatDetails(res?.payload?.data?.data);
-        // setData(res?.payload?.data?.data)
-
-        // if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
-        // setFieldDisable(true)
-        // }
-        // let { monthlyRent, advance, maintenanceCharges, trashCharges } =res?.payload?.data?.data[0];
-        // setDetail({
-        //   monthlyRent,
-        //   advance,
-        //   maintenanceCharges,
-        //   trashCharges,
-        // });
+        
+        const landlordId = res?.payload?.data?.landlordId;
+        const updatedFlatDetails = res?.payload?.data?.data.map((flat) => ({
+          ...flat,
+          landlordId: landlordId,
+        }));
+        setFlatDetails(updatedFlatDetails);
       }
     );
   }, []);
