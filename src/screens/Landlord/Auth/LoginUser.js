@@ -116,6 +116,7 @@ const LoginUser = () => {
                   }
                 } else if (res?.payload?.data?.data?.type === "tenant") {
                   {
+                    sessionStorage.setItem("code", res?.payload?.data?.data?.code);
                     navigate("/tenant-registration");
                   }
                 }
