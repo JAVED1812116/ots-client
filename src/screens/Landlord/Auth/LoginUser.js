@@ -72,7 +72,8 @@ const LoginUser = () => {
                 }
               }, 2200);
             } else if (res?.payload?.data?.data?.code &&
-              res?.payload?.data?.data?.is_active === false) {
+              res?.payload?.data?.data?.is_active === false &&
+              res?.payload?.data?.data?.is_register === true) {
               toast.success("Logging!", {
                 autoClose: 300,
               });
