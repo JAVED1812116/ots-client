@@ -160,7 +160,7 @@ export default function PropertyRegister() {
 
     setRows((prevRows) => {
       return prevRows.map((row) =>
-        row.id === rowId ? { ...row, [name]: value } : row
+        row.id === rowId ? { ...row, [name]: value ,tenantId:null} : row
       );
     });
     
