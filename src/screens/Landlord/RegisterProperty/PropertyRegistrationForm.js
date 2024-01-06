@@ -41,7 +41,7 @@ export default function PropertyRegister() {
   const [rows, setRows] = React.useState({
     flatName: "",
     flatNumber: "",
-    flatFloor: "",
+    flatFloor: 0,
     flatRooms: "",
     flatToilet: "",
     flatKitchen: "",
@@ -50,7 +50,7 @@ export default function PropertyRegister() {
     flatMaintananceCharges: "",
     flatTrashCharges: "",
     flatSecurityCharges: "",
-    is_rent: "",
+    is_rent: 0,
   });
   const [generatedRows, setGeneratedRows] = React.useState([]);
 
@@ -177,6 +177,18 @@ export default function PropertyRegister() {
     setRows(
       Array.from({ length: numToShow }, (_, index) => ({
         id: index,
+        flatName: "",
+        flatNumber: "",
+        flatFloor: 0,
+        flatRooms: "",
+        flatToilet: "",
+        flatKitchen: "",
+        flatRent: "",
+        flatAdvance: "",
+        flatMaintananceCharges: "",
+        flatTrashCharges: "",
+        flatSecurityCharges: "",
+        is_rent: 0,
       }))
     );
 

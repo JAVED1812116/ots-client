@@ -128,7 +128,7 @@ export default function Registration() {
       }
     );
   }, []);
-  console.log(flatDetails, "flatDetails");
+  
   React.useEffect(() => {
     const numToShow = parseInt(detail?.adultFamilyMembers, 10) || 0;
 
@@ -752,7 +752,9 @@ export default function Registration() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
+                    
                       {flatDetails.map((e, i) => (
+                        e.is_rent===0?
                         <TableRow
                           // key={row.name}
                           sx={{
@@ -801,7 +803,7 @@ export default function Registration() {
                           <TableCell component="th" scope="row" align="right">
                             {e.flatSecurityCharges}
                           </TableCell>
-                        </TableRow>
+                        </TableRow>:e.is_rent===1?"":"All Flats Are Booked"
                       ))}
                     </TableBody>
                   </Table>
