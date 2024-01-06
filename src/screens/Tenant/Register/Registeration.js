@@ -495,6 +495,21 @@ export default function Registration() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (
+      (name === "adultFamilyMembers"||name==="childrenFamilyMembers")) {
+        if(value<0){
+          setError((prev) => ({ ...prev, [name]: true }));
+        }
+        else{
+        setError((prev) => ({ ...prev, [name]: false }));
+        setDetail((prev) => {
+          return { ...prev, [name]: value };
+        });
+        }
+      // If it's not a valid number, you can choose to ignore the Input or show an error message.
+      return;
+    }
+
+    if (
       (name === "name" ||
         name === "fatherName" ||
         name === "occupation" ||
@@ -517,11 +532,10 @@ export default function Registration() {
         numericCnic.slice(0, 5) +
         (numericCnic.length > 5 ? "-" + numericCnic.slice(5, 12) : "") +
         (numericCnic.length > 12 ? "-" + numericCnic.slice(12, 13) : "");
-      console.log(formattedCnic);
+ 
       setDetail((prev) => {
         return { ...prev, [name]: formattedCnic };
       });
-      console.log(detail);
       // setError((prev) => ({ ...prev, cnicNo: true }));
       // return;
     }
@@ -534,7 +548,6 @@ export default function Registration() {
       });
     }
 
-    console.log(detail, "de");
   };
   function stepContent(step) {
     switch (step) {
@@ -667,6 +680,8 @@ export default function Registration() {
                 margin="normal"
                 type="number"
                 name="adultFamilyMembers"
+                error={error.adultFamilyMembers}
+                helperText={error.adultFamilyMembers ? "Can Not Enter Less Then Zero" : ""}
                 onChange={handleChange}
               />
               {detail?.adultFamilyMembers === 0 ||
@@ -684,6 +699,8 @@ export default function Registration() {
                 type="number"
                 margin="normal"
                 name="childrenFamilyMembers"
+                error={error.childrenFamilyMembers}
+                helperText={error.childrenFamilyMembers ? "Can Not Enter Less Then Zero" : ""}
                 onChange={handleChange}
               />
               {detail?.childrenFamilyMembers === 0 ||
