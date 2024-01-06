@@ -120,11 +120,17 @@ export default function Registration() {
       (res) => {
         
         const landlordId = res?.payload?.data?.landlordId;
-        const updatedFlatDetails = res?.payload?.data?.data.map((flat) => ({
+        const updatedFlatDetails = res?.payload?.data?.data?.map((flat) => ({
           ...flat,
           landlordId: landlordId,
         }));
+        console.log(updatedFlatDetails,"updatedFlatDetails")
+        if(updatedFlatDetails !==undefined){
         setFlatDetails(updatedFlatDetails);
+        }else{
+          setFlatDetails([])
+        }
+
       }
     );
   }, []);
@@ -719,12 +725,17 @@ export default function Registration() {
         );
       case 2:
         return (
+          
           <>
+            {flatDetails?.length>0?
             <Typography
               sx={{ color: "black", display: "flex", justifyContent: "center" }}
             >
               These Flats Are Available
             </Typography>
+            :""
+            }
+            {flatDetails?.length>0?
             <Box sx={{ height: 400, width: "auto" }}>
               <Paper sx={{ width: "100%", overflow: "hidden" }}>
                 <TableContainer sx={{ maxHeight: 400 }}>
@@ -752,8 +763,8 @@ export default function Registration() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                    
-                      {flatDetails.map((e, i) => (
+                    {console.log(flatDetails,"flatDetailsflatDetails")}
+                      {flatDetails?.map((e, i) => (
                         e.is_rent===0?
                         <TableRow
                           // key={row.name}
@@ -803,13 +814,29 @@ export default function Registration() {
                           <TableCell component="th" scope="row" align="right">
                             {e.flatSecurityCharges}
                           </TableCell>
-                        </TableRow>:e.is_rent===1?"":"All Flats Are Booked"
+                        </TableRow>:e.is_rent===1?"":"sorry"
                       ))}
                     </TableBody>
                   </Table>
                 </TableContainer>
               </Paper>
             </Box>
+    : <Box sx={{ display: "flex", justifyContent: "center", m: 10 }}>
+    <Typography sx={{ fontSize: 40 }}>
+      <span className="noData">N</span>
+      <span>O</span>
+      <span className="noData">T</span>
+      <span> A</span>
+      <span className="noData">V</span>
+      <span>A</span>
+      <span className="noData">I</span>
+      <span>L</span>
+      <span className="noData">A</span>
+      <span>B</span>
+      <span className="noData">L</span>
+      <span>E</span>
+    </Typography>
+  </Box> }
           </>
         );
       default:
@@ -877,11 +904,13 @@ export default function Registration() {
                 >
                   Back
                 </Button>
+                
                 <Button
                   variant="contained"
                   onClick={
                     activeStep === steps.length - 1 ? handleSubmit : handleNext
                   }
+                  disabled={activeStep===2&&flatDetails?.length===0}
                 >
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
                 </Button>
