@@ -14,6 +14,7 @@ import GetOneUploadBill from './Reducer/GetOneUploadBill';
 import PropertyRegistration from './Reducer/PropertyRegistration';
 import GetTenantDetail from './Reducer/GetTenantDetail';
 import LoginUser from './Reducer/LoginUser';
+import AcceptRequest from './Reducer/AcceptRequest';
 export const store = configureStore({
   reducer: {
     "UserAdd": CreateUser,
@@ -30,6 +31,7 @@ export const store = configureStore({
     "Photo": KElectricImg,
     "getOneUploadBillDetail": GetOneUploadBill,
     "propertyRegistration": PropertyRegistration,
+    "AcceptRequest": AcceptRequest,
     "tenantDetail": GetTenantDetail,
   },
 })

@@ -21,6 +21,7 @@ import { useDispatch } from "react-redux";
 import { GetTenant } from "../../../Redux/Reducer/GetTenantDetail";
 import "./newRequest.css";
 import { CircularProgress } from "@mui/material";
+import { RequestAccept } from "../../../Redux/Reducer/AcceptRequest";
 export default function NewRequest() {
   title("New Request");
   const [open, setOpen] = useState(false);
@@ -98,8 +99,20 @@ export default function NewRequest() {
   }
 
   const handleChange = (row) => {
-  if (row?.id) {
-    
+    if (row?.id) {
+    console.log(row,"ROWWWWW")
+    dispatch(RequestAccept({ row })).then((res) => {
+console.log(res)
+      // if (res?.payload?.data?.message === "Property Set Successfully") {
+      //   toast.success("Property Register Successfully", {
+      //     position: "top-center",
+      //   });
+      //   sessionStorage.setItem("is_register", true);
+      //   setTimeout(() => {
+      //     navigate("/pending-request");
+      //   }, 2200);
+      // }
+    });
     setData((prevData) => prevData.filter((item) => item?.id !== row?.id));
    
     // data.filter((item) => item?.id !== row?.id);
