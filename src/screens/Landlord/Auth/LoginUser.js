@@ -61,13 +61,14 @@ const LoginUser = () => {
                 autoClose: 300,
               });
               setTimeout(() => {
-                if (location?.state?.type === "Landlord") {
+                if (res?.payload?.data?.data?.type === "landlord") {
                   {
                     navigate("/landlord-dashboard");
                   }
-                } else if (location?.state?.type === "Tenant") {
+                } else if (res?.payload?.data?.data?.type === "tenant") {
                   {
-                    navigate("/tenant-registration");
+                    // navigate("/tenant-registration");
+                    // tenant dashboard working here
                   }
                 }
               }, 2200);
