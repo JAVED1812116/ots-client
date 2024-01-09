@@ -17,6 +17,7 @@ import {
   CardMedia,
   Grid,
   TextField,
+  CardActionArea,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -36,7 +37,6 @@ function LandingPage() {
   const handleCloseNavMenu = (event) => {
     setAnchorElNav(null);
   };
- 
 
   return (
     <>
@@ -98,7 +98,7 @@ function LandingPage() {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                  <Button
+                <Button
                   sx={{ my: 2, color: "black", display: "block" }}
                   onClick={() => {
                     navigate("/about-us");
@@ -106,13 +106,13 @@ function LandingPage() {
                 >
                   About Us
                 </Button>
-                <Button
-                  sx={{ my: 2, color: "black", display: "block" }}
-                >
+                <Button sx={{ my: 2, color: "black", display: "block" }}>
                   Contact Us
                 </Button>
                 <Button
-                   onClick={() => navigate("/login",{state:{type:"Landlord"}})}
+                  onClick={() =>
+                    navigate("/login", { state: { type: "Landlord" } })
+                  }
                   sx={{ my: 2, color: "black", display: "block" }}
                 >
                   Login
@@ -146,29 +146,33 @@ function LandingPage() {
                 src={Logo}
               />
             </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" },justifyContent:'right' }}>
-            
-                <Button
-                  sx={{ my: 2, color: "white", display: "block" }}
-                  onClick={() => {
-                    navigate("/about-us");
-                  }}
-                >
-                  About Us
-                </Button>
-                <Button
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  Contact Us
-                </Button>
-                <Button
-                  onClick={() => navigate("/login",{state:{type:"Landlord"}})}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  Login
-                </Button>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", md: "flex" },
+                justifyContent: "right",
+              }}
+            >
+              <Button
+                sx={{ my: 2, color: "white", display: "block" }}
+                onClick={() => {
+                  navigate("/about-us");
+                }}
+              >
+                About Us
+              </Button>
+              <Button sx={{ my: 2, color: "white", display: "block" }}>
+                Contact Us
+              </Button>
+              <Button
+                onClick={() =>
+                  navigate("/login", { state: { type: "Landlord" } })
+                }
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                Login
+              </Button>
             </Box>
-
           </Toolbar>
         </Container>
       </AppBar>
@@ -240,73 +244,70 @@ function LandingPage() {
         <Grid container spacing={3}>
           <Grid item xs>
             <Card sx={{ maxWidth: 345 }}>
-              <CardMedia
-                component="img"
-                alt="green iguana"
-                height="140"
-                image="../../assets/Banglow.jpg"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Answer Questions
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Lizards are a widespread group of squamate reptiles, with over
-                  6,000 species, ranging across all continents except Antarctica
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small">Share</Button>
-                <Button size="small">Learn More</Button>
-              </CardActions>
-            </Card>
-          </Grid>
-
-          <Grid item xs={6}>
-            <Card sx={{ maxWidth: 345 }}>
-              <CardMedia
-                component="img"
-                alt="green iguana"
-                height="140"
-                image="/static/images/cards/contemplative-reptile.jpg"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Select a quote
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Lizards are a widespread group of squamate reptiles, with over
-                  6,000 species, ranging across all continents except Antarctica
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small">Share</Button>
-                <Button size="small">Learn More</Button>
-              </CardActions>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image="https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg?cs=srgb&dl=pexels-binyamin-mellish-186077.jpg&fm=jpg"
+                  alt="green iguana"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    Home
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Homes are a widespread group of squamate reptiles, with
+                    over 6,000 species, ranging across all continents except
+                    Antarctica
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
             </Card>
           </Grid>
 
           <Grid item xs>
             <Card sx={{ maxWidth: 345 }}>
-              <CardMedia
-                component="img"
-                alt="green iguana"
-                height="140"
-                image="/static/images/cards/contemplative-reptile.jpg"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Get Registered
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Lizards are a widespread group of squamate reptiles, with over
-                  6,000 species, ranging across all continents except Antarctica
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small">Share</Button>
-                <Button size="small">Learn More</Button>
-              </CardActions>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image="https://www.thehousedesigners.com/images/plans/01/URD/bulk/6583/the-destination-front-rendering_m.webp"
+                  alt="green iguana"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    Home
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Homes are a widespread group of squamate reptiles, with
+                    over 6,000 species, ranging across all continents except
+                    Antarctica
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+
+          <Grid item xs>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg"
+                  alt="green iguana"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    Home
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Homes are a widespread group of squamate reptiles, with
+                    over 6,000 species, ranging across all continents except
+                    Antarctica
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
             </Card>
           </Grid>
         </Grid>
@@ -454,7 +455,7 @@ function LandingPage() {
         </Box>
       </Container>
       {/* FOOTER */}
-      <Container sx={{mt:5}}>
+      <Container sx={{ mt: 5 }}>
         {/* <Typography sx={{color:'black'}}>
           At Integritort, we are revolutionizing the mass tort industry and
           prioritizing patient well-being by harnessing the power of real-time
@@ -466,34 +467,54 @@ function LandingPage() {
         {/* <Typography sx={{  color: 'white', textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center', background: "black" }}>Design & Developed by OTS</Typography> */}
       </Container>
       <Box
-      sx={{
-        textAlign: "center",
-        backgroundColor: (theme) =>
-          theme.palette.mode === "dark"
-            ? theme.palette.grey[800]
-            : theme.palette.grey[800],
-        fontWeight: "bold",
-        fontSize: 24,
-        p: 6,
-      }}
-      component="footer"
-    >
-      <Container maxWidth="xl">
-      <Typography sx={{color:'white'}}>
-          At Integritort, we are revolutionizing the mass tort industry and
-          prioritizing patient well-being by harnessing the power of real-time
-          medical records. Our cutting-edge technology and innovative approach
-          aim to enhance the integrity of mass tort cases while putting patients
-          at the center of their own care journey.
-        </Typography>
-      <Typography sx={{ fontWeight: 'bold', color: 'white', textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Copyright © 2023 Integritort, LLC. All rights reserved.</Typography>
-        <Typography sx={{ fontWeight: 'bold', color: 'white', textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          {"Design & Developed by OTS "}
-          {new Date().getFullYear()}
-          {"."}
-        </Typography>
-      </Container>
-    </Box>
+        sx={{
+          textAlign: "center",
+          backgroundColor: (theme) =>
+            theme.palette.mode === "dark"
+              ? theme.palette.grey[800]
+              : theme.palette.grey[800],
+          fontWeight: "bold",
+          fontSize: 24,
+          p: 6,
+        }}
+        component="footer"
+      >
+        <Container maxWidth="xl">
+          <Typography sx={{ color: "white" }}>
+            At Integritort, we are revolutionizing the mass tort industry and
+            prioritizing patient well-being by harnessing the power of real-time
+            medical records. Our cutting-edge technology and innovative approach
+            aim to enhance the integrity of mass tort cases while putting
+            patients at the center of their own care journey.
+          </Typography>
+          <Typography
+            sx={{
+              fontWeight: "bold",
+              color: "white",
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            Copyright © 2023 Integritort, LLC. All rights reserved.
+          </Typography>
+          <Typography
+            sx={{
+              fontWeight: "bold",
+              color: "white",
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {"Design & Developed by OTS "}
+            {new Date().getFullYear()}
+            {"."}
+          </Typography>
+        </Container>
+      </Box>
     </>
   );
 }
