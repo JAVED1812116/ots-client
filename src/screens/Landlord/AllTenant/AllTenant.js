@@ -1,151 +1,369 @@
 import * as React from "react";
-import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Button from "@mui/material/Button";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Wrapper from "../../../components/Wrapper";
+import { useState } from "react";
 import { useLocation } from "react-router";
 import title from "../../../components/title";
-const columns = [
-  { id: "name", label: "Name", minWidth: 170 },
-  { id: "fatherName", label: "Father Name", minWidth: 100 },
-  {
-    id: "cnic",
-    label: "CNIC",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "fromDate",
-    label: "From Date",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "action",
-    label: "Action",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toFixed(2),
-  },
-];
-
-function createData(name, fatherName, fromDate, cnic, action) {
-  return { name, fatherName, cnic, fromDate, action };
-}
-
-export default function AllTenant() {
-  title("All Tenant")
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const navigate = useNavigate();
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
+import { useDispatch } from "react-redux";
+import { GetAllTenant } from "../../../Redux/Reducer/GetAllTenant";
+import "./newRequest.css";
+import { CircularProgress } from "@mui/material";
+import { RequestAccept } from "../../../Redux/Reducer/AcceptRequest";
+import { useNavigate } from "react-router-dom";
+export default function NewRequest() {
+  title("New Request");
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    setLoading(true)
+    dispatch(GetAllTenant({ userId: localStorage.getItem("user_id") })).then(
+      (res) => {
+        if(res?.payload?.data?.message==="Get All Tenant Successfully"){
+        setData(res?.payload?.data?.data);
+        setLoading(false)
+        }
+      }
+    );
+  }, []);
+
+  function createData(
+    email,
+    name,
+    fatherName,
+    flatName,
+    flatNumber,
+    flatFloor,
+    flatRent,
+    flatAdvance,
+    date,
+    adultFamilyMembers,
+    childrenFamilyMembers,
+    occupation,
+    gender,
+    language,
+    cast,
+    permanentAddress,
+    userId,
+    id
+  ) {
+    return {
+      email,
+      name,
+      fatherName,
+      flatName,
+      flatNumber,
+      flatFloor,
+      flatRent,
+      flatAdvance,
+      date,
+      adultFamilyMembers,
+      childrenFamilyMembers,
+      occupation,
+      gender,
+      language,
+      cast,
+      permanentAddress,
+      userId,
+      id,
+      history: [
+        {
+          date: data?.map((res) => {
+            return res?.data?.map((e) => {
+              return e.date;
+            });
+          }),
+          totalFamilyMembers: data?.map((res) => {
+            return res?.data?.map((e) => {
+              return e.adultFamilyMembers;
+            });
+          }),
+        },
+      ],
+    };
+  }
+
+  const handleChange = (row) => {
+    if (row?.id) {
+    console.log(row,"ROWWWWW")
+    dispatch(RequestAccept({ row })).then((res) => {
+console.log(res)
+      // if (res?.payload?.data?.message === "Property Set Successfully") {
+      //   toast.success("Property Register Successfully", {
+      //     position: "top-center",
+      //   });
+      //   sessionStorage.setItem("is_register", true);
+      //   setTimeout(() => {
+      //     navigate("/pending-request");
+      //   }, 2200);
+      // }
+    });
+    setData((prevData) => prevData.filter((item) => item?.id !== row?.id));
+   
+    // data.filter((item) => item?.id !== row?.id);
+  }
+};
+console.log(data,"data")
+
+  function Row(props) {
+    const { row } = props;
+    const [open, setOpen] = React.useState(false);
+
+    return (
+      <React.Fragment>
+        <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+          <TableCell>
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </TableCell>
+          <TableCell component="th" scope="row">
+            {row.email}
+          </TableCell>
+          <TableCell component="th" scope="row">
+            {row.name}
+          </TableCell>
+          <TableCell align="right">{row.fatherName}</TableCell>
+          <TableCell align="right">{row.flatName}</TableCell>
+          <TableCell align="right">{row.flatNumber}</TableCell>
+          <TableCell align="right">{row.flatFloor}</TableCell>
+          <TableCell align="right">{row.flatRent}</TableCell>
+          <TableCell align="right">{row.flatAdvance}</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                <Typography variant="h6" gutterBottom component="div">
+                  Tenant Detail
+                </Typography>
+                <Table size="small" aria-label="purchases">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Date</TableCell>
+                      <TableCell>Adult</TableCell>
+                      <TableCell align="right">Children</TableCell>
+                      <TableCell align="right">Occupation</TableCell>
+                      <TableCell align="right">Gender</TableCell>
+                      <TableCell align="right">Language</TableCell>
+                      <TableCell align="right">Cast</TableCell>
+                      <TableCell align="right">Permenant Address</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        {row.date}
+                      </TableCell>
+                      <TableCell>{row.adultFamilyMembers}</TableCell>
+                      <TableCell align="right">
+                        {row.childrenFamilyMembers}
+                      </TableCell>
+                      <TableCell align="right">{row.occupation}</TableCell>
+                      {/* <TableCell align="right">{row.gender}</TableCell> */}
+                      <TableCell align="right">
+                        {row.gender[0] === "1"
+                          ? "Male"
+                          : row.gender[0] === "0"
+                          ? "Female"
+                          : "Unknown"}
+                      </TableCell>
+                      <TableCell align="right">{row.language}</TableCell>
+                      <TableCell align="right">{row.cast}</TableCell>
+                      <TableCell align="right">
+                        {row.permanentAddress}
+                      </TableCell>
+                    </TableRow>
+                    {/* ))} */}
+                  </TableBody>
+                </Table>
+                
+                <Button
+                  variant="contained"
+                  sx={{ marginTop: 2, marginRight: 1, background: "black" }}
+                  // onClick={() => handleChange(row)}
+                  onClick={() => navigate("/landlord-functionality")}
+                >
+                  View
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={{ marginTop: 2, background: "black" }}
+                >
+                  Reject
+                </Button>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      </React.Fragment>
+    );
+  }
   const rows = [
-    createData(
-      "Zia",
-      "Khalil",
-      1324171354,
-      3287263,
-      <Button
-        variant="contained"
-        sx={{ background: "black" }}
-        onClick={() => navigate("/landlord-functionality")}
-      >
-        View
-      </Button>
-    ),
-    createData(
-      "Ritik",
-      "Bhawani Shankar",
-      1403500365,
-      9596961,
-      <Button variant="contained" sx={{ background: "black" }}>
-        View
-      </Button>
-    ),
+    
+    data?.map((resp) => {
+      return createData(
+        resp?.email,
+        resp?.data?.map((e) => {
+          return e.name;
+        }),
+        resp?.data?.map((e) => {
+          return e.fatherName;
+        }),
+        resp?.data?.map((res) => {
+          return res?.flatDetail?.map((e) => {
+            return e?.flatName;
+          });
+        }),
+        resp?.data?.map((res) => {
+          return res?.flatDetail?.map((e) => {
+            return e?.flatNumber;
+          });
+        }),
+        resp?.data?.map((res) => {
+          return res?.flatDetail?.map((e) => {
+            return e?.flatFloor;
+          });
+        }),
+        resp?.data?.map((res) => {
+          return res?.flatDetail?.map((e) => {
+            return e?.flatRent;
+          });
+        }),
+        resp?.data?.map((res) => {
+          return res?.flatDetail?.map((e) => {
+            return e?.flatAdvance;
+          });
+        }),
+        resp?.data?.map((e) => {
+          return e.date;
+        }),
+        resp?.data?.map((e) => {
+          return e.adultFamilyMembers;
+        }),
+        resp?.data?.map((e) => {
+          return e.childrenFamilyMembers;
+        }),
+        resp?.data?.map((e) => {
+          return e.occupation;
+        }),
+        resp?.data?.map((e) => {
+          return e.gender;
+        }),
+        resp?.data?.map((e) => {
+          return e.language;
+        }),
+        resp?.data?.map((e) => {
+          return e.cast;
+        }),
+        resp?.data?.map((e) => {
+          return e.permanentAddress;
+        }),
+        resp?.data?.map((e) => {
+          return e.userId;
+        }),
+        resp?.id,
+      );
+    }),
   ];
+
   return (
     <>
-      <Wrapper open={open} setOpen={setOpen} mylocation= {mylocation}/>
+      <Wrapper open={open} setOpen={setOpen} mylocation={mylocation} />
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
         <div className="mainHeading">
-          <h1>All Tenant</h1>
+          <h1>New Requests</h1>
         </div>
-        <Paper sx={{ width: "100%", overflow: "hidden" }}>
-          <TableContainer sx={{ maxHeight: 440 }}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow sx={{ background: "black" }}>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                      sx={{ background: "black", color: "white" }}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
+        {console.log(data,"testttttt")}
+       
+        {data?.length > 0? (
+          <TableContainer
+            component={Paper}
+            // sx={{ marginTop: 4 }}
+          >
+            <Table aria-label="collapsible table">
+              <TableHead sx={{ background: "black" }}>
+                <TableRow>
+                  <TableCell />
+                  <TableCell sx={{ color: "white" }}>Email</TableCell>
+                  <TableCell sx={{ color: "white" }}>Name</TableCell>
+                  <TableCell sx={{ color: "white" }} align="right">
+                    Father Name
+                  </TableCell>
+                  <TableCell sx={{ color: "white" }} align="right">
+                    Flat Name
+                  </TableCell>
+                  <TableCell sx={{ color: "white" }} align="right">
+                    Flat Number
+                  </TableCell>
+                  <TableCell sx={{ color: "white" }} align="right">
+                    Floor
+                  </TableCell>
+                  <TableCell sx={{ color: "white" }} align="right">
+                    Rent
+                  </TableCell>
+                  <TableCell sx={{ color: "white" }} align="right">
+                    Advance
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.code}
-                      >
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          return (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    );
-                  })}
+                {!rows.includes(undefined) &&
+                  rows[0].map((row) => <Row row={row} />)}
               </TableBody>
             </Table>
           </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Paper>
+        ) :loading===true ?
+        
+        <Box sx={{ display: "flex", justifyContent: "center", m: 10 }}>
+        <Typography sx={{ fontSize: 40 }}>
+        <CircularProgress />
+        </Typography>
+      </Box> 
+        :
+      
+      <Box sx={{ display: "flex", justifyContent: "center", m: 10 }}>
+        <Typography sx={{ fontSize: 40 }}>
+          <span className="noData">R</span>
+          <span>e</span>
+          <span className="noData">q</span>
+          <span>u</span>
+          <span className="noData">e</span>
+          <span>s</span>
+          <span className="noData">t</span>
+          <span> N</span>
+          <span className="noData">o</span>
+          <span>T</span>
+          <span className="noData"> F</span>
+          <span>o</span>
+          <span className="noData">u</span>
+          <span>n</span>
+          <span className="noData">d</span>
+        </Typography>
+      </Box> 
+    }
+    
       </div>
     </>
   );
