@@ -124,11 +124,11 @@ export default function NewRequest() {
             {row.name}
           </TableCell>
           <TableCell align="right">{row.fatherName}</TableCell>
-          <TableCell align="right">{row.flatName}</TableCell>
-          <TableCell align="right">{row.flatNumber}</TableCell>
-          <TableCell align="right">{row.flatFloor}</TableCell>
-          <TableCell align="right">{row.flatRent}</TableCell>
-          <TableCell align="right">{row.flatAdvance}</TableCell>
+          <TableCell align="right">{row.flatDetail[0].flatName}</TableCell>
+          <TableCell align="right">{row.flatDetail[0].flatNumber}</TableCell>
+          <TableCell align="right">{row.flatDetail[0].flatFloor}</TableCell>
+          <TableCell align="right">{row.flatDetail[0].flatRent}</TableCell>
+          <TableCell align="right">{row.flatDetail[0].flatAdvance}</TableCell>
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
@@ -199,12 +199,13 @@ export default function NewRequest() {
       </React.Fragment>
     );
   }
+  console.log(data,"dataSaeed");
   const rows = [
-    
     data?.map((resp) => {
+      console.log(resp,"rtrtrtrr")
       return createData(
         resp?.email,
-        resp?.data?.map((e) => {
+        resp?.map((e) => {
           return e.name;
         }),
         resp?.data?.map((e) => {
@@ -308,9 +309,9 @@ export default function NewRequest() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {console.log(rows,"aysha")}
-                {!rows.includes(undefined) &&
-                  rows[0].map((row) => <Row row={row} />)}
+                {console.log(rows,"rowsSaeed")}
+                {!data.includes(undefined) &&
+                  data[0].map((row) => <Row row={row} />)}
               </TableBody>
             </Table>
           </TableContainer>
