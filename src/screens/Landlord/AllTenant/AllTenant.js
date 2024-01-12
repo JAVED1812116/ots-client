@@ -37,7 +37,7 @@ export default function NewRequest() {
     dispatch(GetAllTenant({ userId: localStorage.getItem("user_id") })).then(
       (res) => {
         if(res?.payload?.data?.message==="Get All Tenant Successfully"){
-        setData(res?.payload?.data?.data);
+        setData(res?.payload?.data?.data?.data);
         setLoading(false)
         }
       }
@@ -100,28 +100,6 @@ export default function NewRequest() {
     };
   }
 
-  const handleChange = (row) => {
-    if (row?.id) {
-    console.log(row,"ROWWWWW")
-    dispatch(RequestAccept({ row })).then((res) => {
-console.log(res)
-      // if (res?.payload?.data?.message === "Property Set Successfully") {
-      //   toast.success("Property Register Successfully", {
-      //     position: "top-center",
-      //   });
-      //   sessionStorage.setItem("is_register", true);
-      //   setTimeout(() => {
-      //     navigate("/pending-request");
-      //   }, 2200);
-      // }
-    });
-    setData((prevData) => prevData.filter((item) => item?.id !== row?.id));
-   
-    // data.filter((item) => item?.id !== row?.id);
-  }
-};
-console.log(data,"data")
-
   function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
@@ -140,6 +118,7 @@ console.log(data,"data")
           </TableCell>
           <TableCell component="th" scope="row">
             {row.email}
+            {console.log(row,"rowCell")}
           </TableCell>
           <TableCell component="th" scope="row">
             {row.name}
@@ -182,13 +161,13 @@ console.log(data,"data")
                       </TableCell>
                       <TableCell align="right">{row.occupation}</TableCell>
                       {/* <TableCell align="right">{row.gender}</TableCell> */}
-                      <TableCell align="right">
+                      {/* <TableCell align="right">
                         {row.gender[0] === "1"
                           ? "Male"
                           : row.gender[0] === "0"
                           ? "Female"
                           : "Unknown"}
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell align="right">{row.language}</TableCell>
                       <TableCell align="right">{row.cast}</TableCell>
                       <TableCell align="right">
@@ -295,7 +274,7 @@ console.log(data,"data")
         <div className="mainHeading">
           <h1>New Requests</h1>
         </div>
-        {console.log(data,"testttttt")}
+        
        
         {data?.length > 0? (
           <TableContainer
@@ -329,6 +308,7 @@ console.log(data,"data")
                 </TableRow>
               </TableHead>
               <TableBody>
+                {console.log(rows,"aysha")}
                 {!rows.includes(undefined) &&
                   rows[0].map((row) => <Row row={row} />)}
               </TableBody>
