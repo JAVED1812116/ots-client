@@ -35,6 +35,7 @@ export default function NewRequest() {
     dispatch(GetTenant({ userId: localStorage.getItem("user_id") })).then(
       (res) => {
         if(res?.payload?.data?.message==="Get New Request Successfully"){
+      
         setData(res?.payload?.data?.data);
         setLoading(false)
         }
@@ -60,7 +61,8 @@ export default function NewRequest() {
     cast,
     permanentAddress,
     userId,
-    id
+    id,
+    _id
   ) {
     return {
       email,
@@ -81,6 +83,7 @@ export default function NewRequest() {
       permanentAddress,
       userId,
       id,
+      _id,
       history: [
         {
           date: data?.map((res) => {
@@ -100,25 +103,16 @@ export default function NewRequest() {
 
   const handleChange = (row) => {
     if (row?.id) {
-    console.log(row,"ROWWWWW")
+      console.log(row,"resRow")
     dispatch(RequestAccept({ row })).then((res) => {
-console.log(res)
-      // if (res?.payload?.data?.message === "Property Set Successfully") {
-      //   toast.success("Property Register Successfully", {
-      //     position: "top-center",
-      //   });
-      //   sessionStorage.setItem("is_register", true);
-      //   setTimeout(() => {
-      //     navigate("/pending-request");
-      //   }, 2200);
-      // }
-    });
+console.log(res,"lala")
+        });
     setData((prevData) => prevData.filter((item) => item?.id !== row?.id));
    
     // data.filter((item) => item?.id !== row?.id);
   }
 };
-console.log(data,"data")
+console.log(data,"datasaeed")
 
   function Row(props) {
     const { row } = props;
@@ -218,8 +212,8 @@ console.log(data,"data")
     );
   }
   const rows = [
-    
     data?.map((resp) => {
+      // console.log(resp._id,"dataJob")
       return createData(
         resp?.email,
         resp?.data?.map((e) => {
@@ -281,6 +275,9 @@ console.log(data,"data")
           return e.userId;
         }),
         resp?.id,
+        resp?.data?.map((e) => {
+          return e._id;
+        }),
       );
     }),
   ];
