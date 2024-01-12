@@ -200,83 +200,15 @@ export default function NewRequest() {
     );
   }
   console.log(data,"dataSaeed");
-  const rows = [
-    data?.map((resp) => {
-      console.log(resp,"rtrtrtrr")
-      return createData(
-        resp?.email,
-        resp?.map((e) => {
-          return e.name;
-        }),
-        resp?.data?.map((e) => {
-          return e.fatherName;
-        }),
-        resp?.data?.map((res) => {
-          return res?.flatDetail?.map((e) => {
-            return e?.flatName;
-          });
-        }),
-        resp?.data?.map((res) => {
-          return res?.flatDetail?.map((e) => {
-            return e?.flatNumber;
-          });
-        }),
-        resp?.data?.map((res) => {
-          return res?.flatDetail?.map((e) => {
-            return e?.flatFloor;
-          });
-        }),
-        resp?.data?.map((res) => {
-          return res?.flatDetail?.map((e) => {
-            return e?.flatRent;
-          });
-        }),
-        resp?.data?.map((res) => {
-          return res?.flatDetail?.map((e) => {
-            return e?.flatAdvance;
-          });
-        }),
-        resp?.data?.map((e) => {
-          return e.date;
-        }),
-        resp?.data?.map((e) => {
-          return e.adultFamilyMembers;
-        }),
-        resp?.data?.map((e) => {
-          return e.childrenFamilyMembers;
-        }),
-        resp?.data?.map((e) => {
-          return e.occupation;
-        }),
-        resp?.data?.map((e) => {
-          return e.gender;
-        }),
-        resp?.data?.map((e) => {
-          return e.language;
-        }),
-        resp?.data?.map((e) => {
-          return e.cast;
-        }),
-        resp?.data?.map((e) => {
-          return e.permanentAddress;
-        }),
-        resp?.data?.map((e) => {
-          return e.userId;
-        }),
-        resp?.id,
-      );
-    }),
-  ];
+
 
   return (
     <>
       <Wrapper open={open} setOpen={setOpen} mylocation={mylocation} />
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
         <div className="mainHeading">
-          <h1>New Requests</h1>
+          <h1>All Tenants</h1>
         </div>
-        
-       
         {data?.length > 0? (
           <TableContainer
             component={Paper}
@@ -309,9 +241,8 @@ export default function NewRequest() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {console.log(rows,"rowsSaeed")}
                 {!data.includes(undefined) &&
-                  data[0].map((row) => <Row row={row} />)}
+                  data.map((row) => <Row row={row} />)}
               </TableBody>
             </Table>
           </TableContainer>
@@ -326,21 +257,15 @@ export default function NewRequest() {
       
       <Box sx={{ display: "flex", justifyContent: "center", m: 10 }}>
         <Typography sx={{ fontSize: 40 }}>
-          <span className="noData">R</span>
-          <span>e</span>
-          <span className="noData">q</span>
-          <span>u</span>
-          <span className="noData">e</span>
-          <span>s</span>
-          <span className="noData">t</span>
-          <span> N</span>
-          <span className="noData">o</span>
-          <span>T</span>
+          <span className="noData">N</span>
+          <span>o</span>
+          <span className="noData">T</span>
           <span className="noData"> F</span>
           <span>o</span>
           <span className="noData">u</span>
           <span>n</span>
           <span className="noData">d</span>
+          
         </Typography>
       </Box> 
     }
