@@ -67,7 +67,8 @@ export default function NewRequest() {
     permanentAddress,
     userId,
     id,
-    _id
+    _id,
+    landlordId,
   ) {
     return {
       email,
@@ -89,6 +90,7 @@ export default function NewRequest() {
       userId,
       id,
       _id,
+      landlordId,
       history: [
         {
           date: data?.map((res) => {
@@ -107,8 +109,8 @@ export default function NewRequest() {
   }
 
   const handleAccept = (row) => {
-    
-    if (row?.id) {
+    console.log(row,"rowddddd")
+    if (row?.id[0]) {
       Swal.fire({
         title: 'Do you want to accept this request?',
         showCancelButton: true,
@@ -123,7 +125,7 @@ export default function NewRequest() {
         if (result.isConfirmed) {
            dispatch(RequestAccept({ row })).then((res) => {
         });
-    setData((prevData) => prevData.filter((item) => item?.id !== row?.id));
+    setData((prevData) => prevData.filter((item) => item?.id !== row?.id[0]));
           Swal.fire('Accepted!', '', 'success')
         } 
       })
@@ -158,6 +160,7 @@ export default function NewRequest() {
   function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
+
     return (
       <React.Fragment>
         <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -177,11 +180,11 @@ export default function NewRequest() {
             {row.name}
           </TableCell>
           <TableCell align="right">{row.fatherName}</TableCell>
-          <TableCell align="right">{row.flatDetail[0]?.flatName}</TableCell>
-          <TableCell align="right">{row.flatDetail[0]?.flatNumber}</TableCell>
-          <TableCell align="right">{row.flatDetail[0]?.flatFloor}</TableCell>
-          <TableCell align="right">{row.flatDetail[0]?.flatRent}</TableCell>
-          <TableCell align="right">{row.flatDetail[0]?.flatAdvance}</TableCell>
+          <TableCell align="right">{row.flatName}</TableCell>
+          <TableCell align="right">{row.flatNumber}</TableCell>
+          <TableCell align="right">{row.flatFloor}</TableCell>
+          <TableCell align="right">{row.flatRent}</TableCell>
+          <TableCell align="right">{row.flatAdvance}</TableCell>
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
@@ -320,9 +323,15 @@ export default function NewRequest() {
         resp?.data?.map((e) => {
           return e.userId;
         }),
-        resp?.id,
+        resp?.data?.map((e) => {
+          return e?.flatDetail[0]?.id
+        }),
         resp?.data?.map((e) => {
           return e._id;
+        }),
+        resp?.data?.map((e) => {
+          console.log(e,"fffff")
+          return e.flatDetail[0]?.landlordId;
         }),
       );
     }),
@@ -369,8 +378,8 @@ export default function NewRequest() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {!data.includes(undefined) &&
-                  data[0]?.data?.map((row) => <Row row={row} />)}
+                {!rows.includes(undefined) &&
+                  rows[0].map((row) => <Row row={row} />)}
               </TableBody>
             </Table>
           </TableContainer>
