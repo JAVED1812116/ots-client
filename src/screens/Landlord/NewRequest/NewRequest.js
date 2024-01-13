@@ -20,28 +20,20 @@ import title from "../../../components/title";
 import { useDispatch } from "react-redux";
 import { GetTenant } from "../../../Redux/Reducer/GetTenantDetail";
 import "./newRequest.css";
-import { CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide } from "@mui/material";
+import { CircularProgress} from "@mui/material";
 import { RequestAccept } from "../../../Redux/Reducer/AcceptRequest";
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+import Swal from 'sweetalert2'
+
 export default function NewRequest() {
   title("New Request");
   const [open, setOpen] = useState(false);
-  const [openButton, setOpenButton] = useState(false);
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const handleClickOpen = () => {
-    setOpenButton(true);
-  };
 
-  const handleClose = () => {
-    setOpenButton(false);
-  };
   React.useEffect(() => {
     setLoading(true)
     dispatch(GetTenant({ userId: localStorage.getItem("user_id") })).then(
@@ -114,13 +106,28 @@ export default function NewRequest() {
   }
 
   const handleChange = (row) => {
-    console.log(row,"wa")
+    
     if (row?.id) {
-      
-    dispatch(RequestAccept({ row })).then((res) => {
-      setOpenButton(false);
+      Swal.fire({
+        title: 'Do you want to accept this request?',
+        showCancelButton: true,
+        confirmButtonText: 'Accept',
+        customClass: {
+          actions: 'my-actions',
+          // cancelButton: 'order-1 right-gap',
+          // confirmButton: 'order-2',
+          // denyButton: 'order-3',
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+           dispatch(RequestAccept({ row })).then((res) => {
         });
     setData((prevData) => prevData.filter((item) => item?.id !== row?.id));
+          Swal.fire('Accepted!', '', 'success')
+        } 
+      })
+      
+   
 
   }
 }
@@ -202,16 +209,16 @@ export default function NewRequest() {
                   </TableBody>
                 </Table>
                 
-                {/* <Button
+                <Button
                   variant="contained"
                   sx={{ marginTop: 2, marginRight: 1, background: "black" }}
                   onClick={() => handleChange(row)}
                 >
                   Accept
-                </Button> */}
-                 <Button variant="contained" sx={{ marginTop: 2, marginRight: 1, background: "black" }} onClick={handleClickOpen}>
+                </Button>
+                 {/* <Button variant="contained" sx={{ marginTop: 2, marginRight: 1, background: "black" }} onClick={handleChange(row)}>
         Accept
-      </Button>
+      </Button> */}
 
                 <Button
                   variant="contained"
@@ -222,24 +229,7 @@ export default function NewRequest() {
               </Box>
             </Collapse>
           </TableCell>
-          <Dialog
-        open={openButton}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle>{"Are You Sure Accept This Request!"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            When You Accept This Request Then This Will make your tenant and send email 
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={() => handleChange(row)}>Agree</Button>
-        </DialogActions>
-      </Dialog>
+       
         </TableRow>
       </React.Fragment>
     );
