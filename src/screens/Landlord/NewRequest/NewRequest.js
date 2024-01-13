@@ -109,7 +109,7 @@ export default function NewRequest() {
   }
 
   const handleAccept = (row) => {
-    console.log(row,"rowddddd")
+    
     if (row?.id[0]) {
       Swal.fire({
         title: 'Do you want to accept this request?',
@@ -117,15 +117,12 @@ export default function NewRequest() {
         confirmButtonText: 'Accept',
         customClass: {
           actions: 'my-actions',
-          // cancelButton: 'order-1 right-gap',
-          // confirmButton: 'order-2',
-          // denyButton: 'order-3',
         },
       }).then((result) => {
         if (result.isConfirmed) {
            dispatch(RequestAccept({ row })).then((res) => {
         });
-    setData((prevData) => prevData.filter((item) => item?.id !== row?.id[0]));
+    setData((prevData) => prevData.filter((item) => item?.data[0]?.flatDetail[0]?.id !== row?.id[0]));
           Swal.fire('Accepted!', '', 'success')
         } 
       })
@@ -134,22 +131,19 @@ export default function NewRequest() {
 }
   const handleReject = (row) => {
     
-    if (row?.id) {
+    if (row?.id[0]) {
       Swal.fire({
         title: 'Do you want to Reject this request?',
         showCancelButton: true,
         confirmButtonText: 'Reject',
         customClass: {
           actions: 'my-actions',
-          // cancelButton: 'order-1 right-gap',
-          // confirmButton: 'order-2',
-          // denyButton: 'order-3',
         },
       }).then((result) => {
         if (result.isConfirmed) {
            dispatch(RequestReject({ row })).then((res) => {
         });
-    setData((prevData) => prevData.filter((item) => item?.id !== row?.id));
+    setData((prevData) => prevData.filter((item) => item?.data[0]?.flatDetail[0]?.id!== row?.id[0]));
           Swal.fire('Rejected!', '', 'success')
         } 
       })
