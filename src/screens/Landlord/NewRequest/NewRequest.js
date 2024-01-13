@@ -107,7 +107,7 @@ export default function NewRequest() {
   }
 
   const handleAccept = (row) => {
-    
+    console.log(row,"row.....")
     if (row?.id) {
       Swal.fire({
         title: 'Do you want to accept this request?',
