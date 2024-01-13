@@ -16,6 +16,7 @@ import GetTenantDetail from './Reducer/GetTenantDetail';
 import LoginUser from './Reducer/LoginUser';
 import AcceptRequest from './Reducer/AcceptRequest';
 import GetAllTenant from './Reducer/GetAllTenant';
+import RejectRequest from './Reducer/RejectRequest';
 export const store = configureStore({
   reducer: {
     "UserAdd": CreateUser,
@@ -35,5 +36,6 @@ export const store = configureStore({
     "AcceptRequest": AcceptRequest,
     "tenantDetail": GetTenantDetail,
     "allTenant": GetAllTenant,
+    "RejectRequest": RejectRequest,
   },
 })

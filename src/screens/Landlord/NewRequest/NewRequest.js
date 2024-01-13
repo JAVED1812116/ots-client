@@ -22,6 +22,7 @@ import { GetTenant } from "../../../Redux/Reducer/GetTenantDetail";
 import "./newRequest.css";
 import { CircularProgress} from "@mui/material";
 import { RequestAccept } from "../../../Redux/Reducer/AcceptRequest";
+import { RequestReject } from "../../../Redux/Reducer/RejectRequest";
 import Swal from 'sweetalert2'
 
 export default function NewRequest() {
@@ -105,7 +106,7 @@ export default function NewRequest() {
     };
   }
 
-  const handleChange = (row) => {
+  const handleAccept = (row) => {
     
     if (row?.id) {
       Swal.fire({
@@ -127,8 +128,30 @@ export default function NewRequest() {
         } 
       })
       
-   
-
+  }
+}
+  const handleReject = (row) => {
+    
+    if (row?.id) {
+      Swal.fire({
+        title: 'Do you want to Reject this request?',
+        showCancelButton: true,
+        confirmButtonText: 'Accept',
+        customClass: {
+          actions: 'my-actions',
+          // cancelButton: 'order-1 right-gap',
+          // confirmButton: 'order-2',
+          // denyButton: 'order-3',
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+           dispatch(RequestReject({ row })).then((res) => {
+        });
+    setData((prevData) => prevData.filter((item) => item?.id !== row?.id));
+          Swal.fire('Accepted!', '', 'success')
+        } 
+      })
+      
   }
 }
 
@@ -212,17 +235,18 @@ export default function NewRequest() {
                 <Button
                   variant="contained"
                   sx={{ marginTop: 2, marginRight: 1, background: "black" }}
-                  onClick={() => handleChange(row)}
+                  onClick={() => handleAccept(row)}
                 >
                   Accept
                 </Button>
-                 {/* <Button variant="contained" sx={{ marginTop: 2, marginRight: 1, background: "black" }} onClick={handleChange(row)}>
+                 {/* <Button variant="contained" sx={{ marginTop: 2, marginRight: 1, background: "black" }} onClick={handleAccept(row)}>
         Accept
       </Button> */}
 
                 <Button
                   variant="contained"
                   sx={{ marginTop: 2, background: "black" }}
+                  onClick={() => handleReject(row)}
                 >
                   Reject
                 </Button>
