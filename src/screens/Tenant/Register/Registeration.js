@@ -394,7 +394,8 @@ export default function Registration() {
           userId: sessionStorage.getItem("user_id"),
           userName: sessionStorage.getItem("name"),
           flatDetails: [selectedRow],
-          is_active:false
+          is_accept:false,
+          is_reject:false
         };
         return dispatch(RegisterTenant({ values })).then((res) => {
           if (
