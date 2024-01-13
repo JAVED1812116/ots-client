@@ -158,7 +158,6 @@ export default function NewRequest() {
   function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
-
     return (
       <React.Fragment>
         <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -178,11 +177,11 @@ export default function NewRequest() {
             {row.name}
           </TableCell>
           <TableCell align="right">{row.fatherName}</TableCell>
-          <TableCell align="right">{row.flatName}</TableCell>
-          <TableCell align="right">{row.flatNumber}</TableCell>
-          <TableCell align="right">{row.flatFloor}</TableCell>
-          <TableCell align="right">{row.flatRent}</TableCell>
-          <TableCell align="right">{row.flatAdvance}</TableCell>
+          <TableCell align="right">{row.flatDetail[0]?.flatName}</TableCell>
+          <TableCell align="right">{row.flatDetail[0]?.flatNumber}</TableCell>
+          <TableCell align="right">{row.flatDetail[0]?.flatFloor}</TableCell>
+          <TableCell align="right">{row.flatDetail[0]?.flatRent}</TableCell>
+          <TableCell align="right">{row.flatDetail[0]?.flatAdvance}</TableCell>
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
@@ -370,8 +369,8 @@ export default function NewRequest() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {!rows.includes(undefined) &&
-                  rows[0].map((row) => <Row row={row} />)}
+                {!data.includes(undefined) &&
+                  data[0]?.data?.map((row) => <Row row={row} />)}
               </TableBody>
             </Table>
           </TableContainer>
