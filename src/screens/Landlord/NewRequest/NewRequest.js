@@ -136,7 +136,7 @@ export default function NewRequest() {
       Swal.fire({
         title: 'Do you want to Reject this request?',
         showCancelButton: true,
-        confirmButtonText: 'Accept',
+        confirmButtonText: 'Reject',
         customClass: {
           actions: 'my-actions',
           // cancelButton: 'order-1 right-gap',
@@ -148,7 +148,7 @@ export default function NewRequest() {
            dispatch(RequestReject({ row })).then((res) => {
         });
     setData((prevData) => prevData.filter((item) => item?.id !== row?.id));
-          Swal.fire('Accepted!', '', 'success')
+          Swal.fire('Rejected!', '', 'success')
         } 
       })
       
