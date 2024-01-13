@@ -256,7 +256,6 @@ export default function NewRequest() {
   }
   const rows = [
     data?.map((resp) => {
-      // console.log(resp._id,"dataJob")
       return createData(
         resp?.email,
         resp?.data?.map((e) => {
@@ -343,7 +342,6 @@ export default function NewRequest() {
         {data?.length > 0? (
           <TableContainer
             component={Paper}
-            // sx={{ marginTop: 4 }}
           >
             <Table aria-label="collapsible table">
               <TableHead sx={{ background: "black" }}>
