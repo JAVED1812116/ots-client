@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Wrapper from "../../../components/Wrapper";
 import { useState } from "react";
 import Typography from "@mui/material/Typography";
-import {Container } from "@mui/material";
+import {Box, CircularProgress, Container } from "@mui/material";
 import title from "../../../components/title";
 import {GetOneAgreement} from "../../../Redux/Reducer/GetOneAgreement";
 import { useDispatch } from "react-redux";
@@ -14,8 +14,8 @@ export default function Agreements() {
   const [data, setData] = useState([]);
   const {id}=useParams();
   const dispatch=useDispatch();
+
   useEffect(()=>{
-    console.log(id,"idddddddddddddd")
     dispatch(GetOneAgreement({id:id})).then((res)=>{
       setData(res?.payload?.data?.data[0])
     })
@@ -25,7 +25,8 @@ console.log(data,"data")
     <>
       <Wrapper open={open} setOpen={setOpen} />
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
-
+        {console.log(data?.length>0,"dataLength")}
+{data?.length===undefined?
       <Container maxWidth="sm">
         <Typography variant="h2" align="center" gutterBottom>
           AGREEMENT OF RENT
@@ -44,11 +45,11 @@ console.log(data,"data")
           <b>Name </b><u>{data?.name}</u> <b>CNIC
           NO#</b> <u>{data?.cnicNo}</u> (here in after called the Tenant) of the
           other part. Whereas the landlord is owner a residential flat of
-          <b> Flat Name </b><u>{data?.flatDetail[0].flatName}</u> <b>Flat
-          NO#</b> <u>{data?.flatDetail[0].flatNumber}</u><b>Flat
-          Floor</b> <u>{data?.flatDetail[0].flatFloor}</u><b> Flat
-          Rooms</b> <u>{data?.flatDetail[0].flatRooms}</u> <b>Flat
-          Kitchen</b> <u>{data?.flatDetail[0].flatKitchen}</u> They are agreed to rent out the
+          <b> Flat Name </b><u>{data?.flatDetail[0]?.flatName}</u> <b>Flat
+          NO#</b> <u>{data?.flatDetail[0]?.flatNumber}</u><b>Flat
+          Floor</b> <u>{data?.flatDetail[0]?.flatFloor}</u><b> Flat
+          Rooms</b> <u>{data?.flatDetail[0]?.flatRooms}</u> <b>Flat
+          Kitchen</b> <u>{data?.flatDetail[0]?.flatKitchen}</u> They are agreed to rent out the
           above said flat for a period of <b>11 months</b> commencing <b>from <u>{moment(data?.date).format("DD-MM-YYYY")}</u> To
           ______________ </b>at the monthly rent of Rs.<u>{data?.rent}</u>
           (_______________________________) per month will be paid on or before
@@ -94,6 +95,13 @@ console.log(data,"data")
           agreement.
         </Typography>
         </Container>
+:        
+<Box sx={{ display: "flex", justifyContent: "center", m: 10 }}>
+<Typography sx={{ fontSize: 40 }}>
+<CircularProgress />
+</Typography>
+</Box> }
+
       </div>
     </>
   );
