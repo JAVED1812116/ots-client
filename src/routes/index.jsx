@@ -26,46 +26,8 @@ import AboutUs from "../screens/AboutUs/AboutUs";
 import { useSelector } from "react-redux";
 export default function AllRoutes() {
   const { loginUser } = useSelector((state) => state);
-  console.log(loginUser?.login?.data?.data, "state");
-  let is_register, is_active;
-  if (loginUser) {
-    is_register =
-      loginUser?.login?.length > 0 && loginUser?.login?.data?.data.is_register;
-    is_active =
-      loginUser?.login?.length > 0 && loginUser?.login?.data?.data.is_active;
 
-    console.log(
-      loginUser?.login?.data?.data?.is_register,
-      loginUser?.login?.data?.data?.is_active,
-      "loginUser?.login?.data?.data.is_register"
-    );
-  }
-
-  // console.log(is_register, is_active, 'is_active');
-  // console.log(
-  //   localStorage.getItem("user_id"),
-  //   'localStorage.getItem("user_id")'
-  // );
-  let savedUser;
-  let registeredUser;
-  // useEffect(() => {
-  savedUser = localStorage.getItem("user_id");
-  registeredUser =
-    sessionStorage.getItem("is_register") ||
-    localStorage.getItem("is_register");
-  // console.log(savedUser, "savedUser");
-  // },[]);
-
-  console.log(savedUser, "savedUser");
-  console.log(registeredUser, "registeredUser1");
-  useEffect(() => {
-    console.log(savedUser, "savedUser useeff");
-    console.log(registeredUser, "registeredUser useeff");
-  });
-
-  console.log(typeof registeredUser, "registeredUser type");
   // if (registeredUser === null) {
-  //   console.log("hello1");
   //   return (
   //     <Router>
   //       <Routes>
@@ -94,7 +56,6 @@ export default function AllRoutes() {
     loginUser?.login?.data?.data.is_register == false &&
     loginUser?.login?.data?.data.is_active == false
   ) {
-    console.log("hello1");
     return (
       <Router>
         <Routes>
@@ -112,7 +73,7 @@ export default function AllRoutes() {
     loginUser?.login?.data?.data.is_register == true &&
     loginUser?.login?.data?.data.is_active == false
   ) {
-    console.log("hello3");
+   
     return (
       <Router>
         <Routes>
@@ -127,7 +88,6 @@ export default function AllRoutes() {
   } else
   
   {
-    console.log("hello4");
     return (
       <Router>
         <Routes>
@@ -143,12 +103,12 @@ export default function AllRoutes() {
           {/* <Route path="/rent-setting" element={<RentSetting />} /> */}
           <Route path="/bank-detail" element={<BankDetail />} />
           <Route
-            path="/landlord-functionality"
+            path="/landlord-functionality/:id?"
             element={<LandlordFunctionality />}
           />
-          <Route path="/agreement" element={<Agreement />} />
-          <Route path="/upload-Bill" element={<UploadBill />} />
-          <Route path="/previous-bill" element={<PreviousBillLandlordPage />} />
+          <Route path="/agreement/:id?" element={<Agreement />} />
+          <Route path="/upload-Bill/:id?" element={<UploadBill />} />
+          <Route path="/previous-bill/:id?" element={<PreviousBillLandlordPage />} />
           {/* <Route path="/property-reg" element={<PropertyRegister />} /> */}
 
           <Route path="/addNew-Tenant" element={<AddNew />} />

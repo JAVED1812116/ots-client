@@ -37,6 +37,8 @@ export default function NewRequest() {
     dispatch(GetAllTenant({ userId: localStorage.getItem("user_id") })).then(
       (res) => {
         if(res?.payload?.data?.message==="Get All Tenant Successfully"){
+          
+          sessionStorage.setItem("tenant_id", res?.payload?.data?.data?.data[0]?._id);
         setData(res?.payload?.data?.data?.data);
         setLoading(false)
         }
@@ -194,7 +196,7 @@ export default function NewRequest() {
                   variant="contained"
                   sx={{ marginTop: 2, marginRight: 1, background: "black" }}
                   // onClick={() => handleChange(row)}
-                  onClick={() => navigate("/landlord-functionality")}
+                  onClick={() => navigate(`/landlord-functionality/${row._id}`)}
                 >
                   View
                 </Button>

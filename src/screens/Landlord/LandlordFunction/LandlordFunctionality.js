@@ -11,12 +11,14 @@ import Typography from "@mui/material/Typography";
 // import unRegister from "../../../assets/unRigister.png";
 import Wrapper from "../../../components/Wrapper";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import "./LandlordFunctionality.css";
-
+import { useParams } from 'react-router-dom';
 export default function LandlordFunctionality() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const { id } = useParams();
+
   return (
     <>
       <Wrapper open={open} setOpen={setOpen} />
@@ -46,7 +48,7 @@ export default function LandlordFunctionality() {
                 className="view_button wm100"
                 size="large"
                 onClick={() => {
-                  navigate("/agreement");
+                  navigate(`/agreement/${id}`);
                 }}
               >
                 View
@@ -74,7 +76,7 @@ export default function LandlordFunctionality() {
                 className="view_button wm100"
                 size="large"
                 onClick={() => {
-                  navigate("/upload-Bill");
+                  navigate(`/upload-Bill/${id}`);
                 }}
               >
                 View
@@ -102,7 +104,7 @@ export default function LandlordFunctionality() {
                 className="view_button wm100"
                 size="large"
                 onClick={() => {
-                  navigate("/previous-bill");
+                  navigate(`/previous-bill/${id}`);
                 }}
               >
                 View
