@@ -117,11 +117,11 @@ export default function NewRequest() {
             </IconButton>
           </TableCell>
           <TableCell component="th" scope="row">
-            {row.email}
-            {console.log(row,"rowCell")}
+            {row.name}
           </TableCell>
           <TableCell component="th" scope="row">
-            {row.name}
+            {row.cnicNo}
+            {console.log(row,"rowCell")}
           </TableCell>
           <TableCell align="right">{row.fatherName}</TableCell>
           <TableCell align="right">{row.flatDetail[0].flatName}</TableCell>
@@ -145,9 +145,11 @@ export default function NewRequest() {
                       <TableCell align="right">Children</TableCell>
                       <TableCell align="right">Occupation</TableCell>
                       <TableCell align="right">Gender</TableCell>
+                      <TableCell align="right">MaritalStatus</TableCell>
                       <TableCell align="right">Language</TableCell>
                       <TableCell align="right">Cast</TableCell>
                       <TableCell align="right">Permenant Address</TableCell>
+                      <TableCell align="right">Total Family Members</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -161,17 +163,27 @@ export default function NewRequest() {
                       </TableCell>
                       <TableCell align="right">{row.occupation}</TableCell>
                       {/* <TableCell align="right">{row.gender}</TableCell> */}
-                      {/* <TableCell align="right">
+                      <TableCell align="right">
                         {row.gender[0] === "1"
                           ? "Male"
                           : row.gender[0] === "0"
                           ? "Female"
                           : "Unknown"}
-                      </TableCell> */}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.maritalStatus[0] === "1"
+                          ? "Married"
+                          : row.maritalStatus[0] === "0"
+                          ? "Un-Married"
+                          : "Unknown"}
+                      </TableCell>
                       <TableCell align="right">{row.language}</TableCell>
                       <TableCell align="right">{row.cast}</TableCell>
                       <TableCell align="right">
                         {row.permanentAddress}
+                      </TableCell>
+                      <TableCell align="right">
+                        {parseInt(row.adultFamilyMembers)+parseInt(row.childrenFamilyMembers)}
                       </TableCell>
                     </TableRow>
                     {/* ))} */}
@@ -185,12 +197,6 @@ export default function NewRequest() {
                   onClick={() => navigate("/landlord-functionality")}
                 >
                   View
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={{ marginTop: 2, background: "black" }}
-                >
-                  Reject
                 </Button>
               </Box>
             </Collapse>
@@ -218,8 +224,8 @@ export default function NewRequest() {
               <TableHead sx={{ background: "black" }}>
                 <TableRow>
                   <TableCell />
-                  <TableCell sx={{ color: "white" }}>Email</TableCell>
                   <TableCell sx={{ color: "white" }}>Name</TableCell>
+                  <TableCell sx={{ color: "white" }}>CNIC</TableCell>
                   <TableCell sx={{ color: "white" }} align="right">
                     Father Name
                   </TableCell>
