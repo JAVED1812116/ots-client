@@ -1,25 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Wrapper from "../../../components/Wrapper";
 import { useState } from "react";
 import Typography from "@mui/material/Typography";
-import {Container } from "@mui/material";
+import {Box, CircularProgress, Container } from "@mui/material";
 import title from "../../../components/title";
-
+import {GetOneAgreement} from "../../../Redux/Reducer/GetOneAgreement";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import moment from "moment";
 export default function Agreements() {
   title("Agreement")
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState([]);
+  const {id}=useParams();
+  const dispatch=useDispatch();
+
+  useEffect(()=>{
+    dispatch(GetOneAgreement({id:id})).then((res)=>{
+      setData(res?.payload?.data?.data[0])
+    })
+  },[])
+console.log(data,"data")
   return (
     <>
       <Wrapper open={open} setOpen={setOpen} />
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
-
+        {console.log(data?.length>0,"dataLength")}
+{data?.length===undefined?
       <Container maxWidth="sm">
         <Typography variant="h2" align="center" gutterBottom>
           AGREEMENT OF RENT
         </Typography>
 
         <Typography variant="body1" gutterBottom>
-         <b> Name ______________ Father’s Name: ___________</b>landlord holding<b> CNIC NO
+         <b> Name ____________ Father’s Name: ___________</b>landlord holding<b> CNIC NO
           # ___________ </b>Resident House<b>
           #_________________________________________ Karachi </b>(Here in after
           called the landlord) of the one part.
@@ -28,19 +42,23 @@ export default function Agreements() {
           AND
         </Typography>
         <Typography variant="body1" gutterBottom>
-          <b>Name _____________________________________ CNIC
-          NO#______________________ </b>(here in after called the Tenant) of the
+          <b>Name </b><u>{data?.name}</u> <b>CNIC
+          NO#</b> <u>{data?.cnicNo}</u> (here in after called the Tenant) of the
           other part. Whereas the landlord is owner a residential flat of
-          __________________________________. They are agreed to rent out the
-          above said flat for a period of <b>11 months</b> commencing <b>from _________ To
-          ______________ </b>at the monthly rent of Rs.____________
+          <b> Flat Name </b><u>{data?.flatDetail[0]?.flatName}</u> <b>Flat
+          NO#</b> <u>{data?.flatDetail[0]?.flatNumber}</u><b>Flat
+          Floor</b> <u>{data?.flatDetail[0]?.flatFloor}</u><b> Flat
+          Rooms</b> <u>{data?.flatDetail[0]?.flatRooms}</u> <b>Flat
+          Kitchen</b> <u>{data?.flatDetail[0]?.flatKitchen}</u> They are agreed to rent out the
+          above said flat for a period of <b>11 months</b> commencing <b>from <u>{moment(data?.date).format("DD-MM-YYYY")}</u> To
+          ______________ </b>at the monthly rent of Rs.<u>{data?.rent}</u>
           (_______________________________) per month will be paid on or before
           5th of every month on following terms and conditions.
         </Typography>
 
         <Typography variant="body1" gutterBottom mt={3}>
           <b>
-          1. Advance Amount Rs. ________ (_______________________) </b>will be paid
+          1. Advance Amount Rs. <u>{data?.advance}</u> (_______________________) </b>will be paid
           to landlord by tenant as security deposit 
           </Typography>
           <Typography variant="body1" gutterBottom>
@@ -77,6 +95,13 @@ export default function Agreements() {
           agreement.
         </Typography>
         </Container>
+:        
+<Box sx={{ display: "flex", justifyContent: "center", m: 10 }}>
+<Typography sx={{ fontSize: 40 }}>
+<CircularProgress />
+</Typography>
+</Box> }
+
       </div>
     </>
   );
