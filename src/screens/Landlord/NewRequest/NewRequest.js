@@ -109,8 +109,8 @@ export default function NewRequest() {
   }
 
   const handleAccept = (row) => {
-    
-    if (row?.id[0]) {
+    console.log(row?.id[0],"row")
+    if (String(row?.id[0])) {
       Swal.fire({
         title: 'Do you want to accept this request?',
         showCancelButton: true,
@@ -127,6 +127,9 @@ export default function NewRequest() {
         } 
       })
       
+  }
+  else{
+    console.log(0);
   }
 }
   const handleReject = (row) => {
