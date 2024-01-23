@@ -135,7 +135,8 @@ console.log(paramsID,"check this")
             toast.success("K-Electric Bill Uploaded Successfully!", {
               autoClose: 300,
             });
-            dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+            
+            dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") ,paramsID:paramsID})).then(
               (res) => {
         
                 setHasData(res?.payload?.data?.data)
@@ -190,7 +191,7 @@ console.log(paramsID,"check this")
             toast.success("K-Electric Bill Uploaded Successfully!", {
               autoClose: 300,
             });
-            dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+            dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id"),paramsID:paramsID })).then(
               (res) => {
         
                 setHasData(res?.payload?.data?.data)
@@ -246,7 +247,7 @@ console.log(paramsID,"check this")
                 autoClose: 300,
               });
     setUrl()
-    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id"),paramsID:paramsID })).then(
       (res) => {
 
         setHasData(res?.payload?.data?.data)
@@ -304,7 +305,7 @@ console.log(paramsID,"check this")
               toast.success("SSGC Bill Uploaded Successfully!", {
                 autoClose: 300,
               });
-              dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+              dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id"),paramsID:paramsID })).then(
                 (res) => {
           
                   setHasData(res?.payload?.data?.data)
@@ -357,7 +358,7 @@ console.log(paramsID,"check this")
             toast.success("K-Electric Bill Uploaded Successfully!", {
               autoClose: 300,
             });
-            dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+            dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") ,paramsID:paramsID})).then(
               (res) => {
         
                 setHasData(res?.payload?.data?.data)
@@ -411,7 +412,7 @@ console.log(paramsID,"check this")
                 autoClose: 300,
               });
     setUrl()
-    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id"),paramsID:paramsID })).then(
       (res) => {
 
         setHasData(res?.payload?.data?.data)
@@ -463,7 +464,7 @@ console.log(paramsID,"check this")
               toast.success("Water Bill Uploaded Successfully!", {
                 autoClose: 300,
               });
-              dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+              dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id"),paramsID:paramsID })).then(
                 (res) => {
           
                   setHasData(res?.payload?.data?.data)
@@ -513,7 +514,7 @@ console.log(paramsID,"check this")
                 autoClose: 300,
               });
     setUrl()
-    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id"),paramsID:paramsID })).then(
       (res) => {
 
         setHasData(res?.payload?.data?.data)
@@ -565,7 +566,7 @@ console.log(paramsID,"check this")
               toast.success("Water Bill Uploaded Successfully!", {
                 autoClose: 300,
               });
-              dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+              dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") ,paramsID:paramsID})).then(
                 (res) => {
           
                   setHasData(res?.payload?.data?.data)
@@ -615,7 +616,7 @@ console.log(paramsID,"check this")
                 autoClose: 300,
               });
     setUrl()
-    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") ,paramsID:paramsID})).then(
       (res) => {
 
         setHasData(res?.payload?.data?.data)
@@ -667,7 +668,7 @@ console.log(paramsID,"check this")
               toast.success("Water Bill Uploaded Successfully!", {
                 autoClose: 300,
               });
-              dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+              dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") ,paramsID:paramsID})).then(
                 (res) => {
           
                   setHasData(res?.payload?.data?.data)
@@ -717,7 +718,7 @@ console.log(paramsID,"check this")
                 autoClose: 300,
               });
     setUrl()
-    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id"),paramsID:paramsID })).then(
       (res) => {
 
         setHasData(res?.payload?.data?.data)
@@ -1628,7 +1629,8 @@ console.log(paramsID,"check this")
     );
   }
   React.useEffect(() => {
-    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id") })).then(
+    console.log(paramsID,"paramsIDparamsID")
+    dispatch(GetOneUploadBill({ userId: localStorage.getItem("user_id"),paramsID:paramsID })).then(
       (res) => {
 
         setHasData(res?.payload?.data?.data)
