@@ -52,6 +52,7 @@ export default function UploadBill() {
   const [currentReadingSsgc, setCurrentReadingSsgc] = useState();
   const [perUnitSsgCharge, setPerUnitSsgCharges] = useState();
   const [hasData, setHasData] = useState({});
+  const [url, setUrl] = useState([]);
 
   //////////////MAINTAINANCECHARGES////////////
   const [maintainanceCharge, setMaintainanceCharge] = useState();
@@ -76,7 +77,6 @@ console.log(paramsID,"check this")
     const [selectedValue, setSelectedValue] = useState("");
     const [billDate, setBillDate] = React.useState(dayjs());
     const [dueDate, setDueDate] = React.useState(dayjs());
-    const [url, setUrl] = useState();
     const handleChange = (event) => {
       setSelectedValue(event.target.value);
     };
@@ -104,10 +104,13 @@ console.log(paramsID,"check this")
     const dispatch = useDispatch();
     const imgUpload = (e) => {
       dispatch(ElectricPhoto(e.target.files[0])).then((res) => {
-        setUrl(res?.payload?.data?.url);
+        console.log(res?.payload?.data?.url,"res?.payload?.data?.url")
+        
+          setUrl(res?.payload?.data?.url);
+          console.log(url,"URLLLLLLLLIF")
       });
     };
-  
+    console.log(url,"URLLLLLLLL1111")
     const handleBillKELECReading = (e) => {
       if (selectedValue === "byUnitReading") {
         let values = {
@@ -994,6 +997,7 @@ console.log(paramsID,"check this")
                               onChange={(e) => imgUpload(e)}
                             />
                           </Button>
+                          
                           {url?.length>0?
                           <Button
                             variant="contained"
