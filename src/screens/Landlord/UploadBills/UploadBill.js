@@ -155,7 +155,7 @@ export default function UploadBill() {
               dispatch(
                 GetOneUploadBill({
                   userId: localStorage.getItem("user_id"),
-                  paramsID: paramsID,
+                  paramsID: paramsID
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);

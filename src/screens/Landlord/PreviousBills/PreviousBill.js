@@ -21,7 +21,7 @@ import { GetBill } from "../../../Redux/Reducer/GetBillDetails";
 import { useDispatch } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
 import moment from "moment";
-
+import { useParams } from "react-router-dom";
 
 const electricityColumns = [
   { field: 'date', headerName: 'Post Date', width: 150, valueFormatter: (params) => moment(params.value).format("DD-MM-YYYY") },
@@ -219,7 +219,6 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      {console.log(props,"props")}
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell style={{width:"10px"}}>
           <IconButton
@@ -353,8 +352,10 @@ export default function PreviousBillLandlordPage() {
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
   const dispatch = useDispatch();
+  const { id } = useParams();
+  let paramsID = id;
   React.useEffect(() => {
-    dispatch(GetBill({ userId: localStorage.getItem("user_id") })).then(
+    dispatch(GetBill({ userId: localStorage.getItem("user_id"),paramsID: paramsID})).then(
       (res) => {
         setData(res?.payload?.data?.data);
 
