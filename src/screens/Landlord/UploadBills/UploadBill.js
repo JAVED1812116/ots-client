@@ -939,7 +939,7 @@ export default function UploadBill() {
                                       className="fulldate"
                                       name="kElectricReadingDueDate"
                                       value={dueDate.kElectricReadingDueDate}
-                                      minDate={dayjs()} // Set minDate to the current date
+                                      minDate={dayjs().add(1, 'day')} // Set minDate to the current date
                                       disabled={hasData?.electricity === true}
                                       // onChange={(newValue) => setDueDate(newValue)}
                                       onChange={(newValue) =>
@@ -1035,7 +1035,7 @@ export default function UploadBill() {
                                       className="fulldate"
                                       name="kElectricBillDueDate"
                                       value={dueDate.kElectricBillDueDate}
-                                      minDate={dayjs()} // Set minDate to the current date
+                                      minDate={dayjs().add(1, 'day')} // Set minDate to the current date
                                       disabled={hasData?.electricity === true}
                                       // onChange={(newValue) => setDueDate(newValue)}
                                       onChange={(newValue) =>
@@ -1217,7 +1217,7 @@ export default function UploadBill() {
                                       className="fulldate"
                                       name="ssgcReadingDueDate"
                                       value={dueDate.ssgcReadingDueDate}
-                                      minDate={dayjs()} // Set minDate to the current date
+                                      minDate={dayjs().add(1, 'day')} // Set minDate to the current date
                                       disabled={hasData?.ssgc === true}
                                       // onChange={(newValue) => setDueDate(newValue)}
                                       onChange={(newValue) =>
@@ -1298,7 +1298,7 @@ export default function UploadBill() {
                                       className="fulldate"
                                       name="ssgcBillDueDate"
                                       value={dueDate.ssgcBillDueDate}
-                                      minDate={dayjs()} // Set minDate to the current date
+                                      minDate={dayjs().add(1, 'day')} // Set minDate to the current date
                                       disabled={hasData?.ssgc === true}
                                       // onChange={(newValue) => setDueDate(newValue)}
                                       onChange={(newValue) =>
@@ -1449,7 +1449,7 @@ export default function UploadBill() {
                                       className="fulldate"
                                       name="waterBillDueDate"
                                       value={dueDate.waterBillDueDate}
-                                      minDate={dayjs()} // Set minDate to the current date
+                                      minDate={dayjs().add(1, 'day')} // Set minDate to the current date
                                       disabled={hasData?.water === true}
                                       // onChange={(newValue) => setDueDate(newValue)}
                                       onChange={(newValue) =>
@@ -1601,7 +1601,7 @@ export default function UploadBill() {
                                       className="fulldate"
                                       name="maintananceDueDate"
                                       value={dueDate.maintananceDueDate}
-                                      minDate={dayjs()} // Set minDate to the current date
+                                      minDate={dayjs().add(1, 'day')} // Set minDate to the current date
                                       disabled={hasData?.maintanance === true}
                                       // onChange={(newValue) => setDueDate(newValue)}
                                       onChange={(newValue) =>
@@ -1759,7 +1759,7 @@ export default function UploadBill() {
                                       className="fulldate"
                                       name="trashDueDate"
                                       value={dueDate.trashDueDate}
-                                      minDate={dayjs()} // Set minDate to the current date
+                                      minDate={dayjs().add(1, 'day')} // Set minDate to the current date
                                       disabled={hasData?.trash === true}
                                       // onChange={(newValue) => setDueDate(newValue)}
                                       onChange={(newValue) =>
