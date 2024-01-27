@@ -23,6 +23,7 @@ import "./newRequest.css";
 import { CircularProgress} from "@mui/material";
 import { RequestAccept } from "../../../Redux/Reducer/AcceptRequest";
 import { RequestReject } from "../../../Redux/Reducer/RejectRequest";
+import { SendMail } from "../../../Redux/Reducer/SendEmail";
 import Swal from 'sweetalert2'
 
 export default function NewRequest() {
@@ -109,7 +110,6 @@ export default function NewRequest() {
   }
 
   const handleAccept = (row) => {
-    console.log(row?.id[0],"row")
     if (String(row?.id[0])) {
       Swal.fire({
         title: 'Do you want to accept this request?',
@@ -121,6 +121,11 @@ export default function NewRequest() {
       }).then((result) => {
         if (result.isConfirmed) {
            dispatch(RequestAccept({ row })).then((res) => {
+            
+        });
+        let accept=true
+           dispatch(SendMail({ email:row.email[0],accept })).then((res) => {
+          
         });
     setData((prevData) => prevData.filter((item) => item?.data[0]?.flatDetail[0]?.id !== row?.id[0]));
           Swal.fire('Accepted!', '', 'success')
@@ -146,6 +151,10 @@ export default function NewRequest() {
         if (result.isConfirmed) {
            dispatch(RequestReject({ row })).then((res) => {
         });
+        let accept=false
+        dispatch(SendMail({ email:row.email[0],accept })).then((res) => {
+       
+     });
     setData((prevData) => prevData.filter((item) => item?.data[0]?.flatDetail[0]?.id!== row?.id[0]));
           Swal.fire('Rejected!', '', 'success')
         } 
@@ -260,7 +269,9 @@ export default function NewRequest() {
   const rows = [
     data?.map((resp) => {
       return createData(
-        resp?.email,
+        resp?.data?.map((e) => {
+          return e.email;
+        }),
         resp?.data?.map((e) => {
           return e.name;
         }),
