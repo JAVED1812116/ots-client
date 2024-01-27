@@ -110,7 +110,7 @@ export default function NewRequest() {
   }
 
   const handleAccept = (row) => {
-    if (String(row?.id[0])) {
+    if (String(row?.id)) {
       Swal.fire({
         title: 'Do you want to accept this request?',
         showCancelButton: true,
@@ -127,7 +127,7 @@ export default function NewRequest() {
            dispatch(SendMail({ email:row.email[0],accept })).then((res) => {
           
         });
-    setData((prevData) => prevData.filter((item) => item?.data[0]?.flatDetail[0]?.id !== row?.id[0]));
+    setData((prevData) => prevData.filter((item) => item?.id !== row?.id));
           Swal.fire('Accepted!', '', 'success')
         } 
       })
@@ -138,8 +138,7 @@ export default function NewRequest() {
   }
 }
   const handleReject = (row) => {
-    
-    if (row?.id[0]) {
+    if (row?.id) {
       Swal.fire({
         title: 'Do you want to Reject this request?',
         showCancelButton: true,
@@ -155,7 +154,7 @@ export default function NewRequest() {
         dispatch(SendMail({ email:row.email[0],accept })).then((res) => {
        
      });
-    setData((prevData) => prevData.filter((item) => item?.data[0]?.flatDetail[0]?.id!== row?.id[0]));
+    setData((prevData) => prevData.filter((item) => item?.id!== row?.id));
           Swal.fire('Rejected!', '', 'success')
         } 
       })
@@ -330,9 +329,7 @@ export default function NewRequest() {
         resp?.data?.map((e) => {
           return e.userId;
         }),
-        resp?.data?.map((e) => {
-          return e?.flatDetail[0]?.id
-        }),
+        resp?.id,
         resp?.data?.map((e) => {
           return e._id;
         }),
