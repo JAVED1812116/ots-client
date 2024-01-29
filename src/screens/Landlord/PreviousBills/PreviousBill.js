@@ -354,6 +354,8 @@ export default function PreviousBillLandlordPage() {
   const dispatch = useDispatch();
   const { id } = useParams();
   let paramsID = id;
+
+ 
   React.useEffect(() => {
     dispatch(GetBill({ userId: localStorage.getItem("user_id"),paramsID: paramsID})).then(
       (res) => {
@@ -370,9 +372,35 @@ export default function PreviousBillLandlordPage() {
         //   trashCharges,
         // });
       }
-    );
-  }, []);
-  return (
+      );
+    }, []);
+    data?.electricity?.map((e)=>{
+      if(e.kElectricBillDate===""){
+        delete data.electricity;
+      }
+    })
+    data?.ssgc?.map((e)=>{
+      if(e.ssgcBillDate===""){
+        delete data.ssgc;
+      }
+    })
+    data?.water?.map((e)=>{
+      if(e.waterBillDate===""){
+        delete data.water;
+      }
+    })
+    data?.maintainance?.map((e)=>{
+      if(e.maintananceBillDate===""){
+        delete data.maintainance;
+      }
+    })
+    data?.trash?.map((e)=>{
+      if(e.trashBillDate===""){
+        delete data.trash;
+      }
+    })
+    console.log(data,"running")
+    return (
     <>
       <Wrapper open={open} setOpen={setOpen} mylocation={mylocation} />
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
