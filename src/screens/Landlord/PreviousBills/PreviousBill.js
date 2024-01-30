@@ -22,7 +22,7 @@ import { useDispatch } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
 import moment from "moment";
 import { useParams } from "react-router-dom";
-
+import { CircularProgress} from "@mui/material";
 const electricityColumns = [
   {
     field: "date",
@@ -455,6 +455,7 @@ function Row(props) {
 export default function PreviousBillLandlordPage() {
   title("Previous Bill");
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
@@ -463,11 +464,12 @@ export default function PreviousBillLandlordPage() {
   let paramsID = id;
 
   React.useEffect(() => {
+    setLoading(true)
     dispatch(
       GetBill({ userId: localStorage.getItem("user_id"), paramsID: paramsID })
     ).then((res) => {
       setData(res?.payload?.data?.data);
-
+      setLoading(false)
       if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
         // setFieldDisable(true)
       }
@@ -509,6 +511,13 @@ export default function PreviousBillLandlordPage() {
   return (
     <>
       <Wrapper open={open} setOpen={setOpen} mylocation={mylocation} />
+      {loading===true?
+      <Box sx={{ display: "flex", justifyContent: "center", m: 10 }}>
+        <Typography sx={{ fontSize: 40 }}>
+        <CircularProgress />
+        </Typography>
+      </Box> 
+:
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
         <TableContainer
           component={Paper}
@@ -531,47 +540,22 @@ export default function PreviousBillLandlordPage() {
                 <TableCell align="right"></TableCell>
               </TableRow>
             </TableHead>
-         {data?.electricity != undefined && data?.ssgc != undefined &&data?.water != undefined && data?.trash != undefined &&data?.maintainance != undefined   ?
-          <TableBody>
-              {data?.electricity != undefined ? (
-                <Row electricity={data?.electricity} />
-              ) : (
-                ""
-              )}
-              {data?.ssgc != undefined ? <Row ssgc={data?.ssgc} /> : ""}
-              {data?.water != undefined ? <Row water={data?.water} /> : ""}
-              {data?.maintainance != undefined ? (
-                <Row maintainance={data?.maintainance} />
-              ) : (
-                ""
-              )}
-              {data?.trash != undefined ? <Row trash={data?.trash} /> : ""}
-            </TableBody>:
-          <TableBody>
-   <Box sx={{ display: "flex", justifyContent: "center", m: 5 }}>
-        <Typography sx={{ fontSize: 40 }}>
-          <span className="noData">R</span>
-          <span>e</span>
-          <span className="noData">c</span>
-          <span>o</span>
-          <span className="noData">r</span>
-          <span>d</span>
-          <span className="noData"> N</span>
-          <span>O</span>
-          <span className="noData">T</span>
-          <span> F</span>
-          <span className="noData">O</span>
-          <span>U</span>
-          <span className="noData">N</span>
-          <span>D</span>
-          
-        </Typography>
-      </Box> 
-        </TableBody>  
-          }
+            <TableBody>
+              {data?.electricity && <Row electricity={data?.electricity} />}
+              {data?.ssgc && <Row ssgc={data?.ssgc} />}
+              {data?.water && <Row water={data?.water} />}
+              {data?.maintainance && <Row maintainance={data?.maintainance} />}
+              {data?.trash && <Row trash={data?.trash} />}
+              {(!data?.electricity &&
+                !data?.ssgc &&
+                !data?.water &&
+                !data?.maintainance &&
+                !data?.trash) && <>no record</>}
+            </TableBody>
           </Table>
         </TableContainer>
       </div>
+}
     </>
   );
 }
