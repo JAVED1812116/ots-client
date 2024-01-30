@@ -99,7 +99,7 @@ const ssgcColumns = [
     width: 150,
   },
   {
-    field: "prevReadingSsgc",
+    field: "previousReadingSsg",
     headerName: "Previous Reading",
     width: 150,
   },

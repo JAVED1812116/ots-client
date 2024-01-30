@@ -48,7 +48,7 @@ export default function UploadBill() {
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
   ////////////////SSGC////////////////////////
-  const [prevReadingSsgc, setprevReadingSsgc] = useState();
+  const [previousReadingSsg, setprevReadingSsgc] = useState();
   const [currentReadingSsgc, setCurrentReadingSsgc] = useState();
   const [perUnitSsgCharge, setPerUnitSsgCharges] = useState();
   const [hasData, setHasData] = useState({});
@@ -302,6 +302,7 @@ export default function UploadBill() {
     };
     const handleBillSSGCReading = (e) => {
       if (selectedValue === "byGasUnitReading") {
+        {console.log(inputs,"inputs123")}
         let values = {
           currentReadingSsg: inputs.currentReadingSsg,
           previousReadingSsg: inputs.previousReadingSsg,
@@ -368,7 +369,7 @@ export default function UploadBill() {
           ssgcTotalBill: inputs.ssgcEnterBill,
           //extra fields
           ssgcBillImage: "",
-          prevReadingSsgc: "",
+          previousReadingSsg: "",
           currentReadingSsg: "",
           perUnitSsgCharges: "",
           ssgcTotalUnits: "",
@@ -425,7 +426,7 @@ export default function UploadBill() {
           ssgcTotalBill: "",
           //extra fields
           ssgcBillImage: url,
-          prevReadingSsgc: "",
+          previousReadingSsg: "",
           currentReadingSsg: "",
           perUnitSsgCharges: "",
           ssgcTotalUnits: "",
@@ -1229,13 +1230,29 @@ export default function UploadBill() {
                                     />
                                   </LocalizationProvider>
                                 </TableCell>
-                                  <TableCell align="right">
+                                  {/* <TableCell align="right">
                                     {historyRow.totalSsgUnit || 0}
-                                  </TableCell>
+                                  </TableCell> */}
                                   {/* <TableCell>{historyRow.enterBill}</TableCell> */}
-                                  <TableCell>
+                                  {/* <TableCell>
                                     {historyRow.showSsgcUnit || 0}
-                                  </TableCell>
+                                  </TableCell> */}
+                                  
+
+                                  <TableCell align="right">
+                                    {console.log(inputs,"testtttt")}
+                                  {inputs?.currentReadingSsg === undefined
+                                    ? 0
+                                    : inputs?.currentReadingSsg -
+                                      inputs?.previousReadingSsg}
+                                </TableCell>
+                                {/* <TableCell>{historyRow.enterBill}</TableCell> */}
+                                <TableCell>
+                                  {parseInt(
+                                    inputs?.currentReadingSsg -
+                                      inputs?.previousReadingSsg
+                                  ) * parseInt(inputs?.perUnitSsgCharges) || 0}
+                                </TableCell>
                                 </TableRow>
                               ))}
                             </TableBody>
@@ -1926,9 +1943,9 @@ export default function UploadBill() {
               }}
             ></input>
           ),
-          totalSsgUnit: currentReadingSsgc - prevReadingSsgc,
+          totalSsgUnit: currentReadingSsgc - previousReadingSsg,
           showSsgcUnit:
-            parseInt(currentReadingSsgc - prevReadingSsgc) *
+            parseInt(currentReadingSsgc - previousReadingSsg) *
             parseInt(perUnitSsgCharge),
         },
       ],
