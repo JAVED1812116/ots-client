@@ -3,12 +3,13 @@ import axios from "axios";
 import { BASE_URL } from "../../config/config";
 
 
-export const SendMail = createAsyncThunk("dummyData/SendMail", async ({email, userId, userName,accept}) => {
+export const SendMail = createAsyncThunk("dummyData/SendMail", async ({email, userId, userName,accept,data}) => {
     let response = await axios.post(`${BASE_URL}/send-mail`,  {
         email,
         userId, 
         userName,
-        accept
+        accept,
+        data
     });
     return response;
 });

@@ -70,6 +70,7 @@ export default function NewRequest() {
     id,
     _id,
     landlordId,
+    flatId
   ) {
     return {
       email,
@@ -92,6 +93,7 @@ export default function NewRequest() {
       id,
       _id,
       landlordId,
+      flatId,
       history: [
         {
           date: data?.map((res) => {
@@ -120,18 +122,48 @@ export default function NewRequest() {
         },
       }).then((result) => {
         if (result.isConfirmed) {
-           dispatch(RequestAccept({ row })).then((res) => {
-            
-        });
-        let accept=true
-           dispatch(SendMail({ email:row.email[0],accept })).then((res) => {
           
+           dispatch(RequestAccept({ row })).then((res) => {
+            if(res?.payload?.data?.message==="Accept Request Successfully"){
+            let filterData = [];
+            let rejectData = [];
+            let rejectEmail = [];
+            data.filter((item) =>
+              item?.data?.map((val) => {
+                val?.flatDetail?.map((v) => {
+                  if (v.id !== row?.flatId[0][0]) {
+                    filterData.push(item);
+                  }
+                  else{
+                    if (item?.id !== row?.id) {
+                      rejectData.push(item)
+                    }
+                  }
+                });
+              })
+            );
+            console.log(rejectData,"rejectData")
+            setData(filterData)
+            Swal.fire('Accepted!', '', 'success')
+               dispatch(SendMail({ email:row.email[0],accept:true ,data:row})).then((res) => {
+            });
+            console.log(rejectData,"rejectData")
+            rejectData?.map((m)=>{
+              m.data.map((e)=>{
+                rejectEmail.push(e.email)
+              })
+            })
+            console.log(rejectEmail,"rejectEmail")
+            dispatch(SendMail({email: rejectEmail ,accept:false,data:rejectData})).then((res) => {
+            });
+            console.log(rejectData,"rejectData")
+            }  
         });
-    setData((prevData) => prevData.filter((item) => item?.id !== row?.id));
-          Swal.fire('Accepted!', '', 'success')
+      
+        
         } 
       })
-      
+
   }
   else{
     console.log(0);
@@ -334,8 +366,12 @@ export default function NewRequest() {
           return e._id;
         }),
         resp?.data?.map((e) => {
-          console.log(e,"fffff")
           return e.flatDetail[0]?.landlordId;
+        }),
+        resp?.data?.map((res) => {
+          return res?.flatDetail?.map((e) => {
+            return e?.id;
+          });
         }),
       );
     }),
@@ -348,7 +384,6 @@ export default function NewRequest() {
         <div className="mainHeading">
           <h1>New Requests</h1>
         </div>
-        {console.log(data,"testttttt")}
        
         {data?.length > 0? (
           <TableContainer
