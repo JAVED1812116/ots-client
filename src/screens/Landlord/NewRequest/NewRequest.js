@@ -142,22 +142,22 @@ export default function NewRequest() {
                 });
               })
             );
-            console.log(rejectData,"rejectData")
+    
             setData(filterData)
             Swal.fire('Accepted!', '', 'success')
                dispatch(SendMail({ email:row.email[0],accept:true ,data:row})).then((res) => {
             });
-            console.log(rejectData,"rejectData")
+    
             rejectData?.map((m)=>{
               m.data.map((e)=>{
                 rejectEmail.push(e.email)
               })
             })
-            console.log(rejectEmail,"rejectEmail")
+    if(rejectData?.length>0){
             dispatch(SendMail({email: rejectEmail ,accept:false,data:rejectData})).then((res) => {
-            });
-            console.log(rejectData,"rejectData")
-            }  
+            })
+          }
+          }  
         });
       
         
