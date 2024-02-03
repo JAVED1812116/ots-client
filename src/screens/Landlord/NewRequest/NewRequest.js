@@ -153,7 +153,7 @@ export default function NewRequest() {
                 rejectEmail.push(e.email)
               })
             })
-            console.log(rejectEmail,"rejectEmail")
+            
     if(rejectData?.length>0){
             dispatch(SendMail({email: rejectEmail ,accept:false,data:rejectData})).then((res) => {
             })
