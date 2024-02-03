@@ -25,7 +25,8 @@ import { RequestAccept } from "../../../Redux/Reducer/AcceptRequest";
 import { RequestReject } from "../../../Redux/Reducer/RejectRequest";
 import { SendMail } from "../../../Redux/Reducer/SendEmail";
 import Swal from 'sweetalert2'
-
+import { GetAccount } from "../../../Redux/Reducer/GetAccountDetails";
+import {  useNavigate } from "react-router-dom";
 export default function NewRequest() {
   title("New Request");
   const [open, setOpen] = useState(false);
@@ -33,8 +34,9 @@ export default function NewRequest() {
   const [mylocation, setMyLocation] = useState(location.pathname);
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
+  const [accountDetail, setAccountDetail] = useState(false);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     setLoading(true)
@@ -48,6 +50,12 @@ export default function NewRequest() {
       }
     );
   }, []);
+React.useEffect(()=>{
+  setLoading(true)
+  dispatch(GetAccount({ userId: localStorage.getItem("user_id")})).then((res)=>{
+    setAccountDetail(res?.payload?.data?.data)
+  })
+},[])
 
   function createData(
     email,
@@ -112,6 +120,22 @@ export default function NewRequest() {
   }
 
   const handleAccept = (row) => {
+    if(accountDetail.accountName===''){
+      Swal.fire({
+        title: 'Please Provide Your Account Information',
+        showCancelButton: true,
+        confirmButtonText: 'Account',
+        customClass: {
+          actions: 'my-actions',
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          
+          navigate("/bank-detail");
+          // Swal.fire('Rejected!', '', 'success')
+        } 
+      })
+    }else{
     if (String(row?.id)) {
       Swal.fire({
         title: 'Do you want to accept this request?',
@@ -169,6 +193,7 @@ export default function NewRequest() {
   else{
     console.log(0);
   }
+}
 }
   const handleReject = (row) => {
     if (row?.id) {
