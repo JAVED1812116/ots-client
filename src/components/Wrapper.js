@@ -22,6 +22,7 @@ import { MdAccountBalance } from "react-icons/md";
 import { GoGitPullRequest } from "react-icons/go";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Logout } from "@mui/icons-material";
+import Container from '@mui/material/Container';
 import { useState } from "react";
 
 // import { FaPeopleGroup } from 'react-icons/fa';
@@ -130,15 +131,38 @@ export default function Wrapper({ open, setOpen, mylocation }) {
               alt="Your logo."
               src={Logo}
             />
-          {`${localStorage.getItem("name")}`}
+            <Container
+            maxWidth="100vw"
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: 0,
+              margin: 0,
+              maxWidth: "none"
+            }}
+            >
+
             <Typography
-              sx={{ marginLeft: 200 }}
+              sx={{
+                
+               }}
               variant="h6"
               noWrap
               component="div"
-            >
+              >
+              {`${localStorage.getItem("name")}`}
+            </Typography>
+            <Typography
+              sx={{
+                display: "flex"
+               }}
+              variant="h6"
+              noWrap
+              component="div"
+              >
               OTS
             </Typography>
+            </Container>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
