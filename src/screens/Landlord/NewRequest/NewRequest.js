@@ -33,7 +33,7 @@ export default function NewRequest() {
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
   const [data, setData] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [accountDetail, setAccountDetail] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();

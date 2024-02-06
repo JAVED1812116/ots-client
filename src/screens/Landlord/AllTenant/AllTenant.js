@@ -29,18 +29,20 @@ export default function NewRequest() {
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
   const [data, setData] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   React.useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     dispatch(GetAllTenant({ userId: localStorage.getItem("user_id") })).then(
       (res) => {
-        if(res?.payload?.data?.message==="Get All Tenant Successfully"){
-          
-          sessionStorage.setItem("tenant_id", res?.payload?.data?.data?.data[0]?._id);
-        setData(res?.payload?.data?.data?.data);
-        setLoading(false)
+        if (res?.payload?.data?.message === "Get All Tenant Successfully") {
+          sessionStorage.setItem(
+            "tenant_id",
+            res?.payload?.data?.data?.data[0]?._id
+          );
+          setData(res?.payload?.data?.data?.data);
+          setLoading(false);
         }
       }
     );
@@ -123,7 +125,7 @@ export default function NewRequest() {
           </TableCell>
           <TableCell component="th" scope="row">
             {row.cnicNo}
-            {console.log(row,"rowCell")}
+            {console.log(row, "rowCell")}
           </TableCell>
           <TableCell align="right">{row.fatherName}</TableCell>
           <TableCell align="right">{row.flatDetail[0].flatName}</TableCell>
@@ -185,13 +187,14 @@ export default function NewRequest() {
                         {row.permanentAddress}
                       </TableCell>
                       <TableCell align="right">
-                        {parseInt(row.adultFamilyMembers)+parseInt(row.childrenFamilyMembers)}
+                        {parseInt(row.adultFamilyMembers) +
+                          parseInt(row.childrenFamilyMembers)}
                       </TableCell>
                     </TableRow>
                     {/* ))} */}
                   </TableBody>
                 </Table>
-                
+
                 <Button
                   variant="contained"
                   sx={{ marginTop: 2, marginRight: 1, background: "black" }}
@@ -207,8 +210,7 @@ export default function NewRequest() {
       </React.Fragment>
     );
   }
-  console.log(data,"dataSaeed");
-
+  console.log(data, "dataSaeed");
 
   return (
     <>
@@ -217,67 +219,63 @@ export default function NewRequest() {
         <div className="mainHeading">
           <h1>All Tenants</h1>
         </div>
-        {data?.length > 0? (
+        {loading === true ? (
+          <Box sx={{ display: "flex", justifyContent: "center", m: 10 }}>
+          <Typography sx={{ fontSize: 40 }}>
+            <CircularProgress />
+          </Typography>
+        </Box>
+        ) : data?.length > 0 ? (
           <TableContainer
-            component={Paper}
-            // sx={{ marginTop: 4 }}
-          >
-            <Table aria-label="collapsible table">
-              <TableHead sx={{ background: "black" }}>
-                <TableRow>
-                  <TableCell />
-                  <TableCell sx={{ color: "white" }}>Name</TableCell>
-                  <TableCell sx={{ color: "white" }}>CNIC</TableCell>
-                  <TableCell sx={{ color: "white" }} align="right">
-                    Father Name
-                  </TableCell>
-                  <TableCell sx={{ color: "white" }} align="right">
-                    Flat Name
-                  </TableCell>
-                  <TableCell sx={{ color: "white" }} align="right">
-                    Flat Number
-                  </TableCell>
-                  <TableCell sx={{ color: "white" }} align="right">
-                    Floor
-                  </TableCell>
-                  <TableCell sx={{ color: "white" }} align="right">
-                    Rent
-                  </TableCell>
-                  <TableCell sx={{ color: "white" }} align="right">
-                    Advance
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {!data.includes(undefined) &&
-                  data.map((row) => <Row row={row} />)}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        ) :loading===true ?
-        
-        <Box sx={{ display: "flex", justifyContent: "center", m: 10 }}>
-        <Typography sx={{ fontSize: 40 }}>
-        <CircularProgress />
-        </Typography>
-      </Box> 
-        :
-      
-      <Box sx={{ display: "flex", justifyContent: "center", m: 10 }}>
-        <Typography sx={{ fontSize: 40 }}>
-          <span className="noData">N</span>
-          <span>o</span>
-          <span className="noData">T</span>
-          <span className="noData"> F</span>
-          <span>o</span>
-          <span className="noData">u</span>
-          <span>n</span>
-          <span className="noData">d</span>
-          
-        </Typography>
-      </Box> 
-    }
-    
+          component={Paper}
+          // sx={{ marginTop: 4 }}
+        >
+          <Table aria-label="collapsible table">
+            <TableHead sx={{ background: "black" }}>
+              <TableRow>
+                <TableCell />
+                <TableCell sx={{ color: "white" }}>Name</TableCell>
+                <TableCell sx={{ color: "white" }}>CNIC</TableCell>
+                <TableCell sx={{ color: "white" }} align="right">
+                  Father Name
+                </TableCell>
+                <TableCell sx={{ color: "white" }} align="right">
+                  Flat Name
+                </TableCell>
+                <TableCell sx={{ color: "white" }} align="right">
+                  Flat Number
+                </TableCell>
+                <TableCell sx={{ color: "white" }} align="right">
+                  Floor
+                </TableCell>
+                <TableCell sx={{ color: "white" }} align="right">
+                  Rent
+                </TableCell>
+                <TableCell sx={{ color: "white" }} align="right">
+                  Advance
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {!data.includes(undefined) &&
+                data.map((row) => <Row row={row} />)}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        ) : (
+          <Box sx={{ display: "flex", justifyContent: "center", m: 10 }}>
+            <Typography sx={{ fontSize: 40 }}>
+              <span className="noData">N</span>
+              <span>o</span>
+              <span className="noData">T</span>
+              <span className="noData"> F</span>
+              <span>o</span>
+              <span className="noData">u</span>
+              <span>n</span>
+              <span className="noData">d</span>
+            </Typography>
+          </Box>
+        )}
       </div>
     </>
   );
