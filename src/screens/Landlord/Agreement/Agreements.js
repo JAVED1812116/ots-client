@@ -58,6 +58,37 @@ export default function Agreements() {
                 </Typography>
               </Typography>
             </Container>
+
+            <Typography
+              variant="h6"
+              align="left"
+              gutterBottom
+              sx={{
+                fontWeight: "bold",
+              }}
+            >
+              Flat Detail
+            </Typography>
+            <Container
+              padding={0}
+              width={100}
+              sx={{ display: "flex", padding: "0px" }}
+            >
+              <Container width={40}>
+                <Typography>Flat Name</Typography>
+                <Typography>Flat No.</Typography>
+                <Typography>Flat Floor</Typography>
+                <Typography>Flat Rooms</Typography>
+                <Typography>Flat Kitchen</Typography>
+              </Container>
+              <Container width={60}>
+                <Typography>{data?.flatDetail[0]?.flatName}</Typography>
+                <Typography>{data?.flatDetail[0]?.flatNumber}</Typography>
+                <Typography>{data?.flatDetail[0]?.flatFloor}</Typography>
+                <Typography>{data?.flatDetail[0]?.flatRooms}</Typography>
+                <Typography>{data?.flatDetail[0]?.flatKitchen}</Typography>
+              </Container>
+            </Container>
             <Typography
               variant="h6"
               align="left"
@@ -110,7 +141,29 @@ export default function Agreements() {
                 <Typography>{data?.cnicNo}</Typography>
               </Container>
             </Container>
-            <Typography variant="body1" gutterBottom>
+            <br />
+            <Typography
+              variant="h6"
+              align="left"
+              gutterBottom
+              sx={{
+                fontWeight: "bold",
+              }}
+            >
+              Agreement Detail
+            </Typography>
+              <Typography>
+               <span >abc</span> and <span>{data?.name}</span> are agreed to rent out the above said flat for a period of{" "}
+               <b>11 months</b> commencing{" "}
+              <b>
+                from <u>{moment(data?.acceptedDate).format("DD-MM-YYYY")}</u> To
+                ______________{" "}
+              </b>
+              at the monthly rent of Rs.<u>{data?.rent}</u>
+              (_______________________________) per month will be paid on or
+              before 5th of every month on following terms and conditions.
+              </Typography>
+            {/* <Typography variant="body1" gutterBottom>
               <b> Name ____________ Father’s Name: ___________</b>landlord
               holding<b> CNIC NO # ___________ </b>Resident House
               <b>#_________________________________________ Karachi </b>(Here in
@@ -139,7 +192,7 @@ export default function Agreements() {
               at the monthly rent of Rs.<u>{data?.rent}</u>
               (_______________________________) per month will be paid on or
               before 5th of every month on following terms and conditions.
-            </Typography>
+            </Typography> */}
 
             <Typography variant="body1" gutterBottom mt={3}>
               <b>
