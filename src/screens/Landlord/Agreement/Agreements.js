@@ -9,6 +9,11 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
+import Accordion from "@mui/material/Accordion";
+import AccordionActions from "@mui/material/AccordionActions";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 export default function Agreements() {
   title("Agreement");
   const [open, setOpen] = useState(false);
@@ -60,148 +65,179 @@ export default function Agreements() {
                 </Typography>
               </Typography>
             </Container>
-
-            <Typography
-              variant="h6"
-              align="left"
-              gutterBottom
-              sx={{
-                fontWeight: "bold",
-              }}
-            >
-              Flat Detail
-            </Typography>
-            <Container
-              padding={0}
-              width={100}
-              sx={{ display: "flex", padding: "0px" }}
-            >
-              <Container width={40}>
-                <Typography>Flat Name</Typography>
-                <Typography>Flat No.</Typography>
-                <Typography>Flat Floor</Typography>
-                <Typography>Flat Rooms</Typography>
-                <Typography>Flat Kitchen</Typography>
-              </Container>
-              <Container width={60}>
-                <Typography>{data?.flatDetail[0]?.flatName}</Typography>
-                <Typography>{data?.flatDetail[0]?.flatNumber}</Typography>
-                <Typography>{data?.flatDetail[0]?.flatFloor}</Typography>
-                <Typography>{data?.flatDetail[0]?.flatRooms}</Typography>
-                <Typography>{data?.flatDetail[0]?.flatKitchen}</Typography>
-              </Container>
-            </Container>
-            <Typography
-              variant="h6"
-              align="left"
-              gutterBottom
-              sx={{
-                fontWeight: "bold",
-              }}
-            >
-              Landlord Detail
-            </Typography>
-            <Container
-              padding={0}
-              width={100}
-              sx={{ display: "flex", padding: "0px" }}
-            >
-              <Container width={40}>
-                <Typography>Name</Typography>
-                <Typography>Father Name</Typography>
-                <Typography>CNIC No.</Typography>
-              </Container>
-              <Container width={60}>
-                <Typography>{landlordData?.userName}</Typography>
-                <Typography>{landlordData?.fatherName}</Typography>
-                <Typography>{landlordData?.cnic}</Typography>
-
-              </Container>
-            </Container>
-            <Typography
-              variant="h6"
-              align="left"
-              gutterBottom
-              sx={{
-                fontWeight: "bold",
-              }}
-            >
-              Tenant Detail
-            </Typography>
-            <Container
-              padding={0}
-              width={100}
-              sx={{ display: "flex", padding: "0px" }}
-            >
-              <Container width={40}>
-                <Typography>Name</Typography>
-                <Typography>Father Name</Typography>
-                <Typography>CNIC No.</Typography>
-              </Container>
-              <Container width={60}>
-                <Typography>{data?.name}</Typography>
-                <Typography>{data?.fatherName}</Typography>
-                <Typography>{data?.cnicNo}</Typography>
-              </Container>
-            </Container>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                <Typography
+                  variant="h6"
+                  align="left"
+                  gutterBottom
+                  sx={{
+                    fontWeight: "bold",
+                    margin: "0",
+                  }}
+                >
+                  Flat Detail
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Container
+                  padding={0}
+                  width={100}
+                  sx={{ display: "flex", padding: "0px" }}
+                >
+                  <Container width={40}>
+                    <Typography>Flat Name</Typography>
+                    <Typography>Flat No.</Typography>
+                    <Typography>Flat Floor</Typography>
+                    <Typography>Flat Rooms</Typography>
+                    <Typography>Flat Kitchen</Typography>
+                    <Typography>Flat Rent</Typography>
+                    <Typography>Flat Trash Charges</Typography>
+                    <Typography>Flat Security Charges</Typography>
+                    <Typography>Flat Maintainance Charges</Typography>
+                  </Container>
+                  <Container width={60}>
+                    <Typography>{data?.flatDetail[0]?.flatName}</Typography>
+                    <Typography>{data?.flatDetail[0]?.flatNumber}</Typography>
+                    <Typography>{data?.flatDetail[0]?.flatFloor}</Typography>
+                    <Typography>{data?.flatDetail[0]?.flatRooms}</Typography>
+                    <Typography>{data?.flatDetail[0]?.flatKitchen}</Typography>
+                    <Typography>Rs. {data?.flatDetail[0]?.flatRent}</Typography>
+                    <Typography>
+                      Rs. {data?.flatDetail[0]?.flatTrashCharges}
+                    </Typography>
+                    <Typography>
+                      Rs. {data?.flatDetail[0]?.flatSecurityCharges}
+                    </Typography>
+                    <Typography>
+                      Rs. {data?.flatDetail[0]?.flatMaintananceCharges}
+                    </Typography>
+                  </Container>
+                </Container>
+              </AccordionDetails>
+            </Accordion>
             <br />
-            <Typography
-              variant="h6"
-              align="left"
-              gutterBottom
-              sx={{
-                fontWeight: "bold",
-              }}
-            >
-              Agreement Detail
-            </Typography>
-              <Typography>
-               <span >abc</span> and <span>{data?.name}</span> are agreed to rent out the above said flat for a period of{" "}
-               <b>11 months</b> commencing{" "}
-              <b>
-                from <u>{moment(data?.acceptedDate).format("DD-MM-YYYY")}</u> To
-                ______________{" "}
-              </b>
-              at the monthly rent of Rs.<u>{data?.rent}</u>
-              (_______________________________) per month will be paid on or
-              before 5th of every month on following terms and conditions.
-              </Typography>
-            {/* <Typography variant="body1" gutterBottom>
-              <b> Name ____________ Father’s Name: ___________</b>landlord
-              holding<b> CNIC NO # ___________ </b>Resident House
-              <b>#_________________________________________ Karachi </b>(Here in
-              after called the landlord) of the one part.
-            </Typography>
-            <Typography variant="h4" align="center" gutterBottom>
-              AND
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              <b>Name: </b>
-              <u> {data?.name}</u> <b> CNIC NO#: </b> <u> {data?.cnicNo}</u>{" "}
-              (here in after called the Tenant) of the other part. Whereas the
-              landlord is owner a residential flat of
-              <b> Flat Name </b>
-              <u> {data?.flatDetail[0]?.flatName}</u> <b>Flat NO#</b>{" "}
-              <u>{data?.flatDetail[0]?.flatNumber}</u>
-              <b>Flat Floor</b> <u>{data?.flatDetail[0]?.flatFloor}</u>
-              <b> Flat Rooms</b> <u>{data?.flatDetail[0]?.flatRooms}</u>{" "}
-              <b>Flat Kitchen</b> <u>{data?.flatDetail[0]?.flatKitchen}</u> They
-              are agreed to rent out the above said flat for a period of{" "}
-              <b>11 months</b> commencing{" "}
-              <b>
-                from <u>{moment(data?.date).format("DD-MM-YYYY")}</u> To
-                ______________{" "}
-              </b>
-              at the monthly rent of Rs.<u>{data?.rent}</u>
-              (_______________________________) per month will be paid on or
-              before 5th of every month on following terms and conditions.
-            </Typography> */}
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                <Typography
+                  variant="h6"
+                  align="left"
+                  gutterBottom
+                  sx={{
+                    fontWeight: "bold",
+                    margin: "0",
+                  }}
+                >
+                  Landlord Detail
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Container
+                  padding={0}
+                  width={100}
+                  sx={{ display: "flex", padding: "0px" }}
+                >
+                  <Container width={40}>
+                    <Typography>Name</Typography>
+                    <Typography>Father Name</Typography>
+                    <Typography>CNIC No.</Typography>
+                  </Container>
+                  <Container width={60}>
+                    <Typography>{landlordData?.userName}</Typography>
+                    <Typography>{landlordData?.fatherName}</Typography>
+                    <Typography>{landlordData?.cnic}</Typography>
+                  </Container>
+                </Container>
+              </AccordionDetails>
+            </Accordion>
+            <br />
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                <Typography
+                  variant="h6"
+                  align="left"
+                  gutterBottom
+                  sx={{
+                    fontWeight: "bold",
+                    margin: "0",
+                  }}
+                >
+                  Tenant Detail
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Container
+                  padding={0}
+                  width={100}
+                  sx={{ display: "flex", padding: "0px" }}
+                >
+                  <Container width={40}>
+                    <Typography>Name</Typography>
+                    <Typography>Father Name</Typography>
+                    <Typography>CNIC No.</Typography>
+                  </Container>
+                  <Container width={60}>
+                    <Typography>{data?.name}</Typography>
+                    <Typography>{data?.fatherName}</Typography>
+                    <Typography>{data?.cnicNo}</Typography>
+                  </Container>
+                </Container>
+              </AccordionDetails>
+            </Accordion>
 
-            <Typography variant="body1" gutterBottom mt={3}>
-              <b>
-                1. Advance Amount Rs. <u>{data?.advance}</u>{" "}
-                (_______________________){" "}
-              </b>
+            <br />
+            <Accordion defaultExpanded>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                <Typography
+                  variant="h6"
+                  align="left"
+                  gutterBottom
+                  sx={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  Agreement Detail
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  <span>{landlordData?.userName}</span> and{" "}
+                  <span>{data?.name}</span> are agreed to rent out the above
+                  said flat for a period of <b>11 months</b> commencing{" "}
+                  <b>
+                    from{" "}
+                    <u>{moment(data?.acceptedDate).format("DD-MM-YYYY")}</u> To
+                    ______________{" "}
+                  </b>
+                  at the monthly rent of Rs.{" "}
+                  <u>
+                    <b> {data?.flatDetail[0]?.flatRent}</b>
+                  </u>{" "}
+                  per month will be paid on or before 5th of every month on
+                  following terms and conditions.
+                </Typography>
+                <Typography variant="body1" gutterBottom mt={3}>
+              1. Advance Amount Rs.{" "}
+              <u>
+                <b>{data?.flatDetail[0]?.flatAdvance}</b>
+              </u>{" "}
+              {/* (_______________________){" "} */}
               will be paid to landlord by tenant as security deposit
             </Typography>
             <Typography variant="body1" gutterBottom>
@@ -234,6 +270,40 @@ export default function Agreements() {
               8. If either party wants to continue this agreement, rent will be
               increased by 15%, and make a new agreement.
             </Typography>
+              </AccordionDetails>
+            </Accordion>
+            {/* <Typography variant="body1" gutterBottom>
+              <b> Name ____________ Father’s Name: ___________</b>landlord
+              holding<b> CNIC NO # ___________ </b>Resident House
+              <b>#_________________________________________ Karachi </b>(Here in
+              after called the landlord) of the one part.
+            </Typography>
+            <Typography variant="h4" align="center" gutterBottom>
+              AND
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              <b>Name: </b>
+              <u> {data?.name}</u> <b> CNIC NO#: </b> <u> {data?.cnicNo}</u>{" "}
+              (here in after called the Tenant) of the other part. Whereas the
+              landlord is owner a residential flat of
+              <b> Flat Name </b>
+              <u> {data?.flatDetail[0]?.flatName}</u> <b>Flat NO#</b>{" "}
+              <u>{data?.flatDetail[0]?.flatNumber}</u>
+              <b>Flat Floor</b> <u>{data?.flatDetail[0]?.flatFloor}</u>
+              <b> Flat Rooms</b> <u>{data?.flatDetail[0]?.flatRooms}</u>{" "}
+              <b>Flat Kitchen</b> <u>{data?.flatDetail[0]?.flatKitchen}</u> They
+              are agreed to rent out the above said flat for a period of{" "}
+              <b>11 months</b> commencing{" "}
+              <b>
+                from <u>{moment(data?.date).format("DD-MM-YYYY")}</u> To
+                ______________{" "}
+              </b>
+              at the monthly rent of Rs.<u>{data?.rent}</u>
+              (_______________________________) per month will be paid on or
+              before 5th of every month on following terms and conditions.
+            </Typography> */}
+
+
           </Container>
         ) : (
           <Box sx={{ display: "flex", justifyContent: "center", m: 10 }}>
