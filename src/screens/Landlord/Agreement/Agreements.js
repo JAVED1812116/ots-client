@@ -13,12 +13,14 @@ export default function Agreements() {
   title("Agreement");
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
+  const [landlordData, setLandlordData] = useState([]);
   const { id } = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(GetOneAgreement({ id: id })).then((res) => {
       setData(res?.payload?.data?.data[0]);
+      setLandlordData(res?.payload?.data?.data[1]);
     });
   }, []);
   console.log(data, "data");
@@ -110,9 +112,10 @@ export default function Agreements() {
                 <Typography>CNIC No.</Typography>
               </Container>
               <Container width={60}>
-                <Typography>abc</Typography>
-                <Typography>abc</Typography>
-                <Typography>abc</Typography>
+                <Typography>{landlordData?.userName}</Typography>
+                <Typography>{landlordData?.fatherName}</Typography>
+                <Typography>{landlordData?.cnic}</Typography>
+
               </Container>
             </Container>
             <Typography
