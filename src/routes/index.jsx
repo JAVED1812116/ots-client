@@ -25,8 +25,9 @@ import LandingPage from "../screens/LandingPage/LandingPage";
 import AboutUs from "../screens/AboutUs/AboutUs";
 import { useSelector } from "react-redux";
 export default function AllRoutes() {
-  const { loginUser } = useSelector((state) => state);
-
+  const { loginUser, validateUser } = useSelector((state) => state);
+  console.log(loginUser?.login?.data?.data, "loginUser?.login?.data?.data");
+  console.log(validateUser?.UserValidate?.data?.data, "validateUser?.UserValidate?.data?.data");
   // if (registeredUser === null) {
   //   return (
   //     <Router>
@@ -53,9 +54,12 @@ export default function AllRoutes() {
       </Router>
     );
   } else if (
-    loginUser?.login?.data?.data.is_register == false &&
-    loginUser?.login?.data?.data.is_active == false
+    (loginUser?.login?.data?.data.is_register == false &&
+      loginUser?.login?.data?.data.is_active == false) ||
+    (validateUser?.UserValidate?.data?.data?.is_register == false &&
+      validateUser?.UserValidate?.data?.data?.is_active == false)
   ) {
+    console.log('hello1');
     return (
       <Router>
         <Routes>
@@ -70,10 +74,13 @@ export default function AllRoutes() {
       </Router>
     );
   } else if (
-    loginUser?.login?.data?.data.is_register == true &&
-    loginUser?.login?.data?.data.is_active == false
+    (loginUser?.login?.data?.data.is_register == true &&
+      loginUser?.login?.data?.data.is_active == false) ||
+    (validateUser?.UserValidate?.data?.data?.is_register == true &&
+      validateUser?.UserValidate?.data?.data?.is_active == false)
   ) {
-   
+    console.log('hello2');
+
     return (
       <Router>
         <Routes>
@@ -85,9 +92,28 @@ export default function AllRoutes() {
         </Routes>
       </Router>
     );
-  } else
-  
-  {
+  }else if (
+    (loginUser?.login?.data?.data.is_register == false &&
+      loginUser?.login?.data?.data.is_active == false) ||
+    (validateUser?.UserValidate?.data?.data?.is_register == false &&
+      validateUser?.UserValidate?.data?.data?.is_active == false)
+  ) {
+    console.log('hello1');
+    return (
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/signup/:id?" element={<CreateUser />} />
+          <Route path="/login" element={<LoginUser />} />
+          <Route path="/property-reg" element={<PropertyRegister />} />
+          <Route path="/tenant-registration" element={<Registeration />} />
+
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    );
+  } else {
+    console.log('hello3');
     return (
       <Router>
         <Routes>
@@ -108,7 +134,10 @@ export default function AllRoutes() {
           />
           <Route path="/agreement/:id?" element={<Agreement />} />
           <Route path="/upload-Bill/:id?" element={<UploadBill />} />
-          <Route path="/previous-bill/:id?" element={<PreviousBillLandlordPage />} />
+          <Route
+            path="/previous-bill/:id?"
+            element={<PreviousBillLandlordPage />}
+          />
           {/* <Route path="/property-reg" element={<PropertyRegister />} /> */}
 
           <Route path="/addNew-Tenant" element={<AddNew />} />

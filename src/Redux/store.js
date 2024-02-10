@@ -14,6 +14,7 @@ import GetOneUploadBill from './Reducer/GetOneUploadBill';
 import PropertyRegistration from './Reducer/PropertyRegistration';
 import GetTenantDetail from './Reducer/GetTenantDetail';
 import LoginUser from './Reducer/LoginUser';
+import ValidateUser from './Reducer/ValidateUser';
 import AcceptRequest from './Reducer/AcceptRequest';
 import GetAllTenant from './Reducer/GetAllTenant';
 import RejectRequest from './Reducer/RejectRequest';
@@ -22,6 +23,7 @@ export const store = configureStore({
   reducer: {
     "UserAdd": CreateUser,
     "loginUser": LoginUser,
+    "validateUser": ValidateUser,
     "TenantRegestration": TenantRegestration,
     "rentSetting": RentSetting,
     "accountSetting": AccountSetting,

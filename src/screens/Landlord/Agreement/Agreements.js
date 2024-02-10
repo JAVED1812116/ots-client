@@ -295,6 +295,7 @@ export default function Agreements() {
               </Accordion>
             </Container>
             <Container className="displayInPrint">
+              {/* <img src="http://localhost:3002/static/media/Logo.07d1ec09babf2f86fbb4.png" /> */}
               <Container
                 sx={{
                   display: "flex",
@@ -382,135 +383,132 @@ export default function Agreements() {
 
               <br />
 
-                  <Typography
-                    variant="h6"
-                    align="left"
-                    gutterBottom
-                    sx={{
-                      fontWeight: "bold",
-                      margin: "0",
-                    }}
-                  >
-                    Landlord Detail
-                  </Typography>
+              <Typography
+                variant="h6"
+                align="left"
+                gutterBottom
+                sx={{
+                  fontWeight: "bold",
+                  margin: "0",
+                }}
+              >
+                Landlord Detail
+              </Typography>
 
-                  <Container
-                    padding={0}
-                    width={100}
-                    sx={{ display: "flex", padding: "0px" }}
-                  >
-                    <Container width={40}>
-                      <Typography>Name</Typography>
-                      <Typography>Father Name</Typography>
-                      <Typography>CNIC No.</Typography>
-                    </Container>
-                    <Container width={60}>
-                      <Typography>{landlordData?.userName}</Typography>
-                      <Typography>{landlordData?.fatherName}</Typography>
-                      <Typography>{landlordData?.cnic}</Typography>
-                    </Container>
-                  </Container>
-
-              <br />
-
-                  <Typography
-                    variant="h6"
-                    align="left"
-                    gutterBottom
-                    sx={{
-                      fontWeight: "bold",
-                      margin: "0",
-                    }}
-                  >
-                    Tenant Detail
-                  </Typography>
-
-                  <Container
-                    padding={0}
-                    width={100}
-                    sx={{ display: "flex", padding: "0px" }}
-                  >
-                    <Container width={40}>
-                      <Typography>Name</Typography>
-                      <Typography>Father Name</Typography>
-                      <Typography>CNIC No.</Typography>
-                    </Container>
-                    <Container width={60}>
-                      <Typography>{data?.name}</Typography>
-                      <Typography>{data?.fatherName}</Typography>
-                      <Typography>{data?.cnicNo}</Typography>
-                    </Container>
-                  </Container>
-
+              <Container
+                padding={0}
+                width={100}
+                sx={{ display: "flex", padding: "0px" }}
+              >
+                <Container width={40}>
+                  <Typography>Name</Typography>
+                  <Typography>Father Name</Typography>
+                  <Typography>CNIC No.</Typography>
+                </Container>
+                <Container width={60}>
+                  <Typography>{landlordData?.userName}</Typography>
+                  <Typography>{landlordData?.fatherName}</Typography>
+                  <Typography>{landlordData?.cnic}</Typography>
+                </Container>
+              </Container>
 
               <br />
 
-                  <Typography
-                    variant="h6"
-                    align="left"
-                    gutterBottom
-                    sx={{
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Agreement Detail
-                  </Typography>
+              <Typography
+                variant="h6"
+                align="left"
+                gutterBottom
+                sx={{
+                  fontWeight: "bold",
+                  margin: "0",
+                }}
+              >
+                Tenant Detail
+              </Typography>
 
-                  <Typography>
-                    <span>{landlordData?.userName}</span> and{" "}
-                    <span>{data?.name}</span> are agreed to rent out the above
-                    said flat for a period of <b>11 months</b> commencing{" "}
-                    <b>
-                      from{" "}
-                      <u>{moment(data?.acceptedDate).format("DD-MM-YYYY")}</u>{" "}
-                      To ______________{" "}
-                    </b>
-                    at the monthly rent of Rs.{" "}
-                    <u>
-                      <b> {data?.flatDetail[0]?.flatRent}</b>
-                    </u>{" "}
-                    per month will be paid on or before 5th of every month on
-                    following terms and conditions.
-                  </Typography>
-                  <Typography variant="body1" gutterBottom mt={3}>
-                    1. Advance Amount Rs.{" "}
-                    <u>
-                      <b>{data?.flatDetail[0]?.flatAdvance}</b>
-                    </u>{" "}
-                    {/* (_______________________){" "} */}
-                    will be paid to landlord by tenant as security deposit
-                  </Typography>
-                  <Typography variant="body1" gutterBottom>
-                    2. That the electricity bill / Sui gas bill shall pay by the
-                    tenant.
-                  </Typography>
-                  <Typography variant="body1" gutterBottom>
-                    3. That the tenant shall not challenge the ownership of the
-                    above said flat.
-                  </Typography>
-                  <Typography variant="body1" gutterBottom>
-                    4. That the tenant shall keep the said flat in the same
-                    condition, which he has taken possession.
-                  </Typography>
-                  <Typography variant="body1" gutterBottom>
-                    5. That after expiring of the tenancy period he will restore
-                    back the possession in the same condition and shall not
-                    sublet the flat or any portion to anybody else.
-                  </Typography>
-                  <Typography variant="body1" gutterBottom>
-                    6. That either party shall serve one month’s prior notice in
-                    advance the rent shall be recovered for the notice period
-                    also.
-                  </Typography>
-                  <Typography variant="body1" gutterBottom>
-                    7. That if anybody else or any legal heir raised any
-                    objection over the lease/rent of the said flat then the same
-                    shall be got cleared by the landlord.
-                  </Typography>
-                  <Typography variant="body1" gutterBottom>
-                    8. If either party wants to continue this agreement, rent
-                    will be increased by 15%, and make a new agreement.
-                  </Typography>
+              <Container
+                padding={0}
+                width={100}
+                sx={{ display: "flex", padding: "0px" }}
+              >
+                <Container width={40}>
+                  <Typography>Name</Typography>
+                  <Typography>Father Name</Typography>
+                  <Typography>CNIC No.</Typography>
+                </Container>
+                <Container width={60}>
+                  <Typography>{data?.name}</Typography>
+                  <Typography>{data?.fatherName}</Typography>
+                  <Typography>{data?.cnicNo}</Typography>
+                </Container>
+              </Container>
+
+              <br />
+
+              <Typography
+                variant="h6"
+                align="left"
+                gutterBottom
+                sx={{
+                  fontWeight: "bold",
+                }}
+              >
+                Agreement Detail
+              </Typography>
+
+              <Typography>
+                <span>{landlordData?.userName}</span> and{" "}
+                <span>{data?.name}</span> are agreed to rent out the above said
+                flat for a period of <b>11 months</b> commencing{" "}
+                <b>
+                  from <u>{moment(data?.acceptedDate).format("DD-MM-YYYY")}</u>{" "}
+                  To ______________{" "}
+                </b>
+                at the monthly rent of Rs.{" "}
+                <u>
+                  <b> {data?.flatDetail[0]?.flatRent}</b>
+                </u>{" "}
+                per month will be paid on or before 5th of every month on
+                following terms and conditions.
+              </Typography>
+              <Typography variant="body1" gutterBottom mt={3}>
+                1. Advance Amount Rs.{" "}
+                <u>
+                  <b>{data?.flatDetail[0]?.flatAdvance}</b>
+                </u>{" "}
+                {/* (_______________________){" "} */}
+                will be paid to landlord by tenant as security deposit
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                2. That the electricity bill / Sui gas bill shall pay by the
+                tenant.
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                3. That the tenant shall not challenge the ownership of the
+                above said flat.
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                4. That the tenant shall keep the said flat in the same
+                condition, which he has taken possession.
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                5. That after expiring of the tenancy period he will restore
+                back the possession in the same condition and shall not sublet
+                the flat or any portion to anybody else.
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                6. That either party shall serve one month’s prior notice in
+                advance the rent shall be recovered for the notice period also.
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                7. That if anybody else or any legal heir raised any objection
+                over the lease/rent of the said flat then the same shall be got
+                cleared by the landlord.
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                8. If either party wants to continue this agreement, rent will
+                be increased by 15%, and make a new agreement.
+              </Typography>
             </Container>
           </Container>
         ) : (

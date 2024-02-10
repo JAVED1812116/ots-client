@@ -2,6 +2,9 @@
 .displayInPrint{
     display: none !important;
 }
+.displayInWeb{
+    padding: 0 !important;
+}
 
 @media print{
     .hideInPrint, .MuiDrawer-root, .MuiAppBar-positionFixed{

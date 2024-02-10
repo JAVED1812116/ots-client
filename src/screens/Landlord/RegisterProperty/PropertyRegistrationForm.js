@@ -21,6 +21,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { ValidateUser } from "../../../Redux/Reducer/ValidateUser";
 export default function PropertyRegister() {
   title("PropertyRegister");
   const dispatch = useDispatch();
@@ -56,6 +58,7 @@ export default function PropertyRegister() {
 
   const [error, setError] = React.useState({});
   const [tableError, setTableError] = React.useState({});
+  const { loginUser } = useSelector((state) => state);
   // const handleChange = (e) => {
   //   const { name, value } = e.target;
   //   setDetail((prev) => {
@@ -73,9 +76,8 @@ export default function PropertyRegister() {
     return cnicRegex.test(cnic);
   };
   const handleChange = (e) => {
-    
     const { name, value } = e.target;
-    
+
     // Check if the entered value is not a valid number for "cnic" or "contactNumber" fields
     if (
       (name === "contactNumber" ||
@@ -115,7 +117,7 @@ export default function PropertyRegister() {
       setDetail((prev) => {
         return { ...prev, [name]: formattedCnic };
       });
-      
+
       // setError((prev) => ({ ...prev, cnic: true }));
       // return;
     }
@@ -160,14 +162,12 @@ export default function PropertyRegister() {
 
     setRows((prevRows) => {
       return prevRows.map((row) =>
-        row.id === rowId ? { ...row, [name]: value ,tenantId:null} : row
+        row.id === rowId ? { ...row, [name]: value, tenantId: null } : row
       );
     });
-    
   };
 
   React.useEffect(() => {
-    
     const numToShow = parseInt(detail?.totalFlat, 10) || 0;
 
     const newRows = Array.from({ length: numToShow }, (_, index) => ({
@@ -259,17 +259,23 @@ export default function PropertyRegister() {
                           displayEmpty
                           // inputProps={{ "aria-label": "Without label" }}
                         >
-                          
-                          {
-                            Array.from({ length: detail?.totalFloor?.length > 0 ? detail?.totalFloor : 1 }, (_, index) => ({
+                          {Array.from(
+                            {
+                              length:
+                                detail?.totalFloor?.length > 0
+                                  ? detail?.totalFloor
+                                  : 1,
+                            },
+                            (_, index) => ({
                               id: index,
-                            })).map((e, i) => {
-                              return (
-                                <MenuItem key={i} value={i}>
-                                  {`${i} floor`}
-                                </MenuItem>
-                              );
-                            })}
+                            })
+                          ).map((e, i) => {
+                            return (
+                              <MenuItem key={i} value={i}>
+                                {`${i} floor`}
+                              </MenuItem>
+                            );
+                          })}
                         </Select>
                       </TableCell>
                       <TableCell component="th" scope="row">
@@ -386,7 +392,7 @@ export default function PropertyRegister() {
       }),
     }),
   }));
-  
+
   const onFinish = () => {
     let values = {
       ownerName: detail?.ownerName,
@@ -440,7 +446,6 @@ export default function PropertyRegister() {
       "is_rent",
     ];
 
-  
     if (
       values?.totalFlat !== 0 ||
       values?.ownerName !== "" ||
@@ -456,16 +461,18 @@ export default function PropertyRegister() {
     ) {
       // rows?.flatName!==undefined||rows?.flatNumber!==undefined||rows?.flatFloor!==undefined||rows?.flatRoom!==undefined||rows?.flatToilet!==undefined||rows?.flatKitchen!==undefined||rows?.flatRent!==undefined||rows?.flatDeposit!==undefined||rows?.flatMaintainanceCharges!==undefined||rows?.flattrashCharges!==undefined||rows?.flatsecurityCharges!==undefined||rows?.is_rent!==undefined
       if (values?.flatDetail !== "") {
-        
         dispatch(PropertyRegisters({ values })).then((res) => {
           if (res?.payload?.data?.message === "Property Set Successfully") {
             toast.success("Property Register Successfully", {
               position: "top-center",
             });
             sessionStorage.setItem("is_register", true);
-            setTimeout(() => {
-              navigate("/pending-request");
-            }, 2200);
+            let token = loginUser?.login?.data?.data?.password;
+            dispatch(ValidateUser({email: loginUser?.login?.data?.data?.email, token })).then((re) => {
+              setTimeout(() => {
+                navigate("/pending-request");
+              }, 2200);
+            });
           }
         });
       } else {
@@ -636,7 +643,7 @@ export default function PropertyRegister() {
                     error.totalFloor ? "Please enter a valid Total Floor" : ""
                   }
                 />
-                
+
                 <TextField
                   id="standard-multiline-flexible"
                   label="Total Flat"
