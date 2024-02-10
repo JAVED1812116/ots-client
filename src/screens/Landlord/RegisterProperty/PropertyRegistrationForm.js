@@ -469,9 +469,11 @@ export default function PropertyRegister() {
             sessionStorage.setItem("is_register", true);
             let token = loginUser?.login?.data?.data?.password;
             dispatch(ValidateUser({email: loginUser?.login?.data?.data?.email, token })).then((re) => {
-              setTimeout(() => {
-                navigate("/pending-request");
-              }, 2200);
+              if (re) {                
+                // setTimeout(() => {
+                  navigate("/pending-request");
+                // }, 2200);
+              }
             });
           }
         });
