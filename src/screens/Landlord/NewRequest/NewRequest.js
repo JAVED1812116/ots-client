@@ -177,7 +177,7 @@ React.useEffect(()=>{
                 rejectEmail.push(e.email)
               })
             })
-            
+         console.log(rejectData,"javed-rejectData")   
     if(rejectData?.length>0){
             dispatch(SendMail({email: rejectEmail ,accept:false,data:rejectData})).then((res) => {
             })
@@ -208,8 +208,7 @@ React.useEffect(()=>{
         if (result.isConfirmed) {
            dispatch(RequestReject({ row })).then((res) => {
         });
-        let accept=false
-        dispatch(SendMail({ email:row.email[0],accept })).then((res) => {
+        dispatch(SendMail({ email:row.email[0],accept:"reject" ,data:row })).then((res) => {
        
      });
     setData((prevData) => prevData.filter((item) => item?.id!== row?.id));
