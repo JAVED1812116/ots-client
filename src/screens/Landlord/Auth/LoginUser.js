@@ -52,7 +52,9 @@ const LoginUser = () => {
               );
               localStorage.setItem("name", res?.payload?.data?.data?.name);
               localStorage.setItem("is_register", true);
+              localStorage.setItem("is_active", true);
               localStorage.setItem("user_id", res?.payload?.data?.data?._id);
+              localStorage.setItem("user_email", res?.payload?.data?.data?.email);
               // console.log(
               //   res?.payload?.data?.data?.name,
               //   "data:res?.payload?.data?.data?.name"
