@@ -24,6 +24,7 @@ import { useEffect } from "react";
 import LandingPage from "../screens/LandingPage/LandingPage";
 import AboutUs from "../screens/AboutUs/AboutUs";
 import { useSelector } from "react-redux";
+import TenantDashboard from "../screens/Tenant/TenantDashboard/TenantDashboard";
 export default function AllRoutes() {
   const { loginUser, validateUser } = useSelector((state) => state);
   console.log(loginUser?.login?.data?.data, "loginUser?.login?.data?.data");
@@ -119,7 +120,7 @@ export default function AllRoutes() {
           <Route path="/addNew-Tenant" element={<AddNew />} />
           <Route path="/property-reg" element={<PropertyRegister />} />
           <Route path="/tenant-registration" element={<Registeration />} />
-          <Route path="/tenant-dashboard" element={<TenantFunctionality />} />
+          <Route path="/tenant-dashboard" element={<TenantDashboard />} />
           <Route path="/previous-TenantBill" element={<PreviousBill />} />
           <Route path="/about-us" element={<AboutUs />} />
           {/* <Route path="/Landing-page" element={<LandingPage />} /> */}

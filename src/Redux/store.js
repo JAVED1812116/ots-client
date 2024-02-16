@@ -19,6 +19,8 @@ import AcceptRequest from './Reducer/AcceptRequest';
 import GetAllTenant from './Reducer/GetAllTenant';
 import RejectRequest from './Reducer/RejectRequest';
 import GetOneAgreement from './Reducer/GetOneAgreement';
+import GetAppliedFlatDetail from './Reducer/GetAppliedFlat';
+
 export const store = configureStore({
   reducer: {
     "UserAdd": CreateUser,
@@ -41,5 +43,6 @@ export const store = configureStore({
     "allTenant": GetAllTenant,
     "RejectRequest": RejectRequest,
     "GetOneAgreementDetail": GetOneAgreement,
+    "appliedFlatDetail": GetAppliedFlatDetail,
   },
 })

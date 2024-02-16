@@ -25,7 +25,7 @@ const LoginUser = () => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  console.log(location?.state?.type, "loooooooooooo");
+  
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -67,7 +67,7 @@ const LoginUser = () => {
                   }
                 } else if (res?.payload?.data?.data?.type === "tenant") {
                   {
-                    // navigate("/tenant-registration");
+                    navigate("/tenant-dashboard");
                     // tenant dashboard working here
                   }
                 }
