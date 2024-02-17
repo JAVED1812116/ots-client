@@ -46,7 +46,7 @@ export default function TenantDashboard() {
         </div>
         <div style={{display: "flex", justifyContent: "space-between", flexWrap: "wrap"}}>
         <Grid container >
-      {data.map((e, i) => (
+      {data&&data?.map((e, i) => (
         <Grid key={i}>
           <Button style={{ textDecoration: 'none', color: 'inherit' }}>
             <Card sx={{ maxWidth: 345 }}>
