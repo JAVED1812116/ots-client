@@ -15,7 +15,8 @@ import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import KitchenIcon from '@mui/icons-material/Kitchen';
+import BedIcon from '@mui/icons-material/Bed';
 import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import cardPic from "../../../assets/card_pic.webp";
@@ -62,7 +63,7 @@ export default function TenantDashboard() {
               }
               // title="Shrimp and Chorizo Paella"
               title={e?.flatDetail[0].flatName}
-              subheader={moment(e?.date).format("dd-MM-YYYY")}
+              subheader={moment(e?.acceptedDate===""? e?.rejectedDate:(e?.acceptedDate&&e?.rejectedDate==="")?e?.date:e.acceptedDate).format("DD-MM-YYYY")}
             />
             <CardMedia
               component="img"
@@ -78,11 +79,11 @@ export default function TenantDashboard() {
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
-              <IconButton aria-label="add to favorites">
-                <FavoriteIcon />
+              <IconButton aria-label="bedrooms">
+                <BedIcon  style={{ fontSize: 18 }}/><Typography  style={{ fontSize: 18 }}>{e?.flatDetail[0]?.flatRooms}</Typography>
               </IconButton>
-              <IconButton aria-label="share">
-                <ShareIcon />
+              <IconButton aria-label="kitchen">
+                <KitchenIcon  style={{ fontSize: 18 }}/><Typography style={{ fontSize: 18 }}>{e?.flatDetail[0]?.flatKitchen}</Typography>
               </IconButton>
             </CardActions>
           </Card>
