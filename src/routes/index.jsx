@@ -109,6 +109,10 @@ export default function AllRoutes() {
             path="/landlord-functionality/:id?"
             element={<LandlordFunctionality />}
           />
+          <Route
+            path="/tenant-functionality/:id?"
+            element={<TenantFunctionality />}
+          />
           <Route path="/agreement/:id?" element={<Agreement />} />
           <Route path="/upload-Bill/:id?" element={<UploadBill />} />
           <Route

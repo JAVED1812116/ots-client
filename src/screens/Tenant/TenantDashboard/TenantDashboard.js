@@ -15,18 +15,18 @@ import Typography from "@mui/material/Typography";
 import KitchenIcon from '@mui/icons-material/Kitchen';
 import BedIcon from '@mui/icons-material/Bed';
 import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
 import cardPic from "../../../assets/card_pic.webp";
 import Logo from "../../../assets/Logo.png";
 import moment from "moment";
 import { Button, Grid } from "@mui/material";
-
+import { useNavigate } from "react-router-dom";
 export default function TenantDashboard() {
   title("DashBoard");
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(false);
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -48,7 +48,7 @@ export default function TenantDashboard() {
         <Grid container >
       {data&&data?.map((e, i) => (
         <Grid key={i}>
-          <Button style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Button style={{ textDecoration: 'none', color: 'inherit' }} onClick={() => navigate(`/tenant-functionality/${e?.flatDetail[0]?.landlordId}/${e?.flatDetail[0]?.id}`)}>
             <Card sx={{ maxWidth: 345 }}>
               <CardHeader
                 avatar={<img src={Logo} style={{ objectFit: "cover", width: '50px', height: '50px', borderRadius: 100 }} />}
