@@ -5,20 +5,17 @@ import { useLocation } from "react-router";
 import title from "../../../components/title";
 import { GetAppliedFlat } from "../../../Redux/Reducer/GetAppliedFlat";
 import { useDispatch } from "react-redux";
-import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import KitchenIcon from '@mui/icons-material/Kitchen';
 import BedIcon from '@mui/icons-material/Bed';
-import ShareIcon from "@mui/icons-material/Share";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 import cardPic from "../../../assets/card_pic.webp";
 import Logo from "../../../assets/Logo.png";
 import moment from "moment";
@@ -56,10 +53,10 @@ export default function TenantDashboard() {
                   <img src={Logo} style={{objectFit:"cover",width:'50px',height:'50px',borderRadius:100}}/>
               }
               action={
-                <IconButton aria-label="settings">
-                  {/* <MoreVertIcon /> */}
-                  pending
-                </IconButton>
+                <Stack direction="row" spacing={1}>
+              {e?.is_accept===true?  <Chip label="Active" color="success" />:e?.is_reject===true?<Chip label="Reject" color="error" />:<Chip label="Pending" color="primary" />}
+                
+              </Stack>
               }
               // title="Shrimp and Chorizo Paella"
               title={e?.flatDetail[0].flatName}
