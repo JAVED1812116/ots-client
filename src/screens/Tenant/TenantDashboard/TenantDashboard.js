@@ -60,7 +60,7 @@ export default function TenantDashboard() {
               }
               // title="Shrimp and Chorizo Paella"
               title={e?.flatDetail[0].flatName}
-              subheader={moment(e?.acceptedDate===""? e?.rejectedDate:(e?.acceptedDate&&e?.rejectedDate==="")?e?.date:e.acceptedDate).format("DD-MM-YYYY")}
+              subheader={moment(e?.is_accept===true ? e?.acceptedDate:e?.is_reject===true ? e?.rejectedDate:e?.date).format("DD-MM-YYYY")}
             />
             <CardMedia
               component="img"
