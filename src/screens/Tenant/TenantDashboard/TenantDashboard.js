@@ -19,6 +19,7 @@ import Stack from '@mui/material/Stack';
 import cardPic from "../../../assets/card_pic.webp";
 import Logo from "../../../assets/Logo.png";
 import moment from "moment";
+import { Button, Grid } from "@mui/material";
 
 export default function TenantDashboard() {
   title("DashBoard");
@@ -44,49 +45,45 @@ export default function TenantDashboard() {
           <h1>Dashboard</h1>
         </div>
         <div style={{display: "flex", justifyContent: "space-between", flexWrap: "wrap"}}>
-        {
-          data&&data?.map((e,i)=>{
-            return(
-          <Card sx={{ maxWidth: 345 }} key={i}>
-            <CardHeader
-              avatar={
-                  <img src={Logo} style={{objectFit:"cover",width:'50px',height:'50px',borderRadius:100}}/>
-              }
-              action={
-                <Stack direction="row" spacing={1}>
-              {e?.is_accept===true?  <Chip label="Active" color="success" />:e?.is_reject===true?<Chip label="Reject" color="error" />:<Chip label="Pending" color="primary" />}
-                
-              </Stack>
-              }
-              // title="Shrimp and Chorizo Paella"
-              title={e?.flatDetail[0].flatName}
-              subheader={moment(e?.is_accept===true ? e?.acceptedDate:e?.is_reject===true ? e?.rejectedDate:e?.date).format("DD-MM-YYYY")}
-            />
-            <CardMedia
-              component="img"
-              height="194"
-              image={cardPic}
-              alt="Paella dish"
-            />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                This impressive paella is a perfect party dish and a fun meal to
-                cook together with your guests. Add 1 cup of frozen peas along
-                with the mussels, if you like.
-              </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-              <IconButton aria-label="bedrooms">
-                <BedIcon  style={{ fontSize: 18 }}/><Typography  style={{ fontSize: 18 }}>{e?.flatDetail[0]?.flatRooms}</Typography>
-              </IconButton>
-              <IconButton aria-label="kitchen">
-                <KitchenIcon  style={{ fontSize: 18 }}/><Typography style={{ fontSize: 18 }}>{e?.flatDetail[0]?.flatKitchen}</Typography>
-              </IconButton>
-            </CardActions>
-          </Card>
-          )
-          })
-        }
+        <Grid container >
+      {data.map((e, i) => (
+        <Grid key={i}>
+          <Button style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardHeader
+                avatar={<img src={Logo} style={{ objectFit: "cover", width: '50px', height: '50px', borderRadius: 100 }} />}
+                action={
+                  <Chip label={e.is_accept ? "Active" : e.is_reject ? "Reject" : "Pending"} color={e.is_accept ? "success" : e.is_reject ? "error" : "primary"} />
+                }
+                title={e.flatDetail[0].flatName}
+                subheader={moment(e.is_accept ? e.acceptedDate : e.is_reject ? e.rejectedDate : e.date).format("DD-MM-YYYY")}
+              />
+              <CardMedia
+                component="img"
+                height="194"
+                image={cardPic}
+                alt="Paella dish"
+              />
+              <CardContent>
+                <Typography variant="body2" color="text.secondary">
+                  This impressive paella is a perfect party dish and a fun meal to
+                  cook together with your guests. Add 1 cup of frozen peas along
+                  with the mussels, if you like.
+                </Typography>
+              </CardContent>
+              <CardActions disableSpacing>
+                <IconButton aria-label="bedrooms">
+                  <BedIcon style={{ fontSize: 18 }} /><Typography style={{ fontSize: 18 }}>{e.flatDetail[0].flatRooms}</Typography>
+                </IconButton>
+                <IconButton aria-label="kitchen">
+                  <KitchenIcon style={{ fontSize: 18 }} /><Typography style={{ fontSize: 18 }}>{e.flatDetail[0].flatKitchen}</Typography>
+                </IconButton>
+              </CardActions>
+            </Card>
+          </Button>
+        </Grid>
+      ))}
+    </Grid>
         </div>
 
         
