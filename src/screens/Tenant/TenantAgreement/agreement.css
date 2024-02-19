@@ -1,0 +1,40 @@
+
+.displayInPrint{
+    display: none !important;
+}
+.displayInWeb{
+    padding: 0 !important;
+}
+
+@media print{
+    .hideInPrint, .MuiDrawer-root, .MuiAppBar-positionFixed{
+        display: none;
+        height: 0px !important;
+    }
+    header, .css-k008qs{
+        display: none !important;
+        height: 0px !important;
+    }
+    .sidebar-open{
+        width: 100vw !important;
+        margin: 0px !important;
+    }
+    .sidebar-closed{
+        width: 100vw !important;
+        margin: 0px !important;
+    }
+    .MuiContainer-maxWidthSm{
+        /* width: 100vw !important; */
+        width: 900px !important;
+        margin: 0px !important;
+    }
+    .abc{
+        max-width: 900px !important;
+    }
+    .displayInWeb{
+        display: none !important;
+    }
+    .displayInPrint{
+        display: block !important;
+    }
+}

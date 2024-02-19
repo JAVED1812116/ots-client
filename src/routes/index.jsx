@@ -25,6 +25,7 @@ import LandingPage from "../screens/LandingPage/LandingPage";
 import AboutUs from "../screens/AboutUs/AboutUs";
 import { useSelector } from "react-redux";
 import TenantDashboard from "../screens/Tenant/TenantDashboard/TenantDashboard";
+import TenantAgreements from "../screens/Tenant/TenantAgreement/TenantAgreement";
 export default function AllRoutes() {
   const { loginUser, validateUser } = useSelector((state) => state);
   console.log(loginUser?.login?.data?.data, "loginUser?.login?.data?.data");
@@ -110,7 +111,7 @@ export default function AllRoutes() {
             element={<LandlordFunctionality />}
           />
           <Route
-            path="/tenant-functionality"
+            path="/tenant-functionality/:id?/:id?"
             element={<TenantFunctionality />}
           />
           <Route path="/agreement/:id?" element={<Agreement />} />
@@ -127,6 +128,7 @@ export default function AllRoutes() {
           <Route path="/tenant-dashboard" element={<TenantDashboard />} />
           <Route path="/previous-TenantBill" element={<PreviousBill />} />
           <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/tenant-agreement/:id?/:id?" element={<TenantAgreements />} />
           {/* <Route path="/Landing-page" element={<LandingPage />} /> */}
           <Route path="/*" element={<NotFound />} />
         </Routes>

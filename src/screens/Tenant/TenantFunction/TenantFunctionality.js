@@ -11,12 +11,15 @@ import Typography from "@mui/material/Typography";
 // import unRegister from "../../../assets/unRigister.png";
 import Wrapper from "../../../components/Wrapper";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./TenantFunctionality.css";
 
 export default function TenantFunctionality() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+
+  const getId=window.location.pathname.replace("/tenant-functionality/", "")
+
   return (
     <>
       <Wrapper open={open} setOpen={setOpen} />
@@ -46,7 +49,7 @@ export default function TenantFunctionality() {
                 className="view_button wm100"
                 size="large"
                 onClick={() => {
-                  navigate("/agreement");
+                  navigate(`/tenant-agreement/${getId}`);
                 }}
               >
                 View
