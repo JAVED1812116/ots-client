@@ -110,7 +110,7 @@ export default function AllRoutes() {
             element={<LandlordFunctionality />}
           />
           <Route
-            path="/tenant-functionality/:id?"
+            path="/tenant-functionality"
             element={<TenantFunctionality />}
           />
           <Route path="/agreement/:id?" element={<Agreement />} />
