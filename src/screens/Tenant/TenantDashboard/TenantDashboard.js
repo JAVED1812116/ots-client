@@ -110,23 +110,23 @@ export default function TenantDashboard() {
                         alt="Paella dish"
                       />
                       <CardContent>
-                        <Typography variant="body2" color="text.secondary">
+                        <Typography variant="body2" color="text.secondary" style={{textAlign: "left"}}>
                           <span
                             style={{ fontWeight: "bold" }}
                           >{`Owner Name: ${e?.landlordDetail?.ownerName}`}</span>
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
+                        <Typography variant="body2" color="text.secondary" style={{textAlign: "left"}}>
                           <span
                             style={{ fontWeight: "bold" }}
                           >{`Email Address: ${e?.landlordDetail?.email}`}</span>
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
+                        <Typography variant="body2" color="text.secondary" style={{textAlign: "left"}}>
                           <span
                             style={{ fontWeight: "bold" }}
                           >{`Address: ${e?.landlordDetail?.postalAddress}`}</span>
                         </Typography>
                       </CardContent>
-                      <CardActions disableSpacing>
+                      <CardActions disableSpacing style={{justifyContent: "flex-end"}}>
                         <IconButton aria-label="bedrooms">
                           <BedIcon style={{ fontSize: 20 }} />
                           <Typography style={{ fontSize: 15 }}>
