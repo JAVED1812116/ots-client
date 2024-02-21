@@ -77,7 +77,7 @@ export default function TenantFunctionality() {
                 className="view_button wm100"
                 size="large"
                 onClick={() => {
-                  navigate("/upload-Bill");
+                  navigate("/current-Bill");
                 }}
               >
                 View
