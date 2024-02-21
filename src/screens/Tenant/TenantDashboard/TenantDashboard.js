@@ -67,32 +67,41 @@ export default function TenantDashboard() {
                       <CardHeader
                         avatar={
                           <img
-                            src={Logo}
-                            style={{
-                              objectFit: "cover",
-                              width: "50px",
-                              height: "50px",
-                              borderRadius: 100,
-                            }}
+                          src={Logo}
+                          style={{
+                            objectFit: "cover",
+                            width: "50px",
+                            height: "50px",
+                            borderRadius: 100,
+                          }}
                           />
                         }
                         action={
+                          <div style={{
+                            display:"flex",
+                            justifyContent:"center",
+                            alignItems:"center",
+                            minHeight:"7vh"
+                          }}
+                          al
+                          >
                           <Chip
-                            label={
-                              e.is_accept
-                                ? "Active"
-                                : e.is_reject
-                                ? "Reject"
-                                : "Pending"
-                            }
-                            color={
-                              e.is_accept
-                                ? "success"
-                                : e.is_reject
-                                ? "error"
-                                : "primary"
-                            }
+                          label={
+                            e.is_accept
+                            ? "Active"
+                            : e.is_reject
+                            ? "Reject"
+                            : "Pending"
+                          }
+                          color={
+                            e.is_accept
+                            ? "success"
+                            : e.is_reject
+                            ? "error"
+                            : "primary"
+                          }
                           />
+                        </div>
                         }
                         title={e.flatDetail[0].flatName}
                         subheader={moment(
