@@ -127,7 +127,7 @@ export default function AllRoutes() {
           <Route path="/property-reg" element={<PropertyRegister />} />
           <Route path="/tenant-registration" element={<Registeration />} />
           <Route path="/tenant-dashboard" element={<TenantDashboard />} />
-          <Route path="/current-Bill" element={<CurrentBill />} />
+          <Route path="/current-Bill/:id?/:id?" element={<CurrentBill />} />
           <Route path="/previous-TenantBill" element={<PreviousBill />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/tenant-agreement/:id?/:id?" element={<TenantAgreements />} />
