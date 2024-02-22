@@ -310,10 +310,10 @@ const trashColumns = [
   },
 ];
 
+
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
-
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -462,11 +462,13 @@ export default function PreviousBillLandlordPage() {
   const dispatch = useDispatch();
   const { id } = useParams();
   let paramsID = id;
-
+  const getId=window.location.pathname.replace("/previous-bill/", "")
+  console.log(getId,"javed")
   React.useEffect(() => {
     setLoading(true)
     dispatch(
-      GetBill({ userId: localStorage.getItem("user_id"), paramsID: paramsID })
+      // GetBill({ userId: localStorage.getItem("user_id"), paramsID: paramsID })
+      GetBill({ id:getId })
     ).then((res) => {
       setData(res?.payload?.data?.data);
       setLoading(false)

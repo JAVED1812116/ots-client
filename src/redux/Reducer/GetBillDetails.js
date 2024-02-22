@@ -3,9 +3,10 @@ import axios from "axios";
 import { BASE_URL } from "../../config/config";
 
 
-export const GetBill = createAsyncThunk("dummyData/GetBillDetails", async ({userId,paramsID}) => {
-    let response = await axios.get(`${BASE_URL}/bill-details/${userId}-${paramsID}`,  {
-        userId //body data but not used in get request
+export const GetBill = createAsyncThunk("dummyData/GetBillDetails", async ({id}) => {
+    // let response = await axios.get(`${BASE_URL}/bill-details/${userId}-${paramsID}`,  {
+    let response = await axios.get(`${BASE_URL}/bill-details/${id}`,  {
+        id //body data but not used in get request
     });
     return response;
 });

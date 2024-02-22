@@ -64,10 +64,10 @@ export default function UploadBill() {
   });
   const { id } = useParams();
   let paramsID = id;
+  const getId=window.location.pathname.replace("/upload-Bill/", "")
   const handleInputs = (e) => {
     const value = e.target.value;
     const name = e.target.name;
-
     setInputs({ ...inputs, [name]: value });
   };
   function Row(props) {
@@ -154,8 +154,7 @@ export default function UploadBill() {
 
               dispatch(
                 GetOneUploadBill({
-                  userId: localStorage.getItem("user_id"),
-                  paramsID: paramsID
+                  id:getId
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -163,6 +162,7 @@ export default function UploadBill() {
                   // setFieldDisable(true)
                 }
               });
+              
               //////saeed isay dekh lena
               // setInputs({
               //   kElectricPreviousReading: "",
@@ -801,6 +801,7 @@ export default function UploadBill() {
         }
       }
     };
+    console.log(hasData,"hasData")
     return (
       <React.Fragment>
         <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -1857,8 +1858,7 @@ export default function UploadBill() {
   React.useEffect(() => {
     dispatch(
       GetOneUploadBill({
-        userId: localStorage.getItem("user_id"),
-        paramsID: paramsID,
+       id:getId
       })
     ).then((res) => {
       setHasData(res?.payload?.data?.data);

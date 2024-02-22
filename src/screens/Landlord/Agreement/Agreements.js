@@ -22,9 +22,9 @@ export default function Agreements() {
   const [landlordData, setLandlordData] = useState([]);
   const { id } = useParams();
   const dispatch = useDispatch();
-
+  const getId=window.location.pathname.replace("/agreement/", "")
   useEffect(() => {
-    dispatch(GetOneAgreement({ id: id })).then((res) => {
+    dispatch(GetOneAgreement({ id: getId })).then((res) => {
       setData(res?.payload?.data?.data[0]);
       setLandlordData(res?.payload?.data?.data[1]);
     });

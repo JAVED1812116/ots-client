@@ -108,17 +108,17 @@ export default function AllRoutes() {
           {/* <Route path="/rent-setting" element={<RentSetting />} /> */}
           <Route path="/bank-detail" element={<BankDetail />} />
           <Route
-            path="/landlord-functionality/:id?"
+            path="/landlord-functionality/:id?/:id?"
             element={<LandlordFunctionality />}
           />
           <Route
             path="/tenant-functionality/:id?/:id?"
             element={<TenantFunctionality />}
           />
-          <Route path="/agreement/:id?" element={<Agreement />} />
-          <Route path="/upload-Bill/:id?" element={<UploadBill />} />
+          <Route path="/agreement/:id?/:id?" element={<Agreement />} />
+          <Route path="/upload-Bill/:id?/:id?" element={<UploadBill />} />
           <Route
-            path="/previous-bill/:id?"
+            path="/previous-bill/:id?/:id?"
             element={<PreviousBillLandlordPage />}
           />
           {/* <Route path="/property-reg" element={<PropertyRegister />} /> */}

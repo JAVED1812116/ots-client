@@ -195,11 +195,12 @@ export default function NewRequest() {
                   </TableBody>
                 </Table>
 
+                {console.log(row,"row zia")}
                 <Button
                   variant="contained"
                   sx={{ marginTop: 2, marginRight: 1, background: "black" }}
                   // onClick={() => handleChange(row)}
-                  onClick={() => navigate(`/landlord-functionality/${row._id}`)}
+                  onClick={() => navigate(`/landlord-functionality/${row?._id}/${row?.flatDetail[0]?.id}`)}
                 >
                   View
                 </Button>

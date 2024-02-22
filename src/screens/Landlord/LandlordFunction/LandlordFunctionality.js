@@ -18,7 +18,8 @@ export default function LandlordFunctionality() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
-
+  const getId=window.location.pathname.replace("/landlord-functionality/", "")
+  
   return (
     <>
       <Wrapper open={open} setOpen={setOpen} />
@@ -48,7 +49,7 @@ export default function LandlordFunctionality() {
                 className="view_button wm100"
                 size="large"
                 onClick={() => {
-                  navigate(`/agreement/${id}`);
+                  navigate(`/agreement/${getId}`);
                 }}
               >
                 View
@@ -76,7 +77,7 @@ export default function LandlordFunctionality() {
                 className="view_button wm100"
                 size="large"
                 onClick={() => {
-                  navigate(`/upload-Bill/${id}`);
+                  navigate(`/upload-Bill/${getId}`);
                 }}
               >
                 View
@@ -104,7 +105,7 @@ export default function LandlordFunctionality() {
                 className="view_button wm100"
                 size="large"
                 onClick={() => {
-                  navigate(`/previous-bill/${id}`);
+                  navigate(`/previous-bill/${getId}`);
                 }}
               >
                 View
@@ -179,7 +180,7 @@ export default function LandlordFunctionality() {
                   alt=""
                   height="140"
                   // image={uploadBill}
-                  image="https://media.istockphoto.com/id/1344217043/photo/electric-bill-statement-and-home-energy-consumption.webp?b=1&s=170667a&w=0&k=20&c=0HrN_L88mp7-wC9JppxHzSQtY6DFGLf5FV6k6SwG0nk="
+                  image="https://media.istockphoto.com/getId/1344217043/photo/electric-bill-statement-and-home-energy-consumption.webp?b=1&s=170667a&w=0&k=20&c=0HrN_L88mp7-wC9JppxHzSQtY6DFGLf5FV6k6SwG0nk="
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
@@ -205,7 +206,7 @@ export default function LandlordFunctionality() {
                   alt=""
                   height="140"
                   // image={previousBill}
-                  image="https://media.istockphoto.com/id/641839728/photo/real-estate-app-concept-on-smartphone-screen-person-searching-online.webp?b=1&s=170667a&w=0&k=20&c=3SWtrwHuAdLkM-XgHuCbA_alB-ldd4yoo4CpwJ5_6bU="
+                  image="https://media.istockphoto.com/getId/641839728/photo/real-estate-app-concept-on-smartphone-screen-person-searching-online.webp?b=1&s=170667a&w=0&k=20&c=3SWtrwHuAdLkM-XgHuCbA_alB-ldd4yoo4CpwJ5_6bU="
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
