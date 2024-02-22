@@ -39,7 +39,7 @@ import { ElectricPhoto } from "../../../Redux/Reducer/KElectricImg";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import dayjs from "dayjs";
-import { GetOneUploadBill } from "../../../Redux/Reducer/GetOneUploadBill";
+import {GetTenantCurrentBill} from "../../../Redux/Reducer/GetTenantCurrentBill";
 import { useParams } from "react-router-dom";
 
 export default function CurrentBill() {
@@ -63,7 +63,15 @@ export default function CurrentBill() {
     kElectricPerUnit: "",
   });
   const { id } = useParams();
-  let paramsID = id;
+  const getId=window.location.pathname.replace("/current-Bill/", "")
+  console.log(getId,"iddddddd")
+  React.useEffect(() => {
+    dispatch(GetTenantCurrentBill({ id:getId })).then((res) => {
+      // setData(res?.payload?.data?.data[0]);
+      // setLandlordData(res?.payload?.data?.data[1]);
+    });
+  }, []);
+
   const handleInputs = (e) => {
     const value = e.target.value;
     const name = e.target.name;
@@ -120,7 +128,7 @@ export default function CurrentBill() {
         setUrl(res?.payload?.data?.url);
       });
     };
-    
+  
     const handleBillKELECReading = (e) => {
       if (selectedValue === "byUnitReading") {
         let values = {
@@ -140,7 +148,7 @@ export default function CurrentBill() {
           kElectricEnterBill: "",
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
-          tenantId: paramsID,
+          // tenantId: paramsID,
         };
         if (
           values.kElectricPreviousReading &&
@@ -190,7 +198,7 @@ export default function CurrentBill() {
           kElectricTotalUnits: "",
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
-          tenantId: paramsID,
+          // tenantId: paramsID,
         };
 
         if (
@@ -239,7 +247,7 @@ export default function CurrentBill() {
           kElectricTotalUnits: "",
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
-          tenantId: paramsID,
+          // tenantId: paramsID,
         };
 
         if (
@@ -295,7 +303,7 @@ export default function CurrentBill() {
           ssgcEnterBill: "",
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
-          tenantId: paramsID,
+          // tenantId: paramsID,
         };
         if (
           values?.currentReadingSsg &&
@@ -344,7 +352,7 @@ export default function CurrentBill() {
           ssgcTotalUnits: "",
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
-          tenantId: paramsID,
+          // tenantId: paramsID,
         };
 
         if (
@@ -393,7 +401,7 @@ export default function CurrentBill() {
           ssgcTotalUnits: "",
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
-          tenantId: paramsID,
+          // tenantId: paramsID,
         };
         if (
           values?.ssgcBillImage !== "" &&
@@ -441,7 +449,7 @@ export default function CurrentBill() {
           waterBillImage: "",
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
-          tenantId: paramsID,
+          // tenantId: paramsID,
         };
         if (
           values?.waterEnterBill !== "" &&
@@ -485,7 +493,7 @@ export default function CurrentBill() {
           waterBillImage: url,
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
-          tenantId: paramsID,
+          // tenantId: paramsID,
         };
         if (
           values?.waterBillImage !== "" &&
@@ -533,7 +541,7 @@ export default function CurrentBill() {
           maintananceBillImage: "",
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
-          tenantId: paramsID,
+          // tenantId: paramsID,
         };
         if (
           values?.maintananceEnterBill !== "" &&
@@ -577,7 +585,7 @@ export default function CurrentBill() {
           maintananceBillImage: url,
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
-          tenantId: paramsID,
+          // tenantId: paramsID,
         };
         if (
           values?.maintananceBillImage !== "" &&
@@ -625,7 +633,7 @@ export default function CurrentBill() {
           trashBillImage: "",
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
-          tenantId: paramsID,
+          // tenantId: paramsID,
         };
         if (
           values?.trashEnterBill !== "" &&
@@ -669,7 +677,7 @@ export default function CurrentBill() {
           trashBillImage: url,
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
-          tenantId: paramsID,
+          // tenantId: paramsID,
         };
         if (
           values?.trashBillImage !== "" &&
