@@ -25,7 +25,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
-  
+  const [inputs, setInputs] = React.useState({});
   React.useEffect(() => {
     dispatch(GetTenantCurrentBill({ id:getId })).then((res) => {
       setBillData(res?.payload?.data?.data)
@@ -33,7 +33,13 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
       // setLandlordData(res?.payload?.data?.data[1]);
     });
   }, []);
-  
+  const handleInputs = (e) => {
+    const value = e.target.value;
+    const name = e.target.name;
+
+    setInputs({ ...inputs, [name]: value });
+  };
+  console.log(inputs,"inputsinputs")
   return (
       <>
       {/* ////////////////////////////////////////////////////////////////////////////////K-ELECTRIC ////////////////////////////////////////////////////////*/}
@@ -99,7 +105,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                     //   setKElectricBillEntry(e.target.value);
                                     // }}
                                     name="tenantMessageKElectric"
-                                    // onChange={handleInputs}
+                                    onChange={handleInputs}
                                   />
                                 </TableCell>
                                 <TableCell>
@@ -140,7 +146,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                     //   setKElectricBillEntry(e.target.value);
                                     // }}
                                     name="tenantAmountKElectric"
-                                    // onChange={handleInputs}
+                                    onChange={handleInputs}
                                   />
                                 </TableCell>
                                 <TableCell>
@@ -235,8 +241,8 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                     // onChange={(e) => {
                                     //   setKElectricBillEntry(e.target.value);
                                     // }}
-                                    name="tenantMessageKElectric"
-                                    // onChange={handleInputs}
+                                    name="tenantMessageSSGC"
+                                    onChange={handleInputs}
                                   />
                                 </TableCell>
                                 <TableCell>
@@ -276,8 +282,8 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                     // onChange={(e) => {
                                     //   setKElectricBillEntry(e.target.value);
                                     // }}
-                                    name="tenantAmountKElectric"
-                                    // onChange={handleInputs}
+                                    name="tenantAmountSSGC"
+                                    onChange={handleInputs}
                                   />
                                 </TableCell>
                                 <TableCell>
@@ -317,7 +323,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={waterModal}
-        onClose={handleSSgcClose}
+        onClose={handleWaterClose}
         closeAfterTransition
         slots={{ backdrop: StyledBackdrop }}
       >
@@ -333,7 +339,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                           name="options"
                           style={{ flexDirection: "row" }}
                           value={selectedValue}
-                          onChange={handleWaterClose}
+                          onChange={handleChange}
                         >
                            <FormControlLabel
                              value="byBank"
@@ -372,8 +378,8 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                     // onChange={(e) => {
                                     //   setKElectricBillEntry(e.target.value);
                                     // }}
-                                    name="tenantMessageKElectric"
-                                    // onChange={handleInputs}
+                                    name="tenantMessageWater"
+                                    onChange={handleInputs}
                                   />
                                 </TableCell>
                                 <TableCell>
@@ -413,8 +419,8 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                     // onChange={(e) => {
                                     //   setKElectricBillEntry(e.target.value);
                                     // }}
-                                    name="tenantAmountKElectric"
-                                    // onChange={handleInputs}
+                                    name="tenantAmountWater"
+                                    onChange={handleInputs}
                                   />
                                 </TableCell>
                                 <TableCell>
@@ -509,8 +515,8 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                     // onChange={(e) => {
                                     //   setKElectricBillEntry(e.target.value);
                                     // }}
-                                    name="tenantMessageKElectric"
-                                    // onChange={handleInputs}
+                                    name="tenantMessageMaintainance"
+                                    onChange={handleInputs}
                                   />
                                 </TableCell>
                                 <TableCell>
@@ -550,8 +556,8 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                     // onChange={(e) => {
                                     //   setKElectricBillEntry(e.target.value);
                                     // }}
-                                    name="tenantAmountKElectric"
-                                    // onChange={handleInputs}
+                                    name="tenantAmountMaintainance"
+                                    onChange={handleInputs}
                                   />
                                 </TableCell>
                                 <TableCell>
@@ -646,8 +652,8 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                     // onChange={(e) => {
                                     //   setKElectricBillEntry(e.target.value);
                                     // }}
-                                    name="tenantMessageKElectric"
-                                    // onChange={handleInputs}
+                                    name="tenantMessageTrash"
+                                    onChange={handleInputs}
                                   />
                                 </TableCell>
                                 <TableCell>
@@ -687,8 +693,8 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                     // onChange={(e) => {
                                     //   setKElectricBillEntry(e.target.value);
                                     // }}
-                                    name="tenantAmountKElectric"
-                                    // onChange={handleInputs}
+                                    name="tenantAmountTrash"
+                                    onChange={handleInputs}
                                   />
                                 </TableCell>
                                 <TableCell>
