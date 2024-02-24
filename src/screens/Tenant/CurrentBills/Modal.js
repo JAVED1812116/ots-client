@@ -10,7 +10,7 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import {GetTenantCurrentBill} from "../../../Redux/Reducer/GetTenantCurrentBill";
 import { useDispatch } from 'react-redux';
-
+import moment from 'moment';
 export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModal,setSsgcModal,waterModal,setWaterModal,maintainanceModal,setMaintainanceModal,trashModal,setTrashModal}) {
 //   const handleOpen = () => setOpen(true);
   const handleClose = () => setIsModalVisible(false);
@@ -28,7 +28,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
   const [inputs, setInputs] = React.useState({});
   React.useEffect(() => {
     dispatch(GetTenantCurrentBill({ id:getId })).then((res) => {
-      setBillData(res?.payload?.data?.data)
+      setBillData(res?.payload?.data?.data);
       // setData(res?.payload?.data?.data[0]);
       // setLandlordData(res?.payload?.data?.data[1]);
     });
@@ -39,7 +39,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
 
     setInputs({ ...inputs, [name]: value });
   };
-  console.log(inputs,"inputsinputs")
+  const currentDate = moment().format('DD-MM-YYYY');
   return (
       <>
       {/* ////////////////////////////////////////////////////////////////////////////////K-ELECTRIC ////////////////////////////////////////////////////////*/}
@@ -77,6 +77,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                              control={<Radio />}
                              label="By Cash"
                            />
+                         <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
                          </RadioGroup>
                       </FormControl>
 
@@ -86,7 +87,6 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                             <TableHead>
                               <TableRow>
                                 <TableCell>Message</TableCell>
-                                <TableCell>Pay Date</TableCell>
                                 <TableCell>Due Date</TableCell>
                                 <TableCell>Amount</TableCell>
                                 <TableCell>Total Bill</TableCell>
@@ -109,32 +109,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                   />
                                 </TableCell>
                                 <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      disabled={true}
-                                    //   value={billDate}
-                                    //   onChange={(newValue) =>
-                                    //     setBillDate(newValue)
-                                    //   }
-                                    />
-                                  </LocalizationProvider>
-                                </TableCell>
-                                <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      disabled={true}
-                                    //   value={billDate}
-                                    //   onChange={(newValue) =>
-                                    //     setBillDate(newValue)
-                                    //   }
-                                    />
-                                  </LocalizationProvider>
+                                {billData?.electricity_data[0]?.kElectricDueDate}
                                 </TableCell>
                                 <TableCell>
                                   <TextField
@@ -214,6 +189,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                              control={<Radio />}
                              label="By Cash"
                            />
+                           <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
                          </RadioGroup>
                       </FormControl>
 
@@ -223,7 +199,6 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                             <TableHead>
                               <TableRow>
                                 <TableCell>Message</TableCell>
-                                <TableCell>Pay Date</TableCell>
                                 <TableCell>Due Date</TableCell>
                                 <TableCell>Amount</TableCell>
                                 <TableCell>Total Bill</TableCell>
@@ -246,32 +221,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                   />
                                 </TableCell>
                                 <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      disabled={true}
-                                    //   value={billDate}
-                                    //   onChange={(newValue) =>
-                                    //     setBillDate(newValue)
-                                    //   }
-                                    />
-                                  </LocalizationProvider>
-                                </TableCell>
-                                <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      disabled={true}
-                                    //   value={billDate}
-                                    //   onChange={(newValue) =>
-                                    //     setBillDate(newValue)
-                                    //   }
-                                    />
-                                  </LocalizationProvider>
+                               due DATE 
                                 </TableCell>
                                 <TableCell>
                                   <TextField
@@ -351,6 +301,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                              control={<Radio />}
                              label="By Cash"
                            />
+                           <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
                          </RadioGroup>
                       </FormControl>
 
@@ -360,7 +311,6 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                             <TableHead>
                               <TableRow>
                                 <TableCell>Message</TableCell>
-                                <TableCell>Pay Date</TableCell>
                                 <TableCell>Due Date</TableCell>
                                 <TableCell>Amount</TableCell>
                                 <TableCell>Total Bill</TableCell>
@@ -383,32 +333,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                   />
                                 </TableCell>
                                 <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      disabled={true}
-                                    //   value={billDate}
-                                    //   onChange={(newValue) =>
-                                    //     setBillDate(newValue)
-                                    //   }
-                                    />
-                                  </LocalizationProvider>
-                                </TableCell>
-                                <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      disabled={true}
-                                    //   value={billDate}
-                                    //   onChange={(newValue) =>
-                                    //     setBillDate(newValue)
-                                    //   }
-                                    />
-                                  </LocalizationProvider>
+                               due DATE 
                                 </TableCell>
                                 <TableCell>
                                   <TextField
@@ -488,6 +413,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                              control={<Radio />}
                              label="By Cash"
                            />
+                           <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
                          </RadioGroup>
                       </FormControl>
 
@@ -497,7 +423,6 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                             <TableHead>
                               <TableRow>
                                 <TableCell>Message</TableCell>
-                                <TableCell>Pay Date</TableCell>
                                 <TableCell>Due Date</TableCell>
                                 <TableCell>Amount</TableCell>
                                 <TableCell>Total Bill</TableCell>
@@ -520,32 +445,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                   />
                                 </TableCell>
                                 <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      disabled={true}
-                                    //   value={billDate}
-                                    //   onChange={(newValue) =>
-                                    //     setBillDate(newValue)
-                                    //   }
-                                    />
-                                  </LocalizationProvider>
-                                </TableCell>
-                                <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      disabled={true}
-                                    //   value={billDate}
-                                    //   onChange={(newValue) =>
-                                    //     setBillDate(newValue)
-                                    //   }
-                                    />
-                                  </LocalizationProvider>
+                               due DATE 
                                 </TableCell>
                                 <TableCell>
                                   <TextField
@@ -625,6 +525,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                              control={<Radio />}
                              label="By Cash"
                            />
+                           <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
                          </RadioGroup>
                       </FormControl>
 
@@ -634,7 +535,6 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                             <TableHead>
                               <TableRow>
                                 <TableCell>Message</TableCell>
-                                <TableCell>Pay Date</TableCell>
                                 <TableCell>Due Date</TableCell>
                                 <TableCell>Amount</TableCell>
                                 <TableCell>Total Bill</TableCell>
@@ -656,33 +556,9 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                     onChange={handleInputs}
                                   />
                                 </TableCell>
+                               
                                 <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      disabled={true}
-                                    //   value={billDate}
-                                    //   onChange={(newValue) =>
-                                    //     setBillDate(newValue)
-                                    //   }
-                                    />
-                                  </LocalizationProvider>
-                                </TableCell>
-                                <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      disabled={true}
-                                    //   value={billDate}
-                                    //   onChange={(newValue) =>
-                                    //     setBillDate(newValue)
-                                    //   }
-                                    />
-                                  </LocalizationProvider>
+                               due DATE 
                                 </TableCell>
                                 <TableCell>
                                   <TextField
