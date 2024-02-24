@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { styled, css } from '@mui/system';
 // import { Modal as BaseModal } from '@mui/base/Modal';
-import {Modal as BaseModal, FormControl, FormControlLabel, Radio, RadioGroup, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography} from '@mui/material';
+import {Modal as BaseModal, FormControl, FormControlLabel, Radio, RadioGroup, Stack, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography} from '@mui/material';
 import Fade from '@mui/material/Fade';
 // import { Button } from '@mui/base/Button';
 import { Button } from '@mui/material';
@@ -11,6 +11,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import {GetTenantCurrentBill} from "../../../Redux/Reducer/GetTenantCurrentBill";
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
+import { ElectricPhoto } from '../../../Redux/Reducer/KElectricImg';
 export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModal,setSsgcModal,waterModal,setWaterModal,maintainanceModal,setMaintainanceModal,trashModal,setTrashModal}) {
 //   const handleOpen = () => setOpen(true);
   const handleClose = () => setIsModalVisible(false);
@@ -21,6 +22,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
   const [selectedValue, setSelectedValue] = React.useState("");
   const getId=window.location.pathname.replace("/current-Bill/", "");
   const [billData, setBillData] = React.useState([]);
+  const [url, setUrl] = React.useState([]);
   const dispatch = useDispatch();
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -39,6 +41,191 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
 
     setInputs({ ...inputs, [name]: value });
   };
+  const imgUpload = (e) => {
+    dispatch(ElectricPhoto(e.target.files[0])).then((res) => {
+      setUrl(res?.payload?.data?.url);
+    });
+  };
+//   const handleBillKELECReading = (e) => {
+//     if (selectedValue === "byUnitReading") {
+//       let values = {
+//         kElectricPreviousReading: inputs?.kElectricPreviousReading,
+//         kElectricCurrentReading: inputs?.kElectricCurrentReading,
+//         kElectricPerUnit: inputs?.kElectricPerUnit,
+//         kElectricBillDate: moment(billDate).format("DD-MM-YYYY"),
+//         kElectricDueDate: dueDate?.kElectricReadingDueDate?.format("DD-MM-YYYY"),
+//         kElectricTotalUnits:
+//           inputs?.kElectricCurrentReading - inputs?.kElectricPreviousReading,
+//         kElectricTotalBill:
+//           parseInt(
+//             inputs?.kElectricCurrentReading - inputs?.kElectricPreviousReading
+//           ) * parseInt(inputs?.kElectricPerUnit) || 0,
+//         //extra fields
+//         kElectricBillImage: "",
+//         kElectricEnterBill: "",
+//         userId: localStorage.getItem("user_id"),
+//         userName: localStorage.getItem("name"),
+//         tenantId: paramsID,
+//       };
+//       if (
+//         values.kElectricPreviousReading &&
+//         values.kElectricCurrentReading &&
+//         values.kElectricPerUnit !== ""
+//       ) {
+//         dispatch(ElectricBill({ values })).then((res) => {
+//           if (res?.payload?.data?.message === "Reading Saved Successfully") {
+//             toast.success("K-Electric Bill Uploaded Successfully!", {
+//               autoClose: 300,
+//             });
+
+//             dispatch(
+//               GetOneUploadBill({
+//                 id:getId
+//               })
+//             ).then((res) => {
+//               setHasData(res?.payload?.data?.data);
+//               if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+//                 // setFieldDisable(true)
+//               }
+//             });
+            
+//             //////saeed isay dekh lena
+//             // setInputs({
+//             //   kElectricPreviousReading: "",
+//             //   kElectricCurrentReading: "",
+//             //   kElectricPerUnit: "",
+//             //   // ... (other fields)
+//             // });
+
+//             // setInputs()
+//           } else {
+//             toast.error("Something Wrong", {
+//               position: "top-center",
+//             });
+//           }
+//         });
+//       } else {
+//         toast.error("Fill All Fields", {
+//           position: "top-center",
+//         });
+//       }
+//     } else if (selectedValue === "byBill") {
+//       let values = {
+//         kElectricEnterBill: inputs.kElectricEnterBill,
+//         kElectricBillDate: moment(billDate).format("DD-MM-YYYY"),
+//         kElectricDueDate: dueDate?.kElectricBillDueDate?.format("DD-MM-YYYY"),
+//         kElectricTotalBill: inputs.kElectricEnterBill,
+//         //extra fields
+//         kElectricBillImage: "",
+//         kElectricPreviousReading: "",
+//         kElectricCurrentReading: "",
+//         kElectricPerUnit: "",
+//         kElectricTotalUnits: "",
+//         userId: localStorage.getItem("user_id"),
+//         userName: localStorage.getItem("name"),
+//         tenantId: paramsID,
+//       };
+
+//       if (
+//         values?.kElectricEnterBill !== "" &&
+//         values?.kElectricEnterBill !== undefined
+//       ) {
+//         dispatch(ElectricBill({ values })).then((res) => {
+//           if (res?.payload?.data?.message === "Reading Saved Successfully") {
+//             toast.success("K-Electric Bill Uploaded Successfully!", {
+//               autoClose: 300,
+//             });
+//             dispatch(
+//               GetOneUploadBill({
+//                 userId: localStorage.getItem("user_id"),
+//                 paramsID: paramsID,
+//               })
+//             ).then((res) => {
+//               setHasData(res?.payload?.data?.data);
+//               if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+//                 // setFieldDisable(true)
+//               }
+//             });
+//             //////saeed isay dekh lena
+//             // setInputs({
+//             //   kElectricPreviousReading: "",
+//             //   kElectricCurrentReading: "",
+//             //   kElectricPerUnit: "",
+//             //   // ... (other fields)
+//             // });
+
+//             // setInputs()
+//           } else {
+//             toast.error("Something Wrong", {
+//               position: "top-center",
+//             });
+//           }
+//         });
+//       } else {
+//         toast.error("Fill All Fields", {
+//           position: "top-center",
+//         });
+//       }
+//     } else if (selectedValue === "byPicture") {
+//       let values = {
+//         kElectricEnterBill: "",
+//         kElectricBillDate: "",
+//         kElectricDueDate: "",
+//         kElectricTotalBill: "",
+//         //extra fields
+//         kElectricBillImage: url,
+//         kElectricPreviousReading: "",
+//         kElectricCurrentReading: "",
+//         kElectricPerUnit: "",
+//         kElectricTotalUnits: "",
+//         userId: localStorage.getItem("user_id"),
+//         userName: localStorage.getItem("name"),
+//         tenantId: paramsID,
+//       };
+
+//       if (
+//         values?.kElectricBillImage !== "" &&
+//         values?.kElectricBillImage !== undefined
+//       ) {
+//         dispatch(ElectricBill({ values })).then((res) => {
+//           if (res?.payload?.data?.message === "Reading Saved Successfully") {
+//             toast.success("Image Uploaded Successfully!", {
+//               autoClose: 300,
+//             });
+//             setUrl();
+//             dispatch(
+//               GetOneUploadBill({
+//                 userId: localStorage.getItem("user_id"),
+//                 paramsID: paramsID,
+//               })
+//             ).then((res) => {
+//               setHasData(res?.payload?.data?.data);
+//               if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+//                 // setFieldDisable(true)
+//               }
+//             });
+//             //////saeed isay dekh lena
+//             // setInputs({
+//             //   kElectricPreviousReading: "",
+//             //   kElectricCurrentReading: "",
+//             //   kElectricPerUnit: "",
+//             //   // ... (other fields)
+//             // });
+
+//             // setInputs()
+//           } else {
+//             toast.error("Something Wrong", {
+//               position: "top-center",
+//             });
+//           }
+//         });
+//       } else {
+//         toast.error("Upload Image", {
+//           position: "top-center",
+//         });
+//       }
+//     }
+//   };
   const currentDate = moment().format('DD-MM-YYYY');
   return (
       <>
@@ -58,30 +245,11 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
             <h2 id="transition-modal-title" className="modal-title">
               Choose Payment Method K-Electric
             </h2>
-               <FormControl component="fieldset">
-                         <Typography variant="h6">Select Submission Type</Typography> 
-                       <RadioGroup
-                          aria-label="options"
-                          name="options"
-                          style={{ flexDirection: "row" }}
-                          value={selectedValue}
-                          onChange={handleChange}
-                        >
-                           <FormControlLabel
-                             value="byBank"
-                             control={<Radio />}
-                             label="By Bank"
-                           />
-                           <FormControlLabel
-                             value="byCash"
-                             control={<Radio />}
-                             label="By Cash"
-                           />
-                         <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
-                         </RadioGroup>
-                      </FormControl>
+                          <div style={{textAlign:'center'}}>
+                            <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
+                         
+                        </div>
 
-                       {selectedValue === "byCash" && (
                         <div>
                           <Table size="small" aria-label="purchases">
                             <TableHead>
@@ -91,6 +259,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                 <TableCell>Amount</TableCell>
                                 <TableCell>Total Bill</TableCell>
                                 <TableCell>Remaining Bill</TableCell>
+                                <TableCell>Upload Image</TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
@@ -130,6 +299,40 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                 <TableCell>
                                   {/* {inputs.kElectricEnterBill || 0} */}
                                 </TableCell>
+                                <TableCell>
+                                <Stack
+                            direction="row"
+                            alignItems="center"
+                            spacing={2}
+                          >
+                            <Button variant="contained" component="label">
+                              Upload
+                              <input
+                                hidden
+                                accept="image/*"
+                                type="file"
+                                onChange={(e) => imgUpload(e)}
+                              />
+                            </Button>
+
+                            {/* {url?.length > 0 ? (
+                              <Button
+                                variant="contained"
+                                sx={{
+                                  marginTop: 2,
+                                  marginRight: 1,
+                                  background: "black",
+                                }}
+                                // onClick={handleBillKELECReading}
+                              >
+                                Post
+                              </Button>
+                            ) 
+                            : (
+                              ""
+                            )} */}
+                          </Stack>
+                                </TableCell>
                               </TableRow>
                             </TableBody>
                           </Table>
@@ -145,10 +348,8 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                             SUBMIT
                           </Button>
                         </div>
-                      )}
-            {/* <p id="transition-modal-description" className="modal-description">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            </p> */}
+                  
+          
           </ModalContent>
         </Fade>
       </Modal>
@@ -170,30 +371,12 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
             <h2 id="transition-modal-title" className="modal-title">
               Choose Payment Method SSGC
             </h2>
-               <FormControl component="fieldset">
-                         <Typography variant="h6">Select Submission Type</Typography> 
-                       <RadioGroup
-                          aria-label="options"
-                          name="options"
-                          style={{ flexDirection: "row" }}
-                          value={selectedValue}
-                          onChange={handleChange}
-                        >
-                           <FormControlLabel
-                             value="byBank"
-                             control={<Radio />}
-                             label="By Bank"
-                           />
-                           <FormControlLabel
-                             value="byCash"
-                             control={<Radio />}
-                             label="By Cash"
-                           />
-                           <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
-                         </RadioGroup>
-                      </FormControl>
+            <div style={{textAlign:'center'}}>
+                            <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
+                         
+                        </div>
 
-                       {selectedValue === "byCash" && (
+          
                         <div>
                           <Table size="small" aria-label="purchases">
                             <TableHead>
@@ -203,6 +386,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                 <TableCell>Amount</TableCell>
                                 <TableCell>Total Bill</TableCell>
                                 <TableCell>Remaining Bill</TableCell>
+                                <TableCell>Image Upload</TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
@@ -242,6 +426,40 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                 <TableCell>
                                   {/* {inputs.kElectricEnterBill || 0} */}
                                 </TableCell>
+                                <TableCell>
+                                <Stack
+                            direction="row"
+                            alignItems="center"
+                            spacing={2}
+                          >
+                            <Button variant="contained" component="label">
+                              Upload
+                              <input
+                                hidden
+                                accept="image/*"
+                                type="file"
+                                onChange={(e) => imgUpload(e)}
+                              />
+                            </Button>
+
+                            {/* {url?.length > 0 ? (
+                              <Button
+                                variant="contained"
+                                sx={{
+                                  marginTop: 2,
+                                  marginRight: 1,
+                                  background: "black",
+                                }}
+                                // onClick={handleBillKELECReading}
+                              >
+                                Post
+                              </Button>
+                            ) 
+                            : (
+                              ""
+                            )} */}
+                          </Stack>
+                                </TableCell>
                               </TableRow>
                             </TableBody>
                           </Table>
@@ -257,10 +475,8 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                             SUBMIT
                           </Button>
                         </div>
-                      )}
-            {/* <p id="transition-modal-description" className="modal-description">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            </p> */}
+          
+          
           </ModalContent>
         </Fade>
       </Modal>
@@ -282,30 +498,12 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
             <h2 id="transition-modal-title" className="modal-title">
               Choose Payment Method Water
             </h2>
-               <FormControl component="fieldset">
-                         <Typography variant="h6">Select Submission Type</Typography> 
-                       <RadioGroup
-                          aria-label="options"
-                          name="options"
-                          style={{ flexDirection: "row" }}
-                          value={selectedValue}
-                          onChange={handleChange}
-                        >
-                           <FormControlLabel
-                             value="byBank"
-                             control={<Radio />}
-                             label="By Bank"
-                           />
-                           <FormControlLabel
-                             value="byCash"
-                             control={<Radio />}
-                             label="By Cash"
-                           />
-                           <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
-                         </RadioGroup>
-                      </FormControl>
+            <div style={{textAlign:'center'}}>
+                            <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
+                         
+                        </div>
 
-                       {selectedValue === "byCash" && (
+                       
                         <div>
                           <Table size="small" aria-label="purchases">
                             <TableHead>
@@ -315,6 +513,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                 <TableCell>Amount</TableCell>
                                 <TableCell>Total Bill</TableCell>
                                 <TableCell>Remaining Bill</TableCell>
+                                <TableCell>Image Upload</TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
@@ -354,6 +553,40 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                 <TableCell>
                                   {/* {inputs.kElectricEnterBill || 0} */}
                                 </TableCell>
+                                <TableCell>
+                                <Stack
+                            direction="row"
+                            alignItems="center"
+                            spacing={2}
+                          >
+                            <Button variant="contained" component="label">
+                              Upload
+                              <input
+                                hidden
+                                accept="image/*"
+                                type="file"
+                                onChange={(e) => imgUpload(e)}
+                              />
+                            </Button>
+
+                            {/* {url?.length > 0 ? (
+                              <Button
+                                variant="contained"
+                                sx={{
+                                  marginTop: 2,
+                                  marginRight: 1,
+                                  background: "black",
+                                }}
+                                // onClick={handleBillKELECReading}
+                              >
+                                Post
+                              </Button>
+                            ) 
+                            : (
+                              ""
+                            )} */}
+                          </Stack>
+                                </TableCell>
                               </TableRow>
                             </TableBody>
                           </Table>
@@ -369,10 +602,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                             SUBMIT
                           </Button>
                         </div>
-                      )}
-            {/* <p id="transition-modal-description" className="modal-description">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            </p> */}
+                   
           </ModalContent>
         </Fade>
       </Modal>
@@ -394,30 +624,10 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
             <h2 id="transition-modal-title" className="modal-title">
               Choose Payment Method MAINTAINANCE
             </h2>
-               <FormControl component="fieldset">
-                         <Typography variant="h6">Select Submission Type</Typography> 
-                       <RadioGroup
-                          aria-label="options"
-                          name="options"
-                          style={{ flexDirection: "row" }}
-                          value={selectedValue}
-                          onChange={handleChange}
-                        >
-                           <FormControlLabel
-                             value="byBank"
-                             control={<Radio />}
-                             label="By Bank"
-                           />
-                           <FormControlLabel
-                             value="byCash"
-                             control={<Radio />}
-                             label="By Cash"
-                           />
-                           <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
-                         </RadioGroup>
-                      </FormControl>
-
-                       {selectedValue === "byCash" && (
+            <div style={{textAlign:'center'}}>
+                            <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
+                         
+                        </div>
                         <div>
                           <Table size="small" aria-label="purchases">
                             <TableHead>
@@ -427,6 +637,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                 <TableCell>Amount</TableCell>
                                 <TableCell>Total Bill</TableCell>
                                 <TableCell>Remaining Bill</TableCell>
+                                <TableCell>Image Upload</TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
@@ -466,6 +677,40 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                 <TableCell>
                                   {/* {inputs.kElectricEnterBill || 0} */}
                                 </TableCell>
+                                <TableCell>
+                                <Stack
+                            direction="row"
+                            alignItems="center"
+                            spacing={2}
+                          >
+                            <Button variant="contained" component="label">
+                              Upload
+                              <input
+                                hidden
+                                accept="image/*"
+                                type="file"
+                                onChange={(e) => imgUpload(e)}
+                              />
+                            </Button>
+
+                            {/* {url?.length > 0 ? (
+                              <Button
+                                variant="contained"
+                                sx={{
+                                  marginTop: 2,
+                                  marginRight: 1,
+                                  background: "black",
+                                }}
+                                // onClick={handleBillKELECReading}
+                              >
+                                Post
+                              </Button>
+                            ) 
+                            : (
+                              ""
+                            )} */}
+                          </Stack>
+                                </TableCell>
                               </TableRow>
                             </TableBody>
                           </Table>
@@ -481,10 +726,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                             SUBMIT
                           </Button>
                         </div>
-                      )}
-            {/* <p id="transition-modal-description" className="modal-description">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            </p> */}
+                     
           </ModalContent>
         </Fade>
       </Modal>
@@ -506,30 +748,10 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
             <h2 id="transition-modal-title" className="modal-title">
               Choose Payment Method TRASH
             </h2>
-               <FormControl component="fieldset">
-                         <Typography variant="h6">Select Submission Type</Typography> 
-                       <RadioGroup
-                          aria-label="options"
-                          name="options"
-                          style={{ flexDirection: "row" }}
-                          value={selectedValue}
-                          onChange={handleChange}
-                        >
-                           <FormControlLabel
-                             value="byBank"
-                             control={<Radio />}
-                             label="By Bank"
-                           />
-                           <FormControlLabel
-                             value="byCash"
-                             control={<Radio />}
-                             label="By Cash"
-                           />
-                           <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
-                         </RadioGroup>
-                      </FormControl>
-
-                       {selectedValue === "byCash" && (
+            <div style={{textAlign:'center'}}>
+                            <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
+                         
+                        </div>
                         <div>
                           <Table size="small" aria-label="purchases">
                             <TableHead>
@@ -539,6 +761,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                 <TableCell>Amount</TableCell>
                                 <TableCell>Total Bill</TableCell>
                                 <TableCell>Remaining Bill</TableCell>
+                                <TableCell>Image Upload</TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
@@ -579,6 +802,40 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                 <TableCell>
                                   {/* {inputs.kElectricEnterBill || 0} */}
                                 </TableCell>
+                                <TableCell>
+                                <Stack
+                            direction="row"
+                            alignItems="center"
+                            spacing={2}
+                          >
+                            <Button variant="contained" component="label">
+                              Upload
+                              <input
+                                hidden
+                                accept="image/*"
+                                type="file"
+                                onChange={(e) => imgUpload(e)}
+                              />
+                            </Button>
+
+                            {/* {url?.length > 0 ? (
+                              <Button
+                                variant="contained"
+                                sx={{
+                                  marginTop: 2,
+                                  marginRight: 1,
+                                  background: "black",
+                                }}
+                                // onClick={handleBillKELECReading}
+                              >
+                                Post
+                              </Button>
+                            ) 
+                            : (
+                              ""
+                            )} */}
+                          </Stack>
+                                </TableCell>
                               </TableRow>
                             </TableBody>
                           </Table>
@@ -594,10 +851,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                             SUBMIT
                           </Button>
                         </div>
-                      )}
-            {/* <p id="transition-modal-description" className="modal-description">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            </p> */}
+                     
           </ModalContent>
         </Fade>
       </Modal>
