@@ -745,13 +745,16 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
       >
         <Fade in={trashModal}>
           <ModalContent sx={style}>
-            <h2 id="transition-modal-title" className="modal-title">
+            <div id="transition-modal-title" className="modal-title flex justifybetween">
+                <h2>
               Choose Payment Method TRASH
-            </h2>
-            <div style={{textAlign:'center'}}>
-                            <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
+                </h2>
+              <p style={{fontWeight:'bold'}}>Date: <span>{currentDate}</span></p>
+            </div>
+            {/* <div style={{textAlign:'right'}}>
+                            
                          
-                        </div>
+                        </div> */}
                         <div>
                           <Table size="small" aria-label="purchases">
                             <TableHead>

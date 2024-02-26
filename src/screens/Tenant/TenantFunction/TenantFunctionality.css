@@ -12,6 +12,9 @@
 .flex{
   display: flex;
 }
+.justifybetween{
+  justify-content: space-between;
+}
 .flexwrap{
   flex-wrap: wrap;
 }
