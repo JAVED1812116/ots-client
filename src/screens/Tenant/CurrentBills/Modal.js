@@ -276,7 +276,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                   />
                                 </TableCell>
                                 <TableCell>
-                                {/* {billData?.electricity_data[0]?.kElectricDueDate} */}
+                                {billData?.electricity_data?.length >0 ? billData?.electricity_data[0]?.kElectricDueDate:''}
                                 </TableCell>
                                 <TableCell>
                                   <TextField
@@ -291,8 +291,9 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                     onChange={handleInputs}
                                   />
                                 </TableCell>
+                               
                                 <TableCell>
-                                  {/* {billData?.electricity_data[0]?.kElectricTotalBill} */}
+                                  {billData?.electricity_data?.length >0 ? billData?.electricity_data[0]?.kElectricTotalBill:''}
                                 </TableCell>
                                 <TableCell>
                                   {/* {inputs.kElectricEnterBill || 0} */}
@@ -916,7 +917,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: "50%",
+  width: "53%",
   height:"50%"
 };
 
