@@ -242,14 +242,12 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
       >
         <Fade in={modalValue}>
           <ModalContent sx={style}>
-            <h2 id="transition-modal-title" className="modal-title">
+          <div id="transition-modal-title" className="modal-title flex justifybetween">
+                <h2>
               Choose Payment Method K-Electric
-            </h2>
-                          <div style={{textAlign:'center'}}>
-                            <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
-                         
-                        </div>
-
+                </h2>
+              <p style={{fontWeight:'bold'}}>Date: <span>{currentDate}</span></p>
+            </div>
                         <div>
                           <Table size="small" aria-label="purchases">
                             <TableHead>
@@ -278,7 +276,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                   />
                                 </TableCell>
                                 <TableCell>
-                                {billData?.electricity_data[0]?.kElectricDueDate}
+                                {/* {billData?.electricity_data[0]?.kElectricDueDate} */}
                                 </TableCell>
                                 <TableCell>
                                   <TextField
@@ -294,7 +292,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                   />
                                 </TableCell>
                                 <TableCell>
-                                  {billData?.electricity_data[0]?.kElectricTotalBill}
+                                  {/* {billData?.electricity_data[0]?.kElectricTotalBill} */}
                                 </TableCell>
                                 <TableCell>
                                   {/* {inputs.kElectricEnterBill || 0} */}
@@ -368,13 +366,12 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
       >
         <Fade in={ssgcModal}>
           <ModalContent sx={style}>
-            <h2 id="transition-modal-title" className="modal-title">
+          <div id="transition-modal-title" className="modal-title flex justifybetween">
+                <h2>
               Choose Payment Method SSGC
-            </h2>
-            <div style={{textAlign:'center'}}>
-                            <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
-                         
-                        </div>
+                </h2>
+              <p style={{fontWeight:'bold'}}>Date: <span>{currentDate}</span></p>
+            </div>
 
           
                         <div>
@@ -421,7 +418,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                   />
                                 </TableCell>
                                 <TableCell>
-                                  {billData?.electricity_data[0]?.kElectricTotalBill}
+                                  {/* {billData?.electricity_data[0]?.kElectricTotalBill} */}
                                 </TableCell>
                                 <TableCell>
                                   {/* {inputs.kElectricEnterBill || 0} */}
@@ -495,13 +492,12 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
       >
         <Fade in={waterModal}>
           <ModalContent sx={style}>
-            <h2 id="transition-modal-title" className="modal-title">
+          <div id="transition-modal-title" className="modal-title flex justifybetween">
+                <h2>
               Choose Payment Method Water
-            </h2>
-            <div style={{textAlign:'center'}}>
-                            <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
-                         
-                        </div>
+                </h2>
+              <p style={{fontWeight:'bold'}}>Date: <span>{currentDate}</span></p>
+            </div>
 
                        
                         <div>
@@ -548,7 +544,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                   />
                                 </TableCell>
                                 <TableCell>
-                                  {billData?.electricity_data[0]?.kElectricTotalBill}
+                                  {/* {billData?.electricity_data[0]?.kElectricTotalBill} */}
                                 </TableCell>
                                 <TableCell>
                                   {/* {inputs.kElectricEnterBill || 0} */}
@@ -621,13 +617,12 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
       >
         <Fade in={maintainanceModal}>
           <ModalContent sx={style}>
-            <h2 id="transition-modal-title" className="modal-title">
+           <div id="transition-modal-title" className="modal-title flex justifybetween">
+                <h2>
               Choose Payment Method MAINTAINANCE
-            </h2>
-            <div style={{textAlign:'center'}}>
-                            <p>Date: <span style={{color:'brown',textDecoration:'underline'}}>{currentDate}</span></p>
-                         
-                        </div>
+                </h2>
+              <p style={{fontWeight:'bold'}}>Date: <span>{currentDate}</span></p>
+            </div>
                         <div>
                           <Table size="small" aria-label="purchases">
                             <TableHead>
@@ -672,7 +667,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                   />
                                 </TableCell>
                                 <TableCell>
-                                  {billData?.electricity_data[0]?.kElectricTotalBill}
+                                  {/* {billData?.electricity_data[0]?.kElectricTotalBill} */}
                                 </TableCell>
                                 <TableCell>
                                   {/* {inputs.kElectricEnterBill || 0} */}
@@ -800,7 +795,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                   />
                                 </TableCell>
                                 <TableCell>
-                                  {billData?.electricity_data[0]?.kElectricTotalBill}
+                                  {/* {billData?.electricity_data[0]?.kElectricTotalBill} */}
                                 </TableCell>
                                 <TableCell>
                                   {/* {inputs.kElectricEnterBill || 0} */}
