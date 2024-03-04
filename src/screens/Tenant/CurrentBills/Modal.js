@@ -2,12 +2,12 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { styled, css } from '@mui/system';
 // import { Modal as BaseModal } from '@mui/base/Modal';
-import {Modal as BaseModal, FormControl, FormControlLabel, Radio, RadioGroup, Stack, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography} from '@mui/material';
+import {Modal as BaseModal, FormControl, FormControlLabel, FormHelperText, Radio, RadioGroup, Stack, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography} from '@mui/material';
 import Fade from '@mui/material/Fade';
 // import { Button } from '@mui/base/Button';
 import { Button } from '@mui/material';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { ToastContainer, toast } from "react-toastify";
+import { UpdateElectricBill } from '../../../Redux/Reducer/UpdateElectricReading';
 import {GetTenantCurrentBill} from "../../../Redux/Reducer/GetTenantCurrentBill";
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
@@ -19,214 +19,92 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
   const handleWaterClose = () => setWaterModal(false);
   const handleMaintainanceClose = () => setMaintainanceModal(false);
   const handleTrashClose = () => setTrashModal(false);
-  const [selectedValue, setSelectedValue] = React.useState("");
   const getId=window.location.pathname.replace("/current-Bill/", "");
   const [billData, setBillData] = React.useState([]);
   const [url, setUrl] = React.useState([]);
+  const [errorMessage, setErrorMessage] = React.useState('');
   const dispatch = useDispatch();
-  const handleChange = (event) => {
-    setSelectedValue(event.target.value);
-  };
   const [inputs, setInputs] = React.useState({});
+  const currentDate = moment().format('DD-MM-YYYY');
   React.useEffect(() => {
     dispatch(GetTenantCurrentBill({ id:getId })).then((res) => {
       setBillData(res?.payload?.data?.data);
-      // setData(res?.payload?.data?.data[0]);
-      // setLandlordData(res?.payload?.data?.data[1]);
     });
   }, []);
-  const handleInputs = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
 
+const handleInputs = (e) => {
+  const { value, name } = e.target;
+  const maxBillAmount = billData?.electricity_data[0]?.kElectricTotalBill;
+
+  if (parseFloat(value) < 0) {
+    setInputs({ ...inputs, [name]: 0 });
+    setErrorMessage('Please enter a non-negative number');
+  } else if (parseFloat(value) > maxBillAmount) {
+    setErrorMessage(`Value cannot exceed ${maxBillAmount}`);
+  } else {
     setInputs({ ...inputs, [name]: value });
-  };
+    setErrorMessage('');
+  }
+};
   const imgUpload = (e) => {
     dispatch(ElectricPhoto(e.target.files[0])).then((res) => {
       setUrl(res?.payload?.data?.url);
     });
   };
-//   const handleBillKELECReading = (e) => {
-//     if (selectedValue === "byUnitReading") {
-//       let values = {
-//         kElectricPreviousReading: inputs?.kElectricPreviousReading,
-//         kElectricCurrentReading: inputs?.kElectricCurrentReading,
-//         kElectricPerUnit: inputs?.kElectricPerUnit,
-//         kElectricBillDate: moment(billDate).format("DD-MM-YYYY"),
-//         kElectricDueDate: dueDate?.kElectricReadingDueDate?.format("DD-MM-YYYY"),
-//         kElectricTotalUnits:
-//           inputs?.kElectricCurrentReading - inputs?.kElectricPreviousReading,
-//         kElectricTotalBill:
-//           parseInt(
-//             inputs?.kElectricCurrentReading - inputs?.kElectricPreviousReading
-//           ) * parseInt(inputs?.kElectricPerUnit) || 0,
-//         //extra fields
-//         kElectricBillImage: "",
-//         kElectricEnterBill: "",
-//         userId: localStorage.getItem("user_id"),
-//         userName: localStorage.getItem("name"),
-//         tenantId: paramsID,
-//       };
-//       if (
-//         values.kElectricPreviousReading &&
-//         values.kElectricCurrentReading &&
-//         values.kElectricPerUnit !== ""
-//       ) {
-//         dispatch(ElectricBill({ values })).then((res) => {
-//           if (res?.payload?.data?.message === "Reading Saved Successfully") {
-//             toast.success("K-Electric Bill Uploaded Successfully!", {
-//               autoClose: 300,
-//             });
 
-//             dispatch(
-//               GetOneUploadBill({
-//                 id:getId
-//               })
-//             ).then((res) => {
-//               setHasData(res?.payload?.data?.data);
-//               if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
-//                 // setFieldDisable(true)
-//               }
-//             });
-            
-//             //////saeed isay dekh lena
-//             // setInputs({
-//             //   kElectricPreviousReading: "",
-//             //   kElectricCurrentReading: "",
-//             //   kElectricPerUnit: "",
-//             //   // ... (other fields)
-//             // });
-
-//             // setInputs()
-//           } else {
-//             toast.error("Something Wrong", {
-//               position: "top-center",
-//             });
-//           }
-//         });
-//       } else {
-//         toast.error("Fill All Fields", {
-//           position: "top-center",
-//         });
-//       }
-//     } else if (selectedValue === "byBill") {
-//       let values = {
-//         kElectricEnterBill: inputs.kElectricEnterBill,
-//         kElectricBillDate: moment(billDate).format("DD-MM-YYYY"),
-//         kElectricDueDate: dueDate?.kElectricBillDueDate?.format("DD-MM-YYYY"),
-//         kElectricTotalBill: inputs.kElectricEnterBill,
-//         //extra fields
-//         kElectricBillImage: "",
-//         kElectricPreviousReading: "",
-//         kElectricCurrentReading: "",
-//         kElectricPerUnit: "",
-//         kElectricTotalUnits: "",
-//         userId: localStorage.getItem("user_id"),
-//         userName: localStorage.getItem("name"),
-//         tenantId: paramsID,
-//       };
-
-//       if (
-//         values?.kElectricEnterBill !== "" &&
-//         values?.kElectricEnterBill !== undefined
-//       ) {
-//         dispatch(ElectricBill({ values })).then((res) => {
-//           if (res?.payload?.data?.message === "Reading Saved Successfully") {
-//             toast.success("K-Electric Bill Uploaded Successfully!", {
-//               autoClose: 300,
-//             });
-//             dispatch(
-//               GetOneUploadBill({
-//                 userId: localStorage.getItem("user_id"),
-//                 paramsID: paramsID,
-//               })
-//             ).then((res) => {
-//               setHasData(res?.payload?.data?.data);
-//               if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
-//                 // setFieldDisable(true)
-//               }
-//             });
-//             //////saeed isay dekh lena
-//             // setInputs({
-//             //   kElectricPreviousReading: "",
-//             //   kElectricCurrentReading: "",
-//             //   kElectricPerUnit: "",
-//             //   // ... (other fields)
-//             // });
-
-//             // setInputs()
-//           } else {
-//             toast.error("Something Wrong", {
-//               position: "top-center",
-//             });
-//           }
-//         });
-//       } else {
-//         toast.error("Fill All Fields", {
-//           position: "top-center",
-//         });
-//       }
-//     } else if (selectedValue === "byPicture") {
-//       let values = {
-//         kElectricEnterBill: "",
-//         kElectricBillDate: "",
-//         kElectricDueDate: "",
-//         kElectricTotalBill: "",
-//         //extra fields
-//         kElectricBillImage: url,
-//         kElectricPreviousReading: "",
-//         kElectricCurrentReading: "",
-//         kElectricPerUnit: "",
-//         kElectricTotalUnits: "",
-//         userId: localStorage.getItem("user_id"),
-//         userName: localStorage.getItem("name"),
-//         tenantId: paramsID,
-//       };
-
-//       if (
-//         values?.kElectricBillImage !== "" &&
-//         values?.kElectricBillImage !== undefined
-//       ) {
-//         dispatch(ElectricBill({ values })).then((res) => {
-//           if (res?.payload?.data?.message === "Reading Saved Successfully") {
-//             toast.success("Image Uploaded Successfully!", {
-//               autoClose: 300,
-//             });
-//             setUrl();
-//             dispatch(
-//               GetOneUploadBill({
-//                 userId: localStorage.getItem("user_id"),
-//                 paramsID: paramsID,
-//               })
-//             ).then((res) => {
-//               setHasData(res?.payload?.data?.data);
-//               if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
-//                 // setFieldDisable(true)
-//               }
-//             });
-//             //////saeed isay dekh lena
-//             // setInputs({
-//             //   kElectricPreviousReading: "",
-//             //   kElectricCurrentReading: "",
-//             //   kElectricPerUnit: "",
-//             //   // ... (other fields)
-//             // });
-
-//             // setInputs()
-//           } else {
-//             toast.error("Something Wrong", {
-//               position: "top-center",
-//             });
-//           }
-//         });
-//       } else {
-//         toast.error("Upload Image", {
-//           position: "top-center",
-//         });
-//       }
-//     }
-//   };
-  const currentDate = moment().format('DD-MM-YYYY');
+  const handleBillKELECReading = (e) => {
+    console.log(url?.length,"javedURL")
+    if(url?.length>0){
+      let values = {
+        tenantMessage: inputs?.tenantMessageKElectric,
+        tenantAmount: inputs?.tenantAmountKElectric,
+        tenantBillImage:url,
+        currentDate:currentDate
+        // tenantBillDate: moment(billDate).format("DD-MM-YYYY"),
+        // userId: localStorage.getItem("user_id"),
+        // userName: localStorage.getItem("name"),
+        // tenantId: paramsID,
+      };
+      if (
+        values.tenantMessage &&
+        values.tenantAmount 
+      ) {
+        dispatch(UpdateElectricBill({id:getId,values})).then((res)=>{
+          console.log(res)
+        })
+ 
+      } else {
+        toast.error("Fill All Fields", {
+          position: "top-center",
+        });
+      }
+    }else{
+      let values = {
+        tenantMessage: inputs?.tenantMessageKElectric,
+        tenantAmount: inputs?.tenantAmountKElectric,
+        currentDate:currentDate
+        // tenantBillDate: moment(billDate).format("DD-MM-YYYY"),
+        // userId: localStorage.getItem("user_id"),
+        // userName: localStorage.getItem("name"),
+        // tenantId: paramsID,
+      };
+      if (
+        values.tenantMessage &&
+        values.tenantAmount 
+      ) {
+        dispatch(UpdateElectricBill({id:getId,values})).then((res)=>{
+          console.log(res)
+        })
+ 
+      } else {
+        toast.error("Fill All Fields", {
+          position: "top-center",
+        });
+      }
+    }
+    
+  };
+  
   return (
       <>
       {/* ////////////////////////////////////////////////////////////////////////////////K-ELECTRIC ////////////////////////////////////////////////////////*/}
@@ -284,12 +162,11 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                                     label="Amount"
                                     type="number"
                                     size="small"
-                                    // onChange={(e) => {
-                                    //   setKElectricBillEntry(e.target.value);
-                                    // }}
                                     name="tenantAmountKElectric"
+                                    value={inputs.tenantAmountKElectric || ''}
                                     onChange={handleInputs}
                                   />
+                                   {errorMessage && <FormHelperText error>{errorMessage}</FormHelperText>}
                                 </TableCell>
                                
                                 <TableCell>
@@ -342,7 +219,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
                               marginRight: 1,
                               background: "black",
                             }}
-                            // onClick={handleBillKELECReading}
+                            onClick={handleBillKELECReading}
                           >
                             SUBMIT
                           </Button>
@@ -854,7 +731,7 @@ export default function TransitionsModal({modalValue, setIsModalVisible,ssgcModa
           </ModalContent>
         </Fade>
       </Modal>
-
+      <ToastContainer />
     </div>
     </>
   );
