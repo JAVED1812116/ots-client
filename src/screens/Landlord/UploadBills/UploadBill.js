@@ -867,8 +867,9 @@ export default function UploadBill() {
                                 <TableCell>Previous Reading</TableCell>
                                 <TableCell>Current Reading</TableCell>
                                 <TableCell>Per Unit</TableCell>
-                                <TableCell>Bill Date</TableCell>
+                                <TableCell>Message</TableCell>
                                 <TableCell>Due Date</TableCell>
+                                <TableCell>Bill Date</TableCell>
                                 <TableCell align="right">Total Unit</TableCell>
                                 <TableCell>Total Bill</TableCell>
                                 <TableCell align="right"></TableCell>
@@ -920,18 +921,17 @@ export default function UploadBill() {
                                   />
                                 </TableCell>
                                 <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      disabled={true}
-                                      value={billDate}
-                                      onChange={(newValue) =>
-                                        setBillDate(newValue)
-                                      }
-                                    />
-                                  </LocalizationProvider>
+                                  <TextField
+                                    id="outlined-number"
+                                    label="Enter Message"
+                                    //
+                                    size="small"
+                                    // onChange={(e) => {
+                                    //   setKElectricBillEntry(e.target.value);
+                                    // }}
+                                    name="landlordMessageKElectricbyReading"
+                                    onChange={handleInputs}
+                                  />
                                 </TableCell>
                                 <TableCell>
                                   <LocalizationProvider
@@ -953,6 +953,21 @@ export default function UploadBill() {
                                     />
                                   </LocalizationProvider>
                                 </TableCell>
+                                <TableCell>
+                                  <LocalizationProvider
+                                    dateAdapter={AdapterDayjs}
+                                  >
+                                    <DatePicker
+                                      className="fulldate"
+                                      disabled={true}
+                                      value={billDate}
+                                      onChange={(newValue) =>
+                                        setBillDate(newValue)
+                                      }
+                                    />
+                                  </LocalizationProvider>
+                                </TableCell>
+                              
                                 <TableCell align="right">
                                   {inputs?.kElectricCurrentReading === undefined
                                     ? 0
@@ -989,8 +1004,9 @@ export default function UploadBill() {
                             <TableHead>
                               <TableRow>
                                 <TableCell>Enter Bill</TableCell>
-                                <TableCell>Bill Date</TableCell>
+                                <TableCell>Message</TableCell>
                                 <TableCell>Due Date</TableCell>
+                                <TableCell>Bill Date</TableCell>
                                 <TableCell>Total Bill</TableCell>
                               </TableRow>
                             </TableHead>
@@ -1016,18 +1032,17 @@ export default function UploadBill() {
                                   />
                                 </TableCell>
                                 <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      disabled={true}
-                                      value={billDate}
-                                      onChange={(newValue) =>
-                                        setBillDate(newValue)
-                                      }
-                                    />
-                                  </LocalizationProvider>
+                                  <TextField
+                                    id="outlined-number"
+                                    label="Enter Message"
+                                    //
+                                    size="small"
+                                    // onChange={(e) => {
+                                    //   setKElectricBillEntry(e.target.value);
+                                    // }}
+                                    name="landlordMessageKElectricbyBill"
+                                    onChange={handleInputs}
+                                  />
                                 </TableCell>
                                 <TableCell>
                                   <LocalizationProvider
@@ -1045,6 +1060,20 @@ export default function UploadBill() {
                                           newValue,
                                           "kElectricBillDueDate"
                                         )
+                                      }
+                                    />
+                                  </LocalizationProvider>
+                                </TableCell>
+                                <TableCell>
+                                  <LocalizationProvider
+                                    dateAdapter={AdapterDayjs}
+                                  >
+                                    <DatePicker
+                                      className="fulldate"
+                                      disabled={true}
+                                      value={billDate}
+                                      onChange={(newValue) =>
+                                        setBillDate(newValue)
                                       }
                                     />
                                   </LocalizationProvider>
@@ -1157,8 +1186,9 @@ export default function UploadBill() {
                                 <TableCell>Previous Reading</TableCell>
                                 <TableCell>Current Reading</TableCell>
                                 <TableCell>Per Unit</TableCell>
-                                <TableCell>Bill Date</TableCell>
+                                <TableCell>Message</TableCell>
                                 <TableCell>Due Date</TableCell>
+                                <TableCell>Bill Date</TableCell>
                                 <TableCell align="right">Total Unit</TableCell>
                                 <TableCell>Total Bill</TableCell>
                                 <TableCell align="right"></TableCell>
@@ -1198,19 +1228,18 @@ export default function UploadBill() {
                                     />
                                   </TableCell>
                                   <TableCell>
-                                    <LocalizationProvider
-                                      dateAdapter={AdapterDayjs}
-                                    >
-                                      <DatePicker
-                                        className="fulldate"
-                                        disabled={true}
-                                        value={billDate}
-                                        onChange={(newValue) =>
-                                          setBillDate(newValue)
-                                        }
-                                      />
-                                    </LocalizationProvider>
-                                  </TableCell>
+                                  <TextField
+                                    id="outlined-number"
+                                    label="Enter Message"
+                                    //
+                                    size="small"
+                                    // onChange={(e) => {
+                                    //   setKElectricBillEntry(e.target.value);
+                                    // }}
+                                    name="landlordMessageSsgcbyReading"
+                                    onChange={handleInputs}
+                                  />
+                                </TableCell>
                                   <TableCell>
                                   <LocalizationProvider
                                     dateAdapter={AdapterDayjs}
@@ -1231,6 +1260,20 @@ export default function UploadBill() {
                                     />
                                   </LocalizationProvider>
                                 </TableCell>
+                                <TableCell>
+                                    <LocalizationProvider
+                                      dateAdapter={AdapterDayjs}
+                                    >
+                                      <DatePicker
+                                        className="fulldate"
+                                        disabled={true}
+                                        value={billDate}
+                                        onChange={(newValue) =>
+                                          setBillDate(newValue)
+                                        }
+                                      />
+                                    </LocalizationProvider>
+                                  </TableCell>
                                   {/* <TableCell align="right">
                                     {historyRow.totalSsgUnit || 0}
                                   </TableCell> */}
@@ -1277,8 +1320,9 @@ export default function UploadBill() {
                             <TableHead>
                               <TableRow>
                                 <TableCell>Enter Bill</TableCell>
-                                <TableCell>Bill Date</TableCell>
+                                <TableCell>Message</TableCell>
                                 <TableCell>Due Date</TableCell>
+                                <TableCell>Bill Date</TableCell>
                                 <TableCell>Total Bill</TableCell>
                               </TableRow>
                             </TableHead>
@@ -1295,18 +1339,17 @@ export default function UploadBill() {
                                   />
                                 </TableCell>
                                 <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      disabled={true}
-                                      value={billDate}
-                                      onChange={(newValue) =>
-                                        setBillDate(newValue)
-                                      }
-                                    />
-                                  </LocalizationProvider>
+                                  <TextField
+                                    id="outlined-number"
+                                    label="Enter Message"
+                                    //
+                                    size="small"
+                                    // onChange={(e) => {
+                                    //   setKElectricBillEntry(e.target.value);
+                                    // }}
+                                    name="landlordMessageSsgcbyBill"
+                                    onChange={handleInputs}
+                                  />
                                 </TableCell>
                                 <TableCell>
                                   <LocalizationProvider
@@ -1324,6 +1367,20 @@ export default function UploadBill() {
                                           newValue,
                                           "ssgcBillDueDate"
                                         )
+                                      }
+                                    />
+                                  </LocalizationProvider>
+                                </TableCell>
+                                <TableCell>
+                                  <LocalizationProvider
+                                    dateAdapter={AdapterDayjs}
+                                  >
+                                    <DatePicker
+                                      className="fulldate"
+                                      disabled={true}
+                                      value={billDate}
+                                      onChange={(newValue) =>
+                                        setBillDate(newValue)
                                       }
                                     />
                                   </LocalizationProvider>
@@ -1428,8 +1485,9 @@ export default function UploadBill() {
                             <TableHead>
                               <TableRow>
                                 <TableCell>Enter Bill</TableCell>
-                                <TableCell>Bill Date</TableCell>
+                                <TableCell>Message</TableCell>
                                 <TableCell>Due Date</TableCell>
+                                <TableCell>Bill Date</TableCell>
                                 <TableCell>Total Bill</TableCell>
                               </TableRow>
                             </TableHead>
@@ -1446,18 +1504,17 @@ export default function UploadBill() {
                                   />
                                 </TableCell>
                                 <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      disabled={true}
-                                      value={billDate}
-                                      onChange={(newValue) =>
-                                        setBillDate(newValue)
-                                      }
-                                    />
-                                  </LocalizationProvider>
+                                  <TextField
+                                    id="outlined-number"
+                                    label="Enter Message"
+                                    //
+                                    size="small"
+                                    // onChange={(e) => {
+                                    //   setKElectricBillEntry(e.target.value);
+                                    // }}
+                                    name="landlordMessageWaterbyBill"
+                                    onChange={handleInputs}
+                                  />
                                 </TableCell>
                                 <TableCell>
                                   <LocalizationProvider
@@ -1475,6 +1532,20 @@ export default function UploadBill() {
                                           newValue,
                                           "waterBillDueDate"
                                         )
+                                      }
+                                    />
+                                  </LocalizationProvider>
+                                </TableCell>
+                                <TableCell>
+                                  <LocalizationProvider
+                                    dateAdapter={AdapterDayjs}
+                                  >
+                                    <DatePicker
+                                      className="fulldate"
+                                      disabled={true}
+                                      value={billDate}
+                                      onChange={(newValue) =>
+                                        setBillDate(newValue)
                                       }
                                     />
                                   </LocalizationProvider>
@@ -1580,8 +1651,9 @@ export default function UploadBill() {
                             <TableHead>
                               <TableRow>
                                 <TableCell>Enter Bill</TableCell>
-                                <TableCell>Bill Date</TableCell>
+                                <TableCell>Message</TableCell>
                                 <TableCell>Due Date</TableCell>
+                                <TableCell>Bill Date</TableCell>
                                 <TableCell>Total Bill</TableCell>
                               </TableRow>
                             </TableHead>
@@ -1598,18 +1670,17 @@ export default function UploadBill() {
                                   />
                                 </TableCell>
                                 <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      disabled={true}
-                                      value={billDate} // Set the value to the current date
-                                      onChange={(newValue) =>
-                                        setBillDate(newValue)
-                                      }
-                                    />
-                                  </LocalizationProvider>
+                                  <TextField
+                                    id="outlined-number"
+                                    label="Enter Message"
+                                    //
+                                    size="small"
+                                    // onChange={(e) => {
+                                    //   setKElectricBillEntry(e.target.value);
+                                    // }}
+                                    name="landlordMessageMaintainancebyBill"
+                                    onChange={handleInputs}
+                                  />
                                 </TableCell>
                                 <TableCell>
                                   <LocalizationProvider
@@ -1627,6 +1698,20 @@ export default function UploadBill() {
                                           newValue,
                                           "maintananceDueDate"
                                         )
+                                      }
+                                    />
+                                  </LocalizationProvider>
+                                </TableCell>
+                                <TableCell>
+                                  <LocalizationProvider
+                                    dateAdapter={AdapterDayjs}
+                                  >
+                                    <DatePicker
+                                      className="fulldate"
+                                      disabled={true}
+                                      value={billDate} // Set the value to the current date
+                                      onChange={(newValue) =>
+                                        setBillDate(newValue)
                                       }
                                     />
                                   </LocalizationProvider>
@@ -1735,8 +1820,9 @@ export default function UploadBill() {
                             <TableHead>
                               <TableRow>
                                 <TableCell>Enter Bill</TableCell>
-                                <TableCell>Bill Date</TableCell>
+                                <TableCell>Message</TableCell>
                                 <TableCell>Due Date</TableCell>
+                                <TableCell>Bill Date</TableCell>
                                 <TableCell>Total Bill</TableCell>
                               </TableRow>
                             </TableHead>
@@ -1756,18 +1842,17 @@ export default function UploadBill() {
                                   />
                                 </TableCell>
                                 <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      disabled={true}
-                                      value={billDate}
-                                      onChange={(newValue) =>
-                                        setBillDate(newValue)
-                                      }
-                                    />
-                                  </LocalizationProvider>
+                                  <TextField
+                                    id="outlined-number"
+                                    label="Enter Message"
+                                    //
+                                    size="small"
+                                    // onChange={(e) => {
+                                    //   setKElectricBillEntry(e.target.value);
+                                    // }}
+                                    name="landlordMessageTrashbyBill"
+                                    onChange={handleInputs}
+                                  />
                                 </TableCell>
                                 <TableCell>
                                   <LocalizationProvider
@@ -1785,6 +1870,20 @@ export default function UploadBill() {
                                           newValue,
                                           "trashDueDate"
                                         )
+                                      }
+                                    />
+                                  </LocalizationProvider>
+                                </TableCell>
+                                <TableCell>
+                                  <LocalizationProvider
+                                    dateAdapter={AdapterDayjs}
+                                  >
+                                    <DatePicker
+                                      className="fulldate"
+                                      disabled={true}
+                                      value={billDate}
+                                      onChange={(newValue) =>
+                                        setBillDate(newValue)
                                       }
                                     />
                                   </LocalizationProvider>
