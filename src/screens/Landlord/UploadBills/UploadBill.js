@@ -1115,17 +1115,42 @@ export default function UploadBill() {
                             </Button>
 
                             {url?.length > 0 ? (
+                              <>
+                               <TableCell>
+                                  <TextField
+                                    id="outlined-number"
+                                    label="Amount"
+                                    type="number"
+                                    size="small"
+                                    name="kElectricAmountbyPicture"
+                                    onChange={handleInputs}
+                                  />
+                                </TableCell>
+                             <TableCell>
+                                <TextField
+                                  id="outlined-number"
+                                  label="Enter Message"
+                                  //
+                                  size="small"
+                                  // onChange={(e) => {
+                                  //   setKElectricBillEntry(e.target.value);
+                                  // }}
+                                  name="landlordMessageKElectricbyPicture"
+                                  onChange={handleInputs}
+                                />
+                              </TableCell>
+                              <TableCell>
                               <Button
                                 variant="contained"
                                 sx={{
-                                  marginTop: 2,
-                                  marginRight: 1,
                                   background: "black",
                                 }}
                                 onClick={handleBillKELECReading}
                               >
                                 Post
                               </Button>
+                              </TableCell>
+                              </>
                             ) : (
                               ""
                             )}
@@ -1422,17 +1447,44 @@ export default function UploadBill() {
                               />
                             </Button>
                             {url?.length > 0 ? (
+                              <>
+                                 <TableCell>
+                                  <TextField
+                                    id="outlined-number"
+                                    label="Amount"
+                                    type="number"
+                                    size="small"
+                                    name="ssgcAmountbyPicture"
+                                    onChange={handleInputs}
+                                  />
+                                </TableCell>
+                             <TableCell>
+                                <TextField
+                                  id="outlined-number"
+                                  label="Enter Message"
+                                  //
+                                  size="small"
+                                  // onChange={(e) => {
+                                  //   setKElectricBillEntry(e.target.value);
+                                  // }}
+                                  name="landlordMessageSsgcbyPicture"
+                                  onChange={handleInputs}
+                                />
+                              </TableCell>
+                              <TableCell>
                               <Button
                                 variant="contained"
                                 sx={{
-                                  marginTop: 2,
-                                  marginRight: 1,
+                                  // marginTop: 2,
+                                  // marginRight: 1,
                                   background: "black",
                                 }}
                                 onClick={handleBillSSGCReading}
                               >
                                 Post
                               </Button>
+                              </TableCell>
+                              </>
                             ) : (
                               ""
                             )}
@@ -1587,17 +1639,42 @@ export default function UploadBill() {
                               />
                             </Button>
                             {url?.length > 0 ? (
+                              <>
+                                 <TableCell>
+                                  <TextField
+                                    id="outlined-number"
+                                    label="Amount"
+                                    type="number"
+                                    size="small"
+                                    name="ssgcAmountbyPicture"
+                                    onChange={handleInputs}
+                                  />
+                                </TableCell>
+                             <TableCell>
+                                <TextField
+                                  id="outlined-number"
+                                  label="Enter Message"
+                                  //
+                                  size="small"
+                                  // onChange={(e) => {
+                                  //   setKElectricBillEntry(e.target.value);
+                                  // }}
+                                  name="landlordMessageWaterbyPicture"
+                                  onChange={handleInputs}
+                                />
+                              </TableCell>
+                              <TableCell>
                               <Button
                                 variant="contained"
                                 sx={{
-                                  marginTop: 2,
-                                  marginRight: 1,
                                   background: "black",
                                 }}
                                 onClick={handleBillWaterReading}
                               >
                                 Post
                               </Button>
+                              </TableCell>
+                              </>
                             ) : (
                               ""
                             )}
@@ -1753,6 +1830,31 @@ export default function UploadBill() {
                               />
                             </Button>
                             {url?.length > 0 ? (
+                              <>
+                                 <TableCell>
+                                  <TextField
+                                    id="outlined-number"
+                                    label="Amount"
+                                    type="number"
+                                    size="small"
+                                    name="maintainanceAmountbyPicture"
+                                    onChange={handleInputs}
+                                  />
+                                </TableCell>
+                             <TableCell>
+                                <TextField
+                                  id="outlined-number"
+                                  label="Enter Message"
+                                  //
+                                  size="small"
+                                  // onChange={(e) => {
+                                  //   setKElectricBillEntry(e.target.value);
+                                  // }}
+                                  name="landlordMessageMaintainancebyPicture"
+                                  onChange={handleInputs}
+                                />
+                              </TableCell>
+                              <TableCell>
                               <Button
                                 variant="contained"
                                 sx={{
@@ -1764,6 +1866,8 @@ export default function UploadBill() {
                               >
                                 Post
                               </Button>
+                              </TableCell>
+                              </>
                             ) : (
                               ""
                             )}
@@ -1925,6 +2029,31 @@ export default function UploadBill() {
                               />
                             </Button>
                             {url?.length > 0 ? (
+                              <>
+                                 <TableCell>
+                                  <TextField
+                                    id="outlined-number"
+                                    label="Amount"
+                                    type="number"
+                                    size="small"
+                                    name="trashAmountbyPicture"
+                                    onChange={handleInputs}
+                                  />
+                                </TableCell>
+                             <TableCell>
+                                <TextField
+                                  id="outlined-number"
+                                  label="Enter Message"
+                                  //
+                                  size="small"
+                                  // onChange={(e) => {
+                                  //   setKElectricBillEntry(e.target.value);
+                                  // }}
+                                  name="landlordMessageTrashbyPicture"
+                                  onChange={handleInputs}
+                                />
+                              </TableCell>
+                              <TableCell>
                               <Button
                                 variant="contained"
                                 sx={{
@@ -1936,6 +2065,8 @@ export default function UploadBill() {
                               >
                                 Post
                               </Button>
+                              </TableCell>
+                              </>
                             ) : (
                               ""
                             )}
