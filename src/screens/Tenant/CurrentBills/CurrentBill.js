@@ -765,7 +765,7 @@ export default function CurrentBill() {
                     <div>
                       {console.log(billData,"javed show")}
                       {/* {
-                        billData?.electricity===true? */}
+                       billData?.electricity===true? */}
                         <div>
                         <Table size="small" aria-label="purchases">
                             <TableHead>

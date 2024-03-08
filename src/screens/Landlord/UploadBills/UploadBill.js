@@ -53,6 +53,7 @@ export default function UploadBill() {
   const [perUnitSsgCharge, setPerUnitSsgCharges] = useState();
   const [hasData, setHasData] = useState({});
   const [url, setUrl] = useState([]);
+  const [errorMessage, setErrorMessage] = React.useState('');
 
   //////////////MAINTAINANCECHARGES////////////
   const [maintainanceCharge, setMaintainanceCharge] = useState();
@@ -105,7 +106,14 @@ export default function UploadBill() {
       const value = e.target.value;
       const name = e.target.name;
 
-      setInputs({ ...inputs, [name]: value });
+      // setInputs({ ...inputs, [name]: value });
+      if (parseFloat(value) < 0) {
+        setInputs({ ...inputs, [name]: 0 });
+        setErrorMessage('Please enter a non-negative number');
+      }  else {
+        setInputs({ ...inputs, [name]: value });
+        setErrorMessage('');
+      }
     };
     const handleDateInputs = (newValue, name) => {
       setDueDate((prevDueDate) => ({
@@ -1114,7 +1122,7 @@ export default function UploadBill() {
                               />
                             </Button>
 
-                            {url?.length > 0 ? (
+                           
                               <>
                                <TableCell>
                                   <TextField
@@ -1139,6 +1147,7 @@ export default function UploadBill() {
                                   onChange={handleInputs}
                                 />
                               </TableCell>
+                              {url?.length > 0 ? (
                               <TableCell>
                               <Button
                                 variant="contained"
@@ -1150,10 +1159,10 @@ export default function UploadBill() {
                                 Post
                               </Button>
                               </TableCell>
-                              </>
                             ) : (
                               ""
                             )}
+                              </>
                           </Stack>
                         </div>
                       )}
@@ -1446,7 +1455,7 @@ export default function UploadBill() {
                                 onChange={(e) => imgUpload(e)}
                               />
                             </Button>
-                            {url?.length > 0 ? (
+                            
                               <>
                                  <TableCell>
                                   <TextField
@@ -1471,6 +1480,7 @@ export default function UploadBill() {
                                   onChange={handleInputs}
                                 />
                               </TableCell>
+                              {url?.length > 0 ? (
                               <TableCell>
                               <Button
                                 variant="contained"
@@ -1484,10 +1494,10 @@ export default function UploadBill() {
                                 Post
                               </Button>
                               </TableCell>
+                              ) : (
+                                ""
+                              )}
                               </>
-                            ) : (
-                              ""
-                            )}
                           </Stack>
                         </div>
                       )}
@@ -1638,7 +1648,7 @@ export default function UploadBill() {
                                 onChange={(e) => imgUpload(e)}
                               />
                             </Button>
-                            {url?.length > 0 ? (
+                            
                               <>
                                  <TableCell>
                                   <TextField
@@ -1663,6 +1673,7 @@ export default function UploadBill() {
                                   onChange={handleInputs}
                                 />
                               </TableCell>
+                              {url?.length > 0 ? (
                               <TableCell>
                               <Button
                                 variant="contained"
@@ -1674,10 +1685,10 @@ export default function UploadBill() {
                                 Post
                               </Button>
                               </TableCell>
-                              </>
                             ) : (
                               ""
                             )}
+                              </>
                           </Stack>
                         </div>
                       )}
@@ -1829,7 +1840,7 @@ export default function UploadBill() {
                                 onChange={(e) => imgUpload(e)}
                               />
                             </Button>
-                            {url?.length > 0 ? (
+                            
                               <>
                                  <TableCell>
                                   <TextField
@@ -1854,6 +1865,7 @@ export default function UploadBill() {
                                   onChange={handleInputs}
                                 />
                               </TableCell>
+                              {url?.length > 0 ? (
                               <TableCell>
                               <Button
                                 variant="contained"
@@ -1867,10 +1879,10 @@ export default function UploadBill() {
                                 Post
                               </Button>
                               </TableCell>
-                              </>
                             ) : (
                               ""
                             )}
+                              </>
                           </Stack>
                         </div>
                       )}
@@ -2028,8 +2040,7 @@ export default function UploadBill() {
                                 onChange={(e) => imgUpload(e)}
                               />
                             </Button>
-                            {url?.length > 0 ? (
-                              <>
+                           
                                  <TableCell>
                                   <TextField
                                     id="outlined-number"
@@ -2066,10 +2077,7 @@ export default function UploadBill() {
                                 Post
                               </Button>
                               </TableCell>
-                              </>
-                            ) : (
-                              ""
-                            )}
+                            
                           </Stack>
                         </div>
                       )}
