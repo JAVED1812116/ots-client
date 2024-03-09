@@ -116,7 +116,7 @@ export default function AllRoutes() {
             element={<TenantFunctionality />}
           />
           <Route path="/agreement/:id?/:id?" element={<Agreement />} />
-          <Route path="/upload-Bill/:id?/:id?" element={<UploadBill />} />
+          <Route path="/upload-Bill/:tenantId?/:flatId?" element={<UploadBill />} />
           <Route
             path="/previous-bill/:id?/:id?"
             element={<PreviousBillLandlordPage />}

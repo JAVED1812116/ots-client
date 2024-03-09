@@ -63,8 +63,9 @@ export default function UploadBill() {
     kElectricCurrentReading: "",
     kElectricPerUnit: "",
   });
-  const { id } = useParams();
-  let paramsID = id;
+  const { tenantId, flatId } = useParams();
+  let paramsID = tenantId;
+  let flatID = flatId;
   const getId=window.location.pathname.replace("/upload-Bill/", "")
   const handleInputs = (e) => {
     const value = e.target.value;
@@ -149,6 +150,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
+          flatId: flatID,
         };
         if (
           values.kElectricPreviousReading &&
@@ -208,6 +210,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
+          flatId: flatID,
         };
 
         if (
@@ -266,6 +269,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
+          flatId: flatID,
         };
 
         if (
@@ -330,6 +334,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
+          flatId: flatID,
         };
         if (
           values?.currentReadingSsg &&
@@ -388,6 +393,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
+          flatId: flatID,
         };
 
         if (
@@ -445,6 +451,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
+          flatId: flatID,
           landlordMessage: inputs.landlordMessage,
         };
         if (
@@ -503,6 +510,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
+          flatId: flatID,
         };
         if (
           values?.waterEnterBill !== "" &&
@@ -556,6 +564,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
+          flatId: flatID,
         };
         if (
           values?.waterBillImage !== "" &&
@@ -613,6 +622,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
+          flatId: flatID,
         };
         if (
           values?.maintananceEnterBill !== "" &&
@@ -665,6 +675,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
+          flatId: flatID,
           landlordMessage: inputs.landlordMessage,
         };
         if (
@@ -723,6 +734,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
+          flatId: flatID,
         };
         if (
           values?.trashEnterBill !== "" &&
@@ -775,6 +787,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
+          flatId: flatID,
           landlordMessage: inputs.landlordMessage,
         };
         if (
