@@ -134,7 +134,7 @@ export default function UploadBill() {
           kElectricPreviousReading: inputs?.kElectricPreviousReading,
           kElectricCurrentReading: inputs?.kElectricCurrentReading,
           kElectricPerUnit: inputs?.kElectricPerUnit,
-          landlordMessageKElectricbyReading: inputs?.landlordMessageKElectricbyReading,
+          landlordMessage: inputs?.landlordMessage,
           kElectricBillDate: moment(billDate).format("DD-MM-YYYY"),
           kElectricDueDate: dueDate?.kElectricReadingDueDate?.format("DD-MM-YYYY"),
           kElectricTotalUnits:
@@ -198,7 +198,7 @@ export default function UploadBill() {
           kElectricBillDate: moment(billDate).format("DD-MM-YYYY"),
           kElectricDueDate: dueDate?.kElectricBillDueDate?.format("DD-MM-YYYY"),
           kElectricTotalBill: inputs.kElectricEnterBill,
-          landlordMessageKElectricbyBill: inputs.landlordMessageKElectricbyBill,
+          landlordMessage: inputs.landlordMessage,
           //extra fields
           kElectricBillImage: "",
           kElectricPreviousReading: "",
@@ -258,7 +258,7 @@ export default function UploadBill() {
           kElectricTotalBill: "",
           //extra fields
           kElectricBillImage: url,
-          landlordMessageKElectricbyPicture: inputs.landlordMessageKElectricbyPicture,
+          landlordMessage: inputs.landlordMessage,
           kElectricPreviousReading: "",
           kElectricCurrentReading: "",
           kElectricPerUnit: "",
@@ -317,7 +317,7 @@ export default function UploadBill() {
           currentReadingSsg: inputs.currentReadingSsg,
           previousReadingSsg: inputs.previousReadingSsg,
           perUnitSsgCharges: inputs.perUnitSsgCharges,
-          landlordMessageSsgcbyReading: inputs.landlordMessageSsgcbyReading,
+          landlordMessage: inputs.landlordMessage,
           ssgcBillDate: moment(billDate).format("DD-MM-YYYY"),
           ssgcDueDate: dueDate?.ssgcReadingDueDate?.format("DD-MM-YYYY"),
           ssgcTotalUnits: inputs.currentReadingSsg - inputs.previousReadingSsg,
@@ -378,7 +378,7 @@ export default function UploadBill() {
           ssgcBillDate: moment(billDate).format("DD-MM-YYYY"),
           ssgcDueDate: dueDate?.ssgcBillDueDate?.format("DD-MM-YYYY"),
           ssgcTotalBill: inputs.ssgcEnterBill,
-          landlordMessageSsgcbyBill: inputs.landlordMessageSsgcbyBill,
+          landlordMessage: inputs.landlordMessage,
           //extra fields
           ssgcBillImage: "",
           previousReadingSsg: "",
@@ -445,7 +445,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
-          landlordMessageSsgcbyPicture: inputs.landlordMessageSsgcbyPicture,
+          landlordMessage: inputs.landlordMessage,
         };
         if (
           values?.ssgcBillImage !== "" &&
@@ -497,7 +497,7 @@ export default function UploadBill() {
           waterBillDate: moment(billDate).format("DD-MM-YYYY"),
           waterDueDate: dueDate?.waterBillDueDate?.format("DD-MM-YYYY"),
           waterTotalBill: inputs.waterEnterBill,
-          landlordMessageWaterbyBill: inputs.landlordMessageWaterbyBill,
+          landlordMessage: inputs.landlordMessage,
           //extra fields
           waterBillImage: "",
           userId: localStorage.getItem("user_id"),
@@ -552,7 +552,7 @@ export default function UploadBill() {
           waterTotalBill: "",
           //extra fields
           waterBillImage: url,
-          landlordMessageWaterbyPicture: inputs.landlordMessageWaterbyPicture,
+          landlordMessage: inputs.landlordMessage,
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
@@ -607,7 +607,7 @@ export default function UploadBill() {
           maintananceBillDate: moment(billDate).format("DD-MM-YYYY"),
           maintananceDueDate: dueDate?.maintananceDueDate?.format("DD-MM-YYYY"),
           maintananceTotalBill: inputs.maintananceEnterBill,
-          landlordMessageMaintainancebyBill: inputs.landlordMessageMaintainancebyBill,
+          landlordMessage: inputs.landlordMessage,
           //extra fields
           maintananceBillImage: "",
           userId: localStorage.getItem("user_id"),
@@ -665,7 +665,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
-          landlordMessageMaintainancebyPicture: inputs.landlordMessageMaintainancebyPicture,
+          landlordMessage: inputs.landlordMessage,
         };
         if (
           values?.maintananceBillImage !== "" &&
@@ -717,7 +717,7 @@ export default function UploadBill() {
           trashBillDate: moment(billDate).format("DD-MM-YYYY"),
           trashDueDate: dueDate?.trashDueDate?.format("DD-MM-YYYY"),
           trashTotalBill: inputs.trashEnterBill,
-          landlordMessageTrashbyBill: inputs.landlordMessageTrashbyBill,
+          landlordMessage: inputs.landlordMessage,
           //extra fields
           trashBillImage: "",
           userId: localStorage.getItem("user_id"),
@@ -775,7 +775,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
-          landlordMessageTrashbyPicture: inputs.landlordMessageTrashbyPicture,
+          landlordMessage: inputs.landlordMessage,
         };
         if (
           values?.trashBillImage !== "" &&
@@ -947,7 +947,7 @@ export default function UploadBill() {
                                     // onChange={(e) => {
                                     //   setKElectricBillEntry(e.target.value);
                                     // }}
-                                    name="landlordMessageKElectricbyReading"
+                                    name="landlordMessage"
                                     onChange={handleInputs}
                                   />
                                 </TableCell>
@@ -1058,7 +1058,7 @@ export default function UploadBill() {
                                     // onChange={(e) => {
                                     //   setKElectricBillEntry(e.target.value);
                                     // }}
-                                    name="landlordMessageKElectricbyBill"
+                                    name="landlordMessage"
                                     onChange={handleInputs}
                                   />
                                 </TableCell>
@@ -1153,7 +1153,7 @@ export default function UploadBill() {
                                   // onChange={(e) => {
                                   //   setKElectricBillEntry(e.target.value);
                                   // }}
-                                  name="landlordMessageKElectricbyPicture"
+                                  name="landlordMessage"
                                   onChange={handleInputs}
                                 />
                               </TableCell>
@@ -1280,7 +1280,7 @@ export default function UploadBill() {
                                     // onChange={(e) => {
                                     //   setKElectricBillEntry(e.target.value);
                                     // }}
-                                    name="landlordMessageSsgcbyReading"
+                                    name="landlordMessage"
                                     onChange={handleInputs}
                                   />
                                 </TableCell>
@@ -1391,7 +1391,7 @@ export default function UploadBill() {
                                     // onChange={(e) => {
                                     //   setKElectricBillEntry(e.target.value);
                                     // }}
-                                    name="landlordMessageSsgcbyBill"
+                                    name="landlordMessage"
                                     onChange={handleInputs}
                                   />
                                 </TableCell>
@@ -1486,7 +1486,7 @@ export default function UploadBill() {
                                   // onChange={(e) => {
                                   //   setKElectricBillEntry(e.target.value);
                                   // }}
-                                  name="landlordMessageSsgcbyPicture"
+                                  name="landlordMessage"
                                   onChange={handleInputs}
                                 />
                               </TableCell>
@@ -1584,7 +1584,7 @@ export default function UploadBill() {
                                     // onChange={(e) => {
                                     //   setKElectricBillEntry(e.target.value);
                                     // }}
-                                    name="landlordMessageWaterbyBill"
+                                    name="landlordMessage"
                                     onChange={handleInputs}
                                   />
                                 </TableCell>
@@ -1679,7 +1679,7 @@ export default function UploadBill() {
                                   // onChange={(e) => {
                                   //   setKElectricBillEntry(e.target.value);
                                   // }}
-                                  name="landlordMessageWaterbyPicture"
+                                  name="landlordMessage"
                                   onChange={handleInputs}
                                 />
                               </TableCell>
@@ -1776,7 +1776,7 @@ export default function UploadBill() {
                                     // onChange={(e) => {
                                     //   setKElectricBillEntry(e.target.value);
                                     // }}
-                                    name="landlordMessageMaintainancebyBill"
+                                    name="landlordMessage"
                                     onChange={handleInputs}
                                   />
                                 </TableCell>
@@ -1871,7 +1871,7 @@ export default function UploadBill() {
                                   // onChange={(e) => {
                                   //   setKElectricBillEntry(e.target.value);
                                   // }}
-                                  name="landlordMessageMaintainancebyPicture"
+                                  name="landlordMessage"
                                   onChange={handleInputs}
                                 />
                               </TableCell>
@@ -1976,7 +1976,7 @@ export default function UploadBill() {
                                     // onChange={(e) => {
                                     //   setKElectricBillEntry(e.target.value);
                                     // }}
-                                    name="landlordMessageTrashbyBill"
+                                    name="landlordMessage"
                                     onChange={handleInputs}
                                   />
                                 </TableCell>
@@ -2070,7 +2070,7 @@ export default function UploadBill() {
                                   // onChange={(e) => {
                                   //   setKElectricBillEntry(e.target.value);
                                   // }}
-                                  name="landlordMessageTrashbyPicture"
+                                  name="landlordMessage"
                                   onChange={handleInputs}
                                 />
                               </TableCell>
