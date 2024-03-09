@@ -127,13 +127,14 @@ export default function UploadBill() {
         setUrl(res?.payload?.data?.url);
       });
     };
-    
+    console.log(inputs,"inputsinputs")
     const handleBillKELECReading = (e) => {
       if (selectedValue === "byUnitReading") {
         let values = {
           kElectricPreviousReading: inputs?.kElectricPreviousReading,
           kElectricCurrentReading: inputs?.kElectricCurrentReading,
           kElectricPerUnit: inputs?.kElectricPerUnit,
+          landlordMessageKElectricbyReading: inputs?.landlordMessageKElectricbyReading,
           kElectricBillDate: moment(billDate).format("DD-MM-YYYY"),
           kElectricDueDate: dueDate?.kElectricReadingDueDate?.format("DD-MM-YYYY"),
           kElectricTotalUnits:
@@ -197,6 +198,7 @@ export default function UploadBill() {
           kElectricBillDate: moment(billDate).format("DD-MM-YYYY"),
           kElectricDueDate: dueDate?.kElectricBillDueDate?.format("DD-MM-YYYY"),
           kElectricTotalBill: inputs.kElectricEnterBill,
+          landlordMessageKElectricbyBill: inputs.landlordMessageKElectricbyBill,
           //extra fields
           kElectricBillImage: "",
           kElectricPreviousReading: "",
@@ -256,6 +258,7 @@ export default function UploadBill() {
           kElectricTotalBill: "",
           //extra fields
           kElectricBillImage: url,
+          landlordMessageKElectricbyPicture: inputs.landlordMessageKElectricbyPicture,
           kElectricPreviousReading: "",
           kElectricCurrentReading: "",
           kElectricPerUnit: "",
@@ -310,11 +313,11 @@ export default function UploadBill() {
     };
     const handleBillSSGCReading = (e) => {
       if (selectedValue === "byGasUnitReading") {
-        {console.log(inputs,"inputs123")}
         let values = {
           currentReadingSsg: inputs.currentReadingSsg,
           previousReadingSsg: inputs.previousReadingSsg,
           perUnitSsgCharges: inputs.perUnitSsgCharges,
+          landlordMessageSsgcbyReading: inputs.landlordMessageSsgcbyReading,
           ssgcBillDate: moment(billDate).format("DD-MM-YYYY"),
           ssgcDueDate: dueDate?.ssgcReadingDueDate?.format("DD-MM-YYYY"),
           ssgcTotalUnits: inputs.currentReadingSsg - inputs.previousReadingSsg,
@@ -375,6 +378,7 @@ export default function UploadBill() {
           ssgcBillDate: moment(billDate).format("DD-MM-YYYY"),
           ssgcDueDate: dueDate?.ssgcBillDueDate?.format("DD-MM-YYYY"),
           ssgcTotalBill: inputs.ssgcEnterBill,
+          landlordMessageSsgcbyBill: inputs.landlordMessageSsgcbyBill,
           //extra fields
           ssgcBillImage: "",
           previousReadingSsg: "",
@@ -441,6 +445,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
+          landlordMessageSsgcbyPicture: inputs.landlordMessageSsgcbyPicture,
         };
         if (
           values?.ssgcBillImage !== "" &&
@@ -492,6 +497,7 @@ export default function UploadBill() {
           waterBillDate: moment(billDate).format("DD-MM-YYYY"),
           waterDueDate: dueDate?.waterBillDueDate?.format("DD-MM-YYYY"),
           waterTotalBill: inputs.waterEnterBill,
+          landlordMessageWaterbyBill: inputs.landlordMessageWaterbyBill,
           //extra fields
           waterBillImage: "",
           userId: localStorage.getItem("user_id"),
@@ -546,6 +552,7 @@ export default function UploadBill() {
           waterTotalBill: "",
           //extra fields
           waterBillImage: url,
+          landlordMessageWaterbyPicture: inputs.landlordMessageWaterbyPicture,
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
@@ -600,6 +607,7 @@ export default function UploadBill() {
           maintananceBillDate: moment(billDate).format("DD-MM-YYYY"),
           maintananceDueDate: dueDate?.maintananceDueDate?.format("DD-MM-YYYY"),
           maintananceTotalBill: inputs.maintananceEnterBill,
+          landlordMessageMaintainancebyBill: inputs.landlordMessageMaintainancebyBill,
           //extra fields
           maintananceBillImage: "",
           userId: localStorage.getItem("user_id"),
@@ -657,6 +665,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
+          landlordMessageMaintainancebyPicture: inputs.landlordMessageMaintainancebyPicture,
         };
         if (
           values?.maintananceBillImage !== "" &&
@@ -708,6 +717,7 @@ export default function UploadBill() {
           trashBillDate: moment(billDate).format("DD-MM-YYYY"),
           trashDueDate: dueDate?.trashDueDate?.format("DD-MM-YYYY"),
           trashTotalBill: inputs.trashEnterBill,
+          landlordMessageTrashbyBill: inputs.landlordMessageTrashbyBill,
           //extra fields
           trashBillImage: "",
           userId: localStorage.getItem("user_id"),
@@ -765,6 +775,7 @@ export default function UploadBill() {
           userId: localStorage.getItem("user_id"),
           userName: localStorage.getItem("name"),
           tenantId: paramsID,
+          landlordMessageTrashbyPicture: inputs.landlordMessageTrashbyPicture,
         };
         if (
           values?.trashBillImage !== "" &&
@@ -809,7 +820,6 @@ export default function UploadBill() {
         }
       }
     };
-    console.log(hasData,"hasData")
     return (
       <React.Fragment>
         <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
