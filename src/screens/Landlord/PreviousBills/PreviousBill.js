@@ -356,7 +356,7 @@ function Row(props) {
                   <TableHead>
                     <TableRow>
                       <DataGrid
-                        rows={props.electricity}
+                        rows={props?.electricity}
                         columns={electricityColumns}
                         initialState={{
                           pagination: {
@@ -364,6 +364,7 @@ function Row(props) {
                           },
                         }}
                         pageSizeOptions={[5, 10]}
+                        getRowId={(row) => row._id} 
                         // checkboxSelection
                       />
                     </TableRow>
@@ -374,7 +375,7 @@ function Row(props) {
                   <TableHead>
                     <TableRow>
                       <DataGrid
-                        rows={props.ssgc}
+                        rows={props?.ssgc}
                         columns={ssgcColumns}
                         initialState={{
                           pagination: {
@@ -392,7 +393,7 @@ function Row(props) {
                   <TableHead>
                     <TableRow>
                       <DataGrid
-                        rows={props.water}
+                        rows={props?.water}
                         columns={waterColumns}
                         initialState={{
                           pagination: {
@@ -410,7 +411,7 @@ function Row(props) {
                   <TableHead>
                     <TableRow>
                       <DataGrid
-                        rows={props.maintainance}
+                        rows={props?.maintainance}
                         columns={maintainanceColumns}
                         initialState={{
                           pagination: {
@@ -428,7 +429,7 @@ function Row(props) {
                   <TableHead>
                     <TableRow>
                       <DataGrid
-                        rows={props.trash}
+                        rows={props?.trash}
                         columns={trashColumns}
                         initialState={{
                           pagination: {
