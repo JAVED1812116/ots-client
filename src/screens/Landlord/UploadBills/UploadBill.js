@@ -224,8 +224,7 @@ export default function UploadBill() {
               });
               dispatch(
                 GetOneUploadBill({
-                  userId: localStorage.getItem("user_id"),
-                  paramsID: paramsID,
+                 id:getId
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -284,8 +283,7 @@ export default function UploadBill() {
               setUrl();
               dispatch(
                 GetOneUploadBill({
-                  userId: localStorage.getItem("user_id"),
-                  paramsID: paramsID,
+                 id:getId
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -348,8 +346,7 @@ export default function UploadBill() {
               });
               dispatch(
                 GetOneUploadBill({
-                  userId: localStorage.getItem("user_id"),
-                  paramsID: paramsID,
+                 id:getId
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -407,8 +404,7 @@ export default function UploadBill() {
               });
               dispatch(
                 GetOneUploadBill({
-                  userId: localStorage.getItem("user_id"),
-                  paramsID: paramsID,
+                 id:getId
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -466,8 +462,7 @@ export default function UploadBill() {
               setUrl();
               dispatch(
                 GetOneUploadBill({
-                  userId: localStorage.getItem("user_id"),
-                  paramsID: paramsID,
+                 id:getId
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -512,21 +507,24 @@ export default function UploadBill() {
           tenantId: paramsID,
           flatId: flatID,
         };
+        console.log(flatID,"javedFlatID")
+        console.log(paramsID,"javedParamsID")
+        console.log(localStorage.getItem("user_id"),"javedLocalStorage")
         if (
           values?.waterEnterBill !== "" &&
           values?.waterEnterBill !== undefined
         ) {
           dispatch(WaterReadings({ values })).then((res) => {
+            console.log(res?.payload?.data,"javedres")
             if (res?.payload?.data?.message === "Reading Saved Successfully") {
               toast.success("Water Bill Uploaded Successfully!", {
                 autoClose: 300,
               });
               dispatch(
                 GetOneUploadBill({
-                  userId: localStorage.getItem("user_id"),
-                  paramsID: paramsID,
+                 id:getId
                 })
-              ).then((res) => {
+                ).then((res) => {
                 setHasData(res?.payload?.data?.data);
                 if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
                   // setFieldDisable(true)
@@ -578,8 +576,7 @@ export default function UploadBill() {
               setUrl();
               dispatch(
                 GetOneUploadBill({
-                  userId: localStorage.getItem("user_id"),
-                  paramsID: paramsID,
+                 id:getId
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -635,8 +632,7 @@ export default function UploadBill() {
               });
               dispatch(
                 GetOneUploadBill({
-                  userId: localStorage.getItem("user_id"),
-                  paramsID: paramsID,
+                 id:getId
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -690,8 +686,7 @@ export default function UploadBill() {
               setUrl();
               dispatch(
                 GetOneUploadBill({
-                  userId: localStorage.getItem("user_id"),
-                  paramsID: paramsID,
+                 id:getId
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -747,8 +742,7 @@ export default function UploadBill() {
               });
               dispatch(
                 GetOneUploadBill({
-                  userId: localStorage.getItem("user_id"),
-                  paramsID: paramsID,
+                 id:getId
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -802,8 +796,7 @@ export default function UploadBill() {
               setUrl();
               dispatch(
                 GetOneUploadBill({
-                  userId: localStorage.getItem("user_id"),
-                  paramsID: paramsID,
+                 id:getId
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
