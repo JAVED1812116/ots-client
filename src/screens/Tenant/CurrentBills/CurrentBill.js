@@ -743,7 +743,8 @@ export default function CurrentBill() {
           </TableCell>
           {/* <TableCell align="right">{row.calories}</TableCell>*/}
         </TableRow>
-        {billData.length > 0 &&
+        {console.log(billData, 'billData.length')}
+        {billData && Object.keys(billData).length > 0 &&
           (row?.type === "kelectric" ? (
             <TableRow>
               <TableCell
@@ -752,6 +753,8 @@ export default function CurrentBill() {
               >
                 <Collapse in={open} timeout="auto" unmountOnExit>
                   <Box sx={{ margin: 1 }}>
+                    
+                  {console.log('trueee')}
                     {hasData?.electricity === true ? (
                       <p style={{ color: "red" }}>
                         Bill Paid. If you were do any mistake then contact
@@ -759,9 +762,9 @@ export default function CurrentBill() {
                       </p>
                     ) : (
                       <div>
-                        {/* {
-                       billData?.electricity===true? */}
-                        <div>
+                        {
+                       billData?.electricity===true ?
+                       <div>
                           <Table size="small" aria-label="purchases">
                             <TableHead>
                               <TableRow>
@@ -830,7 +833,7 @@ export default function CurrentBill() {
                             Pay
                           </Button>
                         </div>
-                        {/* :""}  */}
+                        :""} 
                       </div>
                     )}
                   </Box>
@@ -1708,7 +1711,8 @@ export default function CurrentBill() {
             </TableRow>
           ) : (
             ""
-          ))}
+          ))
+          }
       </React.Fragment>
     );
   }
