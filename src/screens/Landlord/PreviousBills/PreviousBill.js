@@ -383,6 +383,7 @@ function Row(props) {
                           },
                         }}
                         pageSizeOptions={[5, 10]}
+                        getRowId={(row) => row._id} 
                         // checkboxSelection
                       />
                     </TableRow>
@@ -401,6 +402,7 @@ function Row(props) {
                           },
                         }}
                         pageSizeOptions={[5, 10]}
+                        getRowId={(row) => row._id} 
                         // checkboxSelection
                       />
                     </TableRow>
@@ -419,6 +421,7 @@ function Row(props) {
                           },
                         }}
                         pageSizeOptions={[5, 10]}
+                        getRowId={(row) => row._id} 
                         // checkboxSelection
                       />
                     </TableRow>
@@ -437,6 +440,7 @@ function Row(props) {
                           },
                         }}
                         pageSizeOptions={[5, 10]}
+                        getRowId={(row) => row._id} 
                         // checkboxSelection
                       />
                     </TableRow>
