@@ -2081,7 +2081,10 @@ export default function UploadBill() {
                                 />
                               </TableCell>
                               <TableCell>
-                              <Button
+                          
+                              {url?.length > 0 ? (
+                              <TableCell>
+                                 <Button
                                 variant="contained"
                                 sx={{
                                   marginTop: 2,
@@ -2092,6 +2095,10 @@ export default function UploadBill() {
                               >
                                 Post
                               </Button>
+                              </TableCell>
+                            ) : (
+                              ""
+                            )}
                               </TableCell>
                             
                           </Stack>
