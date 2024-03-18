@@ -255,7 +255,7 @@ export default function UploadBill() {
       } else if (selectedValue === "byPicture") {
         let values = {
           kElectricEnterBill: "",
-          kElectricBillDate: "",
+          kElectricBillDate: moment(billDate).format("DD-MM-YYYY"),
           kElectricDueDate: "",
           kElectricTotalBill: "",
           //extra fields
@@ -435,7 +435,7 @@ export default function UploadBill() {
       } else if (selectedValue === "byGassPicture") {
         let values = {
           ssgcEnterBill: "",
-          ssgcBillDate: "",
+          ssgcBillDate: moment(billDate).format("DD-MM-YYYY"),
           ssgcDueDate: "",
           ssgcTotalBill: "",
           //extra fields
@@ -553,7 +553,7 @@ export default function UploadBill() {
       } else if (selectedValue === "byWaterPicture") {
         let values = {
           waterEnterBill: "",
-          waterBillDate: "",
+          waterBillDate: moment(billDate).format("DD-MM-YYYY"),
           waterDueDate: "",
           waterTotalBill: "",
           //extra fields
@@ -663,7 +663,7 @@ export default function UploadBill() {
       } else if (selectedValue === "byMaintainancePicture") {
         let values = {
           maintananceEnterBill: "",
-          maintananceBillDate: "",
+          maintananceBillDate: moment(billDate).format("DD-MM-YYYY"),
           maintananceDueDate: "",
           maintananceTotalBill: "",
           //extra fields
@@ -773,7 +773,7 @@ export default function UploadBill() {
       } else if (selectedValue === "byTrashPicture") {
         let values = {
           trashEnterBill: "",
-          trashBillDate: "",
+          trashBillDate: moment(billDate).format("DD-MM-YYYY"),
           trashDueDate: "",
           trashTotalBill: "",
           //extra fields
