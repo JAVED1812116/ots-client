@@ -49,11 +49,11 @@ const electricityColumns = [
     headerName: "Image",
     width: 150,
     renderCell: (params) =>
-      params.value === "" ? (
-        ""
+    params.value === "" ? (
+      ""
       ) : (
         <div
-          style={{
+        style={{
             display: "flex",
             alignItems: "center",
             position: "relative",
@@ -63,7 +63,7 @@ const electricityColumns = [
             src={params.value}
             alt="Electric Bill"
             style={{ maxWidth: "100%", height: "auto" }}
-          />
+            />
           <a href={params.value}>
             <button
               className="download-button"
@@ -77,13 +77,37 @@ const electricityColumns = [
                 cursor: "pointer",
                 opacity: 0,
               }}
-            >
+              >
               <img style={{ width: "24px", height: "24px" }} />
             </button>
           </a>
         </div>
       ),
   },
+  { field: "tenantBillStatus", headerName: "Bill Status", width: 150 ,
+    renderCell:(params)=>{
+      if(params?.row?.tenantBillStatus==""){
+        return(
+       <text>Pending</text>
+        )
+      }
+      else if(params?.row?.tenantBillStatus=="pending"){
+        return(
+          <Button
+          variant="contained"
+          sx={{
+            background: "black",
+          }}
+        >
+          Show
+        </Button>
+        )
+      }
+      
+    }
+},
+  
+  
 ];
 const ssgcColumns = [
   {
@@ -146,6 +170,28 @@ const ssgcColumns = [
         </div>
       ),
   },
+  { field: "tenantBillStatus", headerName: "Bill Status", width: 150 ,
+  renderCell:(params)=>{
+    if(params?.row?.tenantBillStatus==""){
+      return(
+     <text>Pending</text>
+      )
+    }
+    else if(params?.row?.tenantBillStatus=="pending"){
+      return(
+        <Button
+        variant="contained"
+        sx={{
+          background: "black",
+        }}
+      >
+        Show
+      </Button>
+      )
+    }
+    
+  }
+},
 ];
 const waterColumns = [
   {
@@ -200,6 +246,28 @@ const waterColumns = [
         </div>
       ),
   },
+  { field: "tenantBillStatus", headerName: "Bill Status", width: 150 ,
+  renderCell:(params)=>{
+    if(params?.row?.tenantBillStatus==""){
+      return(
+     <text>Pending</text>
+      )
+    }
+    else if(params?.row?.tenantBillStatus=="pending"){
+      return(
+        <Button
+        variant="contained"
+        sx={{
+          background: "black",
+        }}
+      >
+        Show
+      </Button>
+      )
+    }
+    
+  }
+},
 ];
 const maintainanceColumns = [
   {
@@ -254,6 +322,28 @@ const maintainanceColumns = [
         </div>
       ),
   },
+  { field: "tenantBillStatus", headerName: "Bill Status", width: 150 ,
+  renderCell:(params)=>{
+    if(params?.row?.tenantBillStatus==""){
+      return(
+     <text>Pending</text>
+      )
+    }
+    else if(params?.row?.tenantBillStatus=="pending"){
+      return(
+        <Button
+        variant="contained"
+        sx={{
+          background: "black",
+        }}
+      >
+        Show
+      </Button>
+      )
+    }
+    
+  }
+},
 ];
 const trashColumns = [
   {
@@ -308,6 +398,28 @@ const trashColumns = [
         </div>
       ),
   },
+  { field: "tenantBillStatus", headerName: "Bill Status", width: 150 ,
+  renderCell:(params)=>{
+    if(params?.row?.tenantBillStatus==""){
+      return(
+     <text>Pending</text>
+      )
+    }
+    else if(params?.row?.tenantBillStatus=="pending"){
+      return(
+        <Button
+        variant="contained"
+        sx={{
+          background: "black",
+        }}
+      >
+        Show
+      </Button>
+      )
+    }
+    
+  }
+},
 ];
 
 
@@ -514,7 +626,7 @@ export default function PreviousBillLandlordPage() {
       delete data.trash;
     }
   });
-  console.log(data, "running");
+
   return (
     <>
       <Wrapper open={open} setOpen={setOpen} mylocation={mylocation} />
