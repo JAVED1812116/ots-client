@@ -84,28 +84,7 @@ const electricityColumns = [
         </div>
       ),
   },
-  { field: "tenantBillStatus", headerName: "Bill Status", width: 150 ,
-    renderCell:(params)=>{
-      if(params?.row?.tenantBillStatus==""){
-        return(
-       <text>Pending</text>
-        )
-      }
-      else if(params?.row?.tenantBillStatus=="pending"){
-        return(
-          <Button
-          variant="contained"
-          sx={{
-            background: "black",
-          }}
-        >
-          Show
-        </Button>
-        )
-      }
-      
-    }
-},
+ 
   
   
 ];
@@ -170,28 +149,6 @@ const ssgcColumns = [
         </div>
       ),
   },
-  { field: "tenantBillStatus", headerName: "Bill Status", width: 150 ,
-  renderCell:(params)=>{
-    if(params?.row?.tenantBillStatus==""){
-      return(
-     <text>Pending</text>
-      )
-    }
-    else if(params?.row?.tenantBillStatus=="pending"){
-      return(
-        <Button
-        variant="contained"
-        sx={{
-          background: "black",
-        }}
-      >
-        Show
-      </Button>
-      )
-    }
-    
-  }
-},
 ];
 const waterColumns = [
   {
@@ -246,28 +203,6 @@ const waterColumns = [
         </div>
       ),
   },
-  { field: "tenantBillStatus", headerName: "Bill Status", width: 150 ,
-  renderCell:(params)=>{
-    if(params?.row?.tenantBillStatus==""){
-      return(
-     <text>Pending</text>
-      )
-    }
-    else if(params?.row?.tenantBillStatus=="pending"){
-      return(
-        <Button
-        variant="contained"
-        sx={{
-          background: "black",
-        }}
-      >
-        Show
-      </Button>
-      )
-    }
-    
-  }
-},
 ];
 const maintainanceColumns = [
   {
@@ -322,28 +257,6 @@ const maintainanceColumns = [
         </div>
       ),
   },
-  { field: "tenantBillStatus", headerName: "Bill Status", width: 150 ,
-  renderCell:(params)=>{
-    if(params?.row?.tenantBillStatus==""){
-      return(
-     <text>Pending</text>
-      )
-    }
-    else if(params?.row?.tenantBillStatus=="pending"){
-      return(
-        <Button
-        variant="contained"
-        sx={{
-          background: "black",
-        }}
-      >
-        Show
-      </Button>
-      )
-    }
-    
-  }
-},
 ];
 const trashColumns = [
   {
@@ -398,28 +311,6 @@ const trashColumns = [
         </div>
       ),
   },
-  { field: "tenantBillStatus", headerName: "Bill Status", width: 150 ,
-  renderCell:(params)=>{
-    if(params?.row?.tenantBillStatus==""){
-      return(
-     <text>Pending</text>
-      )
-    }
-    else if(params?.row?.tenantBillStatus=="pending"){
-      return(
-        <Button
-        variant="contained"
-        sx={{
-          background: "black",
-        }}
-      >
-        Show
-      </Button>
-      )
-    }
-    
-  }
-},
 ];
 
 
