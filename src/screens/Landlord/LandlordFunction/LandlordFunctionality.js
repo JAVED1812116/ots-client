@@ -14,6 +14,7 @@ import { useState } from "react";
 import {  useNavigate } from "react-router-dom";
 import "./LandlordFunctionality.css";
 import { useParams } from 'react-router-dom';
+import { Box, Grid } from "@mui/material";
 export default function LandlordFunctionality() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -25,7 +26,17 @@ export default function LandlordFunctionality() {
       <Wrapper open={open} setOpen={setOpen} />
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
         <div className=" cardsdiv flex flexwrap">
-          <Card sx={{ maxWidth: 345 }}>
+       
+         
+
+        
+        
+        
+
+          <Grid container spacing={3}>
+  <Grid item xs>
+    <Box>
+    <Card sx={{ maxWidth: 345 }}>
             <CardMedia
               sx={{ height: 140 }}
               image="https://blog.ipleaders.in/wp-content/uploads/2022/02/agreement.jpg"
@@ -57,7 +68,11 @@ export default function LandlordFunctionality() {
               {/* <Button size="small">Learn More</Button> */}
             </CardActions>
           </Card>
-          <Card sx={{ maxWidth: 345 }}>
+    </Box>
+  </Grid>
+  <Grid item xs>
+    <Box>
+    <Card sx={{ maxWidth: 345 }}>
             <CardMedia
               sx={{ height: 140 }}
               image="https://media.istockphoto.com/id/1344217043/photo/electric-bill-statement-and-home-energy-consumption.webp?b=1&s=170667a&w=0&k=20&c=0HrN_L88mp7-wC9JppxHzSQtY6DFGLf5FV6k6SwG0nk="
@@ -85,10 +100,14 @@ export default function LandlordFunctionality() {
               {/* <Button size="small">Learn More</Button> */}
             </CardActions>
           </Card>
-          <Card sx={{ maxWidth: 345 }}>
+    </Box>
+  </Grid>
+  <Grid item xs>
+    <Box>
+    <Card sx={{ maxWidth: 345 }}>
             <CardMedia
               sx={{ height: 140 }}
-              image="https://media.istockphoto.com/id/641839728/photo/real-estate-app-concept-on-smartphone-screen-person-searching-online.webp?b=1&s=170667a&w=0&k=20&c=3SWtrwHuAdLkM-XgHuCbA_alB-ldd4yoo4CpwJ5_6bU="
+              image="https://c8.alamy.com/comp/HEJFTP/pending-stamp-application-form-concept-HEJFTP.jpg"
               title="green iguana"
             />
             <CardContent>
@@ -113,7 +132,13 @@ export default function LandlordFunctionality() {
               {/* <Button size="small">Learn More</Button> */}
             </CardActions>
           </Card>
-          <Card sx={{ maxWidth: 345 }}>
+    </Box>
+  </Grid>
+</Grid>
+
+<Grid container spacing={3}>
+  <Grid item xs>
+    <Box> <Card sx={{ maxWidth: 345 }}>
             <CardMedia
               sx={{ height: 140 }}
               image="https://media.istockphoto.com/id/641839728/photo/real-estate-app-concept-on-smartphone-screen-person-searching-online.webp?b=1&s=170667a&w=0&k=20&c=3SWtrwHuAdLkM-XgHuCbA_alB-ldd4yoo4CpwJ5_6bU="
@@ -140,8 +165,35 @@ export default function LandlordFunctionality() {
               </Button>
               {/* <Button size="small">Learn More</Button> */}
             </CardActions>
-          </Card>
-          <Card sx={{ maxWidth: 345 }}>
+          </Card></Box>
+  </Grid>
+  <Grid item xs>
+    <Box> <Card sx={{ maxWidth: 345 }}>
+            <CardMedia
+              sx={{ height: 140 }}
+              image="https://online.pharmaciae.org.za/wp-content/uploads/elementor/thumbs/unregistered-ot6n195v11gipipseb24tqqwq657ib2pmekkpgs5yw.jpg"
+              title="green iguana"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                UnRegister
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                An agreement is a promise or arrangement between two or more
+                parties to do, or not do, something.
+              </Typography>
+            </CardContent>
+            <CardActions className="justifyend">
+              <Button className="view_button wm100" size="large">
+                View
+              </Button>
+              {/* <Button size="small">Learn More</Button> */}
+            </CardActions>
+          </Card></Box>
+  </Grid>
+  <Grid item xs>
+    <Box>
+    <Card sx={{ maxWidth: 345 }}>
             <CardMedia
               sx={{ height: 140 }}
               image="https://online.pharmaciae.org.za/wp-content/uploads/elementor/thumbs/unregistered-ot6n195v11gipipseb24tqqwq657ib2pmekkpgs5yw.jpg"
@@ -163,6 +215,9 @@ export default function LandlordFunctionality() {
               {/* <Button size="small">Learn More</Button> */}
             </CardActions>
           </Card>
+    </Box>
+  </Grid>
+</Grid>
         </div>
 
         {/* <div>
