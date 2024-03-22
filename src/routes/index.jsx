@@ -18,6 +18,7 @@ import Registeration from "../screens/Tenant/Register/Registeration";
 import TenantFunctionality from "../screens/Tenant/TenantFunction/TenantFunctionality";
 import PreviousBill from "../screens/Tenant/PreviousBill/PreviousBill";
 import PreviousBillLandlordPage from "../screens/Landlord/PreviousBills/PreviousBill";
+import PendingBillLandlordPage from "../screens/Landlord/PendingBill/PendingBill";
 import PropertyRegister from "../screens/Landlord/RegisterProperty/PropertyRegistrationForm";
 import PendingRequest from "../screens/PendingRequest/PendingRequest";
 import { useEffect } from "react";
@@ -120,6 +121,10 @@ export default function AllRoutes() {
           <Route
             path="/previous-bill/:id?/:id?"
             element={<PreviousBillLandlordPage />}
+          />
+          <Route
+            path="/pending-bill/:id?/:id?"
+            element={<PendingBillLandlordPage />}
           />
           {/* <Route path="/property-reg" element={<PropertyRegister />} /> */}
 

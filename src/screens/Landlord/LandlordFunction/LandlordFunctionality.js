@@ -93,6 +93,34 @@ export default function LandlordFunctionality() {
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
+                Pending Bill
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                An agreement is a promise or arrangement between two or more
+                parties to do, or not do, something.
+              </Typography>
+            </CardContent>
+            <CardActions className="justifyend">
+              <Button
+                className="view_button wm100"
+                size="large"
+                onClick={() => {
+                  navigate(`/pending-bill/${getId}`);
+                }}
+              >
+                View
+              </Button>
+              {/* <Button size="small">Learn More</Button> */}
+            </CardActions>
+          </Card>
+          <Card sx={{ maxWidth: 345 }}>
+            <CardMedia
+              sx={{ height: 140 }}
+              image="https://media.istockphoto.com/id/641839728/photo/real-estate-app-concept-on-smartphone-screen-person-searching-online.webp?b=1&s=170667a&w=0&k=20&c=3SWtrwHuAdLkM-XgHuCbA_alB-ldd4yoo4CpwJ5_6bU="
+              title="green iguana"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
                 Previous Bill
               </Typography>
               <Typography variant="body2" color="text.secondary">
