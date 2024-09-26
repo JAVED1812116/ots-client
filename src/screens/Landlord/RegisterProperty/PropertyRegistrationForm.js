@@ -392,101 +392,111 @@ export default function PropertyRegister() {
       }),
     }),
   }));
-
-  const onFinish = () => {
-    let values = {
-      ownerName: detail?.ownerName,
-      fatherName: detail?.fatherName,
-      cnic: detail?.cnic,
-      contactNumber: detail?.contactNumber,
-      alternateNumber: detail?.alternateNumber,
-      permenantAddress: detail?.permenantAddress,
-      postalAddress: detail?.postalAddress,
-      email: detail?.email,
-      propertyAddress: detail?.propertyAddress,
-      totalFloor: detail?.totalFloor,
-      totalFlat: detail?.totalFlat,
-      flatDetail: rows,
-      userId: sessionStorage.getItem("user_id"),
-      userName: sessionStorage.getItem("name"),
-    };
-    // const isEmptyField = Object.values(values).some(value => !value);
-
-    // if (isEmptyField) {
-    //   toast.error("Please fill in all fields.", {
-    //     position: "top-center",
-    //   });
-    //   return;
-    // }
-    const emptyFields = Object.entries(values)
-      .filter(([key, value]) => !value)
-      .map(([key]) => key);
-
-    if (emptyFields.length > 0) {
-      const errorMessage = `Please fill in the following fields: ${emptyFields.join(
-        ", "
-      )}.`;
-      toast.error(errorMessage, {
-        position: "top-center",
-      });
-      return;
-    }
-    const requiredFields = [
-      "flatName",
-      "flatNumber",
-      "flatFloor",
-      "flatRooms",
-      "flatToilet",
-      "flatKitchen",
-      "flatRent",
-      "flatAdvance",
-      "flatMaintananceCharges",
-      "flatTrashCharges",
-      "flatSecurityCharges",
-      "is_rent",
-    ];
-
-    if (
-      values?.totalFlat !== 0 ||
-      values?.ownerName !== "" ||
-      values?.fatherName !== "" ||
-      values?.cnic !== "" ||
-      values?.contactNumber !== "" ||
-      values?.alternateNumber !== "" ||
-      values?.permenantAddress !== "" ||
-      values?.postalAddress !== "" ||
-      values?.email !== "" ||
-      values?.propertyAddress !== "" ||
-      values?.totalFloor !== ""
-    ) {
-      // rows?.flatName!==undefined||rows?.flatNumber!==undefined||rows?.flatFloor!==undefined||rows?.flatRoom!==undefined||rows?.flatToilet!==undefined||rows?.flatKitchen!==undefined||rows?.flatRent!==undefined||rows?.flatDeposit!==undefined||rows?.flatMaintainanceCharges!==undefined||rows?.flattrashCharges!==undefined||rows?.flatsecurityCharges!==undefined||rows?.is_rent!==undefined
-      if (values?.flatDetail !== "") {
-        dispatch(PropertyRegisters({ values })).then((res) => {
-          if (res?.payload?.data?.message === "Property Set Successfully") {
-            toast.success("Property Register Successfully", {
-              position: "top-center",
-            });
-            sessionStorage.setItem("is_register", true);
-            let token = loginUser?.login?.data?.data?.password;
-            dispatch(ValidateUser({email: loginUser?.login?.data?.data?.email, token })).then((re) => {
-              if (re) {                
-                // setTimeout(() => {
-                  navigate("/pending-request");
-                // }, 2200);
-              }
-            });
-          }
+console.log(error, 'error');
+  const onFinish = (e) => {
+    e.preventDefault()
+    console.log('onFInish');
+    if (Object.values(error).some(value => value === true)) {
+      let values = {
+        ownerName: detail?.ownerName,
+        fatherName: detail?.fatherName,
+        cnic: detail?.cnic,
+        contactNumber: detail?.contactNumber,
+        alternateNumber: detail?.alternateNumber,
+        permenantAddress: detail?.permenantAddress,
+        postalAddress: detail?.postalAddress,
+        email: detail?.email,
+        propertyAddress: detail?.propertyAddress,
+        totalFloor: detail?.totalFloor,
+        totalFlat: detail?.totalFlat,
+        flatDetail: rows,
+        userId: sessionStorage.getItem("user_id"),
+        userName: sessionStorage.getItem("name"),
+      };
+      // const isEmptyField = Object.values(values).some(value => !value);
+  
+      // if (isEmptyField) {
+      //   toast.error("Please fill in all fields.", {
+      //     position: "top-center",
+      //   });
+      //   return;
+      // }
+      const emptyFields = Object.entries(values)
+        .filter(([key, value]) => !value)
+        .map(([key]) => key);
+  
+      if (emptyFields.length > 0) {
+        const errorMessage = `Please fill in the following fields: ${emptyFields.join(
+          ", "
+        )}.`;
+        toast.error(errorMessage, {
+          position: "top-center",
         });
+        return;
+      }
+      const requiredFields = [
+        "flatName",
+        "flatNumber",
+        "flatFloor",
+        "flatRooms",
+        "flatToilet",
+        "flatKitchen",
+        "flatRent",
+        "flatAdvance",
+        "flatMaintananceCharges",
+        "flatTrashCharges",
+        "flatSecurityCharges",
+        "is_rent",
+      ];
+  
+      if (
+        values?.totalFlat !== 0 ||
+        values?.ownerName !== "" ||
+        values?.fatherName !== "" ||
+        values?.cnic !== "" ||
+        values?.contactNumber !== "" ||
+        values?.alternateNumber !== "" ||
+        values?.permenantAddress !== "" ||
+        values?.postalAddress !== "" ||
+        values?.email !== "" ||
+        values?.propertyAddress !== "" ||
+        values?.totalFloor !== ""
+      ) {
+        // rows?.flatName!==undefined||rows?.flatNumber!==undefined||rows?.flatFloor!==undefined||rows?.flatRoom!==undefined||rows?.flatToilet!==undefined||rows?.flatKitchen!==undefined||rows?.flatRent!==undefined||rows?.flatDeposit!==undefined||rows?.flatMaintainanceCharges!==undefined||rows?.flattrashCharges!==undefined||rows?.flatsecurityCharges!==undefined||rows?.is_rent!==undefined
+        if (values?.flatDetail !== "") {
+          dispatch(PropertyRegisters({ values })).then((res) => {
+            if (res?.payload?.data?.message === "Property Set Successfully") {
+              toast.success("Property Register Successfully", {
+                position: "top-center",
+              });
+              sessionStorage.setItem("is_register", true);
+              let token = loginUser?.login?.data?.data?.password;
+              dispatch(ValidateUser({email: loginUser?.login?.data?.data?.email, token })).then((re) => {
+                if (re) {                
+                  // setTimeout(() => {
+                    navigate("/pending-request");
+                  // }, 2200);
+                }
+              });
+            }
+          });
+        } else {
+          toast.error("Please fill all flat detail", {
+            position: "top-center",
+          });
+        }
       } else {
-        toast.error("Please fill all flat detail", {
+        toast.error("Please fill in all required fields.", {
           position: "top-center",
         });
       }
-    } else {
-      toast.error("Please fill in all required fields.", {
+    }
+    else{
+      toast.error("Please enter valid values.", {
         position: "top-center",
       });
     }
+    
   };
   return (
     <>
@@ -503,13 +513,14 @@ export default function PropertyRegister() {
           />
         </Toolbar>
       </AppBar>
-      <Grid container spacing={0} className="propertyRegContainer">
+      <Grid container spacing={0} className="propertyRegContainer" component="form" onSubmit={onFinish}>
         <Grid className="boxShadow" md={3} sm={12}>
           <div>
             <h1>Owner Detail</h1>
             <Container maxWidth="sm">
               <div className="property-inputs">
                 <TextField
+                required
                   id="standard-multiline-flexible"
                   label="Owner Name"
                   multiline
@@ -523,6 +534,7 @@ export default function PropertyRegister() {
                   }
                 />
                 <TextField
+                required
                   id="standard-textarea"
                   label="Father Name"
                   placeholder="Placeholder"
@@ -537,6 +549,7 @@ export default function PropertyRegister() {
                 />
 
                 <TextField
+                required
                   id="standard-multiline-flexible"
                   label="CNIC"
                   multiline
@@ -552,6 +565,7 @@ export default function PropertyRegister() {
                   helperText={error.cnic ? "Please enter a valid CNIC" : ""}
                 />
                 <TextField
+                required
                   id="standard-textarea"
                   label="Contact Number"
                   placeholder="Placeholder"
@@ -583,6 +597,7 @@ export default function PropertyRegister() {
                   }
                 />
                 <TextField
+                required
                   id="standard-textarea"
                   label="Permenant Address"
                   placeholder="Placeholder"
@@ -592,6 +607,7 @@ export default function PropertyRegister() {
                   onChange={handleChange}
                 />
                 <TextField
+                required
                   id="standard-textarea"
                   label="Postal Address"
                   placeholder="Placeholder"
@@ -601,6 +617,7 @@ export default function PropertyRegister() {
                   onChange={handleChange}
                 />
                 <TextField
+                required
                   id="standard-textarea"
                   label="Email"
                   placeholder="Placeholder"
@@ -624,6 +641,7 @@ export default function PropertyRegister() {
             <Container maxWidth="sm">
               <div className="property-inputs">
                 <TextField
+                  required
                   id="standard-multiline-flexible"
                   label="Property Address"
                   multiline
@@ -633,6 +651,7 @@ export default function PropertyRegister() {
                   onChange={handleChange}
                 />
                 <TextField
+                  required
                   id="standard-textarea"
                   label="Total Floor"
                   placeholder="Placeholder"
@@ -647,6 +666,7 @@ export default function PropertyRegister() {
                 />
 
                 <TextField
+                  required
                   id="standard-multiline-flexible"
                   label="Total Flat"
                   multiline
@@ -668,19 +688,33 @@ export default function PropertyRegister() {
             </Container>
           </div>
         </Grid>
-      </Grid>
-      <div className="registerButton">
+        <div className="registerButton">
         <Button
           variant="contained"
+          type="submit"
           sx={{
             marginTop: 1,
             background: "black",
           }}
-          onClick={onFinish}
+          // onClick={onFinish}
         >
           Post
         </Button>
       </div>
+      </Grid>
+      {/* <div className="registerButton">
+        <Button
+          variant="contained"
+          type="submit"
+          sx={{
+            marginTop: 1,
+            background: "black",
+          }}
+          // onClick={onFinish}
+        >
+          Post
+        </Button>
+      </div> */}
       <ToastContainer />
     </>
   );
