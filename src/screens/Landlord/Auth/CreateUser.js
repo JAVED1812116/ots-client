@@ -68,6 +68,7 @@ const CreateUser = () => {
             dispatch(UserAdd({ name, email, password, code: hasId })).then(
               (res) => {
                 if (res?.payload?.data === "User Register Successfully") {
+                  navigate("/login",{state:{type:"Landlord"}})
                   return toast.success("Signup Successfully!", {
                     position: "top-center",
                   });
