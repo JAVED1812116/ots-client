@@ -2,6 +2,8 @@ import * as React from "react";
 import Wrapper from "../../../components/Wrapper";
 import { useState } from "react";
 import { useLocation } from "react-router";
+import { useNavigate } from "react-router-dom";
+
 import {
   Button,
   FormControl,
@@ -23,18 +25,22 @@ export default function AddNew() {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const [mylocation, setMyLocation] = useState(location.pathname);
   const [email, setEmail] = useState(null);
   const { validateUser } = useSelector((state) => state);
-
-
-
 
   const sendEMAIL = () => {
     if (email != null || "") {
       var regexEmail = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
       if (regexEmail.test(email)) {
-        dispatch(SendMail({ email, userId : localStorage.getItem("user_id"), userName : localStorage.getItem("name") })).then((res) => {
+        dispatch(
+          SendMail({
+            email,
+            userId: localStorage.getItem("user_id"),
+            userName: localStorage.getItem("name"),
+          })
+        ).then((res) => {
           console.log(res?.payload?.data, "ressssssssss");
           if (res?.payload?.data === "Email Recieved") {
             toast.success(res?.payload?.data, {
@@ -45,15 +51,13 @@ export default function AddNew() {
               position: "top-center",
             });
           }
-
         });
-      }else{
+      } else {
         toast.error("Email is not valid", {
           position: "top-center",
         });
       }
-    }
-    else{
+    } else {
       toast.error("Empty Field are not allowed", {
         position: "top-center",
       });
@@ -66,37 +70,53 @@ export default function AddNew() {
         <div className="mainHeading">
           <h1>Add New Tenant</h1>
         </div>
-        {
-          !validateUser?.UserValidate?.data?.user?.is_bank ?
-          <></>
-          :
-          <Container maxWidth="sm" className="add-new-container">
-          <FormControl className="w100">
-            {/* <InputLabel htmlFor="input-with-icon-adornment">Email</InputLabel> */}
-            <Input
-              id="input-with-icon-adornment"
-              placeholder={"Enter Email Address"}
-              startAdornment={
-                <InputAdornment position="start">
-                  <MarkunreadIcon />
-                </InputAdornment>
-              }
-              onChange={(e) => {
-                setEmail(e.target.value);
+        {!validateUser?.UserValidate?.data?.user?.is_bank ? (
+          <>
+            <div className="flex">
+              <h2 className="mx-2">
+                Set bank details first in order to add any tenant
+              </h2>
+            <Button
+              className="addNewButton"
+              variant="contained"
+              // endIcon={<SendIcon />}
+              onClick={() => {
+                navigate("/bank-detail")
               }}
-            />
-          </FormControl>
-          <Button
-            className="addNewButton"
-            variant="contained"
-            endIcon={<SendIcon />}
-            onClick={() => {
-              sendEMAIL();
-            }}
-          >
-            Send
-          </Button>
-        </Container>}
+            >
+              Setup Bank Details
+            </Button>
+            </div>
+          </>
+        ) : (
+          <Container maxWidth="sm" className="add-new-container">
+            <FormControl className="w100">
+              {/* <InputLabel htmlFor="input-with-icon-adornment">Email</InputLabel> */}
+              <Input
+                id="input-with-icon-adornment"
+                placeholder={"Enter Email Address"}
+                startAdornment={
+                  <InputAdornment position="start">
+                    <MarkunreadIcon />
+                  </InputAdornment>
+                }
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+            </FormControl>
+            <Button
+              className="addNewButton"
+              variant="contained"
+              endIcon={<SendIcon />}
+              onClick={() => {
+                sendEMAIL();
+              }}
+            >
+              Send
+            </Button>
+          </Container>
+        )}
         <ToastContainer />
       </div>
     </>
