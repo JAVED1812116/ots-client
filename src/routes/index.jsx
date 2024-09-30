@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import NotFound from "../screens/NotFound/NotFound";
 import Dashboard from "../screens/Dashboard/Dashboard";
@@ -32,9 +32,12 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 
 import { ValidateUser } from "../Redux/Reducer/ValidateUser";
+import SkeletonComponent from "../components/SkeletonLoader";
 export default function AllRoutes() {
   const dispatch = useDispatch();
 
+  const [load, setLoad] = useState(false)
+console.log(load, 'load');
   const { loginUser, validateUser } = useSelector((state) => state);
   console.log(loginUser, "loginUser?.login?.data?.data");
   console.log(validateUser, "validateUser?.data");
@@ -44,7 +47,10 @@ export default function AllRoutes() {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   useEffect(()=> {
     console.log('hello123');
-    dispatch(ValidateUser({}))
+    setLoad(true)
+    dispatch(ValidateUser({})).then(()=> {
+      setLoad(false)
+    })
   }, [])
 
 
@@ -69,7 +75,14 @@ export default function AllRoutes() {
   //     </Router>
   //   );
   // } else
-  if (loginUser?.login?.data?.result == "No User Found") {
+  if (load){
+   return (<Router>
+        <Routes>
+        <Route path="/" element={<SkeletonComponent />} />
+        </Routes>
+        </Router>)
+  }
+ else if (loginUser?.login?.data?.result == "No User Found") {
     console.log("hello0");
     return (
       <Router>
@@ -148,11 +161,6 @@ export default function AllRoutes() {
     return (
       <Router>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginUser />} />
-          <Route path="/signup/:id?" element={<CreateUser />} />
-          <Route path="/pending-request" element={<PendingRequest />} />
-          {/* <Route path="/signup/:id?" element={<CreateUser />} /> */}
           <Route path="/landlord-dashboard" element={<LandLordDashboard />} />
           <Route path="/new-request" element={<NewRequest />} />
           <Route path="/user-detail" element={<RequestUserDetail />} />
@@ -188,7 +196,16 @@ export default function AllRoutes() {
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/tenant-agreement/:id?/:id?" element={<TenantAgreements />} />
           {/* <Route path="/Landing-page" element={<LandingPage />} /> */}
+          {
+          (loginUser?.login?.data?.data?.type == 'landlord' 
+            || validateUser?.UserValidate?.data?.user?.type == 'landlord')
+          ? <Route path="/*" element={<Redirect to="/landlord-dashboard" />} />
+          // : (loginUser?.login?.data?.data?.type == 'tenant' 
+          //   || validateUser?.UserValidate?.data?.user?.type == 'tenant') ?
+          // <Route path="/*" element={<Redirect to="/pending-request" />} />
+          :
           <Route path="/*" element={<NotFound />} />
+          }
         </Routes>
       </Router>
     );
