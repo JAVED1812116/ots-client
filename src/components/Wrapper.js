@@ -210,9 +210,9 @@ export default function Wrapper({ open, setOpen, mylocation }) {
             <ListItem
               disablePadding
               sx={{ display: "block" }}
-              className={`${mylocation === "/addNew-Tenant" ? "active-li" : ""}`}
+              className={`${mylocation === "/add-new-tenant" ? "active-li" : ""}`}
               onClick={() => {
-                navigate("/addNew-Tenant");
+                navigate("/add-new-tenant");
               }}
             >
               <ListItemButton

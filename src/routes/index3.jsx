@@ -119,7 +119,7 @@ export default function AllRoutes() {
           <Route path="/previous-bill" element={<PreviousBillLandlordPage />} />
           {/* <Route path="/property-reg" element={<PropertyRegister />} /> */}
 
-          <Route path="/addNew-Tenant" element={<AddNew />} />
+          <Route path="/add-new-tenant" element={<AddNew />} />
           <Route path="/tenant-registration" element={<Registeration />} />
           <Route path="/tenant-dashboard" element={<TenantFunctionality />} />
           <Route path="/previous-TenantBill" element={<PreviousBill />} />

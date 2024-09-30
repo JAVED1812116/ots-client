@@ -9,6 +9,7 @@ import {
   InputAdornment,
   Container,
 } from "@mui/material";
+import { useSelector } from "react-redux";
 
 import MarkunreadIcon from "@mui/icons-material/Markunread";
 import SendIcon from "@mui/icons-material/Send";
@@ -24,6 +25,11 @@ export default function AddNew() {
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
   const [email, setEmail] = useState(null);
+  const { validateUser } = useSelector((state) => state);
+
+
+
+
   const sendEMAIL = () => {
     if (email != null || "") {
       var regexEmail = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
@@ -60,7 +66,11 @@ export default function AddNew() {
         <div className="mainHeading">
           <h1>Add New Tenant</h1>
         </div>
-        <Container maxWidth="sm" className="add-new-container">
+        {
+          !validateUser?.UserValidate?.data?.user?.is_bank ?
+          <></>
+          :
+          <Container maxWidth="sm" className="add-new-container">
           <FormControl className="w100">
             {/* <InputLabel htmlFor="input-with-icon-adornment">Email</InputLabel> */}
             <Input
@@ -86,7 +96,7 @@ export default function AddNew() {
           >
             Send
           </Button>
-        </Container>
+        </Container>}
         <ToastContainer />
       </div>
     </>
