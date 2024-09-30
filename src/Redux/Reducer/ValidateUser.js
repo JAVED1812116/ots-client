@@ -1,14 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BASE_URL } from "../../config/config";
+// const token = localStorage.getItem('token')
 
 export const ValidateUser = createAsyncThunk(
   "dummyData/ValidateUser",
   async ({ email, token }) => {
     console.log(token, "token");
     let response = await axios.post(`${BASE_URL}/validateUser`, {
-      email,
-      token,
+      // email,
+      // token,
     });
     return response;
   }
@@ -30,7 +31,8 @@ const UserValidate = createSlice({
       state.loading = true;
     },
     [ValidateUser.rejected]: (state, action) => {
-      state.error = action.error.message;
+      state.UserValidate = [];
+      state.error = action.error;
     },
   },
 });

@@ -395,8 +395,8 @@ export default function PropertyRegister() {
 console.log(error, 'error');
   const onFinish = (e) => {
     e.preventDefault()
-    console.log('onFInish');
-    if (Object.values(error).some(value => value === true)) {
+    if (Object.values(error).some(value => value !== true)) {
+      console.log('onFInish');
       let values = {
         ownerName: detail?.ownerName,
         fatherName: detail?.fatherName,
@@ -698,7 +698,7 @@ console.log(error, 'error');
           }}
           // onClick={onFinish}
         >
-          Post
+          Register
         </Button>
       </div>
       </Grid>

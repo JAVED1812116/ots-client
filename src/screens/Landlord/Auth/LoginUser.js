@@ -15,7 +15,11 @@ import { Link } from "react-router-dom";
 import title from "../../../components/title";
 import { useDispatch } from "react-redux";
 import { UserLogin } from "../../../Redux/Reducer/LoginUser";
+import { reset  } from "../../../Redux/Reducer/LoginUser";
 import { ToastContainer, toast } from "react-toastify";
+import { ValidateUser } from "../../../Redux/Reducer/ValidateUser";
+import axios from "axios";
+import { BASE_URL } from "../../../config/config";
 const LoginUser = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -41,6 +45,8 @@ const LoginUser = () => {
       if (regexEmail.test(email)) {
         if (passwords.test(password)) {
           dispatch(UserLogin({ email, password })).then((res) => {
+            localStorage.setItem("token", res?.payload?.data?.accessToken)
+            sessionStorage.setItem("ots_token", res?.payload?.data?.accessToken);
             if (
               res?.payload?.data?.message === "User Login Successfully" &&
               res?.payload?.data?.data?.is_register === true &&
@@ -161,6 +167,11 @@ const LoginUser = () => {
                 position: "top-center",
               });
             }
+
+            // setTimeout(() => {
+            //   dispatch(reset()); // use to reset the login reducer
+            // }, 3000);
+
           });
         } else {
           toast.error("Password is not valid", {

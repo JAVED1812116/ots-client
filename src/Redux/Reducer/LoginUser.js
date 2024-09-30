@@ -20,6 +20,13 @@ const LoginUser = createSlice({
         login: [],
         error: ""
     },
+    reducers: {
+        reset: (state) => {
+            state.loading = false;
+            state.login = [];
+            state.error = "";
+        }
+    },
     extraReducers: {
         [UserLogin.fulfilled]: (state, action) => {
             state.login = action.payload;
@@ -33,4 +40,5 @@ const LoginUser = createSlice({
         },
     }
 });
+export const { reset } = LoginUser.actions; //to reset this
 export default LoginUser.reducer;

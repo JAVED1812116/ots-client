@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NotFound from "../screens/NotFound/NotFound";
 import Dashboard from "../screens/Dashboard/Dashboard";
 import CreateUser from "../screens/Landlord/Auth/CreateUser";
@@ -36,27 +36,14 @@ export default function AllRoutes() {
   const dispatch = useDispatch();
 
   const { loginUser, validateUser } = useSelector((state) => state);
-  console.log(loginUser, "loginUser?.login?.data?.data");
-  console.log(validateUser, "validateUser?.data");
-  const token = sessionStorage.getItem('ots_token')
-  // console.log(sessionStorage.getItem('ots_token'), 'sessionStorage.getItem()');
-  // console.log(localStorage.getItem('token'), 'localStorage.getItem()');
+  console.log(loginUser?.login?.data?.data, "loginUser?.login?.data?.data");
+  console.log(validateUser?.UserValidate?.data?.data, "validateUser?.data");
+  const token = localStorage.getItem('token')
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   useEffect(()=> {
     console.log('hello123');
     dispatch(ValidateUser({}))
   }, [])
-
-
-  function Redirect({ to }) {
-    let navigate = useNavigate();
-    useEffect(() => {
-      navigate(to);
-    });
-    return null;
-  }
-
-
   // if (registeredUser === null) {
   //   return (
   //     <Router>
@@ -84,67 +71,41 @@ export default function AllRoutes() {
     );
   } else if (
     (loginUser?.login?.data?.data.is_register == false &&
-      loginUser?.login?.data?.data.is_active == false) ||
-    (validateUser?.UserValidate?.data?.user?.is_register == false &&
-      validateUser?.UserValidate?.data?.user?.is_active == false)
+      loginUser?.login?.data?.data.is_active == false) &&
+    (validateUser?.UserValidate?.data?.data?.is_register == false &&
+      validateUser?.UserValidate?.data?.data?.is_active == false)
   ) {
     console.log('hello1');
     return (
       <Router>
         <Routes>
-          {/* <Route path="/" element={<LandingPage />} /> */}
-          {/* <Route path="/signup/:id?" element={<CreateUser />} /> */}
-          {/* <Route path="/login" element={<LoginUser />} /> */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/signup/:id?" element={<CreateUser />} />
+          <Route path="/login" element={<LoginUser />} />
           <Route path="/property-reg" element={<PropertyRegister />} />
           <Route path="/tenant-registration" element={<Registeration />} />
-          {
-          (loginUser?.login?.data?.data?.type == 'landlord' || validateUser?.UserValidate?.data?.user?.type == 'landlord')
-          ? <Route path="/*" element={<Redirect to="/property-reg" />} />
-          : (loginUser?.login?.data?.data?.type == 'tenant' || validateUser?.UserValidate?.data?.user?.type == 'tenant') ?
-          <Route path="/*" element={<Redirect to="/tenant-registration" />} />
-          :
-          <Route path="/*" element={<NotFound />} />
-          }
 
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>
     );
   } else if (
     (loginUser?.login?.data?.data.is_register == true &&
-      loginUser?.login?.data?.data.is_active == false) ||
-      (validateUser?.UserValidate?.data?.user?.is_register == true &&
-        validateUser?.UserValidate?.data?.user?.is_active == false)
+      loginUser?.login?.data?.data.is_active == false)
   ) {
     console.log('hello2');
     return (
       <Router>
         <Routes>
-          {/* <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/signup/:id?" element={<CreateUser />} />
-          <Route path="/login" element={<LoginUser />} /> */}
+          <Route path="/login" element={<LoginUser />} />
           <Route path="/pending-request" element={<PendingRequest />} />
-          {
-          (loginUser?.login?.data?.data?.type == 'landlord' 
-            || validateUser?.UserValidate?.data?.user?.type == 'landlord')
-          ? <Route path="/*" element={<Redirect to="/pending-request" />} />
-          : (loginUser?.login?.data?.data?.type == 'tenant' 
-            || validateUser?.UserValidate?.data?.user?.type == 'tenant') ?
-          <Route path="/*" element={<Redirect to="/pending-request" />} />
-          :
           <Route path="/*" element={<NotFound />} />
-          }
         </Routes>
       </Router>
     );
-  } else 
-  if(
-    (loginUser?.login?.data?.data.is_register == true &&
-      loginUser?.login?.data?.data.is_active == true) ||
-      (validateUser?.UserValidate?.data?.user?.is_register == true &&
-        validateUser?.UserValidate?.data?.user?.is_active == true)
-  ) 
-  {
-    console.log('hello3');
+  } else {
     return (
       <Router>
         <Routes>
@@ -189,20 +150,6 @@ export default function AllRoutes() {
           <Route path="/tenant-agreement/:id?/:id?" element={<TenantAgreements />} />
           {/* <Route path="/Landing-page" element={<LandingPage />} /> */}
           <Route path="/*" element={<NotFound />} />
-        </Routes>
-      </Router>
-    );
-  }
-  else{
-    console.log('hello4 last');
-    return (
-      <Router>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/signup/:id?" element={<CreateUser />} />
-          <Route path="/login" element={<LoginUser />} />
-        <Route path="/*" element={<Redirect to="/" />} />
-
         </Routes>
       </Router>
     );

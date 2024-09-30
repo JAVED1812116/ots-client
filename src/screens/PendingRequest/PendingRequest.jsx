@@ -2,8 +2,13 @@ import React from "react";
 import "./PendingRequest.css";
 import { Button } from "@mui/base";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ValidateUser } from "../../Redux/Reducer/ValidateUser";
+import { useDispatch } from "react-redux";
+import { reset } from "../../Redux/Reducer/LoginUser";
+
 const PendingRequest = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <>
       {/* <h1>404 Page Not Found</h1> */}
@@ -23,7 +28,12 @@ const PendingRequest = () => {
               sessionStorage.clear();
               localStorage.clear("name")
               localStorage.clear("user_id")
-              navigate("/");
+              localStorage.clear("token")
+              setTimeout(() => {                
+                dispatch(ValidateUser({}))
+                dispatch(reset())
+                navigate("/");
+              }, 1000);
              }}>Logout</Button>
       </div>
     </>

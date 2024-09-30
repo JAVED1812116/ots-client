@@ -1,13 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BASE_URL } from "../../config/config";
+const token = localStorage.getItem('token')
 
 
 export const PropertyRegisters = createAsyncThunk("dummyData/PropertyRegistration", async ({values}) => {
        console.log(values,"values")
-    let response = await axios.post(`${BASE_URL}/property-Registration`,  {
-       values
-    });
+       console.log(token,"token")
+    let response = await axios.post(
+        `${BASE_URL}/property-Registration`,  
+        {values},
+    {
+        headers: {
+            Accept: "application/json",
+            Authorization: "Bearer " + token,
+        },
+    }
+);
     return response;
 });
 
