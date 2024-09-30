@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { AccountSet } from "../../../Redux/Reducer/AccountSetting";
 import { ToastContainer, toast } from "react-toastify";
 import { GetAccount } from "../../../Redux/Reducer/GetAccountDetails";
+import { ValidateUser } from "../../../Redux/Reducer/ValidateUser";
 export default function BankDetail() {
   title("Account Detail");
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ export default function BankDetail() {
           toast.success(res?.payload?.data?.message, {
             autoClose: 300,
           });
-
+          dispatch(ValidateUser({}))
           dispatch(
             GetAccount({ userId: localStorage.getItem("user_id") })
           ).then((res) => {
@@ -71,7 +72,8 @@ export default function BankDetail() {
         }
       });
     } else {
-      toast.error("Empty Field are not allowed", {
+      setFieldDisable(false)
+      toast.error("Empty Fields are not allowed", {
         autoClose: 300,
       });
     }
