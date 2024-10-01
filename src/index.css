@@ -257,3 +257,9 @@ dl li {
 .w100{
   width: 100%;
 }
+.mb-10{
+  margin-bottom: 10px !important;
+}
+.no-cursor{
+  cursor: not-allowed !important;
+}

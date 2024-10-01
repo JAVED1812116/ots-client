@@ -10,6 +10,7 @@ import {
   Input,
   InputAdornment,
   Container,
+  CircularProgress 
 } from "@mui/material";
 import { useSelector } from "react-redux";
 
@@ -28,12 +29,14 @@ export default function AddNew() {
   const navigate = useNavigate();
   const [mylocation, setMyLocation] = useState(location.pathname);
   const [email, setEmail] = useState(null);
+  const [btnLoading, setBtnLoading] = useState(false);
   const { validateUser } = useSelector((state) => state);
 
   const sendEMAIL = () => {
     if (email != null || "") {
       var regexEmail = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
       if (regexEmail.test(email)) {
+        setBtnLoading(true)
         dispatch(
           SendMail({
             email,
@@ -42,9 +45,12 @@ export default function AddNew() {
           })
         ).then((res) => {
           console.log(res?.payload?.data, "ressssssssss");
-          if (res?.payload?.data === "Email Recieved") {
-            toast.success(res?.payload?.data, {
-              position: "top-center",
+          setBtnLoading(false)
+          if (res?.payload?.data?.success) {
+            setEmail('')
+            toast.success(res?.payload?.data?.message, {
+              position: "top-right",
+              autoClose:2000,
             });
           } else {
             toast.error("Something Wrong", {
@@ -59,7 +65,7 @@ export default function AddNew() {
       }
     } else {
       toast.error("Empty Field are not allowed", {
-        position: "top-center",
+        position: "top-right",
       });
     }
   };
@@ -76,23 +82,24 @@ export default function AddNew() {
               <h2 className="mx-2">
                 Set bank details first in order to add any tenant
               </h2>
-            <Button
-              className="addNewButton"
-              variant="contained"
-              // endIcon={<SendIcon />}
-              onClick={() => {
-                navigate("/bank-detail")
-              }}
-            >
-              Setup Bank Details
-            </Button>
+              <Button
+                className="addNewButton"
+                variant="contained"
+                // endIcon={<SendIcon />}
+                onClick={() => {
+                  navigate("/bank-detail");
+                }}
+              >
+                Setup Bank Details
+              </Button>
             </div>
           </>
         ) : (
           <Container maxWidth="sm" className="add-new-container">
-            <FormControl className="w100">
+            <FormControl className="w100 mb-10">
               {/* <InputLabel htmlFor="input-with-icon-adornment">Email</InputLabel> */}
               <Input
+                value={email}
                 id="input-with-icon-adornment"
                 placeholder={"Enter Email Address"}
                 startAdornment={
@@ -106,11 +113,12 @@ export default function AddNew() {
               />
             </FormControl>
             <Button
-              className="addNewButton"
+              className={`addNewButton ${btnLoading && 'no-cursor'}`}
               variant="contained"
+              startIcon={btnLoading && <CircularProgress size={18} color="inherit" />}
               endIcon={<SendIcon />}
               onClick={() => {
-                sendEMAIL();
+               !btnLoading && sendEMAIL();
               }}
             >
               Send
