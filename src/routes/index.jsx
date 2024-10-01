@@ -109,7 +109,7 @@ export default function AllRoutes() {
         </Routes>
       </Router>
     );
-  } else if (loginUser?.login?.data?.result == "No User Found") {
+  } else if (loginUser?.login?.data?.result == "No User Found" || (loginUser?.login?.length == 0 && validateUser?.UserValidate?.length == 0 && !token)) {
     console.log("hello0");
     return (
       <Router>
@@ -118,7 +118,7 @@ export default function AllRoutes() {
           <Route path="/login" element={<LoginUser />} />
           <Route path="/signup" element={<CreateUser />} />
           <Route path="/signup/:id?" element={<CreateUser />} />
-          <Route path="/*" element={<NotFound />} />
+          <Route path="/*" element={<Redirect to="/"/>} />
         </Routes>
       </Router>
     );
