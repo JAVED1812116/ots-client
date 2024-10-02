@@ -57,7 +57,6 @@ export default function PropertyRegister() {
   const [generatedRows, setGeneratedRows] = React.useState([]);
 
   const [error, setError] = React.useState({});
-  const [tableError, setTableError] = React.useState({});
   const { loginUser } = useSelector((state) => state);
   // const handleChange = (e) => {
   //   const { name, value } = e.target;
@@ -70,15 +69,15 @@ export default function PropertyRegister() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-  const isCnicValid = (cnic) => {
-    // Regular expression for CNIC validation (e.g., 12345-6789012-3)
-    const cnicRegex = /^\d{5}-\d{7}-\d{1}$/;
-    return cnicRegex.test(cnic);
-  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     // Check if the entered value is not a valid number for "cnic" or "contactNumber" fields
+    if (name === "totalFloor" && value === "0") {
+      setError((prev) => ({ ...prev, totalFloor: true }));
+      return;
+    }
     if (
       (name === "contactNumber" ||
         name === "alternateNumber" ||
@@ -149,12 +148,10 @@ export default function PropertyRegister() {
         name === "flatSecurityCharges") &&
       !/^[0-9]*$/.test(value)
     ) {
-      setTableError((prev) => ({ ...prev, [name]: true }));
       // If it's not a valid number, you can choose to ignore the Input or show an error message.
       return;
     }
     if (name === "flatName" && !/^[A-Za-z\s]*$/.test(value)) {
-      setTableError((prev) => ({ ...prev, [name]: true }));
       // If it's not a valid number, you can choose to ignore the Input or show an error message.
       return;
     }
@@ -207,12 +204,14 @@ export default function PropertyRegister() {
                 className="propertyTable"
                 stickyHeader
               >
+                {detail?.totalFloor===""?"":
+
                 <TableHead>
                   <TableRow>
                     <TableCell>No.</TableCell>
                     <TableCell>Flat Name</TableCell>
                     <TableCell>Flat Number</TableCell>
-                    <TableCell>Flat Floor</TableCell>
+                    {detail?.totalFloor=="0"?"":detail?.totalFloor=="1"?"":  <TableCell>Flat Floor</TableCell>}
                     <TableCell>Rooms</TableCell>
                     <TableCell>Toilet</TableCell>
                     <TableCell>Kitchen</TableCell>
@@ -224,6 +223,8 @@ export default function PropertyRegister() {
                     <TableCell>Status</TableCell>
                   </TableRow>
                 </TableHead>
+  }
+  {detail?.totalFloor===""?"":
                 <TableBody>
                   {generatedRows.map((e, i) => (
                     <TableRow
@@ -250,9 +251,10 @@ export default function PropertyRegister() {
                           onChange={(e) => handleCellChange(i, e)}
                         />
                       </TableCell>
+                      {detail?.totalFloor=="0"?"":detail?.totalFloor=="1"?"":
                       <TableCell component="th" scope="row">
                         <Select
-                          defaultValue={0}
+                          defaultValue={1}
                           // value={age}
                           name="flatFloor"
                           onChange={(e) => handleCellChange(i, e)}
@@ -272,12 +274,13 @@ export default function PropertyRegister() {
                           ).map((e, i) => {
                             return (
                               <MenuItem key={i} value={i}>
-                                {`${i} floor`}
+                                {i === 0 ? 'Ground Floor' : `${i} floor`}
                               </MenuItem>
                             );
                           })}
                         </Select>
                       </TableCell>
+  }
                       <TableCell component="th" scope="row">
                         <Input
                           placeholder="Flat Rooms"
@@ -365,6 +368,7 @@ export default function PropertyRegister() {
                     </TableRow>
                   ))}
                 </TableBody>
+  }
               </Table>
             </TableContainer>
           </Paper>
@@ -392,11 +396,9 @@ export default function PropertyRegister() {
       }),
     }),
   }));
-console.log(error, 'error');
   const onFinish = (e) => {
     e.preventDefault()
     if (Object.values(error).some(value => value !== true)) {
-      console.log('onFInish');
       let values = {
         ownerName: detail?.ownerName,
         fatherName: detail?.fatherName,
@@ -434,20 +436,7 @@ console.log(error, 'error');
         });
         return;
       }
-      const requiredFields = [
-        "flatName",
-        "flatNumber",
-        "flatFloor",
-        "flatRooms",
-        "flatToilet",
-        "flatKitchen",
-        "flatRent",
-        "flatAdvance",
-        "flatMaintananceCharges",
-        "flatTrashCharges",
-        "flatSecurityCharges",
-        "is_rent",
-      ];
+   
   
       if (
         values?.totalFlat !== 0 ||
@@ -664,22 +653,23 @@ console.log(error, 'error');
                     error.totalFloor ? "Please enter a valid Total Floor" : ""
                   }
                 />
-
-                <TextField
-                  required
-                  id="standard-multiline-flexible"
-                  label="Total Flat"
-                  multiline
-                  maxRows={4}
-                  variant="standard"
-                  name="totalFlat"
-                  onChange={handleChange}
-                  error={error.totalFlat}
-                  // disabled={detail?.totalFloor===''}
-                  helperText={
-                    error.totalFlat ? "Please enter a valid Total Flat" : ""
-                  }
-                />
+{ detail?.totalFloor===""?"":
+  <TextField
+    required
+    id="standard-multiline-flexible"
+    label="Total Flat"
+    multiline
+    maxRows={4}
+    variant="standard"
+    name="totalFlat"
+    onChange={handleChange}
+    error={error.totalFlat}
+    // disabled={detail?.totalFloor===''}
+    helperText={
+      error.totalFlat ? "Please enter a valid Total Flat" : ""
+    }
+  />
+}
 
                 {detail?.totalFlat === 0 || detail?.totalFlat?.length === 0
                   ? " "
