@@ -11,6 +11,9 @@ import {
   InputAdornment,
   Container,
   CircularProgress,
+  Chip,
+  Box,
+  Typography,
 } from "@mui/material";
 import { useSelector } from "react-redux";
 
@@ -24,6 +27,16 @@ import { ToastContainer, toast } from "react-toastify";
 import { ValidateUser } from "../../../Redux/Reducer/ValidateUser";
 import { BASE_URL } from "../../../config/config";
 import axios from "axios";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { GetLandlordEmails } from "../../../Redux/Reducer/GetLandlordEmails";
+import moment from "moment";
+
 export default function AddNew() {
   title("Add New Tenant");
   const dispatch = useDispatch();
@@ -32,20 +45,18 @@ export default function AddNew() {
   const navigate = useNavigate();
   const [mylocation, setMyLocation] = useState(location.pathname);
   const [email, setEmail] = useState(null);
+  const [rows, setRows] = useState([]);
   const [btnLoading, setBtnLoading] = useState(false);
   const [isBank, setIsBank] = useState(false);
   const [loader, setLoader] = useState(true);
+  const [tableLoader, setTableLoader] = useState(false);
   const { validateUser, loginUser } = useSelector((state) => state);
   console.log(validateUser?.UserValidate, "validateUser");
   console.log(validateUser?.UserValidate?.length > 0, "validateUser123");
   console.log(loginUser?.login, "loginUser");
-  console.log(
-    loginUser?.login?.data?.data?.is_bank,
-    "loginUser123"
-  );
+  console.log(loginUser?.login?.data?.data?.is_bank, "loginUser123");
 
-
-  React.useEffect(()=>{
+  React.useEffect(() => {
     // setLoader(true)
     const token = sessionStorage.getItem("ots_token");
     axios({
@@ -55,14 +66,26 @@ export default function AddNew() {
         Accept: "application/json",
         Authorization: "Bearer " + token,
       },
-      // httpAgent: agent, 
+      // httpAgent: agent,
       // httpsAgent: agent,
-    }).then((res)=> {
-      console.log(res?.data?.user?.is_bank, 'resssss');
-      setIsBank(res?.data?.user?.is_bank)
-      setLoader(false)
-    })
-  },[])
+    }).then((res) => {
+      console.log(res?.data?.user?.is_bank, "resssss");
+      setIsBank(res?.data?.user?.is_bank);
+      setLoader(false);
+    });
+
+    dispatch(
+      GetLandlordEmails({
+        // email,
+        // userId: localStorage.getItem("user_id"),
+        // userName: localStorage.getItem("name"),
+      })
+    ).then((res) => {
+      console.log(res, "rrrrrr");
+      setRows(res?.payload?.data?.data);
+      setTableLoader(false);
+    });
+  }, []);
 
   const sendEMAIL = () => {
     if (email != null || "") {
@@ -76,6 +99,9 @@ export default function AddNew() {
             userName: localStorage.getItem("name"),
           })
         ).then((res) => {
+          dispatch(GetLandlordEmails({})).then((resp) => {
+            setRows(resp?.payload?.data?.data);
+          });
           console.log(res?.payload?.data, "ressssssssss");
           setBtnLoading(false);
           if (res?.payload?.data?.success) {
@@ -102,9 +128,61 @@ export default function AddNew() {
     }
   };
 
-
-
-
+  const DefaultTable = () => {
+    return (
+      <TableContainer component={Paper} style={{ marginTop: "10px" }}>
+        <Table aria-label="simple table">
+          <TableHead sx={{ background: "black" }}>
+            <TableRow>
+              <TableCell sx={{ color: "white" }}>Date</TableCell>
+              <TableCell sx={{ color: "white" }}>Tenant Email</TableCell>
+              <TableCell sx={{ color: "white" }}>Status</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow
+                key={row.name}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell>
+                  {moment(row.date, "YYYY-MM-DDTHH:mm:ss.SSSZ").calendar(null, {
+                    lastDay: "[Yesterday at] h:mm A",
+                    sameDay: "[Today at] h:mm A",
+                    nextDay: "[Tomorrow at] h:mm A",
+                    lastWeek: "dddd [at] h:mm A", // Adjust this line
+                    nextWeek: "dddd [at] h:mm A",
+                    // sameElse: 'DD MMM [at] h:mm A',
+                    sameElse: function (now) {
+                      if (this.isBefore(now, "year")) {
+                        // For dates in the previous year
+                        return "DD MMM YYYY [at] h:mm A";
+                      } else {
+                        // For all other dates
+                        return "DD MMM [at] h:mm A";
+                      }
+                    },
+                  })}
+                </TableCell>
+                <TableCell>{row.tenantEmail}</TableCell>
+                <TableCell>
+                  {/* {row.tenantEmailStatus} */}
+                  <Chip
+                    label={
+                      row.tenantEmailStatus === "active" ? "Active" : "Pending"
+                    }
+                    color={
+                      row.tenantEmailStatus === "active" ? "success" : "primary"
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  };
 
   return (
     <>
@@ -113,21 +191,18 @@ export default function AddNew() {
         <div className="mainHeading">
           <h1>Add New Tenant</h1>
         </div>
-        {
-        loader ?
-        <div className="flex">
-          <CircularProgress size={42} color="inherit" />
-        </div>
-        :
-        // ((
+        {loader ? (
+          <div className="flex">
+            <CircularProgress size={42} color="inherit" />
+          </div>
+        ) : // ((
         //   (loginUser?.login && typeof loginUser?.login === 'object') || (Array.isArray(loginUser?.login) &&
         //   loginUser?.login?.length > 0)) &&
         //   !loginUser?.login?.data?.data?.is_bank) ||
         // (((validateUser?.UserValidate && typeof validateUser.UserValidate === 'object') || (Array.isArray(validateUser?.UserValidate) &&
         //   validateUser?.UserValidate?.length > 0)) &&
-        //   !validateUser?.UserValidate?.data?.user?.is_bank) 
-          !isBank
-          ? (
+        //   !validateUser?.UserValidate?.data?.user?.is_bank)
+        !isBank ? (
           <>
             <div className="flex">
               <h2 className="mx-2">
@@ -179,6 +254,18 @@ export default function AddNew() {
           </Container>
         )}
         <ToastContainer />
+        {tableLoader ? (
+          <div className="flex">
+            <CircularProgress size={42} color="inherit" />
+          </div>
+        ) : (
+          rows?.length > 0 && (
+            <div>
+              <h2>Sent Emails</h2>
+              <DefaultTable />
+            </div>
+          )
+        )}
       </div>
     </>
   );
