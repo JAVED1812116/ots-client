@@ -33,7 +33,7 @@ const PendingRequest = () => {
                 dispatch(ValidateUser({}))
                 dispatch(reset())
                 navigate("/");
-              }, 1000);
+              }, 2000);
              }}>Logout</Button>
       </div>
     </>

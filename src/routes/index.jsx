@@ -53,6 +53,7 @@ export default function AllRoutes() {
   console.log(loginUser, "loginUser?.login?.data?.data");
   console.log(validateUser, "validateUser?.data");
   const token = sessionStorage.getItem("ots_token");
+  console.log(token, 'index token');
   // console.log(sessionStorage.getItem('ots_token'), 'sessionStorage.getItem()');
   // console.log(localStorage.getItem('token'), 'localStorage.getItem()');
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;

@@ -24,6 +24,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Logout } from "@mui/icons-material";
 import Container from '@mui/material/Container';
 import { useState } from "react";
+import { ValidateUser } from "../Redux/Reducer/ValidateUser";
+import { reset } from "../Redux/Reducer/LoginUser";
+import { useDispatch } from "react-redux";
 
 // import { FaPeopleGroup } from 'react-icons/fa';
 const drawerWidth = 240;
@@ -96,6 +99,7 @@ const Drawer = styled(MuiDrawer, {
 export default function Wrapper({ open, setOpen, mylocation }) {
   const theme = useTheme();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   //   const handleDrawerOpen = () => {
   //     setOpen(true);
@@ -351,10 +355,15 @@ export default function Wrapper({ open, setOpen, mylocation }) {
               disablePadding
               sx={{ display: "block" }}
               onClick={() => {
+                sessionStorage.clear();
                 localStorage.clear("name")
                 localStorage.clear("user_id")
-                sessionStorage.clear();
-                navigate("/");
+                localStorage.clear("token")
+                setTimeout(() => {                
+                  dispatch(ValidateUser({}))
+                  dispatch(reset())
+                  navigate("/");
+                }, 1000);
 
               }}
             >

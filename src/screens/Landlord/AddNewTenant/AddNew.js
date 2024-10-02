@@ -10,7 +10,7 @@ import {
   Input,
   InputAdornment,
   Container,
-  CircularProgress 
+  CircularProgress,
 } from "@mui/material";
 import { useSelector } from "react-redux";
 
@@ -21,6 +21,9 @@ import "./newRequest.css";
 import { SendMail } from "../../../Redux/Reducer/SendEmail";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import { ValidateUser } from "../../../Redux/Reducer/ValidateUser";
+import { BASE_URL } from "../../../config/config";
+import axios from "axios";
 export default function AddNew() {
   title("Add New Tenant");
   const dispatch = useDispatch();
@@ -30,13 +33,42 @@ export default function AddNew() {
   const [mylocation, setMyLocation] = useState(location.pathname);
   const [email, setEmail] = useState(null);
   const [btnLoading, setBtnLoading] = useState(false);
-  const { validateUser } = useSelector((state) => state);
+  const [isBank, setIsBank] = useState(false);
+  const [loader, setLoader] = useState(true);
+  const { validateUser, loginUser } = useSelector((state) => state);
+  console.log(validateUser?.UserValidate, "validateUser");
+  console.log(validateUser?.UserValidate?.length > 0, "validateUser123");
+  console.log(loginUser?.login, "loginUser");
+  console.log(
+    loginUser?.login?.data?.data?.is_bank,
+    "loginUser123"
+  );
+
+
+  React.useEffect(()=>{
+    // setLoader(true)
+    const token = sessionStorage.getItem("ots_token");
+    axios({
+      method: "POST",
+      url: `${BASE_URL}/validateUser`,
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+      // httpAgent: agent, 
+      // httpsAgent: agent,
+    }).then((res)=> {
+      console.log(res?.data?.user?.is_bank, 'resssss');
+      setIsBank(res?.data?.user?.is_bank)
+      setLoader(false)
+    })
+  },[])
 
   const sendEMAIL = () => {
     if (email != null || "") {
       var regexEmail = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
       if (regexEmail.test(email)) {
-        setBtnLoading(true)
+        setBtnLoading(true);
         dispatch(
           SendMail({
             email,
@@ -45,12 +77,12 @@ export default function AddNew() {
           })
         ).then((res) => {
           console.log(res?.payload?.data, "ressssssssss");
-          setBtnLoading(false)
+          setBtnLoading(false);
           if (res?.payload?.data?.success) {
-            setEmail('')
+            setEmail("");
             toast.success(res?.payload?.data?.message, {
               position: "top-right",
-              autoClose:2000,
+              autoClose: 2000,
             });
           } else {
             toast.error("Something Wrong", {
@@ -69,6 +101,11 @@ export default function AddNew() {
       });
     }
   };
+
+
+
+
+
   return (
     <>
       <Wrapper open={open} setOpen={setOpen} mylocation={mylocation} />
@@ -76,7 +113,21 @@ export default function AddNew() {
         <div className="mainHeading">
           <h1>Add New Tenant</h1>
         </div>
-        {!validateUser?.UserValidate?.data?.user?.is_bank ? (
+        {
+        loader ?
+        <div className="flex">
+          <CircularProgress size={42} color="inherit" />
+        </div>
+        :
+        // ((
+        //   (loginUser?.login && typeof loginUser?.login === 'object') || (Array.isArray(loginUser?.login) &&
+        //   loginUser?.login?.length > 0)) &&
+        //   !loginUser?.login?.data?.data?.is_bank) ||
+        // (((validateUser?.UserValidate && typeof validateUser.UserValidate === 'object') || (Array.isArray(validateUser?.UserValidate) &&
+        //   validateUser?.UserValidate?.length > 0)) &&
+        //   !validateUser?.UserValidate?.data?.user?.is_bank) 
+          !isBank
+          ? (
           <>
             <div className="flex">
               <h2 className="mx-2">
@@ -113,12 +164,14 @@ export default function AddNew() {
               />
             </FormControl>
             <Button
-              className={`addNewButton ${btnLoading && 'no-cursor'}`}
+              className={`addNewButton ${btnLoading && "no-cursor"}`}
               variant="contained"
-              startIcon={btnLoading && <CircularProgress size={18} color="inherit" />}
+              startIcon={
+                btnLoading && <CircularProgress size={18} color="inherit" />
+              }
               endIcon={<SendIcon />}
               onClick={() => {
-               !btnLoading && sendEMAIL();
+                !btnLoading && sendEMAIL();
               }}
             >
               Send

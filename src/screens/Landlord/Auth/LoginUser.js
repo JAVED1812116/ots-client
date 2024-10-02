@@ -47,6 +47,7 @@ const LoginUser = () => {
           dispatch(UserLogin({ email, password })).then((res) => {
             localStorage.setItem("token", res?.payload?.data?.accessToken)
             sessionStorage.setItem("ots_token", res?.payload?.data?.accessToken);
+            console.log(sessionStorage.getItem("ots_token"), 'session');
             if (
               res?.payload?.data?.message === "User Login Successfully" &&
               res?.payload?.data?.data?.is_register === true &&
