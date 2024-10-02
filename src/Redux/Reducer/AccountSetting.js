@@ -1,12 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BASE_URL } from "../../config/config";
-
+const token = sessionStorage.getItem("ots_token");
 
 export const AccountSet = createAsyncThunk("dummyData/AccountSettings", async ({detail}) => {
     let response = await axios.post(`${BASE_URL}/account-setting`,  {
         detail
-    });
+    }, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    }
+
+);
     return response;
 });
 
