@@ -12,8 +12,6 @@ import {
   Container,
   CircularProgress,
   Chip,
-  Box,
-  Typography,
 } from "@mui/material";
 import { useSelector } from "react-redux";
 
@@ -27,15 +25,16 @@ import { ToastContainer, toast } from "react-toastify";
 import { ValidateUser } from "../../../Redux/Reducer/ValidateUser";
 import { BASE_URL } from "../../../config/config";
 import axios from "axios";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+// import Table from "@mui/material/Table";
+// import TableBody from "@mui/material/TableBody";
+// import TableCell from "@mui/material/TableCell";
+// import TableContainer from "@mui/material/TableContainer";
+// import TableHead from "@mui/material/TableHead";
+// import TableRow from "@mui/material/TableRow";
+// import Paper from "@mui/material/Paper";
 import { GetLandlordEmails } from "../../../Redux/Reducer/GetLandlordEmails";
 import moment from "moment";
+import { DataGrid } from "@mui/x-data-grid";
 
 export default function AddNew() {
   title("Add New Tenant");
@@ -51,10 +50,7 @@ export default function AddNew() {
   const [loader, setLoader] = useState(true);
   const [tableLoader, setTableLoader] = useState(false);
   const { validateUser, loginUser } = useSelector((state) => state);
-  console.log(validateUser?.UserValidate, "validateUser");
-  console.log(validateUser?.UserValidate?.length > 0, "validateUser123");
-  console.log(loginUser?.login, "loginUser");
-  console.log(loginUser?.login?.data?.data?.is_bank, "loginUser123");
+
 
   React.useEffect(() => {
     // setLoader(true)
@@ -69,7 +65,6 @@ export default function AddNew() {
       // httpAgent: agent,
       // httpsAgent: agent,
     }).then((res) => {
-      console.log(res?.data?.user?.is_bank, "resssss");
       setIsBank(res?.data?.user?.is_bank);
       setLoader(false);
     });
@@ -81,7 +76,6 @@ export default function AddNew() {
         // userName: localStorage.getItem("name"),
       })
     ).then((res) => {
-      console.log(res, "rrrrrr");
       setRows(res?.payload?.data?.data);
       setTableLoader(false);
     });
@@ -102,7 +96,6 @@ export default function AddNew() {
           dispatch(GetLandlordEmails({})).then((resp) => {
             setRows(resp?.payload?.data?.data);
           });
-          console.log(res?.payload?.data, "ressssssssss");
           setBtnLoading(false);
           if (res?.payload?.data?.success) {
             setEmail("");
@@ -127,60 +120,109 @@ export default function AddNew() {
       });
     }
   };
-
+const columns = [
+  {
+    field: "date",
+    headerName: "Date",
+    width: 620,
+    headerClassName: "header-bg",
+     headerAlign: "center", // Center align header text
+      align: "center",
+    renderCell: (params) => moment(params.value).format("DD MMM YYYY, h:mm A"),
+  },
+  {
+    field: "tenantEmail",
+    headerName: "Tenant Email",
+    width: 700,
+     headerAlign: "center", // Center align header text
+      align: "center",
+  },
+  {
+    field: "tenantEmailStatus",
+    headerName: "Status",
+    width: 700,
+     headerAlign: "center", // Center align header text
+      align: "center",
+    renderCell: (params) => (
+      <Chip
+        label={params.value === "active" ? "Active" : "Pending"}
+        color={params.value === "active" ? "success" : "primary"}
+      />
+    ),
+  },
+];
   const DefaultTable = () => {
     return (
-      <TableContainer component={Paper} style={{ marginTop: "10px" }}>
-        <Table aria-label="simple table">
-          <TableHead sx={{ background: "black" }}>
-            <TableRow>
-              <TableCell sx={{ color: "white" }}>Date</TableCell>
-              <TableCell sx={{ color: "white" }}>Tenant Email</TableCell>
-              <TableCell sx={{ color: "white" }}>Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell>
-                  {moment(row.date, "YYYY-MM-DDTHH:mm:ss.SSSZ").calendar(null, {
-                    lastDay: "[Yesterday at] h:mm A",
-                    sameDay: "[Today at] h:mm A",
-                    nextDay: "[Tomorrow at] h:mm A",
-                    lastWeek: "dddd [at] h:mm A", // Adjust this line
-                    nextWeek: "dddd [at] h:mm A",
-                    // sameElse: 'DD MMM [at] h:mm A',
-                    sameElse: function (now) {
-                      if (this.isBefore(now, "year")) {
-                        // For dates in the previous year
-                        return "DD MMM YYYY [at] h:mm A";
-                      } else {
-                        // For all other dates
-                        return "DD MMM [at] h:mm A";
-                      }
-                    },
-                  })}
-                </TableCell>
-                <TableCell>{row.tenantEmail}</TableCell>
-                <TableCell>
-                  {/* {row.tenantEmailStatus} */}
-                  <Chip
-                    label={
-                      row.tenantEmailStatus === "active" ? "Active" : "Pending"
-                    }
-                    color={
-                      row.tenantEmailStatus === "active" ? "success" : "primary"
-                    }
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <div style={{ height: 600, width: "100%" }}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={[5, 10]}
+        // checkboxSelection
+        getRowId={(row) => row._id}
+        sx={{ background: "white", border: "1px solid #ccc" }}
+      />
+    </div>
+      // <TableContainer component={Paper} style={{ marginTop: "10px" }}>
+      //   <Table aria-label="simple table">
+      //     <TableHead >
+      //       <TableRow>
+      //         <TableCell sx={{ color: "white" }}>  <DataGrid
+      //   rows={rows}
+      //   columns={rows}
+      //   // initialState={{ pagination: { paginationModel } }}
+      //   pageSizeOptions={[5, 10]}
+      //   checkboxSelection
+      //   getRowId={(row) => row._id} 
+      //   sx={{ border: 0 }}
+      // /></TableCell>
+      //         <TableCell sx={{ color: "white" }}>Tenant Email</TableCell>
+      //         <TableCell sx={{ color: "white" }}>Status</TableCell>
+      //       </TableRow>
+      //     </TableHead>
+      //     <TableBody>
+      //       {rows.map((row) => (
+      //         <TableRow
+      //           key={row.name}
+      //           sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+      //         >
+      //           <TableCell>
+      //             {moment(row.date, "YYYY-MM-DDTHH:mm:ss.SSSZ").calendar(null, {
+      //               lastDay: "[Yesterday at] h:mm A",
+      //               sameDay: "[Today at] h:mm A",
+      //               nextDay: "[Tomorrow at] h:mm A",
+      //               lastWeek: "dddd [at] h:mm A", // Adjust this line
+      //               nextWeek: "dddd [at] h:mm A",
+      //               // sameElse: 'DD MMM [at] h:mm A',
+      //               sameElse: function (now) {
+      //                 if (this.isBefore(now, "year")) {
+      //                   // For dates in the previous year
+      //                   return "DD MMM YYYY [at] h:mm A";
+      //                 } else {
+      //                   // For all other dates
+      //                   return "DD MMM [at] h:mm A";
+      //                 }
+      //               },
+      //             })}
+      //           </TableCell>
+      //           <TableCell>{row.tenantEmail}</TableCell>
+      //           <TableCell>
+      //             {/* {row.tenantEmailStatus} */}
+      //             <Chip
+      //               label={
+      //                 row.tenantEmailStatus === "active" ? "Active" : "Pending"
+      //               }
+      //               color={
+      //                 row.tenantEmailStatus === "active" ? "success" : "primary"
+      //               }
+      //             />
+      //           </TableCell>
+      //         </TableRow>
+      //       ))}
+      //     </TableBody>
+      //   </Table>
+      // </TableContainer>
     );
   };
 

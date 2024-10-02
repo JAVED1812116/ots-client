@@ -18,7 +18,7 @@ import Logo from "../../../assets/Logo.png";
 import { RegisterTenant } from "../../../Redux/Reducer/TenantRegestration";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
-import { DataGrid } from "@mui/x-data-grid";
+// import { DataGrid } from "@mui/x-data-grid";
 import MuiAppBar from "@mui/material/AppBar";
 import { styled } from "@mui/material/styles";
 import { Input } from "@mui/material";
