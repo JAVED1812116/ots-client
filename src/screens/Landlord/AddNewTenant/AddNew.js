@@ -51,7 +51,6 @@ export default function AddNew() {
   const [tableLoader, setTableLoader] = useState(false);
   const { validateUser, loginUser } = useSelector((state) => state);
 
-
   React.useEffect(() => {
     // setLoader(true)
     const token = sessionStorage.getItem("ots_token");
@@ -120,50 +119,62 @@ export default function AddNew() {
       });
     }
   };
-const columns = [
-  {
-    field: "date",
-    headerName: "Date",
-    width: 620,
-    headerClassName: "header-bg",
-     headerAlign: "center", // Center align header text
-      align: "center",
-    renderCell: (params) => moment(params.value).format("DD MMM YYYY, h:mm A"),
-  },
-  {
-    field: "tenantEmail",
-    headerName: "Tenant Email",
-    width: 700,
-     headerAlign: "center", // Center align header text
-      align: "center",
-  },
-  {
-    field: "tenantEmailStatus",
-    headerName: "Status",
-    width: 700,
-     headerAlign: "center", // Center align header text
-      align: "center",
-    renderCell: (params) => (
-      <Chip
-        label={params.value === "active" ? "Active" : "Pending"}
-        color={params.value === "active" ? "success" : "primary"}
-      />
-    ),
-  },
-];
+  const columns = [
+    {
+      field: "sNo",
+      headerName: "S.No",
+      width: 100, // Set a fixed width for the serial number column
+      headerClassName: "header-bg",
+    },
+    {
+      field: "date",
+      headerName: "Date",
+      // width: 220,
+      flex: 1,
+      headerClassName: "header-bg",
+      //  headerAlign: "center", // Center align header text
+      //   align: "center",
+      renderCell: (params) =>
+        moment(params.value).format("DD MMM YYYY, h:mm A"),
+    },
+    {
+      field: "tenantEmail",
+      headerName: "Tenant Email",
+      flex: 1,
+      // width: 400,
+      //  headerAlign: "center", // Center align header text
+      //   align: "center",
+    },
+    {
+      field: "tenantEmailStatus",
+      headerName: "Status",
+      flex: 1,
+      // width: 700,
+      headerAlign: "right", // Center align header text
+      align: "right",
+      renderCell: (params) => (
+        <Chip
+          label={params.value === "active" ? "Active" : "Pending"}
+          color={params.value === "active" ? "success" : "primary"}
+        />
+      ),
+    },
+  ];
   const DefaultTable = () => {
     return (
-      <div style={{ height: 600, width: "100%" }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5, 10]}
-        // checkboxSelection
-        getRowId={(row) => row._id}
-        sx={{ background: "white", border: "1px solid #ccc" }}
-      />
-    </div>
+      <div style={{ height: 371, width: "100%" }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={5}
+          initialState={{ pagination: { paginationModel: { page: 0, pageSize: 5 } } }}
+
+          rowsPerPageOptions={[5, 10]}
+          // checkboxSelection
+          getRowId={(row) => row._id}
+          sx={{ background: "white", border: "1px solid #ccc" }}
+        />
+      </div>
       // <TableContainer component={Paper} style={{ marginTop: "10px" }}>
       //   <Table aria-label="simple table">
       //     <TableHead >
@@ -174,7 +185,7 @@ const columns = [
       //   // initialState={{ pagination: { paginationModel } }}
       //   pageSizeOptions={[5, 10]}
       //   checkboxSelection
-      //   getRowId={(row) => row._id} 
+      //   getRowId={(row) => row._id}
       //   sx={{ border: 0 }}
       // /></TableCell>
       //         <TableCell sx={{ color: "white" }}>Tenant Email</TableCell>
