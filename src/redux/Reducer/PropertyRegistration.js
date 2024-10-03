@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BASE_URL } from "../../config/config";
-const token = localStorage.getItem('token')
+const token = sessionStorage.getItem('ots_token')
 
 
 export const PropertyRegisters = createAsyncThunk("dummyData/PropertyRegistration", async ({values}) => {

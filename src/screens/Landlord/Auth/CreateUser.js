@@ -67,22 +67,31 @@ const CreateUser = () => {
           if (passwords.test(password)) {
             dispatch(UserAdd({ name, email, password, code: hasId })).then(
               (res) => {
-                if (res?.payload?.data === "User Register Successfully") {
+                // console.log(res, 'res?.payload');
+                if (res?.payload?.data?.message === "User Register Successfully") {
                   navigate("/login",{state:{type:"Landlord"}})
                   return toast.success("Signup Successfully!", {
                     position: "top-center",
                   });
-                } else if (res?.payload?.data === "User Already Registered") {
+                } else if (res?.payload?.data?.message === "User Already Registered") {
                   return toast.error("User Already Registered!", {
                     position: "top-center",
                   });
-                } else {
+                } 
+                else if (res?.payload?.data?.message === "Landlord Not Found") {
+                  return toast.error("Landlord Not Found!", {
+                    position: "top-center",
+                  });
+                } 
+                else {
                   toast.error("Empty Field are not allowed", {
                     position: "top-center",
                   });
                 }
               }
-            );
+            ).catch((err)=> {
+              console.log(err, 'err res');
+            });
           } else {
             toast.error("password is not valid", {
               position: "top-center",

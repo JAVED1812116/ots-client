@@ -116,6 +116,7 @@ export default function Registration() {
   //   );
   // }, []);
   React.useEffect(() => {
+    console.log(sessionStorage.getItem("code"), 'sessionStorage.getItem("code")');
     dispatch(GetProperty({ userId: sessionStorage.getItem("code") })).then(
       (res) => {
         
