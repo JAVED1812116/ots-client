@@ -33,7 +33,11 @@ import { GetProperty } from "../../../Redux/Reducer/GetPropertyDetails";
 import Checkbox from "@mui/material/Checkbox";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { ValidateUser } from "../../../Redux/Reducer/ValidateUser";
+import { useSelector } from "react-redux";
+
 export default function Registration() {
+  const { loginUser, validateUser } = useSelector((state) => state);
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
   const dispatch = useDispatch();
@@ -116,8 +120,7 @@ export default function Registration() {
   //   );
   // }, []);
   React.useEffect(() => {
-    console.log(sessionStorage.getItem("code"), 'sessionStorage.getItem("code")');
-    dispatch(GetProperty({ userId: sessionStorage.getItem("code") })).then(
+    dispatch(GetProperty({ userId: sessionStorage.getItem("code") || loginUser?.login?.data?.data?.code})).then(
       (res) => {
         
         const landlordId = res?.payload?.data?.landlordId;
