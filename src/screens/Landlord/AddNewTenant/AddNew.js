@@ -164,6 +164,7 @@ export default function AddNew() {
     return (
       <div style={{ height: 371, width: "100%" }}>
         <DataGrid
+          className="add-new-tenant-datagrid"
           rows={rows}
           columns={columns}
           pageSize={5}

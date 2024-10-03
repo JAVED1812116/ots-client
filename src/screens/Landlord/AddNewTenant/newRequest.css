@@ -80,3 +80,10 @@ color: #000000;
     margin-left: 2rem;
     margin-right: 2rem;
   }
+  .add-new-tenant-datagrid .MuiDataGrid-columnHeaders{
+    background-color: black;
+    color: white;
+  }
+  .add-new-tenant-datagrid  .MuiDataGrid-columnHeaders .MuiIconButton-root{
+    color: white;
+  }
