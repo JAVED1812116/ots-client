@@ -16,17 +16,18 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Logo from "../assets/Logo.png";
-import { AiFillHome, AiFillSetting } from "react-icons/ai";
+import { AiFillHome } from "react-icons/ai";
 import { IoMdAdd, IoIosPeople } from "react-icons/io";
 import { MdAccountBalance } from "react-icons/md";
 import { GoGitPullRequest } from "react-icons/go";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Logout } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { Logout, PersonAdd, Settings } from "@mui/icons-material";
 import Container from '@mui/material/Container';
 import { useState } from "react";
 import { ValidateUser } from "../Redux/Reducer/ValidateUser";
 import { reset } from "../Redux/Reducer/LoginUser";
 import { useDispatch } from "react-redux";
+import { Avatar, Menu, MenuItem, Tooltip } from "@mui/material";
 
 // import { FaPeopleGroup } from 'react-icons/fa';
 const drawerWidth = 240;
@@ -100,7 +101,8 @@ export default function Wrapper({ open, setOpen, mylocation }) {
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [anchorEl, setAnchorEl] = useState(null);
+  const toogle = Boolean(anchorEl);
   //   const handleDrawerOpen = () => {
   //     setOpen(true);
   //   };
@@ -108,7 +110,13 @@ export default function Wrapper({ open, setOpen, mylocation }) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  console.log(open, "open");
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <>
       <Box sx={{ display: "flex" }}>
@@ -153,6 +161,7 @@ export default function Wrapper({ open, setOpen, mylocation }) {
               variant="h6"
               noWrap
               component="div"
+              marginTop={1}
               >
               {`${localStorage.getItem("name")}`}
             </Typography>
@@ -164,7 +173,85 @@ export default function Wrapper({ open, setOpen, mylocation }) {
               noWrap
               component="div"
               >
-              OTS
+                {/* PROFILE MENU */}
+                <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+        <Tooltip title="Account settings">
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{ ml: 2 }}
+            aria-controls={toogle ? 'account-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={toogle ? 'true' : undefined}
+          >
+        <Avatar sx={{ width: 32, height: 32 }}>{localStorage.getItem("name")?.charAt(0).toUpperCase()}</Avatar>
+          </IconButton>
+        </Tooltip>
+      </Box>
+              <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={toogle}
+        onClose={handleClose}
+        onClick={handleClose}
+        slotProps={{
+          paper: {
+            elevation: 0,
+            sx: {
+              overflow: 'visible',
+              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+              mt: 1.5,
+              '& .MuiAvatar-root': {
+                width: 32,
+                height: 32,
+                ml: -0.5,
+                mr: 1,
+              },
+              '&::before': {
+                content: '""',
+                display: 'block',
+                position: 'absolute',
+                top: 0,
+                right: 14,
+                width: 10,
+                height: 10,
+                bgcolor: 'background.paper',
+                transform: 'translateY(-50%) rotate(45deg)',
+                zIndex: 0,
+              },
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        <MenuItem onClick={handleClose}>
+          <Avatar /> Profile
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Avatar /> My account
+        </MenuItem>
+        <Divider />
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
+            <PersonAdd fontSize="small" />
+          </ListItemIcon>
+          Add another account
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          Settings
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+      </Menu>
+      {/* Profile Picture closed */}
             </Typography>
             </Container>
           </Toolbar>
@@ -295,34 +382,6 @@ export default function Wrapper({ open, setOpen, mylocation }) {
               </ListItemButton>
             </ListItem>
 
-            {/* <ListItem
-              disablePadding
-              sx={{ display: "block" }}
-              className={`${mylocation === "/rent-setting" ? "active-li" : ""}`}
-              onClick={() => {
-                navigate("/rent-setting");
-              }}
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <AiFillSetting size={20} />
-                </ListItemIcon>
-                <ListItemText primary={open ? "Rent Setting" : null} />
-              </ListItemButton>
-            </ListItem> */}
-
             <ListItem
               disablePadding
               sx={{ display: "block" }}
@@ -391,12 +450,6 @@ export default function Wrapper({ open, setOpen, mylocation }) {
           <Divider />
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: 5 }}>
-          {/* {menuData == "home" && <Dashboard />} */}
-          {/* {menuData == "addNewTenant"}
-          {menuData == "newRequest" && <NewRequest />}
-          {menuData == "allTenant" && <AllTenant />}
-          {menuData == "rentSetting" && <RentSetting />}
-          {menuData == "bankDetail" && <BankDetail />} */}
         </Box>
       </Box>
     </>
