@@ -28,6 +28,7 @@ import { ValidateUser } from "../Redux/Reducer/ValidateUser";
 import { reset } from "../Redux/Reducer/LoginUser";
 import { useDispatch } from "react-redux";
 import { Avatar, Menu, MenuItem, Tooltip } from "@mui/material";
+import LogoutHelper from "../Helper/LogoutHelper";
 
 // import { FaPeopleGroup } from 'react-icons/fa';
 const drawerWidth = 240;
@@ -413,18 +414,19 @@ export default function Wrapper({ open, setOpen, mylocation }) {
             <ListItem
               disablePadding
               sx={{ display: "block" }}
-              onClick={() => {
-                sessionStorage.clear();
-                localStorage.clear("name")
-                localStorage.clear("user_id")
-                localStorage.clear("token")
-                setTimeout(() => {                
-                  dispatch(ValidateUser({}))
-                  dispatch(reset())
-                  navigate("/");
-                }, 1000);
+              // onClick={() => {
+              //   sessionStorage.clear();
+              //   localStorage.clear("name")
+              //   localStorage.clear("user_id")
+              //   localStorage.clear("token")
+              //   setTimeout(() => {                
+              //     dispatch(ValidateUser({}))
+              //     dispatch(reset())
+              //     navigate("/");
+              //   }, 1000);
 
-              }}
+              // }}
+              onClick={() => LogoutHelper.logout()}
             >
               <ListItemButton
                 sx={{
