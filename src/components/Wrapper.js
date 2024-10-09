@@ -24,9 +24,6 @@ import { useNavigate } from "react-router-dom";
 import { Logout, PersonAdd, Settings } from "@mui/icons-material";
 import Container from '@mui/material/Container';
 import { useState } from "react";
-import { ValidateUser } from "../Redux/Reducer/ValidateUser";
-import { reset } from "../Redux/Reducer/LoginUser";
-import { useDispatch } from "react-redux";
 import { Avatar, Menu, MenuItem, Tooltip } from "@mui/material";
 import LogoutHelper from "../Helper/LogoutHelper";
 
@@ -101,7 +98,6 @@ const Drawer = styled(MuiDrawer, {
 export default function Wrapper({ open, setOpen, mylocation }) {
   const theme = useTheme();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const toogle = Boolean(anchorEl);
   //   const handleDrawerOpen = () => {
@@ -245,9 +241,9 @@ export default function Wrapper({ open, setOpen, mylocation }) {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem  onClick={() => LogoutHelper.logout()}>
           <ListItemIcon>
-            <Logout fontSize="small" />
+            <Logout fontSize="small"/>
           </ListItemIcon>
           Logout
         </MenuItem>
