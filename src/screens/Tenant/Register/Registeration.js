@@ -412,6 +412,11 @@ export default function Registration() {
       try {
         // Wait for all API calls to complete
         await Promise.all(promises);
+        dispatch(ValidateUser({}))
+        sessionStorage.setItem(
+          "is_register",
+          true
+        );
         toast.success("Form Submitted", { position: "top-center" });
         setTimeout(() => {
           navigate("/pending-request");
