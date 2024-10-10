@@ -22,10 +22,11 @@ import { MdAccountBalance } from "react-icons/md";
 import { GoGitPullRequest } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { Logout, PersonAdd, Settings } from "@mui/icons-material";
-import Container from '@mui/material/Container';
+import Container from "@mui/material/Container";
 import { useState } from "react";
 import { Avatar, Menu, MenuItem, Tooltip } from "@mui/material";
 import LogoutHelper from "../Helper/LogoutHelper";
+import { useSelector } from "react-redux";
 
 // import { FaPeopleGroup } from 'react-icons/fa';
 const drawerWidth = 240;
@@ -96,6 +97,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Wrapper({ open, setOpen, mylocation }) {
+  const { loginUser, validateUser } = useSelector((state) => state);
   const theme = useTheme();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -103,7 +105,7 @@ export default function Wrapper({ open, setOpen, mylocation }) {
   //   const handleDrawerOpen = () => {
   //     setOpen(true);
   //   };
-
+  console.log(loginUser?.login?.data?.data, " loginUser?.login?.data");
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -141,115 +143,126 @@ export default function Wrapper({ open, setOpen, mylocation }) {
               src={Logo}
             />
             <Container
-            maxWidth="100vw"
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              padding: 0,
-              margin: 0,
-              maxWidth: "none"
-            }}
+              maxWidth="100vw"
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                padding: 0,
+                margin: 0,
+                maxWidth: "none",
+              }}
             >
-
-            <Typography
-              sx={{
-                
-               }}
-              variant="h6"
-              noWrap
-              component="div"
-              marginTop={1}
+              <Typography
+                sx={{}}
+                variant="h6"
+                noWrap
+                component="div"
+                marginTop={1}
               >
-              {`${localStorage.getItem("name")}`}
-            </Typography>
-            <Typography
-              sx={{
-                display: "flex"
-               }}
-              variant="h6"
-              noWrap
-              component="div"
+                {`${
+                  loginUser?.login?.data?.data?.name ||
+                  localStorage.getItem("name")
+                }`}
+              </Typography>
+              <Typography
+                sx={{
+                  display: "flex",
+                }}
+                variant="h6"
+                noWrap
+                component="div"
               >
                 {/* PROFILE MENU */}
-                <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <Tooltip title="Account settings">
-          <IconButton
-            onClick={handleClick}
-            size="small"
-            sx={{ ml: 2 }}
-            aria-controls={toogle ? 'account-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={toogle ? 'true' : undefined}
-          >
-        <Avatar sx={{ width: 32, height: 32 }}>{localStorage.getItem("name")?.charAt(0).toUpperCase()}</Avatar>
-          </IconButton>
-        </Tooltip>
-      </Box>
-              <Menu
-        anchorEl={anchorEl}
-        id="account-menu"
-        open={toogle}
-        onClose={handleClose}
-        onClick={handleClose}
-        slotProps={{
-          paper: {
-            elevation: 0,
-            sx: {
-              overflow: 'visible',
-              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-              mt: 1.5,
-              '& .MuiAvatar-root': {
-                width: 32,
-                height: 32,
-                ml: -0.5,
-                mr: 1,
-              },
-              '&::before': {
-                content: '""',
-                display: 'block',
-                position: 'absolute',
-                top: 0,
-                right: 14,
-                width: 10,
-                height: 10,
-                bgcolor: 'background.paper',
-                transform: 'translateY(-50%) rotate(45deg)',
-                zIndex: 0,
-              },
-            },
-          },
-        }}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-      >
-        <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Add another account
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-        <MenuItem  onClick={() => LogoutHelper.logout()}>
-          <ListItemIcon>
-            <Logout fontSize="small"/>
-          </ListItemIcon>
-          Logout
-        </MenuItem>
-      </Menu>
-      {/* Profile Picture closed */}
-            </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  <Tooltip title="Account settings">
+                    <IconButton
+                      onClick={handleClick}
+                      size="small"
+                      sx={{ ml: 2 }}
+                      aria-controls={toogle ? "account-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={toogle ? "true" : undefined}
+                    >
+                      <Avatar sx={{ width: 32, height: 32 }}>
+                        {loginUser?.login?.data?.data?.name
+                          ?.charAt(0)
+                          .toUpperCase() ||
+                          localStorage.getItem("name")?.charAt(0).toUpperCase()}
+                      </Avatar>
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+                <Menu
+                  anchorEl={anchorEl}
+                  id="account-menu"
+                  open={toogle}
+                  onClose={handleClose}
+                  onClick={handleClose}
+                  slotProps={{
+                    paper: {
+                      elevation: 0,
+                      sx: {
+                        overflow: "visible",
+                        filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                        mt: 1.5,
+                        "& .MuiAvatar-root": {
+                          width: 32,
+                          height: 32,
+                          ml: -0.5,
+                          mr: 1,
+                        },
+                        "&::before": {
+                          content: '""',
+                          display: "block",
+                          position: "absolute",
+                          top: 0,
+                          right: 14,
+                          width: 10,
+                          height: 10,
+                          bgcolor: "background.paper",
+                          transform: "translateY(-50%) rotate(45deg)",
+                          zIndex: 0,
+                        },
+                      },
+                    },
+                  }}
+                  transformOrigin={{ horizontal: "right", vertical: "top" }}
+                  anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                >
+                  <MenuItem onClick={handleClose}>
+                    <Avatar /> Profile
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <Avatar /> My account
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem onClick={handleClose}>
+                    <ListItemIcon>
+                      <PersonAdd fontSize="small" />
+                    </ListItemIcon>
+                    Add another account
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <ListItemIcon>
+                      <Settings fontSize="small" />
+                    </ListItemIcon>
+                    Settings
+                  </MenuItem>
+                  <MenuItem onClick={() => LogoutHelper.logout()}>
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
+                    Logout
+                  </MenuItem>
+                </Menu>
+                {/* Profile Picture closed */}
+              </Typography>
             </Container>
           </Toolbar>
         </AppBar>
@@ -298,7 +311,9 @@ export default function Wrapper({ open, setOpen, mylocation }) {
             <ListItem
               disablePadding
               sx={{ display: "block" }}
-              className={`${mylocation === "/add-new-tenant" ? "active-li" : ""}`}
+              className={`${
+                mylocation === "/add-new-tenant" ? "active-li" : ""
+              }`}
               onClick={() => {
                 navigate("/add-new-tenant");
               }}
@@ -349,7 +364,6 @@ export default function Wrapper({ open, setOpen, mylocation }) {
                 <ListItemText primary={open ? "New Request" : null} />
               </ListItemButton>
             </ListItem>
-            
 
             <ListItem
               disablePadding
@@ -415,7 +429,7 @@ export default function Wrapper({ open, setOpen, mylocation }) {
               //   localStorage.clear("name")
               //   localStorage.clear("user_id")
               //   localStorage.clear("token")
-              //   setTimeout(() => {                
+              //   setTimeout(() => {
               //     dispatch(ValidateUser({}))
               //     dispatch(reset())
               //     navigate("/");
@@ -430,7 +444,6 @@ export default function Wrapper({ open, setOpen, mylocation }) {
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                 }}
-                
               >
                 <ListItemIcon
                   sx={{
@@ -447,8 +460,7 @@ export default function Wrapper({ open, setOpen, mylocation }) {
           </List>
           <Divider />
         </Drawer>
-        <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: 5 }}>
-        </Box>
+        <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: 5 }}></Box>
       </Box>
     </>
   );
