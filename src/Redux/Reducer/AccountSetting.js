@@ -4,14 +4,16 @@ import { BASE_URL } from "../../config/config";
 const token = sessionStorage.getItem("ots_token");
 
 export const AccountSet = createAsyncThunk("dummyData/AccountSettings", async ({detail}) => {
+    console.log(token, 'account setting token');
     let response = await axios.post(`${BASE_URL}/account-setting`,  {
         detail
-    }, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        }
     }
+    // , {
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Authorization': `Bearer ${token}`
+    //     }
+    // }
 
 );
     return response;
