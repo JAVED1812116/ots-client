@@ -236,10 +236,7 @@ export default function PropertyRegister() {
                         <Input
                           placeholder="Flat Name"
                           name="flatName"
-                          // error={tableError.flatName}
-                          // helperText={
-                          //   tableError.flatName===true ? "Please enter a valid Owner Name" : ""
-                          // }
+                          required
                           onChange={(e) => handleCellChange(i, e)}
                         />
                       </TableCell>
@@ -248,6 +245,7 @@ export default function PropertyRegister() {
                           placeholder="Flat Number"
                           type="number"
                           name="flatNumber"
+                          required
                           onChange={(e) => handleCellChange(i, e)}
                         />
                       </TableCell>
@@ -285,6 +283,7 @@ export default function PropertyRegister() {
                         <Input
                           placeholder="Flat Rooms"
                           type="number"
+                          required
                           name="flatRooms"
                           onChange={(e) => handleCellChange(i, e)}
                         />
@@ -293,6 +292,7 @@ export default function PropertyRegister() {
                         <Input
                           placeholder="Flat Toilet"
                           type="number"
+                          required
                           name="flatToilet"
                           onChange={(e) => handleCellChange(i, e)}
                         />
@@ -302,6 +302,7 @@ export default function PropertyRegister() {
                         <Input
                           placeholder="Flat Kitchen"
                           type="number"
+                          required
                           name="flatKitchen"
                           onChange={(e) => handleCellChange(i, e)}
                         />
@@ -310,6 +311,7 @@ export default function PropertyRegister() {
                         <Input
                           placeholder="Flat Rent"
                           type="number"
+                          required
                           name="flatRent"
                           onChange={(e) => handleCellChange(i, e)}
                         />
@@ -318,6 +320,7 @@ export default function PropertyRegister() {
                         <Input
                           placeholder="Flat Advance"
                           type="number"
+                          required
                           name="flatAdvance"
                           onChange={(e) => handleCellChange(i, e)}
                         />
@@ -326,6 +329,7 @@ export default function PropertyRegister() {
                         <Input
                           placeholder="Maintainance Charges"
                           type="number"
+                          required
                           name="flatMaintananceCharges"
                           onChange={(e) => handleCellChange(i, e)}
                         />
@@ -334,6 +338,7 @@ export default function PropertyRegister() {
                         <Input
                           placeholder="Trash Charges"
                           type="number"
+                          required
                           name="flatTrashCharges"
                           onChange={(e) => handleCellChange(i, e)}
                         />
@@ -342,6 +347,7 @@ export default function PropertyRegister() {
                         <Input
                           placeholder="Security Charges"
                           type="number"
+                          required
                           name="flatSecurityCharges"
                           onChange={(e) => handleCellChange(i, e)}
                         />
