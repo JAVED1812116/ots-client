@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ValidateUser } from "../../Redux/Reducer/ValidateUser";
 import { useDispatch } from "react-redux";
 import { reset } from "../../Redux/Reducer/LoginUser";
+import LogoutHelper from "../../Helper/LogoutHelper";
 
 const PendingRequest = () => {
   const navigate = useNavigate();
@@ -23,18 +24,7 @@ const PendingRequest = () => {
           to join us...
         </p>
         </div>
-        <Button className="LoginButton"   onClick={() => {
-              //  login();
-              sessionStorage.clear();
-              localStorage.clear("name")
-              localStorage.clear("user_id")
-              localStorage.clear("token")
-              setTimeout(() => {                
-                dispatch(ValidateUser({}))
-                dispatch(reset())
-                navigate("/");
-              }, 2000);
-             }}>Logout</Button>
+        <Button className="LoginButton"   onClick={() => LogoutHelper.logout()}>Logout</Button>
       </div>
     </>
   );
