@@ -39,8 +39,9 @@ export default function BankDetail() {
       (detail.bankName &&
         detail.accountName &&
         detail.accountNumber &&
-        detail.ibanNumber != null) ||
-      ""
+        detail.ibanNumber) 
+      //   ||
+      // ""
     ) {
       detail.userId = localStorage.getItem("user_id");
       detail.userName = localStorage.getItem("name");
