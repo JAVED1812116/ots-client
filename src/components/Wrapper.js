@@ -241,12 +241,12 @@ export default function Wrapper({ open, setOpen, mylocation }) {
                     <Avatar /> My account
                   </MenuItem>
                   <Divider />
-                  <MenuItem onClick={handleClose}>
+                  {/* <MenuItem onClick={handleClose}>
                     <ListItemIcon>
                       <PersonAdd fontSize="small" />
                     </ListItemIcon>
                     Add another account
-                  </MenuItem>
+                  </MenuItem> */}
                   <MenuItem onClick={handleClose}>
                     <ListItemIcon>
                       <Settings fontSize="small" />
