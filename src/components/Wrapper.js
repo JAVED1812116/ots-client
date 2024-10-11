@@ -105,7 +105,6 @@ export default function Wrapper({ open, setOpen, mylocation }) {
   //   const handleDrawerOpen = () => {
   //     setOpen(true);
   //   };
-  console.log(loginUser?.login?.data?.data, " loginUser?.login?.data");
   const handleDrawerClose = () => {
     setOpen(false);
   };

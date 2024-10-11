@@ -13,7 +13,7 @@ export const PropertyRegisters = createAsyncThunk("dummyData/PropertyRegistratio
     {
         headers: {
             Accept: "application/json",
-            Authorization: "Bearer " + token,
+            // Authorization: "Bearer " + token,
         },
     }
 );
