@@ -32,6 +32,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 
 import { ValidateUser } from "../Redux/Reducer/ValidateUser";
+import Profile from "../screens/Landlord/Profile/Profile";
 export default function AllRoutes() {
   const dispatch = useDispatch();
 
@@ -120,6 +121,7 @@ export default function AllRoutes() {
           <Route path="/all-tenant" element={<AllTenant />} />
           {/* <Route path="/rent-setting" element={<RentSetting />} /> */}
           <Route path="/bank-detail" element={<BankDetail />} />
+          <Route path="/profile" element={<Profile />} />
           <Route
             path="/landlord-functionality/:id?/:id?"
             element={<LandlordFunctionality />}

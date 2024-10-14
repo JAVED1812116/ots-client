@@ -17,6 +17,7 @@ import RequestUserDetail from "../screens/Landlord/RequestUserDetail/RequestUser
 import AllTenant from "../screens/Landlord/AllTenant/AllTenant";
 import RentSetting from "../screens/Landlord/RentSetting/RentSetting";
 import BankDetail from "../screens/Landlord/BankDetail/BankDetail";
+import Profile from "../screens/Landlord/Profile/Profile";
 import Agreement from "../screens/Landlord/Agreement/Agreements";
 import UploadBill from "../screens/Landlord/UploadBills/UploadBill";
 import LandlordFunctionality from "../screens/Landlord/LandlordFunction/LandlordFunctionality";
@@ -199,6 +200,7 @@ export default function AllRoutes() {
           <Route path="/all-tenant" element={<AllTenant />} />
           {/* <Route path="/rent-setting" element={<RentSetting />} /> */}
           <Route path="/bank-detail" element={<BankDetail />} />
+          <Route path="/profile" element={<Profile />} />
           <Route
             path="/landlord-functionality/:id?/:id?"
             element={<LandlordFunctionality />}
