@@ -2,18 +2,21 @@ import * as React from "react";
 import Wrapper from "../../../components/Wrapper";
 import title from "../../../components/title";
 import "./profile.css";
-import { Box, Container, Grid, TextField, Avatar, Button } from "@mui/material";
-
+import { Box, Grid, TextField, Avatar, Button } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { ProfileRegister } from "../../../Redux/Reducer/Profile";
 export default function Profile() {
   title("Profile");
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const [image, setImage] = React.useState(null);
   const [userDetails, setUserDetails] = React.useState({
-    name: "SAEED",
-    email: "saeed@example.com",
-    contactNumber: "923xxxxxxxxx",
+    name: "",
+    email: "",
+    contactNumber: "",
   });
-
+  const token = sessionStorage.getItem('ots_token')
+  
   // Handle image upload
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -25,7 +28,19 @@ export default function Profile() {
       reader.readAsDataURL(file);
     }
   };
-
+const onFinish=(e)=>{
+  e.preventDefault()
+  let values={
+    name:userDetails?.name,
+    email:userDetails?.email,
+    contactNumber:userDetails?.contactNumber,
+    image:image,
+    token:token
+  }
+  dispatch(ProfileRegister({ values })).then((res) => {
+    console.log(res,"ressss")
+  })
+}
   return (
     <>
       <Wrapper open={open} setOpen={setOpen} />
@@ -33,7 +48,7 @@ export default function Profile() {
         <h1>Profile</h1>
       </div>
       <Box sx={{ flexGrow: 1, padding: 2 }}>
-        <Grid container spacing={4}>
+        <Grid container spacing={4} >
           {/* Left Grid: Profile Picture, Name, Details */}
           <Grid item xs={12} md={4} textAlign="center">
             <input
@@ -68,7 +83,9 @@ export default function Profile() {
               id="standard-multiline-flexible"
               label="Name"
               value={userDetails.name}
-              onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })}
+              onChange={(e) =>
+                setUserDetails({ ...userDetails, name: e.target.value })
+              }
               fullWidth
               sx={{ marginBottom: 3 }}
               variant="standard"
@@ -77,8 +94,11 @@ export default function Profile() {
               required
               id="standard-multiline-flexible"
               label="Email"
+              placeholder="test@gmail.com"
               value={userDetails.email}
-              onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
+              onChange={(e) =>
+                setUserDetails({ ...userDetails, email: e.target.value })
+              }
               fullWidth
               sx={{ marginBottom: 3 }}
               variant="standard"
@@ -87,12 +107,29 @@ export default function Profile() {
               required
               id="standard-textarea"
               label="Contact Number"
+              placeholder="923XXXXXXXXX"
               value={userDetails.contactNumber}
-              onChange={(e) => setUserDetails({ ...userDetails, contactNumber: e.target.value })}
+              onChange={(e) =>
+                setUserDetails({
+                  ...userDetails,
+                  contactNumber: e.target.value,
+                })
+              }
               fullWidth
               sx={{ marginBottom: 3 }}
               variant="standard"
             />
+            <Button
+              variant="contained"
+              type="submit"
+              sx={{
+                marginTop: 1,
+                background: "black",
+              }}
+              onClick={onFinish}
+            >
+              Submit
+            </Button>{" "}
           </Grid>
         </Grid>
       </Box>
