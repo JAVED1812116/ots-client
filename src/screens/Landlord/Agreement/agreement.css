@@ -5,7 +5,12 @@
 .displayInWeb{
     padding: 0 !important;
 }
-
+.hideInPrint:hover {
+    transform: scale(1.1); /* Enlarge image on hover */
+    opacity: 0.8;          /* Reduce opacity on hover */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    cursor: pointer;
+  }
 @media print{
     .hideInPrint, .MuiDrawer-root, .MuiAppBar-positionFixed{
         display: none;
