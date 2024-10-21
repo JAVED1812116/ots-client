@@ -27,7 +27,7 @@ import TenantFunctionality from "../screens/Tenant/TenantFunction/TenantFunction
 import PreviousBill from "../screens/Tenant/PreviousBill/PreviousBill";
 import PreviousBillLandlordPage from "../screens/Landlord/PreviousBills/PreviousBill";
 import PendingBillLandlordPage from "../screens/Landlord/PendingBill/PendingBill";
-import PropertyRegister from "../screens/Landlord/RegisterProperty/PropertyRegistrationForm";
+import PropertyRegister from "../screens/Landlord/RegisterProperty/PropertyRegistrationFormNew";
 import PendingRequest from "../screens/PendingRequest/PendingRequest";
 import { useEffect } from "react";
 import LandingPage from "../screens/LandingPage/LandingPage";
