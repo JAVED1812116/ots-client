@@ -483,8 +483,8 @@ export default function PropertyRegister() {
 
   const renderDataGrid = () => {
     return (
-      <div style={{ height: 400, width: "100%" }}>
-        <Box sx={{ height: 400, width: "auto" }}>
+      <div style={{ height: 'auto', width: "100%" }}>
+        <Box sx={{ height: 'auto', width: "auto" }}>
           <Paper sx={{ width: "100%", overflow: "hidden" }}>
             <TableContainer sx={{ maxHeight: 400 }}>
               <Table
