@@ -34,7 +34,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ValidateUser } from "../../../Redux/Reducer/ValidateUser";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { landlordDetailSchema, landlordPropertySchema } from "./validationSchema";
+import {
+  landlordDetailSchema,
+  landlordPropertySchema,
+} from "./validationSchema";
 import { useFormik } from "formik";
 
 export default function PropertyRegister() {
@@ -92,8 +95,10 @@ export default function PropertyRegister() {
       email: "",
       propertyAddress: "",
       totalFloor: 1,
+      totalFlat: 1,
     },
-    validationSchema: activeStep === 0 ? landlordDetailSchema : landlordPropertySchema,
+    validationSchema:
+      activeStep === 0 ? landlordDetailSchema : landlordPropertySchema,
     onSubmit: async (values) => {
       const errors = await formik.validateForm();
       formik.setTouched({
@@ -107,13 +112,13 @@ export default function PropertyRegister() {
         email: true,
         propertyAddress: true,
       });
-  
+
       if (Object.keys(errors).length === 0) {
         // If no errors, proceed to the next step
         if (activeStep === steps.length - 1) {
           handleSubmit();
         } else {
-          handleNext()
+          handleNext();
         }
       }
     },
@@ -301,6 +306,31 @@ export default function PropertyRegister() {
                   formik.touched.totalFloor && formik.errors.totalFloor
                 }
               />
+              {formik?.values?.totalFloor === "" ? (
+                ""
+              ) : (
+                <TextField
+                  fullWidth
+                  id="totalFlat"
+                  label="Total Flat"
+                  multiline
+                  type="number"
+                  maxRows={4}
+                  name="totalFlat"
+                  value={formik.values.totalFlat}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={
+                    formik.touched.totalFlat && Boolean(formik.errors.totalFlat)
+                  }
+                  helperText={
+                    formik.touched.totalFlat && formik.errors.totalFlat
+                  }
+                />
+              )}
+              {formik?.values?.totalFlat === 0 || formik?.values?.totalFlat?.length === 0
+                ? " "
+                : renderDataGrid()}
             </div>
           </>
         );
@@ -318,8 +348,8 @@ export default function PropertyRegister() {
     }
   };
   const handleSubmit = async (e) => {
-    console.log('submit');
-    alert(JSON.stringify(formik.values, null))
+    console.log("submit");
+    alert(JSON.stringify(formik.values, null));
     // console.log(formik.values);
   };
   const isEmailValid = (email) => {
@@ -424,7 +454,7 @@ export default function PropertyRegister() {
   };
 
   React.useEffect(() => {
-    const numToShow = parseInt(detail?.totalFlat, 10) || 0;
+    const numToShow = parseInt(formik.values?.totalFlat, 10) || 0;
 
     const newRows = Array.from({ length: numToShow }, (_, index) => ({
       id: index,
@@ -449,7 +479,7 @@ export default function PropertyRegister() {
     );
 
     setGeneratedRows(newRows);
-  }, [detail?.totalFlat]);
+  }, [formik.values?.totalFlat]);
 
   const renderDataGrid = () => {
     return (
@@ -463,7 +493,7 @@ export default function PropertyRegister() {
                 className="propertyTable"
                 stickyHeader
               >
-                {detail?.totalFloor === "" ? (
+                {formik?.values?.totalFloor === "" ? (
                   ""
                 ) : (
                   <TableHead>
@@ -471,9 +501,9 @@ export default function PropertyRegister() {
                       <TableCell>No.</TableCell>
                       <TableCell>Flat Name</TableCell>
                       <TableCell>Flat Number</TableCell>
-                      {detail?.totalFloor == "0" ? (
+                      {formik?.values?.totalFloor == "0" ? (
                         ""
-                      ) : detail?.totalFloor == "1" ? (
+                      ) : formik?.values?.totalFloor == "1" ? (
                         ""
                       ) : (
                         <TableCell>Flat Floor</TableCell>
@@ -490,7 +520,7 @@ export default function PropertyRegister() {
                     </TableRow>
                   </TableHead>
                 )}
-                {detail?.totalFloor === "" ? (
+                {formik?.values?.totalFloor === "" ? (
                   ""
                 ) : (
                   <TableBody>
@@ -519,9 +549,9 @@ export default function PropertyRegister() {
                             onChange={(e) => handleCellChange(i, e)}
                           />
                         </TableCell>
-                        {detail?.totalFloor == "0" ? (
+                        {formik?.values?.totalFloor == "0" ? (
                           ""
-                        ) : detail?.totalFloor == "1" ? (
+                        ) : formik?.values?.totalFloor == "1" ? (
                           ""
                         ) : (
                           <TableCell component="th" scope="row">
@@ -536,8 +566,8 @@ export default function PropertyRegister() {
                               {Array.from(
                                 {
                                   length:
-                                    detail?.totalFloor?.length > 0
-                                      ? detail?.totalFloor
+                                    formik?.values?.totalFloor?.length > 0
+                                      ? formik?.values?.totalFloor
                                       : 1,
                                 },
                                 (_, index) => ({
@@ -807,7 +837,7 @@ export default function PropertyRegister() {
                 // validateOnChange={false} // Disable validation on change
               >
                 {({ handleChange, handleBlur, values, errors, touched, setTouched, handleSubmit  }) => ( */}
-              <form 
+              <form
               // onSubmit={formik.handleSubmit}
               >
                 {stepContent(

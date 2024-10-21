@@ -17,4 +17,5 @@ export const landlordDetailSchema = Yup.object().shape({
 export const landlordPropertySchema = Yup.object().shape({
   propertyAddress: Yup.string().required('Property Address is required'),
   totalFloor: Yup.string().required('Please enter a valid Total Floor'),
+  totalFlat: Yup.string().required('Please enter a valid Total Flat'),
 });
