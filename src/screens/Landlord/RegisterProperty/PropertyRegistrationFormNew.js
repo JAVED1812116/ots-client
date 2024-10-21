@@ -328,7 +328,8 @@ export default function PropertyRegister() {
                   }
                 />
               )}
-              {formik?.values?.totalFlat === 0 || formik?.values?.totalFlat?.length === 0
+              {formik?.values?.totalFlat === 0 ||
+              formik?.values?.totalFlat?.length === 0
                 ? " "
                 : renderDataGrid()}
             </div>
@@ -483,8 +484,8 @@ export default function PropertyRegister() {
 
   const renderDataGrid = () => {
     return (
-      <div style={{ height: 'auto', width: "100%" }}>
-        <Box sx={{ height: 'auto', width: "auto" }}>
+      <div style={{ height: "auto", width: "100%" }}>
+        <Box sx={{ height: "auto", width: "auto" }}>
           <Paper sx={{ width: "100%", overflow: "hidden" }}>
             <TableContainer sx={{ maxHeight: 400 }}>
               <Table
@@ -820,9 +821,20 @@ export default function PropertyRegister() {
               />
             </Toolbar>
           </AppBar>
-          <Box mt={20}>
+          <Box mt={15}>
             <>
-              <Stepper activeStep={activeStep}>
+              <Typography mb={1} variant="h4" align="center" color="primary">
+                LANDLORD REGISTRATION
+              </Typography>
+              <Typography
+                mb={5}
+                variant="h6"
+                align="center"
+                color="textPrimary"
+              >
+                Join OTS: Unlock Your Property's Potential!
+              </Typography>
+              <Stepper sx={{marginBottom: 2 }}  activeStep={activeStep}>
                 {steps.map((label, index) => (
                   <Step key={label}>
                     <StepLabel>{label}</StepLabel>
