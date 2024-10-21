@@ -34,7 +34,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ValidateUser } from "../../../Redux/Reducer/ValidateUser";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { validationSchema } from "./validationSchema";
+import { landlordDetailSchema, landlordPropertySchema } from "./validationSchema";
 import { useFormik } from "formik";
 
 export default function PropertyRegister() {
@@ -90,11 +90,32 @@ export default function PropertyRegister() {
       permenantAddress: "",
       postalAddress: "",
       email: "",
+      propertyAddress: "",
+      totalFloor: 1,
     },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(values, 'values');
-      alert(JSON.stringify(values, null, 2));
+    validationSchema: activeStep === 0 ? landlordDetailSchema : landlordPropertySchema,
+    onSubmit: async (values) => {
+      const errors = await formik.validateForm();
+      formik.setTouched({
+        ownerName: true,
+        fatherName: true,
+        cnic: true,
+        contactNumber: true,
+        alternateNumber: true,
+        permenantAddress: true,
+        postalAddress: true,
+        email: true,
+        propertyAddress: true,
+      });
+  
+      if (Object.keys(errors).length === 0) {
+        // If no errors, proceed to the next step
+        if (activeStep === steps.length - 1) {
+          handleSubmit();
+        } else {
+          handleNext()
+        }
+      }
     },
   });
 
@@ -240,51 +261,46 @@ export default function PropertyRegister() {
                 error={formik.touched.email && Boolean(formik.errors.email)}
                 helperText={formik.touched.email && formik.errors.email}
               />
-              {/* 
-              
-              <Field
-                as={TextField}
-                label="Alternate Number"
-                name="alternateNumber"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.alternateNumber}
-                error={!!errors.alternateNumber}
-                helperText={<ErrorMessage name="alternateNumber" />}
+            </div>
+          </>
+        );
+      case 1:
+        return (
+          <>
+            <div className="property-inputs">
+              <TextField
+                fullWidth
+                id="propertyAddress"
+                name="propertyAddress"
+                label="Property Address"
+                value={formik.values.propertyAddress}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.propertyAddress &&
+                  Boolean(formik.errors.propertyAddress)
+                }
+                helperText={
+                  formik.touched.propertyAddress &&
+                  formik.errors.propertyAddress
+                }
               />
-              <Field
-                as={TextField}
-                required
-                label="Permanent Address"
-                name="permenantAddress"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.permenantAddress}
-                error={!!errors.permenantAddress}
-                helperText={<ErrorMessage name="permenantAddress" />}
+              <TextField
+                fullWidth
+                id="totalFloor"
+                name="totalFloor"
+                label="Total Floor"
+                type="number"
+                value={formik.values.totalFloor}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.totalFloor && Boolean(formik.errors.totalFloor)
+                }
+                helperText={
+                  formik.touched.totalFloor && formik.errors.totalFloor
+                }
               />
-              <Field
-                as={TextField}
-                required
-                label="Postal Address"
-                name="postalAddress"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.postalAddress}
-                error={!!errors.postalAddress}
-                helperText={<ErrorMessage name="postalAddress" />}
-              />
-              <Field
-                as={TextField}
-                required
-                label="Email"
-                name="email"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
-                error={!!errors.email}
-                helperText={<ErrorMessage name="email" />}
-              /> */}
             </div>
           </>
         );
@@ -298,9 +314,14 @@ export default function PropertyRegister() {
   const handleNext = () => {
     console.log(activeStep, "activeStep");
     if (activeStep === 0) {
+      setActiveStep(activeStep + 1);
     }
   };
-  const handleSubmit = async (e) => {};
+  const handleSubmit = async (e) => {
+    console.log('submit');
+    alert(JSON.stringify(formik.values, null))
+    // console.log(formik.values);
+  };
   const isEmailValid = (email) => {
     // Regular expression for basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -786,7 +807,9 @@ export default function PropertyRegister() {
                 // validateOnChange={false} // Disable validation on change
               >
                 {({ handleChange, handleBlur, values, errors, touched, setTouched, handleSubmit  }) => ( */}
-              <form onSubmit={formik.handleSubmit}>
+              <form 
+              // onSubmit={formik.handleSubmit}
+              >
                 {stepContent(
                   activeStep
                   // handleChange,
@@ -804,7 +827,14 @@ export default function PropertyRegister() {
                   >
                     Back
                   </Button>
-                  <Button variant="contained" type="submit">
+                  {/* <Button variant="contained" type="submit">
+                    {activeStep === getSteps().length - 1 ? "Finish" : "Next"}
+                  </Button> */}
+                  <Button
+                    variant="contained"
+                    type="button"
+                    onClick={formik.handleSubmit}
+                  >
                     {activeStep === getSteps().length - 1 ? "Finish" : "Next"}
                   </Button>
                 </Box>
