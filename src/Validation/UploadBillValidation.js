@@ -17,7 +17,15 @@ const getUploadBillValidationSchema = () => {
     landlordMessage: Yup.string()
     .required("Field is required")
     .nullable(),
-   
+
+    kElectricEnterBill: Yup.string()
+    .required("Field is required")
+    .nullable(),
+
+    kElectricAmountbyPicture: Yup.string()
+    .required("Field is required")
+    .nullable(),
+  
   });
 };
 export const UploadBillValidation = getUploadBillValidationSchema;

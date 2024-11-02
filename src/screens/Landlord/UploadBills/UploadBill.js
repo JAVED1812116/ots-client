@@ -130,7 +130,6 @@ export default function UploadBill() {
         setUrl(res?.payload?.data?.url);
       });
     };
-    console.log(inputs, "inputsinputs");
     const handleBillKELECReading = (e) => {
       e.preventDefault();
       if (selectedValue === "byUnitReading") {
@@ -186,12 +185,25 @@ export default function UploadBill() {
           .catch((err) => {
             if (err.inner) {
               const errorMessages = {};
-
+          
               err.inner.forEach((error) => {
-                if (!errorMessages[error.path]) {
+                // Show errors based on the selected option
+                if (selectedValue === "byUnitReading" && 
+                    (error.path === "kElectricPreviousReading" || 
+                     error.path === "kElectricCurrentReading" || 
+                     error.path === "kElectricPerUnit")) {
+                  errorMessages[error.path] = error.message;
+                }
+                
+                if (selectedValue === "byBill" && error.path === "kElectricEnterBill") {
+                  errorMessages[error.path] = error.message;
+                }
+          
+                if (selectedValue === "byPicture" && error.path === "kElectricBillImage") {
                   errorMessages[error.path] = error.message;
                 }
               });
+          
               setErrorMessage(errorMessages);
             }
           });
@@ -213,11 +225,13 @@ export default function UploadBill() {
           tenantId: paramsID,
           flatId: flatID,
         };
-
-        if (
-          values?.kElectricEnterBill !== "" &&
-          values?.kElectricEnterBill !== undefined
-        ) {
+        // if (
+        //   values?.kElectricEnterBill !== "" &&
+        //   values?.kElectricEnterBill !== undefined
+        // ) {
+        validationSchema
+        .validate({ values }, { abortEarly: false })
+        .then(async (e) => {
           dispatch(ElectricBill({ values })).then((res) => {
             if (res?.payload?.data?.message === "Reading Saved Successfully") {
               toast.success("K-Electric Bill Uploaded Successfully!", {
@@ -248,11 +262,31 @@ export default function UploadBill() {
               });
             }
           });
-        } else {
-          toast.error("Fill All Fields", {
-            position: "top-center",
-          });
-        }
+        }).catch((err) => {
+          if (err.inner) {
+            const errorMessages = {};
+        
+            err.inner.forEach((error) => {
+              // Show errors based on the selected option
+              if (selectedValue === "byUnitReading" && 
+                  (error.path === "kElectricPreviousReading" || 
+                   error.path === "kElectricCurrentReading" || 
+                   error.path === "kElectricPerUnit")) {
+                errorMessages[error.path] = error.message;
+              }
+              
+              if (selectedValue === "byBill" && error.path === "kElectricEnterBill") {
+                errorMessages[error.path] = error.message;
+              }
+        
+              if (selectedValue === "byPicture" && error.path === "kElectricBillImage") {
+                errorMessages[error.path] = error.message;
+              }
+            });
+        
+            setErrorMessage(errorMessages);
+          }
+        });
       } else if (selectedValue === "byPicture") {
         let values = {
           kElectricEnterBill: "",
@@ -272,10 +306,13 @@ export default function UploadBill() {
           flatId: flatID,
         };
 
-        if (
-          values?.kElectricBillImage !== "" &&
-          values?.kElectricBillImage !== undefined
-        ) {
+        // if (
+        //   values?.kElectricBillImage !== "" &&
+        //   values?.kElectricBillImage !== undefined
+        // ) {
+          validationSchema
+          .validate({ values}, { abortEarly: false })
+          .then(async (e) => {
           dispatch(ElectricBill({ values })).then((res) => {
             if (res?.payload?.data?.message === "Reading Saved Successfully") {
               toast.success("Image Uploaded Successfully!", {
@@ -307,11 +344,31 @@ export default function UploadBill() {
               });
             }
           });
-        } else {
-          toast.error("Upload Image", {
-            position: "top-center",
+          }).catch((err) => {
+            if (err.inner) {
+              const errorMessages = {};
+          
+              err.inner.forEach((error) => {
+                // Show errors based on the selected option
+                if (selectedValue === "byUnitReading" && 
+                    (error.path === "kElectricPreviousReading" || 
+                     error.path === "kElectricCurrentReading" || 
+                     error.path === "kElectricPerUnit")) {
+                  errorMessages[error.path] = error.message;
+                }
+                
+                if (selectedValue === "byBill" && error.path === "kElectricEnterBill") {
+                  errorMessages[error.path] = error.message;
+                }
+          
+                if (selectedValue === "byPicture" && error.path === "kElectricBillImage") {
+                  errorMessages[error.path] = error.message;
+                }
+              });
+          
+              setErrorMessage(errorMessages);
+            }
           });
-        }
       }
     };
     const handleBillSSGCReading = (e) => {
@@ -508,15 +565,11 @@ export default function UploadBill() {
           tenantId: paramsID,
           flatId: flatID,
         };
-        console.log(flatID, "javedFlatID");
-        console.log(paramsID, "javedParamsID");
-        console.log(localStorage.getItem("user_id"), "javedLocalStorage");
         if (
           values?.waterEnterBill !== "" &&
           values?.waterEnterBill !== undefined
         ) {
           dispatch(WaterReadings({ values })).then((res) => {
-            console.log(res?.payload?.data, "javedres");
             if (res?.payload?.data?.message === "Reading Saved Successfully") {
               toast.success("Water Bill Uploaded Successfully!", {
                 autoClose: 300,
@@ -1055,6 +1108,12 @@ export default function UploadBill() {
                       )}
 
                       {selectedValue === "byBill" && (
+                         <FormControl
+                         className="w100 mb-10"
+                         error={!!errorMessage}
+                         component="form"
+                         onSubmit={handleBillKELECReading}
+                       >
                         <div>
                           <Table size="small" aria-label="purchases">
                             <TableHead>
@@ -1086,6 +1145,11 @@ export default function UploadBill() {
                                     name="kElectricEnterBill"
                                     onChange={handleInputs}
                                   />
+                                  {errorMessage?.kElectricEnterBill && (
+                                      <FormHelperText style={{ color: "red" }}>
+                                        {errorMessage.kElectricEnterBill}
+                                      </FormHelperText>
+                                    )}
                                 </TableCell>
                                 <TableCell>
                                   <TextField
@@ -1099,6 +1163,11 @@ export default function UploadBill() {
                                     name="landlordMessage"
                                     onChange={handleInputs}
                                   />
+                                  {errorMessage?.landlordMessage && (
+                                      <FormHelperText style={{ color: "red" }}>
+                                        {errorMessage.landlordMessage}
+                                      </FormHelperText>
+                                    )}
                                 </TableCell>
                                 <TableCell>
                                   <LocalizationProvider
@@ -1147,13 +1216,21 @@ export default function UploadBill() {
                               marginRight: 1,
                               background: "black",
                             }}
-                            onClick={handleBillKELECReading}
+                            type="submit"
+                            // onClick={handleBillKELECReading}
                           >
                             Post
                           </Button>
                         </div>
+                        </FormControl>
                       )}
                       {selectedValue === "byPicture" && (
+                        <FormControl
+                        className="w100 mb-10"
+                        error={!!errorMessage}
+                        component="form"
+                        onSubmit={handleBillKELECReading}
+                      >
                         <div>
                           <Stack
                             direction="row"
@@ -1180,6 +1257,11 @@ export default function UploadBill() {
                                   name="kElectricAmountbyPicture"
                                   onChange={handleInputs}
                                 />
+                                {errorMessage?.kElectricAmountbyPicture && (
+                                      <FormHelperText style={{ color: "red" }}>
+                                        {errorMessage.kElectricAmountbyPicture}
+                                      </FormHelperText>
+                                    )}
                               </TableCell>
                               <TableCell>
                                 <TextField
@@ -1193,6 +1275,11 @@ export default function UploadBill() {
                                   name="landlordMessage"
                                   onChange={handleInputs}
                                 />
+                                  {errorMessage?.landlordMessage && (
+                                      <FormHelperText style={{ color: "red" }}>
+                                        {errorMessage.landlordMessage}
+                                      </FormHelperText>
+                                    )}
                               </TableCell>
                               {url?.length > 0 ? (
                                 <TableCell>
@@ -1201,7 +1288,8 @@ export default function UploadBill() {
                                     sx={{
                                       background: "black",
                                     }}
-                                    onClick={handleBillKELECReading}
+                                    type="submit"
+                                    // onClick={handleBillKELECReading}
                                   >
                                     Post
                                   </Button>
@@ -1212,6 +1300,7 @@ export default function UploadBill() {
                             </>
                           </Stack>
                         </div>
+                      </FormControl>
                       )}
                     </div>
                   )}
@@ -1364,7 +1453,6 @@ export default function UploadBill() {
                                   </TableCell> */}
 
                                   <TableCell align="right">
-                                    {console.log(inputs, "testtttt")}
                                     {inputs?.currentReadingSsg === undefined
                                       ? 0
                                       : inputs?.currentReadingSsg -
