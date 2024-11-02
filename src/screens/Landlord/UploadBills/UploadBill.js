@@ -24,6 +24,7 @@ import moment from "moment";
 import {
   FormControl,
   FormControlLabel,
+  FormHelperText,
   Radio,
   RadioGroup,
 } from "@mui/material";
@@ -41,9 +42,10 @@ import { ToastContainer, toast } from "react-toastify";
 import dayjs from "dayjs";
 import { GetOneUploadBill } from "../../../Redux/Reducer/GetOneUploadBill";
 import { useParams } from "react-router-dom";
-
+import UploadBillValidation from "../../../Validation/UploadBillValidation";
 export default function UploadBill() {
   title("Upload Bill");
+  const validationSchema = UploadBillValidation();
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const [mylocation, setMyLocation] = useState(location.pathname);
@@ -53,7 +55,7 @@ export default function UploadBill() {
   const [perUnitSsgCharge, setPerUnitSsgCharges] = useState();
   const [hasData, setHasData] = useState({});
   const [url, setUrl] = useState([]);
-  const [errorMessage, setErrorMessage] = React.useState('');
+  const [errorMessage, setErrorMessage] = React.useState("");
 
   //////////////MAINTAINANCECHARGES////////////
   const [maintainanceCharge, setMaintainanceCharge] = useState();
@@ -66,7 +68,7 @@ export default function UploadBill() {
   const { tenantId, flatId } = useParams();
   let paramsID = tenantId;
   let flatID = flatId;
-  const getId=window.location.pathname.replace("/upload-Bill/", "")
+  const getId = window.location.pathname.replace("/upload-Bill/", "");
   const handleInputs = (e) => {
     const value = e.target.value;
     const name = e.target.name;
@@ -110,10 +112,10 @@ export default function UploadBill() {
       // setInputs({ ...inputs, [name]: value });
       if (parseFloat(value) < 0) {
         setInputs({ ...inputs, [name]: 0 });
-        setErrorMessage('Please enter a non-negative number');
-      }  else {
+        setErrorMessage("Please enter a non-negative number");
+      } else {
         setInputs({ ...inputs, [name]: value });
-        setErrorMessage('');
+        setErrorMessage("");
       }
     };
     const handleDateInputs = (newValue, name) => {
@@ -128,8 +130,9 @@ export default function UploadBill() {
         setUrl(res?.payload?.data?.url);
       });
     };
-    console.log(inputs,"inputsinputs")
+    console.log(inputs, "inputsinputs");
     const handleBillKELECReading = (e) => {
+      e.preventDefault();
       if (selectedValue === "byUnitReading") {
         let values = {
           kElectricPreviousReading: inputs?.kElectricPreviousReading,
@@ -137,14 +140,14 @@ export default function UploadBill() {
           kElectricPerUnit: inputs?.kElectricPerUnit,
           landlordMessage: inputs?.landlordMessage,
           kElectricBillDate: moment(billDate).format("DD-MM-YYYY"),
-          kElectricDueDate: dueDate?.kElectricReadingDueDate?.format("DD-MM-YYYY"),
+          kElectricDueDate:
+            dueDate?.kElectricReadingDueDate?.format("DD-MM-YYYY"),
           kElectricTotalUnits:
             inputs?.kElectricCurrentReading - inputs?.kElectricPreviousReading,
           kElectricTotalBill:
             parseInt(
               inputs?.kElectricCurrentReading - inputs?.kElectricPreviousReading
             ) * parseInt(inputs?.kElectricPerUnit) || 0,
-          //extra fields
           kElectricBillImage: "",
           kElectricEnterBill: "",
           userId: localStorage.getItem("user_id"),
@@ -152,48 +155,46 @@ export default function UploadBill() {
           tenantId: paramsID,
           flatId: flatID,
         };
-        if (
-          values.kElectricPreviousReading &&
-          values.kElectricCurrentReading &&
-          values.kElectricPerUnit !== ""
-        ) {
-          dispatch(ElectricBill({ values })).then((res) => {
-            if (res?.payload?.data?.message === "Reading Saved Successfully") {
-              toast.success("K-Electric Bill Uploaded Successfully!", {
-                autoClose: 300,
-              });
+        validationSchema
+          .validate({ values }, { abortEarly: false })
+          .then(async (e) => {
+            dispatch(ElectricBill({ values })).then((res) => {
+              if (
+                res?.payload?.data?.message === "Reading Saved Successfully"
+              ) {
+                toast.success("K-Electric Bill Uploaded Successfully!", {
+                  autoClose: 300,
+                });
 
-              dispatch(
-                GetOneUploadBill({
-                  id:getId
-                })
-              ).then((res) => {
-                setHasData(res?.payload?.data?.data);
-                if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
-                  // setFieldDisable(true)
+                dispatch(
+                  GetOneUploadBill({
+                    id: getId,
+                  })
+                ).then((res) => {
+                  setHasData(res?.payload?.data?.data);
+                  if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
+                    // setFieldDisable(true)
+                  }
+                });
+              } else {
+                toast.error("Something Wrong", {
+                  position: "top-center",
+                });
+              }
+            });
+          })
+          .catch((err) => {
+            if (err.inner) {
+              const errorMessages = {};
+
+              err.inner.forEach((error) => {
+                if (!errorMessages[error.path]) {
+                  errorMessages[error.path] = error.message;
                 }
               });
-              
-              //////saeed isay dekh lena
-              // setInputs({
-              //   kElectricPreviousReading: "",
-              //   kElectricCurrentReading: "",
-              //   kElectricPerUnit: "",
-              //   // ... (other fields)
-              // });
-
-              // setInputs()
-            } else {
-              toast.error("Something Wrong", {
-                position: "top-center",
-              });
+              setErrorMessage(errorMessages);
             }
           });
-        } else {
-          toast.error("Fill All Fields", {
-            position: "top-center",
-          });
-        }
       } else if (selectedValue === "byBill") {
         let values = {
           kElectricEnterBill: inputs.kElectricEnterBill,
@@ -224,7 +225,7 @@ export default function UploadBill() {
               });
               dispatch(
                 GetOneUploadBill({
-                 id:getId
+                  id: getId,
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -283,7 +284,7 @@ export default function UploadBill() {
               setUrl();
               dispatch(
                 GetOneUploadBill({
-                 id:getId
+                  id: getId,
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -346,7 +347,7 @@ export default function UploadBill() {
               });
               dispatch(
                 GetOneUploadBill({
-                 id:getId
+                  id: getId,
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -404,7 +405,7 @@ export default function UploadBill() {
               });
               dispatch(
                 GetOneUploadBill({
-                 id:getId
+                  id: getId,
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -462,7 +463,7 @@ export default function UploadBill() {
               setUrl();
               dispatch(
                 GetOneUploadBill({
-                 id:getId
+                  id: getId,
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -507,24 +508,24 @@ export default function UploadBill() {
           tenantId: paramsID,
           flatId: flatID,
         };
-        console.log(flatID,"javedFlatID")
-        console.log(paramsID,"javedParamsID")
-        console.log(localStorage.getItem("user_id"),"javedLocalStorage")
+        console.log(flatID, "javedFlatID");
+        console.log(paramsID, "javedParamsID");
+        console.log(localStorage.getItem("user_id"), "javedLocalStorage");
         if (
           values?.waterEnterBill !== "" &&
           values?.waterEnterBill !== undefined
         ) {
           dispatch(WaterReadings({ values })).then((res) => {
-            console.log(res?.payload?.data,"javedres")
+            console.log(res?.payload?.data, "javedres");
             if (res?.payload?.data?.message === "Reading Saved Successfully") {
               toast.success("Water Bill Uploaded Successfully!", {
                 autoClose: 300,
               });
               dispatch(
                 GetOneUploadBill({
-                 id:getId
+                  id: getId,
                 })
-                ).then((res) => {
+              ).then((res) => {
                 setHasData(res?.payload?.data?.data);
                 if (res?.payload?.data?.data[0]?.monthlyRent !== "") {
                   // setFieldDisable(true)
@@ -576,7 +577,7 @@ export default function UploadBill() {
               setUrl();
               dispatch(
                 GetOneUploadBill({
-                 id:getId
+                  id: getId,
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -632,7 +633,7 @@ export default function UploadBill() {
               });
               dispatch(
                 GetOneUploadBill({
-                 id:getId
+                  id: getId,
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -686,7 +687,7 @@ export default function UploadBill() {
               setUrl();
               dispatch(
                 GetOneUploadBill({
-                 id:getId
+                  id: getId,
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -742,7 +743,7 @@ export default function UploadBill() {
               });
               dispatch(
                 GetOneUploadBill({
-                 id:getId
+                  id: getId,
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -796,7 +797,7 @@ export default function UploadBill() {
               setUrl();
               dispatch(
                 GetOneUploadBill({
-                 id:getId
+                  id: getId,
                 })
               ).then((res) => {
                 setHasData(res?.payload?.data?.data);
@@ -884,142 +885,173 @@ export default function UploadBill() {
 
                       {/* Conditional rendering based on the selected radio button */}
                       {selectedValue === "byUnitReading" && (
-                        <div>
-                          <Table size="small" aria-label="purchases">
-                            <TableHead>
-                              <TableRow>
-                                <TableCell>Previous Reading</TableCell>
-                                <TableCell>Current Reading</TableCell>
-                                <TableCell>Per Unit</TableCell>
-                                <TableCell>Message</TableCell>
-                                <TableCell>Due Date</TableCell>
-                                <TableCell>Bill Date</TableCell>
-                                <TableCell align="right">Total Unit</TableCell>
-                                <TableCell>Total Bill</TableCell>
-                                <TableCell align="right"></TableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-                              {/* {row.history.map((historyRow) => ( */}
-                              <TableRow>
-                                <TableCell component="th" scope="row">
-                                  <TextField
-                                    id="outlined-number"
-                                    label="Previous Reading"
-                                    type="number"
-                                    size="small"
-                                    name="kElectricPreviousReading"
-                                    disabled={hasData?.electricity === true}
-                                    // onChange={(e) => {
-                                    //   setprevReadingKelectric(e.target.value);
-                                    // }}
-                                    onChange={handleInputs}
-                                  />
-                                </TableCell>
-                                <TableCell>
-                                  <TextField
-                                    id="outlined-number"
-                                    label="Current Reading"
-                                    type="number"
-                                    size="small"
-                                    name="kElectricCurrentReading"
-                                    disabled={hasData?.electricity === true}
-                                    // onChange={(e) => {
-                                    //   setCurrentReadingKelectric(e.target.value);
-                                    // }}
-                                    onChange={handleInputs}
-                                  />
-                                </TableCell>
-                                <TableCell>
-                                  <TextField
-                                    id="outlined-number"
-                                    label="Per Unit"
-                                    type="number"
-                                    size="small"
-                                    disabled={hasData?.electricity === true}
-                                    // onChange={(e) => {
-                                    //   setPerUnitCharges(e.target.value);
-                                    // }}
-                                    name="kElectricPerUnit"
-                                    onChange={handleInputs}
-                                  />
-                                </TableCell>
-                                <TableCell>
-                                  <TextField
-                                    id="outlined-number"
-                                    label="Enter Message"
-                                    //
-                                    size="small"
-                                    // onChange={(e) => {
-                                    //   setKElectricBillEntry(e.target.value);
-                                    // }}
-                                    name="landlordMessage"
-                                    onChange={handleInputs}
-                                  />
-                                </TableCell>
-                                <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      name="kElectricReadingDueDate"
-                                      value={dueDate.kElectricReadingDueDate}
-                                      minDate={dayjs().add(1, 'day')} // Set minDate to the current date
+                        <FormControl
+                          className="w100 mb-10"
+                          error={!!errorMessage}
+                          component="form"
+                          onSubmit={handleBillKELECReading}
+                        >
+                          <div>
+                            <Table size="small" aria-label="purchases">
+                              <TableHead>
+                                <TableRow>
+                                  <TableCell>Previous Reading</TableCell>
+                                  <TableCell>Current Reading</TableCell>
+                                  <TableCell>Per Unit</TableCell>
+                                  <TableCell>Message</TableCell>
+                                  <TableCell>Due Date</TableCell>
+                                  <TableCell>Bill Date</TableCell>
+                                  <TableCell align="right">
+                                    Total Unit
+                                  </TableCell>
+                                  <TableCell>Total Bill</TableCell>
+                                  <TableCell align="right"></TableCell>
+                                </TableRow>
+                              </TableHead>
+                              <TableBody>
+                                {/* {row.history.map((historyRow) => ( */}
+                                <TableRow>
+                                  <TableCell component="th" scope="row">
+                                    <TextField
+                                      id="outlined-number"
+                                      label="Previous Reading"
+                                      type="number"
+                                      size="small"
+                                      name="kElectricPreviousReading"
                                       disabled={hasData?.electricity === true}
-                                      // onChange={(newValue) => setDueDate(newValue)}
-                                      onChange={(newValue) =>
-                                        handleDateInputs(
-                                          newValue,
-                                          "kElectricReadingDueDate"
-                                        )
-                                      }
+                                      // onChange={(e) => {
+                                      //   setprevReadingKelectric(e.target.value);
+                                      // }}
+                                      onChange={handleInputs}
                                     />
-                                  </LocalizationProvider>
-                                </TableCell>
-                                <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      disabled={true}
-                                      value={billDate}
-                                      onChange={(newValue) =>
-                                        setBillDate(newValue)
-                                      }
+                                    {errorMessage?.kElectricPreviousReading && (
+                                      <FormHelperText style={{ color: "red" }}>
+                                        {errorMessage.kElectricPreviousReading}
+                                      </FormHelperText>
+                                    )}
+                                  </TableCell>
+                                  <TableCell>
+                                    <TextField
+                                      id="outlined-number"
+                                      label="Current Reading"
+                                      type="number"
+                                      size="small"
+                                      name="kElectricCurrentReading"
+                                      disabled={hasData?.electricity === true}
+                                      // onChange={(e) => {
+                                      //   setCurrentReadingKelectric(e.target.value);
+                                      // }}
+                                      onChange={handleInputs}
                                     />
-                                  </LocalizationProvider>
-                                </TableCell>
-                              
-                                <TableCell align="right">
-                                  {inputs?.kElectricCurrentReading === undefined
-                                    ? 0
-                                    : inputs?.kElectricCurrentReading -
-                                      inputs?.kElectricPreviousReading}
-                                </TableCell>
-                                {/* <TableCell>{historyRow.enterBill}</TableCell> */}
-                                <TableCell>
-                                  {parseInt(
-                                    inputs?.kElectricCurrentReading -
-                                      inputs?.kElectricPreviousReading
-                                  ) * parseInt(inputs?.kElectricPerUnit) || 0}
-                                </TableCell>
-                              </TableRow>
-                            </TableBody>
-                          </Table>
-                          <Button
-                            variant="contained"
-                            sx={{
-                              marginTop: 2,
-                              marginRight: 1,
-                              background: "black",
-                            }}
-                            onClick={handleBillKELECReading}
-                          >
-                            Post
-                          </Button>
-                        </div>
+                                    {errorMessage?.kElectricCurrentReading && (
+                                      <FormHelperText style={{ color: "red" }}>
+                                        {errorMessage.kElectricCurrentReading}
+                                      </FormHelperText>
+                                    )}
+                                  </TableCell>
+                                  <TableCell>
+                                    <TextField
+                                      id="outlined-number"
+                                      label="Per Unit"
+                                      type="number"
+                                      size="small"
+                                      disabled={hasData?.electricity === true}
+                                      // onChange={(e) => {
+                                      //   setPerUnitCharges(e.target.value);
+                                      // }}
+                                      name="kElectricPerUnit"
+                                      onChange={handleInputs}
+                                    />
+                                    {errorMessage?.kElectricPerUnit && (
+                                      <FormHelperText style={{ color: "red" }}>
+                                        {errorMessage.kElectricPerUnit}
+                                      </FormHelperText>
+                                    )}
+                                  </TableCell>
+                                  <TableCell>
+                                    <TextField
+                                      id="outlined-number"
+                                      label="Enter Message"
+                                      //
+                                      size="small"
+                                      // onChange={(e) => {
+                                      //   setKElectricBillEntry(e.target.value);
+                                      // }}
+                                      name="landlordMessage"
+                                      onChange={handleInputs}
+                                    />
+                                    {errorMessage?.landlordMessage && (
+                                      <FormHelperText style={{ color: "red" }}>
+                                        {errorMessage.landlordMessage}
+                                      </FormHelperText>
+                                    )}
+                                  </TableCell>
+                                  <TableCell>
+                                    <LocalizationProvider
+                                      dateAdapter={AdapterDayjs}
+                                    >
+                                      <DatePicker
+                                        className="fulldate"
+                                        name="kElectricReadingDueDate"
+                                        value={dueDate.kElectricReadingDueDate}
+                                        minDate={dayjs().add(1, "day")} // Set minDate to the current date
+                                        disabled={hasData?.electricity === true}
+                                        // onChange={(newValue) => setDueDate(newValue)}
+                                        onChange={(newValue) =>
+                                          handleDateInputs(
+                                            newValue,
+                                            "kElectricReadingDueDate"
+                                          )
+                                        }
+                                      />
+                                    </LocalizationProvider>
+                                  </TableCell>
+                                  <TableCell>
+                                    <LocalizationProvider
+                                      dateAdapter={AdapterDayjs}
+                                    >
+                                      <DatePicker
+                                        className="fulldate"
+                                        disabled={true}
+                                        value={billDate}
+                                        onChange={(newValue) =>
+                                          setBillDate(newValue)
+                                        }
+                                      />
+                                    </LocalizationProvider>
+                                  </TableCell>
+
+                                  <TableCell align="right">
+                                    {inputs?.kElectricCurrentReading ===
+                                    undefined
+                                      ? 0
+                                      : inputs?.kElectricCurrentReading -
+                                        inputs?.kElectricPreviousReading}
+                                  </TableCell>
+                                  {/* <TableCell>{historyRow.enterBill}</TableCell> */}
+                                  <TableCell>
+                                    {parseInt(
+                                      inputs?.kElectricCurrentReading -
+                                        inputs?.kElectricPreviousReading
+                                    ) * parseInt(inputs?.kElectricPerUnit) || 0}
+                                  </TableCell>
+                                </TableRow>
+                              </TableBody>
+                            </Table>
+                            <Button
+                              variant="contained"
+                              sx={{
+                                marginTop: 2,
+                                marginRight: 1,
+                                background: "black",
+                              }}
+                              type="submit"
+                              // onClick={handleBillKELECReading}
+                            >
+                              Post
+                            </Button>
+                          </div>
+                        </FormControl>
                       )}
 
                       {selectedValue === "byBill" && (
@@ -1076,7 +1108,7 @@ export default function UploadBill() {
                                       className="fulldate"
                                       name="kElectricBillDueDate"
                                       value={dueDate.kElectricBillDueDate}
-                                      minDate={dayjs().add(1, 'day')} // Set minDate to the current date
+                                      minDate={dayjs().add(1, "day")} // Set minDate to the current date
                                       disabled={hasData?.electricity === true}
                                       // onChange={(newValue) => setDueDate(newValue)}
                                       onChange={(newValue) =>
@@ -1138,19 +1170,18 @@ export default function UploadBill() {
                               />
                             </Button>
 
-                           
-                              <>
-                               <TableCell>
-                                  <TextField
-                                    id="outlined-number"
-                                    label="Amount"
-                                    type="number"
-                                    size="small"
-                                    name="kElectricAmountbyPicture"
-                                    onChange={handleInputs}
-                                  />
-                                </TableCell>
-                             <TableCell>
+                            <>
+                              <TableCell>
+                                <TextField
+                                  id="outlined-number"
+                                  label="Amount"
+                                  type="number"
+                                  size="small"
+                                  name="kElectricAmountbyPicture"
+                                  onChange={handleInputs}
+                                />
+                              </TableCell>
+                              <TableCell>
                                 <TextField
                                   id="outlined-number"
                                   label="Enter Message"
@@ -1164,21 +1195,21 @@ export default function UploadBill() {
                                 />
                               </TableCell>
                               {url?.length > 0 ? (
-                              <TableCell>
-                              <Button
-                                variant="contained"
-                                sx={{
-                                  background: "black",
-                                }}
-                                onClick={handleBillKELECReading}
-                              >
-                                Post
-                              </Button>
-                              </TableCell>
-                            ) : (
-                              ""
-                            )}
-                              </>
+                                <TableCell>
+                                  <Button
+                                    variant="contained"
+                                    sx={{
+                                      background: "black",
+                                    }}
+                                    onClick={handleBillKELECReading}
+                                  >
+                                    Post
+                                  </Button>
+                                </TableCell>
+                              ) : (
+                                ""
+                              )}
+                            </>
                           </Stack>
                         </div>
                       )}
@@ -1278,39 +1309,39 @@ export default function UploadBill() {
                                     />
                                   </TableCell>
                                   <TableCell>
-                                  <TextField
-                                    id="outlined-number"
-                                    label="Enter Message"
-                                    //
-                                    size="small"
-                                    // onChange={(e) => {
-                                    //   setKElectricBillEntry(e.target.value);
-                                    // }}
-                                    name="landlordMessage"
-                                    onChange={handleInputs}
-                                  />
-                                </TableCell>
-                                  <TableCell>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DatePicker
-                                      className="fulldate"
-                                      name="ssgcReadingDueDate"
-                                      value={dueDate.ssgcReadingDueDate}
-                                      minDate={dayjs().add(1, 'day')} // Set minDate to the current date
-                                      disabled={hasData?.ssgc === true}
-                                      // onChange={(newValue) => setDueDate(newValue)}
-                                      onChange={(newValue) =>
-                                        handleDateInputs(
-                                          newValue,
-                                          "ssgcReadingDueDate"
-                                        )
-                                      }
+                                    <TextField
+                                      id="outlined-number"
+                                      label="Enter Message"
+                                      //
+                                      size="small"
+                                      // onChange={(e) => {
+                                      //   setKElectricBillEntry(e.target.value);
+                                      // }}
+                                      name="landlordMessage"
+                                      onChange={handleInputs}
                                     />
-                                  </LocalizationProvider>
-                                </TableCell>
-                                <TableCell>
+                                  </TableCell>
+                                  <TableCell>
+                                    <LocalizationProvider
+                                      dateAdapter={AdapterDayjs}
+                                    >
+                                      <DatePicker
+                                        className="fulldate"
+                                        name="ssgcReadingDueDate"
+                                        value={dueDate.ssgcReadingDueDate}
+                                        minDate={dayjs().add(1, "day")} // Set minDate to the current date
+                                        disabled={hasData?.ssgc === true}
+                                        // onChange={(newValue) => setDueDate(newValue)}
+                                        onChange={(newValue) =>
+                                          handleDateInputs(
+                                            newValue,
+                                            "ssgcReadingDueDate"
+                                          )
+                                        }
+                                      />
+                                    </LocalizationProvider>
+                                  </TableCell>
+                                  <TableCell>
                                     <LocalizationProvider
                                       dateAdapter={AdapterDayjs}
                                     >
@@ -1331,22 +1362,22 @@ export default function UploadBill() {
                                   {/* <TableCell>
                                     {historyRow.showSsgcUnit || 0}
                                   </TableCell> */}
-                                  
 
                                   <TableCell align="right">
-                                    {console.log(inputs,"testtttt")}
-                                  {inputs?.currentReadingSsg === undefined
-                                    ? 0
-                                    : inputs?.currentReadingSsg -
-                                      inputs?.previousReadingSsg}
-                                </TableCell>
-                                {/* <TableCell>{historyRow.enterBill}</TableCell> */}
-                                <TableCell>
-                                  {parseInt(
-                                    inputs?.currentReadingSsg -
-                                      inputs?.previousReadingSsg
-                                  ) * parseInt(inputs?.perUnitSsgCharges) || 0}
-                                </TableCell>
+                                    {console.log(inputs, "testtttt")}
+                                    {inputs?.currentReadingSsg === undefined
+                                      ? 0
+                                      : inputs?.currentReadingSsg -
+                                        inputs?.previousReadingSsg}
+                                  </TableCell>
+                                  {/* <TableCell>{historyRow.enterBill}</TableCell> */}
+                                  <TableCell>
+                                    {parseInt(
+                                      inputs?.currentReadingSsg -
+                                        inputs?.previousReadingSsg
+                                    ) * parseInt(inputs?.perUnitSsgCharges) ||
+                                      0}
+                                  </TableCell>
                                 </TableRow>
                               ))}
                             </TableBody>
@@ -1409,7 +1440,7 @@ export default function UploadBill() {
                                       className="fulldate"
                                       name="ssgcBillDueDate"
                                       value={dueDate.ssgcBillDueDate}
-                                      minDate={dayjs().add(1, 'day')} // Set minDate to the current date
+                                      minDate={dayjs().add(1, "day")} // Set minDate to the current date
                                       disabled={hasData?.ssgc === true}
                                       // onChange={(newValue) => setDueDate(newValue)}
                                       onChange={(newValue) =>
@@ -1471,19 +1502,19 @@ export default function UploadBill() {
                                 onChange={(e) => imgUpload(e)}
                               />
                             </Button>
-                            
-                              <>
-                                 <TableCell>
-                                  <TextField
-                                    id="outlined-number"
-                                    label="Amount"
-                                    type="number"
-                                    size="small"
-                                    name="ssgcAmountbyPicture"
-                                    onChange={handleInputs}
-                                  />
-                                </TableCell>
-                             <TableCell>
+
+                            <>
+                              <TableCell>
+                                <TextField
+                                  id="outlined-number"
+                                  label="Amount"
+                                  type="number"
+                                  size="small"
+                                  name="ssgcAmountbyPicture"
+                                  onChange={handleInputs}
+                                />
+                              </TableCell>
+                              <TableCell>
                                 <TextField
                                   id="outlined-number"
                                   label="Enter Message"
@@ -1497,23 +1528,23 @@ export default function UploadBill() {
                                 />
                               </TableCell>
                               {url?.length > 0 ? (
-                              <TableCell>
-                              <Button
-                                variant="contained"
-                                sx={{
-                                  // marginTop: 2,
-                                  // marginRight: 1,
-                                  background: "black",
-                                }}
-                                onClick={handleBillSSGCReading}
-                              >
-                                Post
-                              </Button>
-                              </TableCell>
+                                <TableCell>
+                                  <Button
+                                    variant="contained"
+                                    sx={{
+                                      // marginTop: 2,
+                                      // marginRight: 1,
+                                      background: "black",
+                                    }}
+                                    onClick={handleBillSSGCReading}
+                                  >
+                                    Post
+                                  </Button>
+                                </TableCell>
                               ) : (
                                 ""
                               )}
-                              </>
+                            </>
                           </Stack>
                         </div>
                       )}
@@ -1602,7 +1633,7 @@ export default function UploadBill() {
                                       className="fulldate"
                                       name="waterBillDueDate"
                                       value={dueDate.waterBillDueDate}
-                                      minDate={dayjs().add(1, 'day')} // Set minDate to the current date
+                                      minDate={dayjs().add(1, "day")} // Set minDate to the current date
                                       disabled={hasData?.water === true}
                                       // onChange={(newValue) => setDueDate(newValue)}
                                       onChange={(newValue) =>
@@ -1664,19 +1695,19 @@ export default function UploadBill() {
                                 onChange={(e) => imgUpload(e)}
                               />
                             </Button>
-                            
-                              <>
-                                 <TableCell>
-                                  <TextField
-                                    id="outlined-number"
-                                    label="Amount"
-                                    type="number"
-                                    size="small"
-                                    name="ssgcAmountbyPicture"
-                                    onChange={handleInputs}
-                                  />
-                                </TableCell>
-                             <TableCell>
+
+                            <>
+                              <TableCell>
+                                <TextField
+                                  id="outlined-number"
+                                  label="Amount"
+                                  type="number"
+                                  size="small"
+                                  name="ssgcAmountbyPicture"
+                                  onChange={handleInputs}
+                                />
+                              </TableCell>
+                              <TableCell>
                                 <TextField
                                   id="outlined-number"
                                   label="Enter Message"
@@ -1690,21 +1721,21 @@ export default function UploadBill() {
                                 />
                               </TableCell>
                               {url?.length > 0 ? (
-                              <TableCell>
-                              <Button
-                                variant="contained"
-                                sx={{
-                                  background: "black",
-                                }}
-                                onClick={handleBillWaterReading}
-                              >
-                                Post
-                              </Button>
-                              </TableCell>
-                            ) : (
-                              ""
-                            )}
-                              </>
+                                <TableCell>
+                                  <Button
+                                    variant="contained"
+                                    sx={{
+                                      background: "black",
+                                    }}
+                                    onClick={handleBillWaterReading}
+                                  >
+                                    Post
+                                  </Button>
+                                </TableCell>
+                              ) : (
+                                ""
+                              )}
+                            </>
                           </Stack>
                         </div>
                       )}
@@ -1794,7 +1825,7 @@ export default function UploadBill() {
                                       className="fulldate"
                                       name="maintananceDueDate"
                                       value={dueDate.maintananceDueDate}
-                                      minDate={dayjs().add(1, 'day')} // Set minDate to the current date
+                                      minDate={dayjs().add(1, "day")} // Set minDate to the current date
                                       disabled={hasData?.maintanance === true}
                                       // onChange={(newValue) => setDueDate(newValue)}
                                       onChange={(newValue) =>
@@ -1856,19 +1887,19 @@ export default function UploadBill() {
                                 onChange={(e) => imgUpload(e)}
                               />
                             </Button>
-                            
-                              <>
-                                 <TableCell>
-                                  <TextField
-                                    id="outlined-number"
-                                    label="Amount"
-                                    type="number"
-                                    size="small"
-                                    name="maintainanceAmountbyPicture"
-                                    onChange={handleInputs}
-                                  />
-                                </TableCell>
-                             <TableCell>
+
+                            <>
+                              <TableCell>
+                                <TextField
+                                  id="outlined-number"
+                                  label="Amount"
+                                  type="number"
+                                  size="small"
+                                  name="maintainanceAmountbyPicture"
+                                  onChange={handleInputs}
+                                />
+                              </TableCell>
+                              <TableCell>
                                 <TextField
                                   id="outlined-number"
                                   label="Enter Message"
@@ -1882,23 +1913,23 @@ export default function UploadBill() {
                                 />
                               </TableCell>
                               {url?.length > 0 ? (
-                              <TableCell>
-                              <Button
-                                variant="contained"
-                                sx={{
-                                  marginTop: 2,
-                                  marginRight: 1,
-                                  background: "black",
-                                }}
-                                onClick={handleMaintainanceReading}
-                              >
-                                Post
-                              </Button>
-                              </TableCell>
-                            ) : (
-                              ""
-                            )}
-                              </>
+                                <TableCell>
+                                  <Button
+                                    variant="contained"
+                                    sx={{
+                                      marginTop: 2,
+                                      marginRight: 1,
+                                      background: "black",
+                                    }}
+                                    onClick={handleMaintainanceReading}
+                                  >
+                                    Post
+                                  </Button>
+                                </TableCell>
+                              ) : (
+                                ""
+                              )}
+                            </>
                           </Stack>
                         </div>
                       )}
@@ -1994,7 +2025,7 @@ export default function UploadBill() {
                                       className="fulldate"
                                       name="trashDueDate"
                                       value={dueDate.trashDueDate}
-                                      minDate={dayjs().add(1, 'day')} // Set minDate to the current date
+                                      minDate={dayjs().add(1, "day")} // Set minDate to the current date
                                       disabled={hasData?.trash === true}
                                       // onChange={(newValue) => setDueDate(newValue)}
                                       onChange={(newValue) =>
@@ -2056,51 +2087,49 @@ export default function UploadBill() {
                                 onChange={(e) => imgUpload(e)}
                               />
                             </Button>
-                           
-                                 <TableCell>
-                                  <TextField
-                                    id="outlined-number"
-                                    label="Amount"
-                                    type="number"
-                                    size="small"
-                                    name="trashAmountbyPicture"
-                                    onChange={handleInputs}
-                                  />
-                                </TableCell>
-                             <TableCell>
-                                <TextField
-                                  id="outlined-number"
-                                  label="Enter Message"
-                                  //
-                                  size="small"
-                                  // onChange={(e) => {
-                                  //   setKElectricBillEntry(e.target.value);
-                                  // }}
-                                  name="landlordMessage"
-                                  onChange={handleInputs}
-                                />
-                              </TableCell>
-                              <TableCell>
-                          
+
+                            <TableCell>
+                              <TextField
+                                id="outlined-number"
+                                label="Amount"
+                                type="number"
+                                size="small"
+                                name="trashAmountbyPicture"
+                                onChange={handleInputs}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <TextField
+                                id="outlined-number"
+                                label="Enter Message"
+                                //
+                                size="small"
+                                // onChange={(e) => {
+                                //   setKElectricBillEntry(e.target.value);
+                                // }}
+                                name="landlordMessage"
+                                onChange={handleInputs}
+                              />
+                            </TableCell>
+                            <TableCell>
                               {url?.length > 0 ? (
-                              <TableCell>
-                                 <Button
-                                variant="contained"
-                                sx={{
-                                  marginTop: 2,
-                                  marginRight: 1,
-                                  background: "black",
-                                }}
-                                onClick={handleTrashReading}
-                              >
-                                Post
-                              </Button>
-                              </TableCell>
-                            ) : (
-                              ""
-                            )}
-                              </TableCell>
-                            
+                                <TableCell>
+                                  <Button
+                                    variant="contained"
+                                    sx={{
+                                      marginTop: 2,
+                                      marginRight: 1,
+                                      background: "black",
+                                    }}
+                                    onClick={handleTrashReading}
+                                  >
+                                    Post
+                                  </Button>
+                                </TableCell>
+                              ) : (
+                                ""
+                              )}
+                            </TableCell>
                           </Stack>
                         </div>
                       )}
@@ -2119,7 +2148,7 @@ export default function UploadBill() {
   React.useEffect(() => {
     dispatch(
       GetOneUploadBill({
-       id:getId
+        id: getId,
       })
     ).then((res) => {
       setHasData(res?.payload?.data?.data);
