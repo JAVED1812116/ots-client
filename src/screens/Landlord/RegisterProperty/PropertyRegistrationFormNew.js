@@ -1,7 +1,6 @@
 import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
-import Grid from "@mui/material/Unstable_Grid2";
 import title from "../../../components/title";
 import Box from "@mui/material/Box";
 import "./registerProperty.css";
@@ -17,10 +16,9 @@ import {
   Step,
   StepLabel,
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 import Logo from "../../../assets/Logo.png";
 import { PropertyRegisters } from "../../../Redux/Reducer/PropertyRegistration";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { Input } from "@mui/material";
 import Table from "@mui/material/Table";
@@ -30,10 +28,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { ValidateUser } from "../../../Redux/Reducer/ValidateUser";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import {
   landlordDetailSchema,
   landlordPropertySchema,
@@ -51,7 +47,7 @@ export default function PropertyRegister() {
     ownerName: "",
     fatherName: "",
     cnic: "",
-    contactNumber: "",
+    contactNumber: "03",
     alternateNumber: "",
     permenantAddress: "",
     postalAddress: "",
@@ -77,18 +73,12 @@ export default function PropertyRegister() {
 
   const [error, setError] = React.useState({});
   const { loginUser } = useSelector((state) => state);
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setDetail((prev) => {
-  //     return { ...prev, [name]: value };
-  //   });
-  // };
   const formik = useFormik({
     initialValues: {
       ownerName: "",
       fatherName: "",
       cnic: "",
-      contactNumber: "",
+      contactNumber: "03",
       alternateNumber: "",
       permenantAddress: "",
       postalAddress: "",
@@ -129,14 +119,7 @@ export default function PropertyRegister() {
   }
   function stepContent(
     step
-    // handleChange,
-    // handleBlur,
-    // values,
-    // errors,
-    // touched,
-    // setTouched
   ) {
-    // console.log(errors, 'errors');
     switch (step) {
       case 0:
         return (
@@ -204,24 +187,6 @@ export default function PropertyRegister() {
                   formik.touched.contactNumber && formik.errors.contactNumber
                 }
               />
-              {/* <TextField
-                fullWidth
-                id="alternateNumber"
-                name="alternateNumber"
-                label="Alternate Number"
-                type="number"
-                value={formik.values.alternateNumber}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.alternateNumber &&
-                  Boolean(formik.errors.alternateNumber)
-                }
-                helperText={
-                  formik.touched.alternateNumber &&
-                  formik.errors.alternateNumber
-                }
-              /> */}
               <TextField
                 fullWidth
                 id="permenantAddress"
@@ -306,16 +271,14 @@ export default function PropertyRegister() {
                   formik.touched.totalFloor && formik.errors.totalFloor
                 }
               />
-              {formik?.values?.totalFloor === "" ? (
+              {formik?.values?.totalFloor === ""||formik?.values?.totalFloor === 0  ? (
                 ""
               ) : (
                 <TextField
                   fullWidth
                   id="totalFlat"
                   label="Total Flat"
-                  multiline
                   type="number"
-                  maxRows={4}
                   name="totalFlat"
                   value={formik.values.totalFlat}
                   onChange={formik.handleChange}
@@ -328,8 +291,9 @@ export default function PropertyRegister() {
                   }
                 />
               )}
-              {formik?.values?.totalFlat === 0 ||
-              formik?.values?.totalFlat?.length === 0
+              {formik?.values?.totalFlat === 0 ||formik?.values?.totalFlat <= 0 ||
+              formik?.values?.totalFlat?.length === 0 ||formik?.values?.totalFloor === 0 ||formik?.values?.totalFloor <= 0 ||
+              formik?.values?.totalFloor?.length === 0
                 ? " "
                 : renderDataGrid()}
             </div>
@@ -658,8 +622,6 @@ export default function PropertyRegister() {
                           />
                         </TableCell>
                         <TableCell component="th" scope="row">
-                          {/* <FormControl fullWidth>
-  <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
                           <Select
                             defaultValue={0}
                             // value={age}
@@ -668,9 +630,6 @@ export default function PropertyRegister() {
                             displayEmpty
                             inputProps={{ "aria-label": "Without label" }}
                           >
-                            {/* <MenuItem value="">
-            <em>None</em>
-          </MenuItem> */}
                             <MenuItem value={0}>Vacant</MenuItem>
                             <MenuItem value={1}>RentOut</MenuItem>
                           </Select>
@@ -726,14 +685,7 @@ export default function PropertyRegister() {
         userId: sessionStorage.getItem("user_id"),
         userName: sessionStorage.getItem("name"),
       };
-      // const isEmptyField = Object.values(values).some(value => !value);
 
-      // if (isEmptyField) {
-      //   toast.error("Please fill in all fields.", {
-      //     position: "top-center",
-      //   });
-      //   return;
-      // }
       const emptyFields = Object.entries(values)
         .filter(([key, value]) => !value)
         .map(([key]) => key);
@@ -761,7 +713,6 @@ export default function PropertyRegister() {
         values?.propertyAddress !== "" ||
         values?.totalFloor !== ""
       ) {
-        // rows?.flatName!==undefined||rows?.flatNumber!==undefined||rows?.flatFloor!==undefined||rows?.flatRoom!==undefined||rows?.flatToilet!==undefined||rows?.flatKitchen!==undefined||rows?.flatRent!==undefined||rows?.flatDeposit!==undefined||rows?.flatMaintainanceCharges!==undefined||rows?.flattrashCharges!==undefined||rows?.flatsecurityCharges!==undefined||rows?.is_rent!==undefined
         if (values?.flatDetail !== "") {
           dispatch(PropertyRegisters({ values })).then((res) => {
             if (res?.payload?.data?.message === "Property Set Successfully") {
@@ -841,16 +792,7 @@ export default function PropertyRegister() {
                   </Step>
                 ))}
               </Stepper>
-              {/* <Formik
-                initialValues={detail}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-                // validateOnBlur={false} // Disable validation on blur
-                // validateOnChange={false} // Disable validation on change
-              >
-                {({ handleChange, handleBlur, values, errors, touched, setTouched, handleSubmit  }) => ( */}
               <form
-              // onSubmit={formik.handleSubmit}
               >
                 {stepContent(
                   activeStep
@@ -869,9 +811,6 @@ export default function PropertyRegister() {
                   >
                     Back
                   </Button>
-                  {/* <Button variant="contained" type="submit">
-                    {activeStep === getSteps().length - 1 ? "Finish" : "Next"}
-                  </Button> */}
                   <Button
                     variant="contained"
                     type="button"
@@ -881,211 +820,8 @@ export default function PropertyRegister() {
                   </Button>
                 </Box>
               </form>
-              {/* )} */}
-              {/* </Formik> */}
             </>
           </Box>
-          {/* <Grid
-            container
-            spacing={0}
-            className="propertyRegContainer"
-            component="form"
-            onSubmit={onFinish}
-          >
-            <Grid className="boxShadow" md={3} sm={12}>
-              <div>
-                <h1>Owner Detail</h1>
-                <Container maxWidth="sm">
-                  <div className="property-inputs">
-                    <TextField
-                      required
-                      id="standard-multiline-flexible"
-                      label="Owner Name"
-                      multiline
-                      maxRows={4}
-                      variant="standard"
-                      name="ownerName"
-                      onChange={handleChange}
-                      error={error.ownerName}
-                      helperText={
-                        error.ownerName ? "Please enter a valid Owner Name" : ""
-                      }
-                    />
-                    <TextField
-                      required
-                      id="standard-textarea"
-                      label="Father Name"
-                      placeholder="Placeholder"
-                      multiline
-                      variant="standard"
-                      name="fatherName"
-                      onChange={handleChange}
-                      error={error.fatherName}
-                      helperText={
-                        error.fatherName
-                          ? "Please enter a valid Father Name"
-                          : ""
-                      }
-                    />
-
-                    <TextField
-                      required
-                      id="standard-multiline-flexible"
-                      label="CNIC"
-                      multiline
-                      type="number"
-                      data-inputmask="'mask': '99999-9999999-9'"
-                      placeholder="XXXXX-XXXXXXX-X"
-                      maxRows={4}
-                      variant="standard"
-                      value={detail?.cnic}
-                      name="cnic"
-                      onChange={handleChange}
-                      error={error.cnic}
-                      helperText={error.cnic ? "Please enter a valid CNIC" : ""}
-                    />
-                    <TextField
-                      required
-                      id="standard-textarea"
-                      label="Contact Number"
-                      placeholder="Placeholder"
-                      multiline
-                      variant="standard"
-                      name="contactNumber"
-                      onChange={handleChange}
-                      error={error.contactNumber}
-                      helperText={
-                        error.contactNumber
-                          ? "Please enter a valid Contact Number"
-                          : ""
-                      }
-                    />
-                    <TextField
-                      id="standard-textarea"
-                      label="Alternate Number"
-                      placeholder="Placeholder"
-                      multiline
-                      variant="standard"
-                      name="alternateNumber"
-                      onChange={handleChange}
-                      error={error.alternateNumber}
-                      helperText={
-                        error.alternateNumber
-                          ? "Please enter a valid Alternate Number"
-                          : ""
-                      }
-                    />
-                    <TextField
-                      required
-                      id="standard-textarea"
-                      label="Permenant Address"
-                      placeholder="Placeholder"
-                      multiline
-                      variant="standard"
-                      name="permenantAddress"
-                      onChange={handleChange}
-                    />
-                    <TextField
-                      required
-                      id="standard-textarea"
-                      label="Postal Address"
-                      placeholder="Placeholder"
-                      multiline
-                      variant="standard"
-                      name="postalAddress"
-                      onChange={handleChange}
-                    />
-                    <TextField
-                      required
-                      id="standard-textarea"
-                      label="Email"
-                      placeholder="Placeholder"
-                      multiline
-                      variant="standard"
-                      name="email"
-                      onChange={handleChange}
-                      error={error.email}
-                      helperText={
-                        error.email ? "Please enter a valid Email Address" : ""
-                      }
-                    />
-                  </div>
-                </Container>
-              </div>
-            </Grid>
-
-            <Grid className="boxShadow " md={6} sm={12}>
-              <div>
-                <h1>Property Detail</h1>
-                <Container maxWidth="sm">
-                  <div className="property-inputs">
-                    <TextField
-                      required
-                      id="standard-multiline-flexible"
-                      label="Property Address"
-                      multiline
-                      maxRows={4}
-                      variant="standard"
-                      name="propertyAddress"
-                      onChange={handleChange}
-                    />
-                    <TextField
-                      required
-                      id="standard-textarea"
-                      label="Total Floor"
-                      placeholder="Placeholder"
-                      multiline
-                      variant="standard"
-                      name="totalFloor"
-                      onChange={handleChange}
-                      error={error.totalFloor}
-                      helperText={
-                        error.totalFloor
-                          ? "Please enter a valid Total Floor"
-                          : ""
-                      }
-                    />
-                    {detail?.totalFloor === "" ? (
-                      ""
-                    ) : (
-                      <TextField
-                        required
-                        id="standard-multiline-flexible"
-                        label="Total Flat"
-                        multiline
-                        maxRows={4}
-                        variant="standard"
-                        name="totalFlat"
-                        onChange={handleChange}
-                        error={error.totalFlat}
-                        helperText={
-                          error.totalFlat
-                            ? "Please enter a valid Total Flat"
-                            : ""
-                        }
-                      />
-                    )}
-
-                    {detail?.totalFlat === 0 || detail?.totalFlat?.length === 0
-                      ? " "
-                      : renderDataGrid()}
-                  </div>
-                </Container>
-              </div>
-            </Grid>
-            <div className="registerButton">
-              <Button
-                variant="contained"
-                type="submit"
-                sx={{
-                  marginTop: 1,
-                  background: "black",
-                }}
-              >
-                Register
-              </Button>
-            </div>
-          </Grid> */}
         </Container>
       )}
       <ToastContainer />
