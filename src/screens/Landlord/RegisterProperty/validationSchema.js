@@ -16,6 +16,7 @@ export const landlordDetailSchema = Yup.object().shape({
 
 export const landlordPropertySchema = Yup.object().shape({
   propertyAddress: Yup.string().required('Property Address is required'),
+  flatName: Yup.string().required('Flat Name is required'),
 totalFloor: Yup.number()
   .transform((val, original) => (original === "" ? undefined : val))
   .typeError("Total Floor must be a number")

@@ -71,7 +71,6 @@ export default function PropertyRegister() {
   });
   const [generatedRows, setGeneratedRows] = React.useState([]);
 
-  const [error, setError] = React.useState({});
   const { loginUser } = useSelector((state) => state);
   const formik = useFormik({
     initialValues: {
@@ -86,6 +85,19 @@ export default function PropertyRegister() {
       propertyAddress: "",
       totalFloor: 1,
       totalFlat: 1,
+      /////////////////////////////////////////////////////////////
+      flatName: "",
+      flatNumber: "",
+      flatFloor: 0,
+      flatRooms: "",
+      flatToilet: "",
+      flatKitchen: "",
+      flatRent: "",
+      flatAdvance: "",
+      flatMaintananceCharges: "",
+      flatTrashCharges: "",
+      flatSecurityCharges: "",
+      is_rent: 0,
     },
     validationSchema:
       activeStep === 0 ? landlordDetailSchema : landlordPropertySchema,
@@ -101,6 +113,19 @@ export default function PropertyRegister() {
         postalAddress: true,
         email: true,
         propertyAddress: true,
+        ////////////////////////////////////////////////
+        flatName: true,
+        flatNumber: true,
+        flatFloor: true,
+        flatRooms: true,
+        flatToilet: true,
+        flatKitchen: true,
+        flatRent: true,
+        flatAdvance: true,
+        flatMaintananceCharges: true,
+        flatTrashCharges: true,
+        flatSecurityCharges: true,
+        is_rent: true,
       });
 
       if (Object.keys(errors).length === 0) {
@@ -117,9 +142,7 @@ export default function PropertyRegister() {
   function getSteps() {
     return ["Owner Detail", "Property Detail"];
   }
-  function stepContent(
-    step
-  ) {
+  function stepContent(step) {
     switch (step) {
       case 0:
         return (
@@ -271,7 +294,8 @@ export default function PropertyRegister() {
                   formik.touched.totalFloor && formik.errors.totalFloor
                 }
               />
-              {formik?.values?.totalFloor === ""||formik?.values?.totalFloor === 0  ? (
+              {formik?.values?.totalFloor === "" ||
+              formik?.values?.totalFloor === 0 ? (
                 ""
               ) : (
                 <TextField
@@ -291,8 +315,11 @@ export default function PropertyRegister() {
                   }
                 />
               )}
-              {formik?.values?.totalFlat === 0 ||formik?.values?.totalFlat <= 0 ||
-              formik?.values?.totalFlat?.length === 0 ||formik?.values?.totalFloor === 0 ||formik?.values?.totalFloor <= 0 ||
+              {formik?.values?.totalFlat === 0 ||
+              formik?.values?.totalFlat <= 0 ||
+              formik?.values?.totalFlat?.length === 0 ||
+              formik?.values?.totalFloor === 0 ||
+              formik?.values?.totalFloor <= 0 ||
               formik?.values?.totalFloor?.length === 0
                 ? " "
                 : renderDataGrid()}
@@ -307,53 +334,20 @@ export default function PropertyRegister() {
     setActiveStep(activeStep - 1);
   };
   const handleNext = () => {
-    console.log(activeStep, "activeStep");
     if (activeStep === 0) {
       setActiveStep(activeStep + 1);
     }
   };
   const handleSubmit = async (e) => {
-    console.log("submit");
     alert(JSON.stringify(formik.values, null));
-    // console.log(formik.values);
   };
   const isEmailValid = (email) => {
     // Regular expression for basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-  console.log(formik.values, "formik");
-  const handleChange = (e) => {
+  const handleChange = (e,rowId) => {
     const { name, value } = e.target;
-
-    // Check if the entered value is not a valid number for "cnic" or "contactNumber" fields
-    if (name === "totalFloor" && value === "0") {
-      setError((prev) => ({ ...prev, totalFloor: true }));
-      return;
-    }
-    if (
-      (name === "contactNumber" ||
-        name === "alternateNumber" ||
-        name === "totalFloor" ||
-        name === "totalFlat") &&
-      !/^[0-9]*$/.test(value)
-    ) {
-      setError((prev) => ({ ...prev, [name]: true }));
-      // If it's not a valid number, you can choose to ignore the Input or show an error message.
-      return;
-    }
-    if (
-      (name === "ownerName" || name === "fatherName") &&
-      !/^[A-Za-z\s]*$/.test(value)
-    ) {
-      setError((prev) => ({ ...prev, [name]: true }));
-      // If it's not a valid number, you can choose to ignore the Input or show an error message.
-      return;
-    }
-    if (name === "email" && !isEmailValid(value)) {
-      setError((prev) => ({ ...prev, email: true }));
-      return;
-    }
     if (
       name === "cnic"
       //  && !isCnicValid(value)
@@ -366,25 +360,38 @@ export default function PropertyRegister() {
         (numericCnic.length > 5 ? "-" + numericCnic.slice(5, 12) : "") +
         (numericCnic.length > 12 ? "-" + numericCnic.slice(12, 13) : "");
 
-      setDetail((prev) => {
-        return { ...prev, [name]: formattedCnic };
-      });
+     
       formik.setFieldValue("cnic", formattedCnic);
-
-      // setError((prev) => ({ ...prev, cnic: true }));
-      // return;
     }
-    setError((prev) => ({ ...prev, [name]: false }));
     // Check if the entered value is a number for the "CNIC" field
-
-    // Update the state
-
-    if (name === "cnic") {
-    } else {
-      setDetail((prev) => {
-        return { ...prev, [name]: value };
-      });
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+      if (
+      (name === "flatNumber" ||
+        name === "flatFloor" ||
+        name === "flatRooms" ||
+        name === "flatToilet" ||
+        name === "flatKitchen" ||
+        name === "flatRent" ||
+        name === "flatAdvance" ||
+        name === "flatMaintananceCharges" ||
+        name === "flatTrashCharges" ||
+        name === "flatSecurityCharges") &&
+      !/^[0-9]*$/.test(value)
+    ) {
+      // If it's not a valid number, you can choose to ignore the Input or show an error message.
+      return;
     }
+    if (name === "flatName" && !/^[A-Za-z\s]*$/.test(value)) {
+      // If it's not a valid number, you can choose to ignore the Input or show an error message.
+      return;
+    }
+    // Update the state with the new value
+
+    setRows((prevRows) => {
+      return prevRows.map((row) =>
+        row.id === rowId ? { ...row, [name]: value, tenantId: "" } : row
+      );
+    });
   };
   const handleCellChange = (rowId, e) => {
     const { name, value } = e.target;
@@ -497,12 +504,23 @@ export default function PropertyRegister() {
                         }}
                       >
                         <TableCell>{i + 1}.</TableCell>
-                        <TableCell component="th" scope="row">
+                        <TableCell component="th" scope="row" style={{height:10}}>
                           <Input
                             placeholder="Flat Name"
                             name="flatName"
                             required
-                            onChange={(e) => handleCellChange(i, e)}
+                            // onChange={(e) => handleCellChange(i, e)}
+                            value={formik.values.flatName}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={
+                              formik.touched.flatName &&
+                              Boolean(formik.errors.flatName)
+                            }
+                            helperText={
+                              formik.touched.flatName &&
+                              formik.errors.flatName
+                            }
                           />
                         </TableCell>
                         <TableCell component="th" scope="row">
@@ -666,91 +684,92 @@ export default function PropertyRegister() {
       }),
     }),
   }));
-  const onFinish = (e) => {
-    e.preventDefault();
-    if (Object.values(error).some((value) => value !== true)) {
-      let values = {
-        ownerName: detail?.ownerName,
-        fatherName: detail?.fatherName,
-        cnic: detail?.cnic,
-        contactNumber: detail?.contactNumber,
-        alternateNumber: detail?.alternateNumber,
-        permenantAddress: detail?.permenantAddress,
-        postalAddress: detail?.postalAddress,
-        email: detail?.email,
-        propertyAddress: detail?.propertyAddress,
-        totalFloor: detail?.totalFloor,
-        totalFlat: detail?.totalFlat,
-        flatDetail: rows,
-        userId: sessionStorage.getItem("user_id"),
-        userName: sessionStorage.getItem("name"),
-      };
+  // const onFinish = (e) => {
+  //   e.preventDefault();
+  //   if (Object.values(error).some((value) => value !== true)) {
+  //     let values = {
+  //       ownerName: detail?.ownerName,
+  //       fatherName: detail?.fatherName,
+  //       cnic: detail?.cnic,
+  //       contactNumber: detail?.contactNumber,
+  //       alternateNumber: detail?.alternateNumber,
+  //       permenantAddress: detail?.permenantAddress,
+  //       postalAddress: detail?.postalAddress,
+  //       email: detail?.email,
+  //       propertyAddress: detail?.propertyAddress,
+  //       totalFloor: detail?.totalFloor,
+  //       totalFlat: detail?.totalFlat,
+  //       flatDetail: rows,
+  //       userId: sessionStorage.getItem("user_id"),
+  //       userName: sessionStorage.getItem("name"),
+  //     };
 
-      const emptyFields = Object.entries(values)
-        .filter(([key, value]) => !value)
-        .map(([key]) => key);
+  //     const emptyFields = Object.entries(values)
+  //       .filter(([key, value]) => !value)
+  //       .map(([key]) => key);
 
-      if (emptyFields.length > 0) {
-        const errorMessage = `Please fill in the following fields: ${emptyFields.join(
-          ", "
-        )}.`;
-        toast.error(errorMessage, {
-          position: "top-center",
-        });
-        return;
-      }
+  //     if (emptyFields.length > 0) {
+  //       const errorMessage = `Please fill in the following fields: ${emptyFields.join(
+  //         ", "
+  //       )}.`;
+  //       toast.error(errorMessage, {
+  //         position: "top-center",
+  //       });
+  //       return;
+  //     }
 
-      if (
-        values?.totalFlat !== 0 ||
-        values?.ownerName !== "" ||
-        values?.fatherName !== "" ||
-        values?.cnic !== "" ||
-        values?.contactNumber !== "" ||
-        values?.alternateNumber !== "" ||
-        values?.permenantAddress !== "" ||
-        values?.postalAddress !== "" ||
-        values?.email !== "" ||
-        values?.propertyAddress !== "" ||
-        values?.totalFloor !== ""
-      ) {
-        if (values?.flatDetail !== "") {
-          dispatch(PropertyRegisters({ values })).then((res) => {
-            if (res?.payload?.data?.message === "Property Set Successfully") {
-              toast.success("Property Register Successfully", {
-                position: "top-center",
-              });
-              sessionStorage.setItem("is_register", true);
-              let token = loginUser?.login?.data?.data?.password;
-              dispatch(
-                ValidateUser({
-                  email: loginUser?.login?.data?.data?.email,
-                  token,
-                })
-              ).then((re) => {
-                if (re) {
-                  // setTimeout(() => {
-                  navigate("/pending-request");
-                  // }, 2200);
-                }
-              });
-            }
-          });
-        } else {
-          toast.error("Please fill all flat detail", {
-            position: "top-center",
-          });
-        }
-      } else {
-        toast.error("Please fill in all required fields.", {
-          position: "top-center",
-        });
-      }
-    } else {
-      toast.error("Please enter valid values.", {
-        position: "top-center",
-      });
-    }
-  };
+  //     if (
+  //       values?.totalFlat !== 0 ||
+  //       values?.ownerName !== "" ||
+  //       values?.fatherName !== "" ||
+  //       values?.cnic !== "" ||
+  //       values?.contactNumber !== "" ||
+  //       values?.alternateNumber !== "" ||
+  //       values?.permenantAddress !== "" ||
+  //       values?.postalAddress !== "" ||
+  //       values?.email !== "" ||
+  //       values?.propertyAddress !== "" ||
+  //       values?.totalFloor !== ""
+  //     ) {
+  //       if (values?.flatDetail !== "") {
+  //         dispatch(PropertyRegisters({ values })).then((res) => {
+  //           if (res?.payload?.data?.message === "Property Set Successfully") {
+  //             toast.success("Property Register Successfully", {
+  //               position: "top-center",
+  //             });
+  //             sessionStorage.setItem("is_register", true);
+  //             let token = loginUser?.login?.data?.data?.password;
+  //             dispatch(
+  //               ValidateUser({
+  //                 email: loginUser?.login?.data?.data?.email,
+  //                 token,
+  //               })
+  //             ).then((re) => {
+  //               if (re) {
+  //                 // setTimeout(() => {
+  //                 navigate("/pending-request");
+  //                 // }, 2200);
+  //               }
+  //             });
+  //           }
+  //         });
+  //       } else {
+  //         toast.error("Please fill all flat detail", {
+  //           position: "top-center",
+  //         });
+  //       }
+  //     } else {
+  //       toast.error("Please fill in all required fields.", {
+  //         position: "top-center",
+  //       });
+  //     }
+  //   } else {
+  //     toast.error("Please enter valid values.", {
+  //       position: "top-center",
+  //     });
+  //   }
+  // };
+  console.log(formik,"formikkkkkkkkkk")
   return (
     <>
       {activeStep === steps.length ? (
@@ -785,15 +804,14 @@ export default function PropertyRegister() {
               >
                 Join OTS: Unlock Your Property's Potential!
               </Typography>
-              <Stepper sx={{marginBottom: 2 }}  activeStep={activeStep}>
+              <Stepper sx={{ marginBottom: 2 }} activeStep={activeStep}>
                 {steps.map((label, index) => (
                   <Step key={label}>
                     <StepLabel>{label}</StepLabel>
                   </Step>
                 ))}
               </Stepper>
-              <form
-              >
+              <form>
                 {stepContent(
                   activeStep
                   // handleChange,
