@@ -3,10 +3,10 @@ import axios from "axios";
 import { BASE_URL } from "../../config/config";
 
 
-export const UserLogin = createAsyncThunk("dummyData/loginUser", async ({email,password}) => {
+export const UserLogin = createAsyncThunk("dummyData/loginUser", async ({values}) => {
     let response = await axios.post(`${BASE_URL}/loginUser`,  {
-        email,
-        password
+        email:values?.email,
+        password:values?.password,
     });
     return response;
 });

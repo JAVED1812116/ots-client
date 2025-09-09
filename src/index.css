@@ -263,3 +263,8 @@ dl li {
 .no-cursor{
   cursor: not-allowed !important;
 }
+
+.error-style {
+  color: red;
+  font-size: 8;
+}
