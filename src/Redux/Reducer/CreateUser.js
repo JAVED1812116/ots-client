@@ -3,11 +3,11 @@ import axios from "axios";
 import { BASE_URL } from "../../config/config";
 
 
-export const UserAdd = createAsyncThunk("dummyData/UserAdd", async ({name,email,password,code}) => {
-    let response = await axios.post(`${BASE_URL}/createUser`,  {
-        name,
-        email,
-        password,
+export const UserAdd = createAsyncThunk("dummyData/UserAdd", async ({ values, code }) => {
+    let response = await axios.post(`${BASE_URL}/createUser`, {
+        name: values.name,
+        email: values.email,
+        password: values.password,
         code
     });
     return response;

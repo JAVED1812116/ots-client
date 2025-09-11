@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./auth.css";
 import { Button } from "@mui/base";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -13,34 +13,28 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { EmailRounded } from "@mui/icons-material";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { Link } from "react-router-dom";
-import title from "../../../components/title";
 // import { UserAdd } from "../../../redux/reducers";
 import { useDispatch, useSelector } from "react-redux";
-import { Alert } from "@mui/material";
+import { Alert, CircularProgress } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import CodeIcon from "@mui/icons-material/Code";
 import "react-toastify/dist/ReactToastify.css";
 import { UserAdd } from "../../../Redux/Reducer/CreateUser";
+import { useFormik } from "formik";
+import { signUpSchema } from "./validationSchema";
 
 // import Button from '@mui/material/Button';
 const CreateUser = () => {
   const location = useLocation();
-  // console.log(location.state.type, "Locationsignup");
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [code, setCode] = useState(null);
-
+  const loaderSate=useSelector((state)=>state?.UserAdd?.loading)
   function useQuery() {
     const { search } = useLocation();
     return React.useMemo(() => new URLSearchParams(search), [search]);
   }
   let query = useQuery();
-
-  console.log(query.get("id"), "abc");
 
   <Alert variant="filled" severity="success">
     This is a success alert — check it out!
@@ -49,70 +43,46 @@ const CreateUser = () => {
     event.preventDefault();
   };
   const navigate = useNavigate();
-  // const idRegex = /^\/signup\/([a-fA-F0-9]+)$/;
-  // const hasId = idRegex.test(location?.pathname);
   const hasId = query.get("id");
-  // useEffect(()=>{
-  //   location?.state?.type===undefined&&  navigate("/")
-  // },[])
-  const Signup = () => {
-    title("SignUp");
-    if ((name && email && password != null) || "") {
-      var regexEmail = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
-      var names = /^([^0-9]*)$/;
-      var passwords = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
-      if (names.test(name)) {
-        if (regexEmail.test(email)) {
-          if (passwords.test(password)) {
-            dispatch(UserAdd({ name, email, password, code: hasId })).then(
-              (res) => {
-                // console.log(res, 'res?.payload');
-                if (res?.payload?.data?.message === "User Register Successfully") {
-                  navigate("/login",{state:{type:"Landlord"}})
-                  return toast.success("Signup Successfully!", {
-                    position: "top-center",
-                  });
-                } else if (res?.payload?.data?.message === "User Already Registered") {
-                  return toast.error("User Already Registered!", {
-                    position: "top-center",
-                  });
-                } 
-                else if (res?.payload?.data?.message === "Landlord Not Found") {
-                  return toast.error("Landlord Not Found!", {
-                    position: "top-center",
-                  });
-                } 
-                else {
-                  toast.error("Empty Field are not allowed", {
-                    position: "top-center",
-                  });
-                }
-              }
-            ).catch((err)=> {
-              console.log(err, 'err res');
+  const initialValues = {
+    name:"",
+    email: "",
+    password: ""
+  }
+  const { values, errors, handleBlur, handleChange, touched, handleSubmit } = useFormik({
+    initialValues,
+    validationSchema: signUpSchema,
+    onSubmit: (values,action) => {
+      dispatch(UserAdd({ values, code: hasId })).then(
+        (res) => {
+          if (res?.payload?.data?.message === "User Register Successfully") {
+            navigate("/login",{state:{type:"Landlord"}})
+            return toast.success("Signup Successfully!", {
+              position: "top-center",
             });
-          } else {
-            toast.error("password is not valid", {
+          } else if (res?.payload?.data?.message === "User Already Registered") {
+            return toast.error("User Already Registered!", {
+              position: "top-center",
+            });
+          } 
+          else if (res?.payload?.data?.message === "Landlord Not Found") {
+            return toast.error("Landlord Not Found!", {
+              position: "top-center",
+            });
+          } 
+          else {
+            toast.error("Empty Field are not allowed", {
               position: "top-center",
             });
           }
-        } else {
-          toast.error("Email is not valid", {
-            position: "top-center",
-          });
         }
-      } else {
-        toast.error("name is not valid", {
-          position: "top-center",
-        });
-      }
-    } else {
-      toast.error("Please Fill All Field!", {
-        position: "top-center",
+      ).catch((err)=> {
+        console.log(err, 'err res');
       });
-    }
-  };
+      action.resetForm();
+    },
+  })
   return (
     <div className="landlord_login">
       <div className="login-body">
@@ -122,6 +92,12 @@ const CreateUser = () => {
         <div className="loginText">
           <h1>Signup Page</h1>
         </div>
+        {loaderSate && (
+      <div className="loader-overlay">
+        <CircularProgress />
+      </div>
+    )}
+        <form onSubmit={handleSubmit}>
         <div className="flex flex-col">
           <FormControl variant="outlined" fullWidth className="name_input">
             <InputLabel htmlFor="outlined-adornment-password">Name</InputLabel>
@@ -139,8 +115,17 @@ const CreateUser = () => {
                 </InputAdornment>
               }
               label="Name"
-              onChange={(e) => setName(e.target.value)}
+              // onChange={(e) => setName(e.target.value)}
+              name="name"
+              value={values.name}
+              onChange={handleChange}
+                onBlur={handleBlur}
+                error={
+                  touched.name && Boolean(errors.name)
+                }
+                helperText={touched.name && errors.name}
             />
+            <p className="error-style">{errors.name}</p>
           </FormControl>
 
           <FormControl variant="outlined" fullWidth className="email_input">
@@ -159,10 +144,19 @@ const CreateUser = () => {
                 </InputAdornment>
               }
               label="Email"
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
+              // onChange={(e) => {
+              //   setEmail(e.target.value);
+              // }}
+              name="email"
+              value={values.email}
+              onChange={handleChange}
+                onBlur={handleBlur}
+                error={
+                  touched.email && Boolean(errors.email)
+                }
+                helperText={touched.email && errors.email}
             />
+{errors.email&& touched.email? <p className="error-style">{errors.email}</p>:null}
           </FormControl>
           <FormControl variant="outlined" fullWidth className="password_input">
             <InputLabel htmlFor="outlined-adornment-password">
@@ -184,10 +178,19 @@ const CreateUser = () => {
                 </InputAdornment>
               }
               label="Password"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+              // onChange={(e) => {
+              //   setPassword(e.target.value);
+              // }}
+              value={values.password}
+                      error={
+                        touched.password && Boolean(errors.password)
+                      }
+                      helperText={touched.password && errors.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      name="password"
             />
+            {errors.password&& touched.password? <p className="error-style">{errors.password}</p>:null}
           </FormControl>
           {location?.state?.type === "Tenant" || hasId ? (
             <FormControl
@@ -224,17 +227,20 @@ const CreateUser = () => {
             ""
           )}
         </div>
+        
         {/* onClick={() => navigate("/landlord-dashboard")} */}
         <div className="flex Login">
           <Button
             className="LoginButton"
-            onClick={() => {
-              Signup();
-            }}
+            type="submit"
+            // onClick={() => {
+            //   Signup();
+            // }}
           >
             Signup
           </Button>
         </div>
+        </form>
         <div className="Login flex">
           <text className="newAccount">
             Already have an account
