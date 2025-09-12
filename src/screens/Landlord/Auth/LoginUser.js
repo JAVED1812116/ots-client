@@ -12,11 +12,12 @@ import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import { EmailRounded } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UserLogin } from "../../../Redux/Reducer/LoginUser";
 import { ToastContainer, toast } from "react-toastify";
 import { loginSchema } from "./validationSchema";
 import { useFormik } from "formik";
+import { CircularProgress } from "@mui/material";
 
 const initialValues = {
   email: "",
@@ -28,7 +29,8 @@ const LoginUser = () => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
+  const loaderSate=useSelector((state)=>state?.loginUser?.loading)
+  console.log(loaderSate,"javed")
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -179,7 +181,11 @@ const LoginUser = () => {
         <div className="loginText">
           <h1>Login Page</h1>
         </div>
-
+        {loaderSate && (
+      <div className="loader-overlay">
+        <CircularProgress />
+      </div>
+    )}
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col">
             <FormControl variant="outlined" fullWidth className="email_input">
