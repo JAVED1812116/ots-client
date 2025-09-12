@@ -42,19 +42,7 @@ export default function PropertyRegister() {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
-  const [detail, setDetail] = React.useState({
-    totalFlat: 0, // Set a default value for totalFlat
-    ownerName: "",
-    fatherName: "",
-    cnic: "",
-    contactNumber: "03",
-    alternateNumber: "",
-    permenantAddress: "",
-    postalAddress: "",
-    email: "",
-    propertyAddress: "",
-    totalFloor: "",
-  });
+ 
   const [rows, setRows] = React.useState({
     flatName: "",
     flatNumber: "",
@@ -72,9 +60,8 @@ export default function PropertyRegister() {
   const [generatedRows, setGeneratedRows] = React.useState([]);
 
   const { loginUser } = useSelector((state) => state);
-  const formik = useFormik({
-    initialValues: {
-      ownerName: "",
+  const initialValues = {
+    ownerName: "",
       fatherName: "",
       cnic: "",
       contactNumber: "03",
@@ -98,46 +85,21 @@ export default function PropertyRegister() {
       flatTrashCharges: "",
       flatSecurityCharges: "",
       is_rent: 0,
-    },
-    validationSchema:
-      activeStep === 0 ? landlordDetailSchema : landlordPropertySchema,
-    onSubmit: async (values) => {
-      const errors = await formik.validateForm();
-      formik.setTouched({
-        ownerName: true,
-        fatherName: true,
-        cnic: true,
-        contactNumber: true,
-        alternateNumber: true,
-        permenantAddress: true,
-        postalAddress: true,
-        email: true,
-        propertyAddress: true,
-        ////////////////////////////////////////////////
-        flatName: true,
-        flatNumber: true,
-        flatFloor: true,
-        flatRooms: true,
-        flatToilet: true,
-        flatKitchen: true,
-        flatRent: true,
-        flatAdvance: true,
-        flatMaintananceCharges: true,
-        flatTrashCharges: true,
-        flatSecurityCharges: true,
-        is_rent: true,
-      });
-
+  }
+  const { values, errors, handleBlur, handleChange, touched, handleSubmit } = useFormik({
+    initialValues,
+    validationSchema: activeStep === 0 ? landlordDetailSchema : landlordPropertySchema,
+    onSubmit: (values,action) => {
       if (Object.keys(errors).length === 0) {
-        // If no errors, proceed to the next step
         if (activeStep === steps.length - 1) {
           handleSubmit();
         } else {
           handleNext();
         }
       }
+      action.resetForm();
     },
-  });
+  })
 
   function getSteps() {
     return ["Owner Detail", "Property Detail"];
@@ -153,27 +115,27 @@ export default function PropertyRegister() {
                 id="ownerName"
                 name="ownerName"
                 label="Owner Name"
-                value={formik.values.ownerName}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+                value={values.ownerName}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 error={
-                  formik.touched.ownerName && Boolean(formik.errors.ownerName)
+                  touched.ownerName && Boolean(errors.ownerName)
                 }
-                helperText={formik.touched.ownerName && formik.errors.ownerName}
+                helperText={touched.ownerName && errors.ownerName}
               />
               <TextField
                 fullWidth
                 id="fatherName"
                 name="fatherName"
                 label="Father Name"
-                value={formik.values.fatherName}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+                value={values.fatherName}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 error={
-                  formik.touched.fatherName && Boolean(formik.errors.fatherName)
+                  touched.fatherName && Boolean(errors.fatherName)
                 }
                 helperText={
-                  formik.touched.fatherName && formik.errors.fatherName
+                  touched.fatherName && errors.fatherName
                 }
               />
               <TextField
@@ -186,12 +148,12 @@ export default function PropertyRegister() {
                 placeholder="XXXXX-XXXXXXX-X"
                 maxRows={4}
                 // variant="standard"
-                value={formik.values.cnic}
+                value={values.cnic}
                 name="cnic"
                 onChange={handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.cnic && Boolean(formik.errors.cnic)}
-                helperText={formik.touched.cnic && formik.errors.cnic}
+                onBlur={handleBlur}
+                error={touched.cnic && Boolean(errors.cnic)}
+                helperText={touched.cnic && errors.cnic}
               />
               <TextField
                 fullWidth
@@ -199,15 +161,15 @@ export default function PropertyRegister() {
                 name="contactNumber"
                 label="Contact Number"
                 type="number"
-                value={formik.values.contactNumber}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+                value={values.contactNumber}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 error={
-                  formik.touched.contactNumber &&
-                  Boolean(formik.errors.contactNumber)
+                  touched.contactNumber &&
+                  Boolean(errors.contactNumber)
                 }
                 helperText={
-                  formik.touched.contactNumber && formik.errors.contactNumber
+                  touched.contactNumber && errors.contactNumber
                 }
               />
               <TextField
@@ -215,16 +177,16 @@ export default function PropertyRegister() {
                 id="permenantAddress"
                 name="permenantAddress"
                 label="Permenant Address"
-                value={formik.values.permenantAddress}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+                value={values.permenantAddress}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 error={
-                  formik.touched.permenantAddress &&
-                  Boolean(formik.errors.permenantAddress)
+                  touched.permenantAddress &&
+                  Boolean(errors.permenantAddress)
                 }
                 helperText={
-                  formik.touched.permenantAddress &&
-                  formik.errors.permenantAddress
+                  touched.permenantAddress &&
+                  errors.permenantAddress
                 }
               />
               <TextField
@@ -232,15 +194,15 @@ export default function PropertyRegister() {
                 id="postalAddress"
                 name="postalAddress"
                 label="Postal Address"
-                value={formik.values.postalAddress}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+                value={values.postalAddress}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 error={
-                  formik.touched.postalAddress &&
-                  Boolean(formik.errors.postalAddress)
+                  touched.postalAddress &&
+                  Boolean(errors.postalAddress)
                 }
                 helperText={
-                  formik.touched.postalAddress && formik.errors.postalAddress
+                  touched.postalAddress && errors.postalAddress
                 }
               />
               <TextField
@@ -248,11 +210,11 @@ export default function PropertyRegister() {
                 id="email"
                 name="email"
                 label="Email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.email && Boolean(errors.email)}
+                helperText={touched.email && errors.email}
               />
             </div>
           </>
@@ -266,16 +228,16 @@ export default function PropertyRegister() {
                 id="propertyAddress"
                 name="propertyAddress"
                 label="Property Address"
-                value={formik.values.propertyAddress}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+                value={values.propertyAddress}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 error={
-                  formik.touched.propertyAddress &&
-                  Boolean(formik.errors.propertyAddress)
+                  touched.propertyAddress &&
+                  Boolean(errors.propertyAddress)
                 }
                 helperText={
-                  formik.touched.propertyAddress &&
-                  formik.errors.propertyAddress
+                  touched.propertyAddress &&
+                  errors.propertyAddress
                 }
               />
               <TextField
@@ -284,18 +246,18 @@ export default function PropertyRegister() {
                 name="totalFloor"
                 label="Total Floor"
                 type="number"
-                value={formik.values.totalFloor}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+                value={values.totalFloor}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 error={
-                  formik.touched.totalFloor && Boolean(formik.errors.totalFloor)
+                  touched.totalFloor && Boolean(errors.totalFloor)
                 }
                 helperText={
-                  formik.touched.totalFloor && formik.errors.totalFloor
+                  touched.totalFloor && errors.totalFloor
                 }
               />
-              {formik?.values?.totalFloor === "" ||
-              formik?.values?.totalFloor === 0 ? (
+              {values?.totalFloor === "" ||
+              values?.totalFloor === 0 ? (
                 ""
               ) : (
                 <TextField
@@ -304,23 +266,23 @@ export default function PropertyRegister() {
                   label="Total Flat"
                   type="number"
                   name="totalFlat"
-                  value={formik.values.totalFlat}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
+                  value={values.totalFlat}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                   error={
-                    formik.touched.totalFlat && Boolean(formik.errors.totalFlat)
+                    touched.totalFlat && Boolean(errors.totalFlat)
                   }
                   helperText={
-                    formik.touched.totalFlat && formik.errors.totalFlat
+                    touched.totalFlat && errors.totalFlat
                   }
                 />
               )}
-              {formik?.values?.totalFlat === 0 ||
-              formik?.values?.totalFlat <= 0 ||
-              formik?.values?.totalFlat?.length === 0 ||
-              formik?.values?.totalFloor === 0 ||
-              formik?.values?.totalFloor <= 0 ||
-              formik?.values?.totalFloor?.length === 0
+              {values?.totalFlat === 0 ||
+              values?.totalFlat <= 0 ||
+              values?.totalFlat?.length === 0 ||
+              values?.totalFloor === 0 ||
+              values?.totalFloor <= 0 ||
+              values?.totalFloor?.length === 0
                 ? " "
                 : renderDataGrid()}
             </div>
@@ -338,61 +300,7 @@ export default function PropertyRegister() {
       setActiveStep(activeStep + 1);
     }
   };
-  const handleSubmit = async (e) => {
-    alert(JSON.stringify(formik.values, null));
-  };
-  const isEmailValid = (email) => {
-    // Regular expression for basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-  const handleChange = (e,rowId) => {
-    const { name, value } = e.target;
-    if (
-      name === "cnic"
-      //  && !isCnicValid(value)
-    ) {
-      const numericCnic = value.replace(/\D/g, "");
 
-      // Format CNIC as XXXXX-XXXXXXX-X
-      const formattedCnic =
-        numericCnic.slice(0, 5) +
-        (numericCnic.length > 5 ? "-" + numericCnic.slice(5, 12) : "") +
-        (numericCnic.length > 12 ? "-" + numericCnic.slice(12, 13) : "");
-
-     
-      formik.setFieldValue("cnic", formattedCnic);
-    }
-    // Check if the entered value is a number for the "CNIC" field
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-      if (
-      (name === "flatNumber" ||
-        name === "flatFloor" ||
-        name === "flatRooms" ||
-        name === "flatToilet" ||
-        name === "flatKitchen" ||
-        name === "flatRent" ||
-        name === "flatAdvance" ||
-        name === "flatMaintananceCharges" ||
-        name === "flatTrashCharges" ||
-        name === "flatSecurityCharges") &&
-      !/^[0-9]*$/.test(value)
-    ) {
-      // If it's not a valid number, you can choose to ignore the Input or show an error message.
-      return;
-    }
-    if (name === "flatName" && !/^[A-Za-z\s]*$/.test(value)) {
-      // If it's not a valid number, you can choose to ignore the Input or show an error message.
-      return;
-    }
-    // Update the state with the new value
-
-    setRows((prevRows) => {
-      return prevRows.map((row) =>
-        row.id === rowId ? { ...row, [name]: value, tenantId: "" } : row
-      );
-    });
-  };
   const handleCellChange = (rowId, e) => {
     const { name, value } = e.target;
 
@@ -426,7 +334,7 @@ export default function PropertyRegister() {
   };
 
   React.useEffect(() => {
-    const numToShow = parseInt(formik.values?.totalFlat, 10) || 0;
+    const numToShow = parseInt(values?.totalFlat, 10) || 0;
 
     const newRows = Array.from({ length: numToShow }, (_, index) => ({
       id: index,
@@ -451,7 +359,7 @@ export default function PropertyRegister() {
     );
 
     setGeneratedRows(newRows);
-  }, [formik.values?.totalFlat]);
+  }, [values?.totalFlat]);
 
   const renderDataGrid = () => {
     return (
@@ -465,7 +373,7 @@ export default function PropertyRegister() {
                 className="propertyTable"
                 stickyHeader
               >
-                {formik?.values?.totalFloor === "" ? (
+                {values?.totalFloor === "" ? (
                   ""
                 ) : (
                   <TableHead>
@@ -473,9 +381,9 @@ export default function PropertyRegister() {
                       <TableCell>No.</TableCell>
                       <TableCell>Flat Name</TableCell>
                       <TableCell>Flat Number</TableCell>
-                      {formik?.values?.totalFloor == "0" ? (
+                      {values?.totalFloor == "0" ? (
                         ""
-                      ) : formik?.values?.totalFloor == "1" ? (
+                      ) : values?.totalFloor == "1" ? (
                         ""
                       ) : (
                         <TableCell>Flat Floor</TableCell>
@@ -492,7 +400,7 @@ export default function PropertyRegister() {
                     </TableRow>
                   </TableHead>
                 )}
-                {formik?.values?.totalFloor === "" ? (
+                {values?.totalFloor === "" ? (
                   ""
                 ) : (
                   <TableBody>
@@ -510,19 +418,20 @@ export default function PropertyRegister() {
                             name="flatName"
                             required
                             // onChange={(e) => handleCellChange(i, e)}
-                            value={formik.values.flatName}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
+                            value={values.flatName}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
                             error={
-                              formik.touched.flatName &&
-                              Boolean(formik.errors.flatName)
+                              touched.flatName &&
+                              Boolean(errors.flatName)
                             }
                             helperText={
-                              formik.touched.flatName &&
-                              formik.errors.flatName
+                              touched.flatName &&
+                              errors.flatName
                             }
                           />
                         </TableCell>
+                        {console.log(values,"")}
                         <TableCell component="th" scope="row">
                           <Input
                             placeholder="Flat Number"
@@ -532,9 +441,9 @@ export default function PropertyRegister() {
                             onChange={(e) => handleCellChange(i, e)}
                           />
                         </TableCell>
-                        {formik?.values?.totalFloor == "0" ? (
+                        {values?.totalFloor == "0" ? (
                           ""
-                        ) : formik?.values?.totalFloor == "1" ? (
+                        ) : values?.totalFloor == "1" ? (
                           ""
                         ) : (
                           <TableCell component="th" scope="row">
@@ -549,14 +458,15 @@ export default function PropertyRegister() {
                               {Array.from(
                                 {
                                   length:
-                                    formik?.values?.totalFloor?.length > 0
-                                      ? formik?.values?.totalFloor
+                                    values?.totalFloor?.length > 0
+                                      ? values?.totalFloor
                                       : 1,
                                 },
                                 (_, index) => ({
                                   id: index,
                                 })
                               ).map((e, i) => {
+                                console.log(e,i,"eee,iiii")
                                 return (
                                   <MenuItem key={i} value={i}>
                                     {i === 0 ? "Ground Floor" : `${i} floor`}
@@ -769,7 +679,7 @@ export default function PropertyRegister() {
   //     });
   //   }
   // };
-  console.log(formik,"formikkkkkkkkkk")
+  console.log(values,"valuessssssssss")
   return (
     <>
       {activeStep === steps.length ? (
@@ -832,7 +742,7 @@ export default function PropertyRegister() {
                   <Button
                     variant="contained"
                     type="button"
-                    onClick={formik.handleSubmit}
+                    onClick={handleSubmit}
                   >
                     {activeStep === getSteps().length - 1 ? "Finish" : "Next"}
                   </Button>

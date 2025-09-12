@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
 
 export const landlordDetailSchema = Yup.object().shape({
-  ownerName: Yup.string().matches(/^[A-Za-z\s]+$/, 'Owner Name must not contain numbers').required('Owner Name is required'),
-  fatherName: Yup.string().matches(/^[A-Za-z\s]+$/, 'Father Name must not contain numbers').required('Father Name is required'),
+  ownerName: Yup.string().min(2).matches(/^[A-Za-z\s]+$/, 'Owner Name must not contain numbers').required('Owner Name is required'),
+  fatherName: Yup.string().min(2).matches(/^[A-Za-z\s]+$/, 'Father Name must not contain numbers').required('Father Name is required'),
   cnic: Yup.string()
     .matches(/^\d{5}-\d{7}-\d{1}$/, 'CNIC must be in the format XXXXX-XXXXXXX-X')
     .required('CNIC is required'),
@@ -16,7 +16,7 @@ export const landlordDetailSchema = Yup.object().shape({
 
 export const landlordPropertySchema = Yup.object().shape({
   propertyAddress: Yup.string().required('Property Address is required'),
-  flatName: Yup.string().required('Flat Name is required'),
+  flatName: Yup.string().min(2).required('Flat Name is required'),
 totalFloor: Yup.number()
   .transform((val, original) => (original === "" ? undefined : val))
   .typeError("Total Floor must be a number")
