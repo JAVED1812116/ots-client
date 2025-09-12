@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./auth.css";
 import { Button } from "@mui/base";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -30,7 +30,6 @@ const LoginUser = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const loaderSate=useSelector((state)=>state?.loginUser?.loading)
-  console.log(loaderSate,"javed")
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -43,7 +42,6 @@ const LoginUser = () => {
       dispatch(UserLogin({ values })).then((res) => {
         localStorage.setItem("token", res?.payload?.data?.accessToken)
         sessionStorage.setItem("ots_token", res?.payload?.data?.accessToken);
-        console.log(sessionStorage.getItem("ots_token"), 'session');
         if (
           res?.payload?.data?.message === "User Login Successfully" &&
           res?.payload?.data?.data?.is_register === true &&
