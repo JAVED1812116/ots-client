@@ -42,22 +42,6 @@ export default function PropertyRegister() {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
- 
-  const [rows, setRows] = React.useState({
-    flatName: "",
-    flatNumber: "",
-    flatFloor: 0,
-    flatRooms: "",
-    flatToilet: "",
-    flatKitchen: "",
-    flatRent: "",
-    flatAdvance: "",
-    flatMaintananceCharges: "",
-    flatTrashCharges: "",
-    flatSecurityCharges: "",
-    is_rent: 0,
-  });
-  const [generatedRows, setGeneratedRows] = React.useState([]);
 
   const { loginUser } = useSelector((state) => state);
   const initialValues = {
@@ -73,34 +57,76 @@ export default function PropertyRegister() {
       totalFloor: 1,
       totalFlat: 1,
       /////////////////////////////////////////////////////////////
-      flatName: "",
-      flatNumber: "",
-      flatFloor: 0,
-      flatRooms: "",
-      flatToilet: "",
-      flatKitchen: "",
-      flatRent: "",
-      flatAdvance: "",
-      flatMaintananceCharges: "",
-      flatTrashCharges: "",
-      flatSecurityCharges: "",
-      is_rent: 0,
+      // flatName: "",
+      // flatNumber: "",
+      // flatFloor: 0,
+      // flatRooms: "",
+      // flatToilet: "",
+      // flatKitchen: "",
+      // flatRent: "",
+      // flatAdvance: "",
+      // flatMaintananceCharges: "",
+      // flatTrashCharges: "",
+      // flatSecurityCharges: "",
+      flats:[],
+      // is_rent: 0,
   }
-  const { values, errors, handleBlur, handleChange, touched, handleSubmit } = useFormik({
+  const { values, errors, handleBlur, handleChange, touched, handleSubmit,setFieldValue } = useFormik({
     initialValues,
     validationSchema: activeStep === 0 ? landlordDetailSchema : landlordPropertySchema,
     onSubmit: (values,action) => {
       if (Object.keys(errors).length === 0) {
         if (activeStep === steps.length - 1) {
           handleSubmit();
+          action.resetForm();
         } else {
           handleNext();
         }
       }
-      action.resetForm();
     },
   })
-
+  React.useEffect(() => {
+    if (values.totalFloor) {
+      const total = parseInt(values.totalFloor);
+      const existingRows = values.flats || [];
+  
+      // Create a copy of existing rows
+      const updatedRows = [...existingRows];
+  
+      // Add new empty rows if totalFloor increased
+      while (updatedRows.length < total) {
+        updatedRows.push({
+          flatName: "",
+          flatNumber: "",
+          flatFloor: "",
+          flatRooms: "",
+          flatToilet: "",
+          flatKitchen: "",
+          flatRent: "",
+          flatAdvance: "",
+          flatMaintananceCharges: "",
+          flatTrashCharges: "",
+          flatSecurityCharges: "",
+          is_rent: 0,
+        });
+      }
+  
+      // Optionally trim rows if totalFloor decreased
+      if (updatedRows.length > total) {
+        updatedRows.length = total;
+      }
+  
+      setFieldValue("flats", updatedRows);
+    }
+  }, [values.totalFloor]);
+  
+  const handleCellChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedFlats = [...values.flats];
+    updatedFlats[index][name] = value;
+    setFieldValue("flats", updatedFlats);
+  };
+  
   function getSteps() {
     return ["Owner Detail", "Property Detail"];
   }
@@ -301,51 +327,49 @@ export default function PropertyRegister() {
     }
   };
 
-  const handleCellChange = (rowId, e) => {
-    const { name, value } = e.target;
+  // const handleCellChange = (rowId, e) => {
+  //   const { name, value } = e.target;
 
-    if (
-      (name === "flatNumber" ||
-        name === "flatFloor" ||
-        name === "flatRooms" ||
-        name === "flatToilet" ||
-        name === "flatKitchen" ||
-        name === "flatRent" ||
-        name === "flatAdvance" ||
-        name === "flatMaintananceCharges" ||
-        name === "flatTrashCharges" ||
-        name === "flatSecurityCharges") &&
-      !/^[0-9]*$/.test(value)
-    ) {
-      // If it's not a valid number, you can choose to ignore the Input or show an error message.
-      return;
-    }
-    if (name === "flatName" && !/^[A-Za-z\s]*$/.test(value)) {
-      // If it's not a valid number, you can choose to ignore the Input or show an error message.
-      return;
-    }
-    // Update the state with the new value
+  //   if (
+  //     (name === "flatNumber" ||
+  //       name === "flatFloor" ||
+  //       name === "flatRooms" ||
+  //       name === "flatToilet" ||
+  //       name === "flatKitchen" ||
+  //       name === "flatRent" ||
+  //       name === "flatAdvance" ||
+  //       name === "flatMaintananceCharges" ||
+  //       name === "flatTrashCharges" ||
+  //       name === "flatSecurityCharges") &&
+  //     !/^[0-9]*$/.test(value)
+  //   ) {
+  //     // If it's not a valid number, you can choose to ignore the Input or show an error message.
+  //     return;
+  //   }
+  //   if (name === "flatName" && !/^[A-Za-z\s]*$/.test(value)) {
+  //     // If it's not a valid number, you can choose to ignore the Input or show an error message.
+  //     return;
+  //   }
+  //   // Update the state with the new value
 
-    setRows((prevRows) => {
-      return prevRows.map((row) =>
-        row.id === rowId ? { ...row, [name]: value, tenantId: "" } : row
-      );
-    });
-  };
+  //   setRows((prevRows) => {
+  //     return prevRows.map((row) =>
+  //       row.id === rowId ? { ...row, [name]: value, tenantId: "" } : row
+  //     );
+  //   });
+  // };
 
   React.useEffect(() => {
     const numToShow = parseInt(values?.totalFlat, 10) || 0;
-
-    const newRows = Array.from({ length: numToShow }, (_, index) => ({
-      id: index,
-    }));
-
-    setRows(
-      Array.from({ length: numToShow }, (_, index) => ({
-        id: index,
+    const existingFlats = values.flats || [];
+  
+    const updatedFlats = [...existingFlats];
+  
+    while (updatedFlats.length < numToShow) {
+      updatedFlats.push({
         flatName: "",
         flatNumber: "",
-        flatFloor: 0,
+        flatFloor: "",
         flatRooms: "",
         flatToilet: "",
         flatKitchen: "",
@@ -355,11 +379,16 @@ export default function PropertyRegister() {
         flatTrashCharges: "",
         flatSecurityCharges: "",
         is_rent: 0,
-      }))
-    );
-
-    setGeneratedRows(newRows);
-  }, [values?.totalFlat]);
+      });
+    }
+  
+    if (updatedFlats.length > numToShow) {
+      updatedFlats.length = numToShow;
+    }
+  
+    setFieldValue("flats", updatedFlats);
+  }, [values.totalFlat]);
+  
 
   const renderDataGrid = () => {
     return (
@@ -404,7 +433,7 @@ export default function PropertyRegister() {
                   ""
                 ) : (
                   <TableBody>
-                    {generatedRows.map((e, i) => (
+                    {values.flats.map((flat, i) => (
                       <TableRow
                         // key={row.name}
                         sx={{
@@ -417,31 +446,30 @@ export default function PropertyRegister() {
                             placeholder="Flat Name"
                             name="flatName"
                             required
-                            // onChange={(e) => handleCellChange(i, e)}
-                            value={values.flatName}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            error={
-                              touched.flatName &&
-                              Boolean(errors.flatName)
-                            }
-                            helperText={
-                              touched.flatName &&
-                              errors.flatName
-                            }
+                            onChange={(e) => handleCellChange(i, e)}
+                            value={flat.flatName}
+                            // onChange={handleChange}
+                            // onBlur={handleBlur}
+                            // error={
+                            //   touched.flatName &&
+                            //   Boolean(errors.flatName)
+                            // }
+                            // helperText={
+                            //   touched.flatName &&
+                            //   errors.flatName
+                            // }
                           />
                         </TableCell>
-                        {console.log(values,"")}
                         <TableCell component="th" scope="row">
                           <Input
                             placeholder="Flat Number"
                             type="number"
                             name="flatNumber"
                             required
+                            value={flat.flatNumber}
                             onChange={(e) => handleCellChange(i, e)}
                           />
                         </TableCell>
-                        {console.log(values,"valuesvaluesvalues")}
                         {values?.totalFloor == "0" ? (
                           ""
                         ) : values?.totalFloor == "1" ? (
@@ -450,8 +478,8 @@ export default function PropertyRegister() {
                           <TableCell component="th" scope="row">
                             <Select
                               defaultValue={1}
-                              // value={age}
                               name="flatFloor"
+                              value={flat.flatFloor}
                               onChange={(e) => handleCellChange(i, e)}
                               displayEmpty
                               // inputProps={{ "aria-label": "Without label" }}
