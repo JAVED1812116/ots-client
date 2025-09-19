@@ -441,6 +441,7 @@ export default function PropertyRegister() {
                             onChange={(e) => handleCellChange(i, e)}
                           />
                         </TableCell>
+                        {console.log(values,"valuesvaluesvalues")}
                         {values?.totalFloor == "0" ? (
                           ""
                         ) : values?.totalFloor == "1" ? (
@@ -458,7 +459,7 @@ export default function PropertyRegister() {
                               {Array.from(
                                 {
                                   length:
-                                    values?.totalFloor?.length > 0
+                                    values?.totalFloor
                                       ? values?.totalFloor
                                       : 1,
                                 },
@@ -466,10 +467,9 @@ export default function PropertyRegister() {
                                   id: index,
                                 })
                               ).map((e, i) => {
-                                console.log(e,i,"eee,iiii")
                                 return (
                                   <MenuItem key={i} value={i}>
-                                    {i === 0 ? "Ground Floor" : `${i} floor`}
+                                    {i === 0 ? "Ground Floor" : `${i} Floor`}
                                   </MenuItem>
                                 );
                               })}
