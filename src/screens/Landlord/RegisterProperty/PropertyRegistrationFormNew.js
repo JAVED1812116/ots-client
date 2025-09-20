@@ -46,42 +46,50 @@ export default function PropertyRegister() {
   const { loginUser } = useSelector((state) => state);
   const initialValues = {
     ownerName: "",
-      fatherName: "",
-      cnic: "",
-      contactNumber: "03",
-      alternateNumber: "",
-      permenantAddress: "",
-      postalAddress: "",
-      email: "",
-      propertyAddress: "",
-      totalFloor: 1,
-      totalFlat: 1,
-      /////////////////////////////////////////////////////////////
-      // flatName: "",
-      // flatNumber: "",
-      // flatFloor: 0,
-      // flatRooms: "",
-      // flatToilet: "",
-      // flatKitchen: "",
-      // flatRent: "",
-      // flatAdvance: "",
-      // flatMaintananceCharges: "",
-      // flatTrashCharges: "",
-      // flatSecurityCharges: "",
-      flats:[],
-      // is_rent: 0,
+    fatherName: "",
+    cnic: "",
+    contactNumber: "03",
+    alternateNumber: "",
+    permenantAddress: "",
+    postalAddress: "",
+    email: "",
+    propertyAddress: "",
+    totalFloor: 1,
+    totalFlat: 1,
+    flats: [],
+    is_rent: 0,
   }
-  const { values, errors, handleBlur, handleChange, touched, handleSubmit,setFieldValue } = useFormik({
+  const { values, errors, handleBlur, handleChange, touched, handleSubmit, setFieldValue } = useFormik({
     initialValues,
     validationSchema: activeStep === 0 ? landlordDetailSchema : landlordPropertySchema,
-    onSubmit: (values,action) => {
+    onSubmit: (values, action) => {
       if (Object.keys(errors).length === 0) {
         if (activeStep === steps.length - 1) {
-          handleSubmit();
-          action.resetForm();
-        } else {
-          handleNext();
-        }
+          dispatch(PropertyRegisters({ values })).then((res) => {
+                      if (res?.payload?.data?.message === "Property Set Successfully") {
+                        toast.success("Property Register Successfully", {
+                          position: "top-center",
+                        });
+                        sessionStorage.setItem("is_register", true);
+                        let token = loginUser?.login?.data?.data?.password;
+                        dispatch(
+                          ValidateUser({
+                            email: loginUser?.login?.data?.data?.email,
+                            token,
+                          })
+                        ).then((re) => {
+                          if (re) {
+                            // setTimeout(() => {
+                            navigate("/pending-request");
+                            // }, 2200);
+                          }
+                        });
+                      }
+                    });
+                  } else {
+                    handleNext();
+                  }
+                  // action.resetForm();
       }
     },
   })
@@ -89,10 +97,10 @@ export default function PropertyRegister() {
     if (values.totalFloor) {
       const total = parseInt(values.totalFloor);
       const existingRows = values.flats || [];
-  
+
       // Create a copy of existing rows
       const updatedRows = [...existingRows];
-  
+
       // Add new empty rows if totalFloor increased
       while (updatedRows.length < total) {
         updatedRows.push({
@@ -110,23 +118,23 @@ export default function PropertyRegister() {
           is_rent: 0,
         });
       }
-  
+
       // Optionally trim rows if totalFloor decreased
       if (updatedRows.length > total) {
         updatedRows.length = total;
       }
-  
+
       setFieldValue("flats", updatedRows);
     }
   }, [values.totalFloor]);
-  
+
   const handleCellChange = (index, e) => {
     const { name, value } = e.target;
     const updatedFlats = [...values.flats];
     updatedFlats[index][name] = value;
     setFieldValue("flats", updatedFlats);
   };
-  
+
   function getSteps() {
     return ["Owner Detail", "Property Detail"];
   }
@@ -283,7 +291,7 @@ export default function PropertyRegister() {
                 }
               />
               {values?.totalFloor === "" ||
-              values?.totalFloor === 0 ? (
+                values?.totalFloor === 0 ? (
                 ""
               ) : (
                 <TextField
@@ -304,11 +312,11 @@ export default function PropertyRegister() {
                 />
               )}
               {values?.totalFlat === 0 ||
-              values?.totalFlat <= 0 ||
-              values?.totalFlat?.length === 0 ||
-              values?.totalFloor === 0 ||
-              values?.totalFloor <= 0 ||
-              values?.totalFloor?.length === 0
+                values?.totalFlat <= 0 ||
+                values?.totalFlat?.length === 0 ||
+                values?.totalFloor === 0 ||
+                values?.totalFloor <= 0 ||
+                values?.totalFloor?.length === 0
                 ? " "
                 : renderDataGrid()}
             </div>
@@ -326,45 +334,12 @@ export default function PropertyRegister() {
       setActiveStep(activeStep + 1);
     }
   };
-
-  // const handleCellChange = (rowId, e) => {
-  //   const { name, value } = e.target;
-
-  //   if (
-  //     (name === "flatNumber" ||
-  //       name === "flatFloor" ||
-  //       name === "flatRooms" ||
-  //       name === "flatToilet" ||
-  //       name === "flatKitchen" ||
-  //       name === "flatRent" ||
-  //       name === "flatAdvance" ||
-  //       name === "flatMaintananceCharges" ||
-  //       name === "flatTrashCharges" ||
-  //       name === "flatSecurityCharges") &&
-  //     !/^[0-9]*$/.test(value)
-  //   ) {
-  //     // If it's not a valid number, you can choose to ignore the Input or show an error message.
-  //     return;
-  //   }
-  //   if (name === "flatName" && !/^[A-Za-z\s]*$/.test(value)) {
-  //     // If it's not a valid number, you can choose to ignore the Input or show an error message.
-  //     return;
-  //   }
-  //   // Update the state with the new value
-
-  //   setRows((prevRows) => {
-  //     return prevRows.map((row) =>
-  //       row.id === rowId ? { ...row, [name]: value, tenantId: "" } : row
-  //     );
-  //   });
-  // };
-
   React.useEffect(() => {
     const numToShow = parseInt(values?.totalFlat, 10) || 0;
     const existingFlats = values.flats || [];
-  
+
     const updatedFlats = [...existingFlats];
-  
+
     while (updatedFlats.length < numToShow) {
       updatedFlats.push({
         flatName: "",
@@ -381,14 +356,14 @@ export default function PropertyRegister() {
         is_rent: 0,
       });
     }
-  
+
     if (updatedFlats.length > numToShow) {
       updatedFlats.length = numToShow;
     }
-  
+
     setFieldValue("flats", updatedFlats);
   }, [values.totalFlat]);
-  
+
 
   const renderDataGrid = () => {
     return (
@@ -441,35 +416,37 @@ export default function PropertyRegister() {
                         }}
                       >
                         <TableCell>{i + 1}.</TableCell>
-                        <TableCell component="th" scope="row" style={{height:10}}>
+                        <TableCell component="th" scope="row" style={{ height: 10 }}>
                           <Input
                             placeholder="Flat Name"
                             name="flatName"
                             required
                             onChange={(e) => handleCellChange(i, e)}
                             value={flat.flatName}
-                            // onChange={handleChange}
-                            // onBlur={handleBlur}
-                            // error={
-                            //   touched.flatName &&
-                            //   Boolean(errors.flatName)
-                            // }
-                            // helperText={
-                            //   touched.flatName &&
-                            //   errors.flatName
-                            // }
+                            onBlur={handleBlur}
                           />
+                            {errors.flats?.[i]?.flatName && touched.flats?.[i]?.flatName && (
+                            <div style={{ color: "red", fontSize: "12px" }}>
+                              {errors.flats[i].flatName}
+                            </div>
+                          )}
                         </TableCell>
                         <TableCell component="th" scope="row">
                           <Input
                             placeholder="Flat Number"
                             type="number"
                             name="flatNumber"
-                            required
                             value={flat.flatNumber}
                             onChange={(e) => handleCellChange(i, e)}
+                            onBlur={handleBlur}
                           />
+                          {errors.flats?.[i]?.flatNumber && touched.flats?.[i]?.flatNumber && (
+                            <div style={{ color: "red", fontSize: "12px" }}>
+                              {errors.flats[i].flatNumber}
+                            </div>
+                          )}
                         </TableCell>
+
                         {values?.totalFloor == "0" ? (
                           ""
                         ) : values?.totalFloor == "1" ? (
@@ -482,7 +459,8 @@ export default function PropertyRegister() {
                               value={flat.flatFloor}
                               onChange={(e) => handleCellChange(i, e)}
                               displayEmpty
-                              // inputProps={{ "aria-label": "Without label" }}
+                              onBlur={handleBlur}
+                            // inputProps={{ "aria-label": "Without label" }}
                             >
                               {Array.from(
                                 {
@@ -502,6 +480,11 @@ export default function PropertyRegister() {
                                 );
                               })}
                             </Select>
+                            {errors.flats?.[i]?.flatFloor && touched.flats?.[i]?.flatFloor && (
+                            <div style={{ color: "red", fontSize: "12px" }}>
+                              {errors.flats[i].flatFloor}
+                            </div>
+                          )}
                           </TableCell>
                         )}
                         <TableCell component="th" scope="row">
@@ -511,7 +494,13 @@ export default function PropertyRegister() {
                             required
                             name="flatRooms"
                             onChange={(e) => handleCellChange(i, e)}
+                            onBlur={handleBlur}
                           />
+                           {errors.flats?.[i]?.flatRooms && touched.flats?.[i]?.flatRooms && (
+                            <div style={{ color: "red", fontSize: "12px" }}>
+                              {errors.flats[i].flatRooms}
+                            </div>
+                          )}
                         </TableCell>
                         <TableCell component="th" scope="row">
                           <Input
@@ -520,7 +509,13 @@ export default function PropertyRegister() {
                             required
                             name="flatToilet"
                             onChange={(e) => handleCellChange(i, e)}
+                            onBlur={handleBlur}
                           />
+                           {errors.flats?.[i]?.flatToilet && touched.flats?.[i]?.flatToilet && (
+                            <div style={{ color: "red", fontSize: "12px" }}>
+                              {errors.flats[i].flatToilet}
+                            </div>
+                          )}
                         </TableCell>
 
                         <TableCell component="th" scope="row">
@@ -530,7 +525,13 @@ export default function PropertyRegister() {
                             required
                             name="flatKitchen"
                             onChange={(e) => handleCellChange(i, e)}
+                            onBlur={handleBlur}
                           />
+                          {errors.flats?.[i]?.flatKitchen && touched.flats?.[i]?.flatKitchen && (
+                            <div style={{ color: "red", fontSize: "12px" }}>
+                              {errors.flats[i].flatKitchen}
+                            </div>
+                          )}
                         </TableCell>
                         <TableCell component="th" scope="row">
                           <Input
@@ -539,7 +540,13 @@ export default function PropertyRegister() {
                             required
                             name="flatRent"
                             onChange={(e) => handleCellChange(i, e)}
+                            onBlur={handleBlur}
                           />
+                          {errors.flats?.[i]?.flatRent && touched.flats?.[i]?.flatRent && (
+                            <div style={{ color: "red", fontSize: "12px" }}>
+                              {errors.flats[i].flatRent}
+                            </div>
+                          )}
                         </TableCell>
                         <TableCell component="th" scope="row">
                           <Input
@@ -548,7 +555,13 @@ export default function PropertyRegister() {
                             required
                             name="flatAdvance"
                             onChange={(e) => handleCellChange(i, e)}
+                            onBlur={handleBlur}
                           />
+                          {errors.flats?.[i]?.flatAdvance && touched.flats?.[i]?.flatAdvance && (
+                            <div style={{ color: "red", fontSize: "12px" }}>
+                              {errors.flats[i].flatAdvance}
+                            </div>
+                          )}
                         </TableCell>
                         <TableCell component="th" scope="row">
                           <Input
@@ -557,7 +570,13 @@ export default function PropertyRegister() {
                             required
                             name="flatMaintananceCharges"
                             onChange={(e) => handleCellChange(i, e)}
+                            onBlur={handleBlur}
                           />
+                           {errors.flats?.[i]?.flatMaintananceCharges && touched.flats?.[i]?.flatMaintananceCharges && (
+                            <div style={{ color: "red", fontSize: "12px" }}>
+                              {errors.flats[i].flatMaintananceCharges}
+                            </div>
+                          )}
                         </TableCell>
                         <TableCell component="th" scope="row">
                           <Input
@@ -566,7 +585,13 @@ export default function PropertyRegister() {
                             required
                             name="flatTrashCharges"
                             onChange={(e) => handleCellChange(i, e)}
+                            onBlur={handleBlur}
                           />
+                           {errors.flats?.[i]?.flatTrashCharges && touched.flats?.[i]?.flatTrashCharges && (
+                            <div style={{ color: "red", fontSize: "12px" }}>
+                              {errors.flats[i].flatTrashCharges}
+                            </div>
+                          )}
                         </TableCell>
                         <TableCell component="th" scope="row">
                           <Input
@@ -575,7 +600,13 @@ export default function PropertyRegister() {
                             required
                             name="flatSecurityCharges"
                             onChange={(e) => handleCellChange(i, e)}
+                            onBlur={handleBlur}
                           />
+                           {errors.flats?.[i]?.flatSecurityCharges && touched.flats?.[i]?.flatSecurityCharges && (
+                            <div style={{ color: "red", fontSize: "12px" }}>
+                              {errors.flats[i].flatSecurityCharges}
+                            </div>
+                          )}
                         </TableCell>
                         <TableCell component="th" scope="row">
                           <Select
@@ -583,12 +614,18 @@ export default function PropertyRegister() {
                             // value={age}
                             name="is_rent"
                             onChange={(e) => handleCellChange(i, e)}
+                            onBlur={handleBlur}
                             displayEmpty
                             inputProps={{ "aria-label": "Without label" }}
                           >
                             <MenuItem value={0}>Vacant</MenuItem>
                             <MenuItem value={1}>RentOut</MenuItem>
                           </Select>
+                           {errors.flats?.[i]?.is_rent && touched.flats?.[i]?.is_rent && (
+                            <div style={{ color: "red", fontSize: "12px" }}>
+                              {errors.flats[i].is_rent}
+                            </div>
+                          )}
                           {/* </FormControl> */}
                         </TableCell>
                       </TableRow>
@@ -707,7 +744,6 @@ export default function PropertyRegister() {
   //     });
   //   }
   // };
-  console.log(values,"valuessssssssss")
   return (
     <>
       {activeStep === steps.length ? (
@@ -749,7 +785,7 @@ export default function PropertyRegister() {
                   </Step>
                 ))}
               </Stepper>
-              <form>
+              <form onSubmit={handleSubmit}>
                 {stepContent(
                   activeStep
                   // handleChange,
@@ -769,8 +805,9 @@ export default function PropertyRegister() {
                   </Button>
                   <Button
                     variant="contained"
-                    type="button"
-                    onClick={handleSubmit}
+                    type="submit"
+                    // onClick={handleSubmit}
+
                   >
                     {activeStep === getSteps().length - 1 ? "Finish" : "Next"}
                   </Button>

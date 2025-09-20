@@ -16,7 +16,6 @@ export const landlordDetailSchema = Yup.object().shape({
 
 export const landlordPropertySchema = Yup.object().shape({
   propertyAddress: Yup.string().required('Property Address is required'),
-  flatName: Yup.string().min(2).required('Flat Name is required'),
 totalFloor: Yup.number()
   .transform((val, original) => (original === "" ? undefined : val))
   .typeError("Total Floor must be a number")
@@ -29,6 +28,22 @@ totalFlat: Yup.number()
   .integer("Total Flat must be an integer")
   .min(1, "Total Flat cannot be 0 and must be at least 1")
   .required("Please enter a valid Total Flat"),
+  flats: Yup.array().of(
+    Yup.object().shape({
+      flatName: Yup.string().required("Flat name is required"),
+      flatNumber: Yup.string().required("Flat number is required"),
+      flatFloor: Yup.string().required("Flat Floor is required"),
+      flatRooms: Yup.string().required("Rooms are required"),
+      flatToilet: Yup.string().required("Toilet is required"),
+      flatKitchen: Yup.string().required("Kitchen is required"),
+      flatRent: Yup.string().required("Rent is required"),
+      flatAdvance: Yup.string().required("Advance is required"),
+      flatMaintananceCharges: Yup.string().required("Maintainance is required"),
+      flatTrashCharges: Yup.string().required("Trash charges are required"),
+      flatSecurityCharges: Yup.string().required("Security charges are required"),
+      is_rent: Yup.string().required("Status are required"),
+    })
+  ),
   // totalFlat: Yup.string()
   // .min(1, 'Total Flat must be at least 1').required('Please enter a valid Total Flat'),
 });
