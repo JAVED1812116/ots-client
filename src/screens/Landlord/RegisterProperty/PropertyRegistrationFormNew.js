@@ -15,6 +15,7 @@ import {
   Stepper,
   Step,
   StepLabel,
+  InputAdornment,
 } from "@mui/material";
 import Logo from "../../../assets/Logo.png";
 import { PropertyRegisters } from "../../../Redux/Reducer/PropertyRegistration";
@@ -48,7 +49,7 @@ export default function PropertyRegister() {
     ownerName: "",
     fatherName: "",
     cnic: "",
-    contactNumber: "03",
+    contactNumber: "",
     alternateNumber: "",
     permenantAddress: "",
     postalAddress: "",
@@ -65,7 +66,13 @@ export default function PropertyRegister() {
     onSubmit: (values, action) => {
       if (Object.keys(errors).length === 0) {
         if (activeStep === steps.length - 1) {
-          dispatch(PropertyRegisters({ values })).then((res) => {
+          const finalValues={
+            ...values,
+            contactNumber:values.contactNumber?`03${values.contactNumber}`:"",
+            is_register:true,
+            is_active:false
+          };
+          dispatch(PropertyRegisters({ values:finalValues })).then((res) => {
                       if (res?.payload?.data?.message === "Property Set Successfully") {
                         toast.success("Property Register Successfully", {
                           position: "top-center",
@@ -79,9 +86,9 @@ export default function PropertyRegister() {
                           })
                         ).then((re) => {
                           if (re) {
-                            // setTimeout(() => {
+                            setTimeout(() => {
                             navigate("/pending-request");
-                            // }, 2200);
+                            }, 2200);
                           }
                         });
                       }
@@ -93,6 +100,30 @@ export default function PropertyRegister() {
       }
     },
   })
+  const handleCnicChange = (e) => {
+    let value = e.target.value.replace(/\D/g, ""); // sirf digits allow
+    if (value.length > 13) value = value.slice(0, 13); // max 13 digits
+  
+    // format XXXXX-XXXXXXX-X
+    let formatted = value;
+    if (value.length > 5) {
+      formatted = value.slice(0, 5) + "-" + value.slice(5);
+    }
+    if (value.length > 12) {
+      formatted = formatted.slice(0, 13) + "-" + formatted.slice(13);
+    }
+  
+    setFieldValue("cnic", formatted);
+  };
+  
+  const handleContactChange = (e) => {
+    let value = e.target.value.replace(/\D/g, ""); // sirf digits
+    if (value.length > 9) value = value.slice(0, 9); // max 9 digits
+  
+    setFieldValue("contactNumber", value);
+  };
+  
+  
   React.useEffect(() => {
     if (values.totalFloor) {
       const total = parseInt(values.totalFloor);
@@ -102,22 +133,22 @@ export default function PropertyRegister() {
       const updatedRows = [...existingRows];
 
       // Add new empty rows if totalFloor increased
-      while (updatedRows.length < total) {
-        updatedRows.push({
-          flatName: "",
-          flatNumber: "",
-          flatFloor: "",
-          flatRooms: "",
-          flatToilet: "",
-          flatKitchen: "",
-          flatRent: "",
-          flatAdvance: "",
-          flatMaintananceCharges: "",
-          flatTrashCharges: "",
-          flatSecurityCharges: "",
-          is_rent: 0,
-        });
-      }
+      // while (updatedRows.length < total) {
+      //   updatedRows.push({
+      //     flatName: "",
+      //     flatNumber: "",
+      //     flatFloor: "",
+      //     flatRooms: "",
+      //     flatToilet: "",
+      //     flatKitchen: "",
+      //     flatRent: "",
+      //     flatAdvance: "",
+      //     flatMaintananceCharges: "",
+      //     flatTrashCharges: "",
+      //     flatSecurityCharges: "",
+      //     is_rent: 0,
+      //   });
+      // }
 
       // Optionally trim rows if totalFloor decreased
       if (updatedRows.length > total) {
@@ -176,15 +207,12 @@ export default function PropertyRegister() {
                 fullWidth
                 id="CNIC"
                 label="CNIC"
-                multiline
-                type="number"
+                type="text"
                 data-inputmask="'mask': '99999-9999999-9'"
                 placeholder="XXXXX-XXXXXXX-X"
-                maxRows={4}
-                // variant="standard"
                 value={values.cnic}
                 name="cnic"
-                onChange={handleChange}
+                onChange={handleCnicChange}
                 onBlur={handleBlur}
                 error={touched.cnic && Boolean(errors.cnic)}
                 helperText={touched.cnic && errors.cnic}
@@ -196,8 +224,11 @@ export default function PropertyRegister() {
                 label="Contact Number"
                 type="number"
                 value={values.contactNumber}
-                onChange={handleChange}
+                onChange={handleContactChange}
                 onBlur={handleBlur}
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">03</InputAdornment>, // 👈 fixed 03 show karega
+                }}
                 error={
                   touched.contactNumber &&
                   Boolean(errors.contactNumber)
@@ -371,6 +402,7 @@ export default function PropertyRegister() {
         <Box sx={{ height: "auto", width: "auto" }}>
           <Paper sx={{ width: "100%", overflow: "hidden" }}>
             <TableContainer sx={{ maxHeight: 400 }}>
+              {console.log(values?.totalFloor,"values?.totalFloor")}
               <Table
                 sx={{ minWidth: 650 }}
                 aria-label="simple table"
@@ -447,42 +479,6 @@ export default function PropertyRegister() {
 
                         {values?.totalFloor == "0" ? (
                             ""
-                        ) : values?.totalFloor == "1" ? (
-                          <TableCell component="th" scope="row">
-                          <Select
-                            defaultValue={1}
-                            name="flatFloor"
-                            value={flat.flatFloor=0}
-                            disabled={true}
-                            onChange={(e) => handleCellChange(i, e)}
-                            displayEmpty
-                            onBlur={handleBlur}
-                          // inputProps={{ "aria-label": "Without label" }}
-                          >
-                            {Array.from(
-                              {
-                                length:
-                                  values?.totalFloor
-                                    ? values?.totalFloor
-                                    : 1,
-                              },
-                              (_, index) => ({
-                                id: index,
-                              })
-                            ).map((e, i) => {
-                              return (
-                                <MenuItem key={i} value={i}>
-                                  {i === 0 ? "Ground Floor" : `${i} Floor`}
-                                </MenuItem>
-                              );
-                            })}
-                          </Select>
-                          {errors.flats?.[i]?.flatFloor && touched.flats?.[i]?.flatFloor && (
-                          <div style={{ color: "red", fontSize: "12px" }}>
-                            {errors.flats[i].flatFloor}
-                          </div>
-                        )}
-                        </TableCell>
                         ) : (
                           <TableCell component="th" scope="row">
                             <Select
@@ -525,6 +521,7 @@ export default function PropertyRegister() {
                             type="number"
                             required
                             name="flatRooms"
+                            value={flat.flatRooms}
                             onChange={(e) => handleCellChange(i, e)}
                             onBlur={handleBlur}
                           />
@@ -540,6 +537,7 @@ export default function PropertyRegister() {
                             type="number"
                             required
                             name="flatToilet"
+                            value={flat.flatToilet}
                             onChange={(e) => handleCellChange(i, e)}
                             onBlur={handleBlur}
                           />
@@ -556,6 +554,7 @@ export default function PropertyRegister() {
                             type="number"
                             required
                             name="flatKitchen"
+                            value={flat.flatKitchen}
                             onChange={(e) => handleCellChange(i, e)}
                             onBlur={handleBlur}
                           />
@@ -571,6 +570,7 @@ export default function PropertyRegister() {
                             type="number"
                             required
                             name="flatRent"
+                            value={flat.flatRent}
                             onChange={(e) => handleCellChange(i, e)}
                             onBlur={handleBlur}
                           />
@@ -586,6 +586,7 @@ export default function PropertyRegister() {
                             type="number"
                             required
                             name="flatAdvance"
+                            value={flat.flatAdvance}
                             onChange={(e) => handleCellChange(i, e)}
                             onBlur={handleBlur}
                           />
@@ -601,6 +602,7 @@ export default function PropertyRegister() {
                             type="number"
                             required
                             name="flatMaintananceCharges"
+                            value={flat.flatMaintananceCharges}
                             onChange={(e) => handleCellChange(i, e)}
                             onBlur={handleBlur}
                           />
@@ -616,6 +618,7 @@ export default function PropertyRegister() {
                             type="number"
                             required
                             name="flatTrashCharges"
+                            value={flat.flatTrashCharges}
                             onChange={(e) => handleCellChange(i, e)}
                             onBlur={handleBlur}
                           />
@@ -631,6 +634,7 @@ export default function PropertyRegister() {
                             type="number"
                             required
                             name="flatSecurityCharges"
+                            value={flat.flatSecurityCharges}
                             onChange={(e) => handleCellChange(i, e)}
                             onBlur={handleBlur}
                           />
@@ -645,6 +649,7 @@ export default function PropertyRegister() {
                             defaultValue={0}
                             // value={age}
                             name="is_rent"
+                            value={flat.is_rent}
                             onChange={(e) => handleCellChange(i, e)}
                             onBlur={handleBlur}
                             displayEmpty
