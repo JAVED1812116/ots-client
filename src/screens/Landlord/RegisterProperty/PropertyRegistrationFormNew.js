@@ -387,9 +387,7 @@ export default function PropertyRegister() {
                       <TableCell>Flat Number</TableCell>
                       {values?.totalFloor == "0" ? (
                         ""
-                      ) : values?.totalFloor == "1" ? (
-                        ""
-                      ) : (
+                      ): (
                         <TableCell>Flat Floor</TableCell>
                       )}
                       <TableCell>Rooms</TableCell>
@@ -448,9 +446,43 @@ export default function PropertyRegister() {
                         </TableCell>
 
                         {values?.totalFloor == "0" ? (
-                          ""
+                            ""
                         ) : values?.totalFloor == "1" ? (
-                          ""
+                          <TableCell component="th" scope="row">
+                          <Select
+                            defaultValue={1}
+                            name="flatFloor"
+                            value={flat.flatFloor=0}
+                            disabled={true}
+                            onChange={(e) => handleCellChange(i, e)}
+                            displayEmpty
+                            onBlur={handleBlur}
+                          // inputProps={{ "aria-label": "Without label" }}
+                          >
+                            {Array.from(
+                              {
+                                length:
+                                  values?.totalFloor
+                                    ? values?.totalFloor
+                                    : 1,
+                              },
+                              (_, index) => ({
+                                id: index,
+                              })
+                            ).map((e, i) => {
+                              return (
+                                <MenuItem key={i} value={i}>
+                                  {i === 0 ? "Ground Floor" : `${i} Floor`}
+                                </MenuItem>
+                              );
+                            })}
+                          </Select>
+                          {errors.flats?.[i]?.flatFloor && touched.flats?.[i]?.flatFloor && (
+                          <div style={{ color: "red", fontSize: "12px" }}>
+                            {errors.flats[i].flatFloor}
+                          </div>
+                        )}
+                        </TableCell>
                         ) : (
                           <TableCell component="th" scope="row">
                             <Select
