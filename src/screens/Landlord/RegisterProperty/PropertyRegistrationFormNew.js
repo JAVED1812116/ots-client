@@ -68,9 +68,7 @@ export default function PropertyRegister() {
         if (activeStep === steps.length - 1) {
           const finalValues={
             ...values,
-            contactNumber:values.contactNumber?`03${values.contactNumber}`:"",
-            is_register:true,
-            is_active:false
+            contactNumber:values.contactNumber?`03${values.contactNumber}`:""
           };
           dispatch(PropertyRegisters({ values:finalValues })).then((res) => {
                       if (res?.payload?.data?.message === "Property Set Successfully") {
