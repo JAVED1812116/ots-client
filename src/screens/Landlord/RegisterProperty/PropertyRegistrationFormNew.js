@@ -17,6 +17,7 @@ import {
   StepLabel,
   InputAdornment,
   CircularProgress,
+  IconButton,
 } from "@mui/material";
 import Logo from "../../../assets/Logo.png";
 import { PropertyRegisters } from "../../../Redux/Reducer/PropertyRegistration";
@@ -37,6 +38,8 @@ import {
   landlordPropertySchema,
 } from "./validationSchema";
 import { useFormik } from "formik";
+import { LogoutRounded } from "@mui/icons-material";
+import LogoutHelper from "../../../Helper/LogoutHelper";
 
 export default function PropertyRegister() {
   title("PropertyRegister");
@@ -47,7 +50,6 @@ export default function PropertyRegister() {
 
   const { loginUser } = useSelector((state) => state);
   const propertyRegistration = useSelector((state) => state.propertyRegistration.loading);
-  console.log(propertyRegistration,"loginUserS")
   const initialValues = {
     ownerName: "",
     fatherName: "",
@@ -795,19 +797,26 @@ export default function PropertyRegister() {
         </Typography>
       ) : (
         <Container maxWidth="sm">
-          <AppBar position="fixed">
-            <Toolbar style={{ backgroundColor: "black" }}>
-              <Box
-                component="img"
-                sx={{
-                  height: 56,
-                  margin: 1,
-                }}
-                alt="Your logo."
-                src={Logo}
-              />
-            </Toolbar>
-          </AppBar>
+        <AppBar position="fixed">
+  <Toolbar style={{ backgroundColor: "black", display: "flex", justifyContent: "space-between" }}>
+    {/* Left side - Logout Button */}
+    <Box
+      component="img"
+      sx={{
+        height: 56,
+        margin: 1,
+      }}
+      alt="Your logo."
+      src={Logo}
+    />
+
+    {/* Right side - Logo */}
+    <IconButton color="inherit" onClick={() => LogoutHelper.logout()}>
+      <LogoutRounded />
+    </IconButton>
+    
+  </Toolbar>
+</AppBar>
           <Box mt={15}>
             <>
               <Typography mb={1} variant="h4" align="center" color="primary">
