@@ -16,6 +16,7 @@ import {
   Step,
   StepLabel,
   InputAdornment,
+  CircularProgress,
 } from "@mui/material";
 import Logo from "../../../assets/Logo.png";
 import { PropertyRegisters } from "../../../Redux/Reducer/PropertyRegistration";
@@ -45,6 +46,8 @@ export default function PropertyRegister() {
   const steps = getSteps();
 
   const { loginUser } = useSelector((state) => state);
+  const propertyRegistration = useSelector((state) => state.propertyRegistration.loading);
+  console.log(propertyRegistration,"loginUserS")
   const initialValues = {
     ownerName: "",
     fatherName: "",
@@ -781,6 +784,11 @@ export default function PropertyRegister() {
   // };
   return (
     <>
+    {propertyRegistration && (
+      <div className="loader-overlay">
+        <CircularProgress />
+      </div>
+    )}
       {activeStep === steps.length ? (
         <Typography variant="h1" align="center">
           Pending
