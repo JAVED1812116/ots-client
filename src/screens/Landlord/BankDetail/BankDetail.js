@@ -11,7 +11,8 @@ import { AccountSet } from "../../../Redux/Reducer/AccountSetting";
 import { ToastContainer, toast } from "react-toastify";
 import { GetAccount } from "../../../Redux/Reducer/GetAccountDetails";
 import { ValidateUser } from "../../../Redux/Reducer/ValidateUser";
-import AccountDetailValidation from "../../../Validation/AccountDetailValidation";
+import { bankDetailSchema } from "./validationSchema";
+import { useFormik } from "formik";
 
 export default function BankDetail() {
   title("Account Detail");
@@ -21,52 +22,7 @@ export default function BankDetail() {
   const [mylocation, setMyLocation] = useState(location.pathname);
   const [getData, setGetData] = useState();
   const [fieldDisable, setFieldDisable] = useState(false);
-  
-  const validationSchema = AccountDetailValidation();
-  const [detail, setDetail] = useState({
-    bankName: "",
-    accountName: "",
-    accountNumber: "",
-    ibanNumber: "",
-  });
-  
-  const [errors, setErrors] = useState({}); // State to hold error messages
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setDetail((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: "" })); // Clear error on change
-  };
-
-  const handleSubmit = async () => {
-    try {
-      // Validate the detail object
-      await validationSchema.validate(detail, { abortEarly: false });
-      
-      // If validation passes, dispatch the action
-      setFieldDisable(true);
-      const res = await dispatch(AccountSet({ detail }));
-      if (res?.payload?.data?.message === "Account Detail Save Successfully") {
-        toast.success(res?.payload?.data?.message, { autoClose: 300 });
-        dispatch(ValidateUser({}));
-        const accountRes = await dispatch(GetAccount({ userId: localStorage.getItem("user_id") }));
-        setGetData(accountRes?.payload?.data);
-        let { bankName, accountName, accountNumber, ibanNumber } = accountRes?.payload?.data?.data;
-        setDetail({ bankName, accountName, accountNumber, ibanNumber });
-      } else {
-        toast.error(res?.payload?.data?.message, { autoClose: 300 });
-      }
-    } catch (err) {
-      if (err.inner) {
-        const newErrors = {};
-        err.inner.forEach((error) => {
-          newErrors[error.path] = error.message; // Collect all errors
-        });
-        setErrors(newErrors); // Set errors in state
-      }
-    }
-  };
-
+ 
   const handleUpdate = () => {
     setFieldDisable(false);
   };
@@ -78,13 +34,52 @@ export default function BankDetail() {
         setFieldDisable(true);
       }
       const { bankName, accountName, accountNumber, ibanNumber } = res?.payload?.data?.data;
-      setDetail({ bankName, accountName, accountNumber, ibanNumber });
+      // setDetail({ bankName, accountName, accountNumber, ibanNumber });
     });
   }, []);
-
+  const initialValues = {
+    bankName: "",
+    accountName: "",
+    accountNumber: "",
+    ibanNumber: "",
+  }
+  const { values, errors, handleBlur, handleChange, touched, handleSubmit } = useFormik({
+    initialValues,
+    validationSchema: bankDetailSchema,
+    onSubmit: async(values,action) => {
+  try {
+     
+      
+      // If validation passes, dispatch the action
+      setFieldDisable(true);
+      console.log(values,"111111111 valuesvaluesvalues")
+      const res = await dispatch(AccountSet({ values }));
+      console.log(res,"111111111 resresres")
+      if (res?.payload?.data?.message === "Account Detail Save Successfully") {
+        toast.success(res?.payload?.data?.message, { autoClose: 300 });
+        dispatch(ValidateUser({}));
+        const accountRes = await dispatch(GetAccount({ userId: localStorage.getItem("user_id") }));
+        setGetData(accountRes?.payload?.data);
+        let { bankName, accountName, accountNumber, ibanNumber } = accountRes?.payload?.data?.data;
+        // setDetail({ bankName, accountName, accountNumber, ibanNumber });
+      } else {
+        toast.error(res?.payload?.data?.message, { autoClose: 300 });
+      }
+    } catch (err) {
+      if (err.inner) {
+        const newErrors = {};
+        err.inner.forEach((error) => {
+          newErrors[error.path] = error.message; // Collect all errors
+        });
+      }
+    }
+      action.resetForm();
+    },
+  })
   return (
     <>
       <Wrapper open={open} setOpen={setOpen} mylocation={mylocation} />
+      <form onSubmit={handleSubmit}>
       <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
         <div className="mainHeading">
           <h1>Account Detail</h1>
@@ -96,68 +91,82 @@ export default function BankDetail() {
               label="Bank Name"
               variant="standard"
               name="bankName"
-              value={detail.bankName}
               disabled={fieldDisable}
+              value={values.bankName}
               onChange={handleChange}
-              error={!!errors.bankName} // Check for error
-              helperText={errors.bankName} // Show error message
+              onBlur={handleBlur}
+              error={
+                touched.bankName && Boolean(errors.bankName)
+              }
+              helperText={touched.bankName && errors.bankName}
             />
             <TextField
               id="accountName"
               label="Account Name"
               variant="standard"
               name="accountName"
-              value={detail.accountName}
               disabled={fieldDisable}
+              value={values.accountName}
               onChange={handleChange}
-              error={!!errors.accountName}
-              helperText={errors.accountName}
+              onBlur={handleBlur}
+              error={
+                touched.accountName && Boolean(errors.accountName)
+              }
+              helperText={touched.accountName && errors.accountName}
             />
             <TextField
               id="accountNumber"
               label="Account Number"
               variant="standard"
               name="accountNumber"
-              value={detail.accountNumber}
               disabled={fieldDisable}
+              value={values.accountNumber}
               onChange={handleChange}
-              error={!!errors.accountNumber}
-              helperText={errors.accountNumber}
+              onBlur={handleBlur}
+              error={
+                touched.accountNumber && Boolean(errors.accountNumber)
+              }
+              helperText={touched.accountNumber && errors.accountNumber}
             />
             <TextField
               id="ibanNumber"
               label="IBAN Number"
               variant="standard"
               name="ibanNumber"
-              value={detail.ibanNumber}
               disabled={fieldDisable}
+              value={values.ibanNumber}
               onChange={handleChange}
-              error={!!errors.ibanNumber}
-              helperText={errors.ibanNumber}
+              onBlur={handleBlur}
+              error={
+                touched.ibanNumber && Boolean(errors.ibanNumber)
+              }
+              helperText={touched.ibanNumber && errors.ibanNumber}
             />
           </div>
 
-          {getData?.data?.bankName === "" &&
-          getData?.data?.accountName === "" &&
-          getData?.data?.accountNumber === "" &&
-          getData?.data?.ibanNumber === "" ? (
-            <Button className="bankButton" variant="contained" onClick={handleSubmit}>
+          {/* {values?.bankName === "" &&
+          values?.accountName === "" &&
+          values?.accountNumber === "" &&
+          values?.ibanNumber === "" ? ( */}
+            <Button className="bankButton" variant="contained" type="submit">
               Save
             </Button>
-          ) : getData?.data?.bankName && getData?.data?.accountName && getData?.data?.accountNumber && getData?.data?.ibanNumber ? (
-            fieldDisable === false ? (
-              <Button className="bankButton" variant="contained" onClick={handleSubmit}>
+          {/* ) : */}
+           {/* getData?.data?.bankName && getData?.data?.accountName && getData?.data?.accountNumber && getData?.data?.ibanNumber ? (
+            fieldDisable === false ? ( */}
+              {/* <Button className="bankButton" variant="contained" onClick={handleSubmit}>
                 Update
-              </Button>
-            ) : (
-              <Button className="bankButton" variant="contained" onClick={handleUpdate}>
+              </Button> */}
+            {/* ) : ( */}
+              {/* <Button className="bankButton" variant="contained" onClick={handleUpdate}>
                 Edit
-              </Button>
-            )
-          ) : null}
+              </Button> */}
+            {/* )
+          ) : null} */}
         </Container>
         <ToastContainer />
       </div>
+      </form>
     </>
   );
 }

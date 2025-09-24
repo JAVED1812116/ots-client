@@ -3,10 +3,10 @@ import axios from "axios";
 import { BASE_URL } from "../../config/config";
 const token = sessionStorage.getItem("ots_token");
 
-export const AccountSet = createAsyncThunk("dummyData/AccountSettings", async ({detail}) => {
+export const AccountSet = createAsyncThunk("dummyData/AccountSettings", async ({values}) => {
     console.log(token, 'account setting token');
     let response = await axios.post(`${BASE_URL}/account-setting`,  {
-        detail
+        values
     }
     // , {
     //     headers: {
