@@ -40,8 +40,7 @@ const LoginUser = () => {
     validationSchema: loginSchema,
     onSubmit: (values,action) => {
       dispatch(UserLogin({ values })).then((res) => {
-        localStorage.setItem("token", res?.payload?.data?.accessToken)
-        sessionStorage.setItem("ots_token", res?.payload?.data?.accessToken);
+
         if (
           res?.payload?.data?.message === "User Login Successfully" &&
           res?.payload?.data?.data?.is_register === true &&
@@ -56,7 +55,8 @@ const LoginUser = () => {
           localStorage.setItem("is_active", true);
           localStorage.setItem("user_id", res?.payload?.data?.data?._id);
           localStorage.setItem("user_email", res?.payload?.data?.data?.email);
-         
+          localStorage.setItem("token", res?.payload?.data?.accessToken)
+          sessionStorage.setItem("ots_token", res?.payload?.data?.accessToken);
           toast.success("Logging!", {
             autoClose: 300,
           });
