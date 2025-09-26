@@ -114,7 +114,7 @@ export default function AllRoutes() {
         </Routes>
       </Router>
     );
-  } else if (loginUser?.login?.data?.result == "No User Found" || (loginUser?.login?.length == 0 && validateUser?.UserValidate?.length == 0 && !token)) {
+  } else if (loginUser?.login?.data?.message == "No User Found" || loginUser?.login?.data?.message == "Invalid User Login" || (loginUser?.login?.length == 0 && validateUser?.UserValidate?.length == 0 && !token)) {
     console.log("hello0");
     return (
       <Router>
@@ -128,8 +128,8 @@ export default function AllRoutes() {
       </Router>
     );
   } else if (
-    (loginUser?.login?.data?.data.is_register == false &&
-      loginUser?.login?.data?.data.is_active == false) ||
+    (loginUser?.login?.data?.data?.is_register == false &&
+      loginUser?.login?.data?.data?.is_active == false) ||
     (validateUser?.UserValidate?.data?.user?.is_register == false &&
       validateUser?.UserValidate?.data?.user?.is_active == false)
   ) {
@@ -155,8 +155,8 @@ export default function AllRoutes() {
       </Router>
     );
   } else if (
-    (loginUser?.login?.data?.data.is_register == true &&
-      loginUser?.login?.data?.data.is_active == false) ||
+    (loginUser?.login?.data?.data?.is_register == true &&
+      loginUser?.login?.data?.data?.is_active == false) ||
     (validateUser?.UserValidate?.data?.user?.is_register == true &&
       validateUser?.UserValidate?.data?.user?.is_active == false)
   ) {
@@ -181,8 +181,8 @@ export default function AllRoutes() {
       </Router>
     );
   } else if (
-    (loginUser?.login?.data?.data.is_register == true &&
-      loginUser?.login?.data?.data.is_active == true) ||
+    (loginUser?.login?.data?.data?.is_register == true &&
+      loginUser?.login?.data?.data?.is_active == true) ||
     (validateUser?.UserValidate?.data?.user?.is_register == true &&
       validateUser?.UserValidate?.data?.user?.is_active == true)
   ) {
