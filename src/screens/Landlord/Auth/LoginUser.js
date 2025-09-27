@@ -55,7 +55,7 @@ const LoginUser = () => {
           localStorage.setItem("is_active", true);
           localStorage.setItem("user_id", res?.payload?.data?.data?._id);
           localStorage.setItem("user_email", res?.payload?.data?.data?.email);
-          localStorage.setItem("token", res?.payload?.data?.accessToken)
+          // localStorage.setItem("token", res?.payload?.data?.accessToken)
           sessionStorage.setItem("ots_token", res?.payload?.data?.accessToken);
           toast.success("Logging!", {
             autoClose: 300,
@@ -88,6 +88,8 @@ const LoginUser = () => {
             res?.payload?.data?.data?.email
           );
           sessionStorage.setItem("code", res?.payload?.data?.data?.code);
+          sessionStorage.setItem("ots_token", res?.payload?.data?.accessToken);
+
           setTimeout(() => {
             navigate("/pending-request");
           }, 2200);
@@ -109,6 +111,8 @@ const LoginUser = () => {
             "user_email",
             res?.payload?.data?.data?.email
           );
+          sessionStorage.setItem("ots_token", res?.payload?.data?.accessToken);
+
           setTimeout(() => {
             if (res?.payload?.data?.data?.type === "landlord") {
               {
@@ -139,6 +143,8 @@ const LoginUser = () => {
             "user_email",
             res?.payload?.data?.data?.email
           );
+          sessionStorage.setItem("ots_token", res?.payload?.data?.accessToken);
+
           setTimeout(() => {
             if (location?.state?.type === "Landlord") {
               {
