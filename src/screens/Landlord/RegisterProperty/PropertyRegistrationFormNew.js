@@ -244,7 +244,7 @@ export default function PropertyRegister() {
                 fullWidth
                 id="permenantAddress"
                 name="permenantAddress"
-                label="Permenant Address"
+                label="permanent Address"
                 value={values.permenantAddress}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -261,7 +261,7 @@ export default function PropertyRegister() {
                 fullWidth
                 id="postalAddress"
                 name="postalAddress"
-                label="Postal Address"
+                label="Current Address"
                 value={values.postalAddress}
                 onChange={handleChange}
                 onBlur={handleBlur}
