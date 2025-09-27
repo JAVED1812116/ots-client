@@ -4,7 +4,6 @@ import Button from "@mui/material/Button";
 import Wrapper from "../../../components/Wrapper";
 import { useState, useEffect } from "react";
 import { CircularProgress, Container } from "@mui/material";
-import { useLocation } from "react-router";
 import title from "../../../components/title";
 import { useDispatch, useSelector } from "react-redux";
 import { AccountSet } from "../../../Redux/Reducer/AccountSetting";
@@ -19,9 +18,7 @@ import "./bankDetails.css";
 export default function BankDetail() {
   title("Account Detail");
   const dispatch = useDispatch();
-  const location = useLocation();
   const [open, setOpen] = useState(false);
-  const [mylocation, setMyLocation] = useState(location.pathname);
   const loaderSate=useSelector((state)=>state?.accountSetting?.loading);
   const [initialData, setInitialData] = useState({
     bankName: "",
@@ -29,7 +26,6 @@ export default function BankDetail() {
     accountNumber: "",
     ibanNumber: "",
   });
-
   const formik = useFormik({
     initialValues: initialData,
     enableReinitialize: true, // jab initialData change ho to values reset ho jayein
@@ -54,7 +50,7 @@ export default function BankDetail() {
             ibanNumber: ibanNumber || "",
           };
 
-          setInitialData(updatedData); // form reset karne ke liye
+          setInitialData(updatedData);
         } else {
           toast.error(res?.payload?.data?.message, { autoClose: 300 });
         }
@@ -95,7 +91,7 @@ export default function BankDetail() {
         <CircularProgress />
       </div>
     )}
-      <Wrapper open={open} setOpen={setOpen} mylocation={mylocation} />
+      <Wrapper open={open} setOpen={setOpen} />
       <form onSubmit={handleSubmit}>
         <div className={`${open ? "sidebar-open" : "sidebar-closed"} `}>
           <div className="mainHeading">
