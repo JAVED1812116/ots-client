@@ -20,16 +20,22 @@
 
 /* jab disabled ho */
 .bankButton.Mui-disabled {
-  background: black !important;   /* same look rakho */
-  color: #ffffff !important;      /* text white hi rahe */
-  cursor: not-allowed !important; /* click block ho */
-  opacity: 0.6;                   /* halka grey effect */
-  pointer-events: auto !important; /* hover allow karega */
+  background: black !important;
+  /* same look rakho */
+  color: #ffffff !important;
+  /* text white hi rahe */
+  cursor: not-allowed !important;
+  /* click block ho */
+  opacity: 0.6;
+  /* halka grey effect */
+  pointer-events: auto !important;
+  /* hover allow karega */
 }
 
 /* disabled hover par red overlay */
 .bankButton.Mui-disabled:hover {
-  background: red !important;
+  opacity: 0.6;
+  background-color: black;
   color: #fff !important;
-  opacity: 0.8;
+
 }
